@@ -1,96 +1,70 @@
-# {product}-internal
+# Getting Started with Create React App
 
-{Template for internal repos where we store information that does not fit in our open source product repos. When creating an -internal repo, use this template and replace all strings within curly brackets {}. (Markdown does not have any placeholder markers, curly brackets made sense - better ideas are welcome}
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-> {_Note, the structure in this template are just suggestions, feel free to change everything to best fit your product!}
+## Available Scripts
 
-Equinor internal documentation for {product}.equinor.com. This repo is open to everyone in Equinor. It contains information and Issues about {product} that fit in GitHub, but does not fit on public (open-source) repos. **It must not contain any secrets or restricted information.**
+In the project directory, you can run:
 
-## About the product
+### `npm start`
 
-### Where to find the solution
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-Issues (Feature requests and bugs) are managed in GitHub Issues in the various repos we use. All issues are connected to our project board for a full overview.
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-Project board: [{project} board](https://github.com/orgs/equinor/projects/{board-id})
+### `npm test`
 
-> _Note!_ This is an automated board reflecting the status of issues in the various repos we use. Moving issues between lanes in the board will NOT update the status of the Issue. It is thus recommented no not move Issues in the board. See [Linking a pull request to an issue](https://docs.github.com/en/free-pro-team@latest/github/managing-your-work-on-github/linking-a-pull-request-to-an-issue) for how pull requests are linked to issues. (We do not control this, it's how GitHub boards work)
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-#### Source code
+### `npm run build`
 
-Repo | Link | Access control | Comment
--|-|-|-
-Application documentation | [{product}-internal](https://github.com/equinor/{product}-internal) | [{github-team}](https://github.com/orgs/equinor/teams/{team})
-Website (frontend) | [{product-web}](https://github.com/equinor/{product-web}) | [{github-team}](https://github.com/orgs/equinor/teams/{team})
-API (backend) | [{product-api}](https://github.com/equinor/{product-api}) | [{github-team}](https://github.com/orgs/equinor/teams/{team})
-Infrastructure | [{product}-infra](https://github.com/equinor/{product-infra}) | [{github-team}](https://github.com/orgs/equinor/teams/{team})
-Application documentation | [{product}-internal](https://github.com/equinor/{product}-internal) | [{github-team}](https://github.com/orgs/equinor/teams/{team})
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-#### Runtime environment
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-Environment | Link
--|-
-Frontend hosting | <https://console.radix.equinor.com/applications/{radix application}>
-Backend hosting | <https://console.radix.equinor.com/applications/{radix application}>
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### Devopment and test environments
+### `npm run eject`
 
-Website: <https://{product}.equinor.com>
-API: <https://api.equinor.com/{...}>
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-Environment | Link
--|-
-Production environment | [{...}-prod.azurewebsites.net](https://{...}-prod.azurewebsites.net) (same as {product}.equinor.com)
-QA environment | [{...}-qa.azurewebsites.net](https://{...}-qa.azurewebsites.net)
-Test environment | [{...}-test.azurewebsites.net](https://{...}-test.azurewebsites.net)
-Development environment | [{...}-dev.azurewebsites.net](https://{...}-dev.azurewebsites.net)
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-### People
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-DevOps team:
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-- Members from
-  - Dev: SDS CoreDev(<https://github.com/orgs/equinor/teams/sds-coredev>)
-  - Ops: Ops(<https://github.com/orgs/equinor/teams/ops>).
-- See [Contributors](https://docs.github.com/en/free-pro-team@latest/github/visualizing-repository-data-with-graphs/viewing-a-projects-contributors) in the repos for individuals
+## Learn More
 
-Stakeholders:
-List of PO, user reps and anyone not on the DevOps team
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-### Links
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-- Software Development Life Cycle, see <https://github.com/equinor/sdscoredev-handbook>
-- Service alignment: CI=[{CIname}]({https://equinor.service-now.com/nav_to.do?uri=%2Fcmdb_ci_spkg_list.do})
-- Architecture contract: [{product.md}](<https://github.com/equinor/architecturecontract/blob/master/contracts/{ac_contract}>)
-- User documentation: [{name}]({link})
-- EITA: [{name}]({link})
-- Runbook: [{name}]({link})
-- Teams channel: [{name}]({link})
-- Slack channel: [{name}]({link})
+### Code Splitting
 
-## For the DevOps team
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-{Getting Started}
+### Analyzing the Bundle Size
 
-{How to setup the solution on local dev machine}
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-{Azure Portal Configuration}
+### Making a Progressive Web App
 
-{Running tests locally}
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-{Running tests in CI/CD}
+### Advanced Configuration
 
-{Test coverage}
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-{APIM/Swagger}
+### Deployment
 
-Environment | Link
--|-
-Dev | <https://{...}.azurewebsites.net/api/swagger>
-Test | <https://{...}.azurewebsites.net/api/swagger>
-QA | <https://{...}.azurewebsites.net/api/swagger>
-Prod | <https://{...}.azurewebsites.net/api/swagger>
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-{Logging and Monitoring}
+### `npm run build` fails to minify
 
-{Azure AD management]
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
