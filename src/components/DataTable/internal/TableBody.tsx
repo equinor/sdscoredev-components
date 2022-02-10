@@ -1,8 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Table } from '@equinor/eds-core-react';
 import { TableRow } from './TableRow';
-// import { StateContext } from "../DataTableStore";
-import FilterParser from "../ODataQuery/parser";
 import { useLocation } from "react-router-dom";
 import { StateContext } from "../DataTableStore";
 
@@ -13,8 +11,7 @@ type TableBodyProps = {
 export const TableBody: React.FC<TableBodyProps> = (props) => {
     const { data, onFetch } = props;
     const state: any = useContext(StateContext);
-    const location = useLocation();
-    // const dispatch: any = useContext(DispatchContext);
+
 
     // TODO: if query is undefined dont do onFetch, but make sure it fetches if dataTableReducer.query has been updated
     useEffect(() => {

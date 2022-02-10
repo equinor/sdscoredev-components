@@ -1,4 +1,4 @@
-import { ODataQuery } from '.';
+import { ODataQuery } from './ODataQuery';
 
 interface ODataQueryState {}
 
