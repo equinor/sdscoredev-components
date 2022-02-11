@@ -4,4 +4,5 @@ export type ColumnSelectorProps = {
     onChange?: Function;
     title?: string;
     icon?: JSX.Element;
+    cache?: boolean;
 };

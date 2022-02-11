@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+import React, { Children, useEffect } from "react";
 import { TableHeader } from './internal/TableHeader';
 import { TableBody } from './internal/TableBody';
 import { Table } from '@equinor/eds-core-react';
@@ -8,12 +8,17 @@ import { DataTableStore } from "./DataTableStore";
 import { dataTableReducer } from "./reducers/dataTableReducer";
 import styled from "styled-components";
 import { Filter } from "./Filter/Filter";
+import { TableToolbar } from "./internal/TableToolbar";
 
 const Wrapper = styled.div`
     /* overflow-x: auto; */
     white-space: nowrap;
     display: block;
 `;
+
+const TableWrapper = styled.div`
+    overflow-x: auto;
+`
 
 export type DataTableProps = {
     /**
@@ -47,9 +52,13 @@ export type DataTableProps = {
      * Callback for fetching data from API
      */
     onFetch?: Function;
+    /**
+     * Provide caching of state to localStorage. If set, plugins will try get and set values in localStorage 
+     */
+    cache?: boolean;
 }
 
-export const DataTable: React.FC<DataTableProps> = ({ data, getData, children, reducers, onFetch }) => {
+export const DataTable: React.FC<DataTableProps> = ({ data, getData, children, reducers, onFetch, cache }) => {
     const components = Children.toArray(children);
 
     const row: any = components.find((x: any) => x.type.name === 'Row');
@@ -61,22 +70,25 @@ export const DataTable: React.FC<DataTableProps> = ({ data, getData, children, r
         <DataTableStore reducers={{ dataTableReducer, ...reducers}}>
             <Wrapper>
 
-                {columnSelector && <ColumnSelector {...columnSelector.props} />}
+                <TableToolbar>
+                    {columnSelector && <ColumnSelector {...columnSelector.props} cache={cache} />}
+                    {filter && <Filter {...filter.props} />}
+                </TableToolbar>
 
-                {filter && <Filter {...filter.props} />}
+                <TableWrapper>
+                    <Table style={{ width: '100%' }}>
+                        <TableHeader >
+                            {components.filter((x: any) => x.type.name === 'Column')}
+                        </TableHeader>
 
-                <Table style={{ width: '100%' }}>
-                    <TableHeader>
-                        {components.filter((x: any) => x.type.name === 'Column')}
-                    </TableHeader>
+                        <TableBody 
+                            {...row?.props} 
+                            data={data && getData ? getData(data) : data} 
+                            onFetch={onFetch} 
+                        />
 
-                    <TableBody 
-                        {...row?.props} 
-                        data={data && getData ? getData(data) : data} 
-                        onFetch={onFetch} 
-                    />
-
-                </Table>
+                    </Table>
+                </TableWrapper>
 
                 {pagination && <Pagination count={pagination.props.getCount(data || 0)} />}
 

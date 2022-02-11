@@ -13,23 +13,30 @@ const ContentWrapper = styled.div`
     margin-top: 8px;
 `;
 
-export const ColumnSelector: React.FC<ColumnSelectorProps> = ({ title, icon }) => {
+export const ColumnSelector: React.FC<ColumnSelectorProps> = ({ title, icon, cache }) => {
     const state: any = useContext(StateContext);
     const dispatch: any = useContext(DispatchContext);
     const dialogRef = useRef<DialogRef>(null);
 
+    /**
+     * Throw error if columnSelectorReducer is not added to the `reducers` prop of `<DataTable>`
+     */
+     if (!state.columnSelectorReducer) {
+        throw Error("No columnSelectorReducer was found. Add one in the <DataTable> reducers prop.")
+    }
+
     const handleChange = (column: JSX.Element): void => {
         const { id } = column.props;
 
-        if (state.dataTableReducer.visibleColumns?.includes(id)) {
-            dispatch({ type: 'SET_VISIBLE_COLUMNS', payload: state.dataTableReducer.visibleColumns.filter((x: any) => x !== id) })
+        if (state.columnSelectorReducer.visibleColumns?.includes(id)) {
+            dispatch({ type: 'SET_VISIBLE_COLUMNS', payload: state.columnSelectorReducer.visibleColumns.filter((x: any) => x !== id) })
         } else {
-            dispatch({ type: 'SET_VISIBLE_COLUMNS', payload: [...state.dataTableReducer.visibleColumns, id] })
+            dispatch({ type: 'SET_VISIBLE_COLUMNS', payload: [...state.columnSelectorReducer.visibleColumns, id] })
         }
     }
 
     const handleResetColumns = (): void => {
-        dispatch({ type: 'RESET_VISIBLE_COLUMNS' })
+        dispatch({ type: 'RESET_VISIBLE_COLUMNS', payload: state.dataTableReducer.columns })
     }
 
     return (
@@ -54,14 +61,13 @@ export const ColumnSelector: React.FC<ColumnSelectorProps> = ({ title, icon }) =
                             <Checkbox
                                 key={column.props.id}
                                 label={column.props.children}
-                                checked={state.dataTableReducer.visibleColumns?.includes(column.props.id)}
+                                checked={state.columnSelectorReducer.visibleColumns?.includes(column.props.id)}
                                 onChange={() => handleChange(column)}
                             />
                         )
                     )}
                 </ContentWrapper>
             </Dialog>
-
         </>
     )
 }
