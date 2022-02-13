@@ -1,4 +1,4 @@
-import React, { ChangeEvent, MouseEventHandler, useContext } from "react";
+import React, { useContext } from "react";
 import { Checkbox, EdsProvider, Table } from '@equinor/eds-core-react';
 import { DispatchContext, StateContext } from "../DataTableStore";
 import styled from "styled-components";
@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 
 const Cell = styled(Table.Cell)`
     border-top: unset !important;
-    width: 1%;
+    /* width: 1%; */
     padding: 0 8px;
 
     background-image: linear-gradient(to bottom, #cfcfcf, transparent 50%);
@@ -26,7 +26,7 @@ const Cell = styled(Table.Cell)`
     }
 `;
 
-export const CheckboxHeaderCell: React.FC<CheckboxCellProps> = () => {
+const CheckboxHeaderCell: React.FC<CheckboxCellProps> = () => {
     const state: any = useContext(StateContext);
     const dispatch: any = useContext(DispatchContext);
 
@@ -61,3 +61,5 @@ export const CheckboxHeaderCell: React.FC<CheckboxCellProps> = () => {
         </Cell>
     );
 }
+
+export default CheckboxHeaderCell;

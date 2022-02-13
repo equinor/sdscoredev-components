@@ -1,4 +1,4 @@
-import React, { Children, useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import styled from 'styled-components';
 import { DispatchContext } from "../DataTableStore";
 
@@ -26,7 +26,7 @@ const Right = styled.div`
     align-items: center;
 `;
 
-export const TableToolbar: React.FC = ({ children }) => {
+const Toolbar: React.FC = ({ children }) => {
     const dispatch: any = useContext(DispatchContext);
     
     return (
@@ -36,3 +36,5 @@ export const TableToolbar: React.FC = ({ children }) => {
         </Wrapper>
     );
 };
+
+export default Toolbar;

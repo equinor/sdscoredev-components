@@ -20,4 +20,10 @@ export const useCombinedReducers = (combinedReducers: any) => {
 
     return [state, dispatch];
   };
+
+export const onNextFrame = (callback: FrameRequestCallback) => {
+    setTimeout(function () {
+        requestAnimationFrame(callback)
+    })
+}
   

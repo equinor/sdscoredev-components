@@ -14,8 +14,8 @@ Composite component library extending eds design systems
 - [ ] Cache user settings
 - [ ] Context menu
 - [ ] Row editing
-- [ ] Sticky header
+- [x] Sticky header
 - [ ] Subrows
-- [ ] Checkbox column
-- [ ] Toolbar
+- [x] Checkbox column
+- [x] Toolbar
 
