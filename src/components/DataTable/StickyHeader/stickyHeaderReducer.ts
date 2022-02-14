@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 
-export const SET_WIDTH = "SET_WIDTH";
+// export const SET_WIDTH = "SET_WIDTH";
+export const CALCULATE_COLUMN_WIDTH = "CALCULATE_COLUMN_WIDTH";
 
 interface DataTableState {
     width?: any;
@@ -12,12 +13,35 @@ export const initialState: DataTableState = {
 
 const reducer = (state = initialState, action: any): DataTableState => {
     
+    /**
+     * Calculates widths of the header columns
+     * 
+     * @returns void
+     */
+     const calculateColumnWidth = (visibleColumns: Array<string>) => {
+        const headerElement = document.getElementById('dataTable.headerRow');
+        if (!headerElement) return
+
+        const payload = {}
+        Array.from(headerElement.children).forEach((child: any) => {
+            if (visibleColumns.includes(child.id)) {
+                payload[child.id] = child.getBoundingClientRect().width - 32 // TODO: Must not use hard coded value (padding)
+            }
+        })
+        return payload
+    }
+
     switch (action.type) {
-        case SET_WIDTH:
+        case CALCULATE_COLUMN_WIDTH:
             return {
                 ...state,
-                width: action.payload
+                width: calculateColumnWidth(action.payload)
             };
+        // case SET_WIDTH:
+        //     return {
+        //         ...state,
+        //         width: action.payload
+        //     };
         default:
             return state;
     }

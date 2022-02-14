@@ -7,5 +7,6 @@ export type InternalStickyHeaderProps = {
 }
 
 export type StickyHeaderRef = {
-    calculate: () => void;
+    handleScroll: () => void;
+    handleResize: () => void;
   } | null;

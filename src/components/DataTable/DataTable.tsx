@@ -71,7 +71,6 @@ export const DataTable = forwardRef<TableRef, DataTableProps>((props: DataTableP
     const { data, getData, children, reducers, onFetch, cache, onScroll } = props;
     const components = Children.toArray(children);
     const wrapperRef = useRef<any>(null);
-    const bodyRef = useRef<any>(null);
 
     const row: any = components.find((x: any) => x.type.name === 'Row');
     const pagination: any = components.find((x: JSX.Element) => x.type.name === 'Pagination');
@@ -88,10 +87,6 @@ export const DataTable = forwardRef<TableRef, DataTableProps>((props: DataTableP
         // eslint-disable-next-line react-hooks/exhaustive-deps
         return (): any => wrapperRef.current.removeEventListener('scroll', handleScroll);
     }, []);
-
-    useImperativeHandle(ref, () => ({
-        handleResize: (t: any) => bodyRef.current.calculate()
-    }));
     
     return (
         <DataTableStore reducers={{ dataTableReducer, ...reducers}}>
@@ -117,7 +112,6 @@ export const DataTable = forwardRef<TableRef, DataTableProps>((props: DataTableP
                             {...row?.props} 
                             data={data && getData ? getData(data) : data} 
                             onFetch={onFetch}
-                            ref={bodyRef}
                         />
 
                     </Table>

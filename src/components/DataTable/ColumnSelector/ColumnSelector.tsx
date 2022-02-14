@@ -1,5 +1,5 @@
 import React, { useContext, useRef } from 'react';
-import { Button, Tooltip, Icon, Checkbox } from '@equinor/eds-core-react';
+import { Button, Tooltip, Checkbox } from '@equinor/eds-core-react';
 import styled from 'styled-components';
 import { Dialog, DialogRef } from '../../Dialog';
 import { DispatchContext, StateContext } from '../DataTableStore';
@@ -13,7 +13,7 @@ const ContentWrapper = styled.div`
     margin-top: 8px;
 `;
 
-export const ColumnSelector: React.FC<ColumnSelectorProps> = ({ title, icon, cache }) => {
+export const ColumnSelector: React.FC<ColumnSelectorProps> = ({ title, icon, cache, onChange }) => {
     const state: any = useContext(StateContext);
     const dispatch: any = useContext(DispatchContext);
     const dialogRef = useRef<DialogRef>(null);
@@ -33,6 +33,8 @@ export const ColumnSelector: React.FC<ColumnSelectorProps> = ({ title, icon, cac
         } else {
             dispatch({ type: 'SET_VISIBLE_COLUMNS', payload: [...state.columnSelectorReducer.visibleColumns, id] })
         }
+
+        onChange && onChange()
     }
 
     const handleResetColumns = (): void => {
