@@ -84,6 +84,7 @@
   "dependencies": {
     "@equinor/eds-tokens": "^0.7.0",
     "object-merge-advanced": "^13.0.12",
-    "odata-query": "^6.7.1"
+    "odata-query": "^6.7.1",
+    "react-select": "^5.2.2"
   }
 }
