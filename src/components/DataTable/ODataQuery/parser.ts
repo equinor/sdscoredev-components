@@ -316,7 +316,7 @@ class FilterParser {
     private getPagination = (value: any) => {
         const values = value.split(',');
         const top = parseFloat(values[1]);
-        const skip = parseFloat(values[1]) * parseFloat(values[0]);
+        const skip = parseFloat(values[1]) * (parseFloat(values[0]) - 1);
         if (this.logging) {
             console.log('  \u25CB PAGINATION: ', { skip, top });
         }
