@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { formReducer } from "./reducers/formReducer";
 import { FormStore } from './FormStore';
 import { FormWrapper } from './FormWrapper';
+import { Validation } from './Validation/Validation';
+import { validationReducer } from './Validation/validationReducer';
 
 type Object = { [key: string]: any };
 
@@ -36,11 +38,21 @@ export type FormRef = {} | null;
     // Peek the children so we can count and manipulate them
     const children = Children.toArray(props.children);
 
+    const validation = Array.isArray(props.children) ? props.children.find((x: any) => x.type?.displayName === 'Form.Validation') : undefined;
+    const inputFields = Array.isArray(props.children) ? props.children.find((x: any) => typeof x === 'function') : props.children;
+
     return (
-        <FormStore reducers={{ formReducer, ...reducers}}>
+        <FormStore reducers={{ 
+            formReducer, 
+            validationReducer, // TODO: Make dynamically added
+            ...reducers
+        }}>
+
+            {validation && <Validation {...validation.props} />}
+
             <ColumnsWrapper count={children.length}>
                 <FormWrapper {...props}>
-                    {props.children}
+                    {inputFields}
                 </FormWrapper>
             </ColumnsWrapper>
         </FormStore>
