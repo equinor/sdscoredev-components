@@ -72,10 +72,10 @@ export const DataTable = forwardRef<TableRef, DataTableProps>((props: DataTableP
     const components = Children.toArray(children);
     const wrapperRef = useRef<any>(null);
 
-    const row: any = components.find((x: any) => x.type.name === 'Row');
-    const pagination: any = components.find((x: JSX.Element) => x.type.name === 'Pagination');
-    const columnSelector: any = components.find((x: JSX.Element) => x.type.name === 'ColumnSelector');
-    const filter: any = components.find((x: JSX.Element) => x.type.name === 'Filter');
+    const row: any = components.find((x: any) => x.type.displayName === 'DataTable.Row');
+    const pagination: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Pagination');
+    const columnSelector: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.ColumnSelector');
+    const filter: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Filter');
 
     /**
      * Add scroll event handler to the table wrapper. It is the wrapper that gets a horizontal scrollbar
