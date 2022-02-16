@@ -79,6 +79,16 @@ type TableRowProps = {
 const Row: React.FC<TableRowProps & RowProps & RefAttributes<HTMLTableRowElement>> = forwardRef((props, ref) => {
     const state: any = useContext(StateContext);
 
+    const handleClick = (e: any) => {
+        e.preventDefault();
+
+        if (props.getLink) {
+            props.onClick && props.onClick(props.getLink(props.data))
+        }
+       
+        props.onClick && props.onClick()
+    }
+
     if (!props.data) return <></>
 
     return (
@@ -90,7 +100,13 @@ const Row: React.FC<TableRowProps & RowProps & RefAttributes<HTMLTableRowElement
             {state.dataTableReducer.columns?.map((column: any) => {
                 if (state.columnSelectorReducer.visibleColumns?.includes(column.props.id)) {
                     return (
-                        <Cell slim={column.props.slim} key={`${column.props.id}-${props.data.id}`} scope="col" id={column.props.id}>
+                        <Cell 
+                            slim={column.props.slim} 
+                            key={`${column.props.id}-${props.data.id}`} 
+                            scope="col" 
+                            id={column.props.id}
+                            onClick={handleClick}
+                        >
                             {props.getLink ? <a href={props.getLink(props.data)}>{props.data[column.props.id]}</a> : props.data[column.props.id]}
                         </Cell>
                     )
