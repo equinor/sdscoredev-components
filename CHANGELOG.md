@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/equinor/sdscoredev-components/compare/1.2.0...1.2.1) (2022-02-23)
+
+
+### Bug Fixes
+
+* try new name ([cf49d47](https://github.com/equinor/sdscoredev-components/commit/cf49d476ddd8f171c51dda5e8a6a58dbb9a2051e))
+
 # [1.2.0](https://github.com/equinor/sdscoredev-components/compare/v1.1.1...1.2.0) (2022-02-23)
 
 
