@@ -1,8 +1,8 @@
 {
   "name": "@equinor/sdscoredev-components",
-  "version": "0.1.0",
-  "description": "composite components based on equinor design system",
-  "author": "",
+  "version": "1.0.0",
+  "description": "Composite react components based on equinor design system (EDS)",
+  "author": "John Wennstrøm <john.wennstrom@protonmail.com>",
   "license": "ISC",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
