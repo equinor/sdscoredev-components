@@ -21,34 +21,6 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "release": {
-    "tagFormat": "${version}",
-    "branches": ["main", "next"],
-    "plugins": [
-      "@semantic-release/commit-analyzer",
-      [
-        "@semantic-release/npm",
-        {
-          "pkgRoot": "dist/"
-        }
-      ],
-      "@semantic-release/release-notes-generator",
-      [
-        "@semantic-release/changelog",
-        {
-          "changelogFile": "CHANGELOG.md"
-        }
-      ],
-      [
-        "@semantic-release/git",
-        {
-          "assets": [
-            "CHANGELOG.md"
-          ]
-        }
-      ]
-    ]
-  },
   "eslintConfig": {
     "extends": [
       "react-app",
