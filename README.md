@@ -1,5 +1,5 @@
 # sdscoredev-components
-Composite component library extending eds design systems
+Composite react components that extend Equinor Design Systems (EDS)
 
 ## Components
 
