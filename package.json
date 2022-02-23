@@ -21,16 +21,33 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "rollup --config",
-    "test": "react-scripts test",
-    "build-pkg": "rollup -c",
-    "watch-pkg": "rollup -c -w",
-    "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public",
-    "release": "standard-version && git push --follow-tags && npm publish",
-    "semantic-release": "semantic-release"
+  "release": {
+    "tagFormat": "${version}",
+    "branches": ["main", "next"],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "dist/"
+        }
+      ],
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/changelog",
+        {
+          "changelogFile": "CHANGELOG.md"
+        }
+      ],
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "CHANGELOG.md"
+          ]
+        }
+      ]
+    ]
   },
   "eslintConfig": {
     "extends": [
@@ -59,6 +76,17 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "rollup --config",
+    "test": "react-scripts test",
+    "build-pkg": "rollup -c",
+    "watch-pkg": "rollup -c -w",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public",
+    "release": "standard-version && git push --follow-tags && npm publish",
+    "semantic-release": "semantic-release"
   },
   "devDependencies": {
     "@equinor/eds-core-react": "^0.17.0",
