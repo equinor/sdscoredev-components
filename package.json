@@ -1,6 +1,6 @@
 {
   "name": "@equinor/sdscoredev-components",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "description": "Composite react components based on equinor design system (EDS)",
   "author": "John Wennstrøm <john.wennstrom@protonmail.com>",
   "license": "ISC",
@@ -9,6 +9,14 @@
   "files": [
     "dist"
   ],
+  "homepage": "https://github.com/equinor/sdscoredev-components#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/equinor/sdscoredev-components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/equinor/sdscoredev-components/issues"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "rollup --config",
@@ -16,7 +24,9 @@
     "build-pkg": "rollup -c",
     "watch-pkg": "rollup -c -w",
     "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "release": "standard-version && git push --follow-tags && npm publish",
+    "semantic-release": "semantic-release"
   },
   "eslintConfig": {
     "extends": [
@@ -70,9 +80,11 @@
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.31.2",
+    "standard-version": "^9.3.2",
     "styled-components": "5.3.3",
     "web-vitals": "^2.1.4",
-    "webpack": "^5.68.0"
+    "webpack": "^5.68.0",
+    "semantic-release": "^19.0.2"
   },
   "peerDependencies": {
     "@equinor/eds-core-react": ">=0.17.0",
