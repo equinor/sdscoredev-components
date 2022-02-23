@@ -17,6 +17,10 @@
   "bugs": {
     "url": "https://github.com/equinor/sdscoredev-components/issues"
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "rollup --config",
