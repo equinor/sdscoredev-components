@@ -1,5 +1,5 @@
 {
-  "name": "@equinor/sdscoredev-components",
+  "name": "equinor-sdscoredev-components",
   "version": "1.1.2",
   "description": "Composite react components based on equinor design system (EDS)",
   "author": "John Wennstrøm <john.wennstrom@protonmail.com>",
