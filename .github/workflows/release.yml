@@ -21,12 +21,6 @@ jobs:
           cache: 'npm'
           registry-url: https://registry.npmjs.org
 
-      - name: Config git user
-        run: |
-          git config --global user.name "${{ github.actor }}"
-          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-          git fetch --depth=1 origin +refs/tags/*:refs/tags/*
-
       - name: Install Node Dependencies
         run: npm ci
         env:
