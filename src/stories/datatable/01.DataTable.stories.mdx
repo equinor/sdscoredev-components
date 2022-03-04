@@ -1,0 +1,59 @@
+import { Meta, Story, Canvas, ArgsTable, Source } from '@storybook/addon-docs';
+import { DataTable } from '../../components/DataTable';
+import { Column } from '../../components/DataTable/Column';
+import { Row } from '../../components/DataTable/Row';
+import { ColumnSelector } from '../../components/DataTable/ColumnSelector';
+import { Filter } from '../../components/DataTable/Filter';
+import { StickyHeader } from '../../components/DataTable/StickyHeader';
+
+<Meta title="Library/DataTable/Documentation" />
+
+# DataTable
+
+SDSCoredev Components provides an advanced datatable that offer you pagination, sorting, filter 
+integration, column settings, query handling, sticky headers and much more. It is based on Equinor 
+Design System components to comply with Equinor design standards.
+
+It is created so that developers can easily integrate it into their applications. The complexity that 
+a datatable generate over time is avoided by abstractions and combined reducers.
+
+So the `<DataTable>` comes these props:
+
+<ArgsTable of={DataTable} />
+
+## `<Column>`
+
+Is used as a child component of `<DataTable>` to define the columns of the table. 
+
+<ArgsTable of={Column} />
+
+## `<Row>`
+
+Can be added as a child if custom settings for the row is needed.
+
+<ArgsTable of={Row} />
+
+## `<ColumnSelector>`
+
+Can be added as a child to provide option to show/hide columns.
+
+<ArgsTable of={ColumnSelector} />
+
+## `<Filter>`
+
+Can be added as a child to provide a trigger button for opening or showing filters.
+
+<ArgsTable of={Filter} />
+
+## `<StickyHeader>`
+
+Can be added as a child to provide sticky header. It will create a dublicate of the `<header>` 
+and recalculate all cell widths if window resizes. 
+
+This component is relied on the `<DataTable>` 
+having `onScroll={() => stickyHeaderRef.current.handleScroll()}` set. 
+
+This component need the `ref` prop to be set.
+
+<ArgsTable of={StickyHeader} />
+

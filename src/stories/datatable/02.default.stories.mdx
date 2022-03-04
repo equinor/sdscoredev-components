@@ -1,0 +1,28 @@
+import { Meta, Story, Canvas, ArgsTable, Source } from '@storybook/addon-docs';
+// import Template from './Default.template';
+import { DataTable } from '../../components/DataTable';
+import dedent from 'ts-dedent';
+import { users } from '../data';
+
+
+<Meta title="Library/DataTable" component={DataTable} />
+
+# Default datatable
+
+<Canvas>
+  <Story name="Default">
+      {() => {
+      const { Column, ColumnSelector, StickyHeader } = DataTable;
+      return (
+          <DataTable data={users(10)}>
+            <Column id="id">Uuid</Column>
+            <Column id="firstname">First name</Column>
+            <Column id="lastname">Last name</Column>
+            <Column id="email">Email</Column>
+            <Column id="title">Title</Column>
+            <Column id="country">Country</Column>
+        </DataTable>
+      )
+    }}
+  </Story>
+</Canvas>

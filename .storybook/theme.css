@@ -1,0 +1,20 @@
+:root {
+    font-family: 'Equinor';
+    --mdc-typography-font-family: 'Equinor';
+}
+
+/* .sbdocs-content {
+    max-width: 100% !important;
+} */
+
+.sbdocs-wrapper {
+    padding: 4rem !important;
+}
+
+.sbdocs-content > div[class^="css"] {
+    max-width: 1000px;
+}
+
+.sbdocs-content > div[id^="story"] {
+    padding: 0 65px;
+}
