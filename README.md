@@ -17,4 +17,7 @@ a datatable generate over time is avoided by abstractions and combined reducers.
 
 ### Tooltip
 
+A tooltip that can be added to texts, input labels or basically anywhere. 
+It contains a question mark icon that when hovered will display a message.
+
 ### Dialog
