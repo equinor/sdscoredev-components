@@ -18,8 +18,8 @@ const reducer = (state = initialState, action: any): DataTableState => {
      * 
      * @returns void
      */
-     const calculateColumnWidth = (visibleColumns: Array<string>) => {
-        const headerElement = document.getElementById('dataTable.headerRow');
+     const calculateColumnWidth = (visibleColumns: Array<string>, id: string) => {
+        const headerElement = document.getElementById(`dataTable.headerRow.${id}`);
         if (!headerElement) return
 
         const payload = {}
@@ -35,7 +35,7 @@ const reducer = (state = initialState, action: any): DataTableState => {
         case CALCULATE_COLUMN_WIDTH:
             return {
                 ...state,
-                width: calculateColumnWidth(action.payload)
+                width: calculateColumnWidth(action.payload, action.id)
             };
         // case SET_WIDTH:
         //     return {

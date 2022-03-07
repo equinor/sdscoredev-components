@@ -1,14 +1,9 @@
 import { Ref } from "react";
 
 export type StickyHeaderProps = {
-    /**
-     * The scroll position where the ehader should stick at
-     */
     threshold?: number;
-    /**
-     * A ref to this element
-     */
     ref: Ref<any>;
+    id: string;
 }
 
 export type InternalStickyHeaderProps = {

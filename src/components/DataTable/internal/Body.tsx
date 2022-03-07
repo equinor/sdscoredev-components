@@ -7,9 +7,10 @@ type TableBodyProps = {
     data?: any;
     onFetch?: Function;
     children?: any;
+    id?: string;
 }
 const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBodyProps, ref) => {
-    const { data, onFetch } = props;
+    const { data, onFetch, id } = props;
     const state: any = useContext(StateContext);
     const dispatch: any = useContext(DispatchContext);
     const rowRef = useRef<any>(null)
@@ -30,7 +31,7 @@ const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBo
 
     useEffect(() => {
         if (redraw.current < 3 && state.columnSelectorReducer.visibleColumns) {
-            dispatch({ type: "CALCULATE_COLUMN_WIDTH", payload: state.columnSelectorReducer.visibleColumns })
+            dispatch({ type: "CALCULATE_COLUMN_WIDTH", payload: state.columnSelectorReducer.visibleColumns, id })
             redraw.current++;
         }
     }, [redraw.current])
@@ -38,7 +39,7 @@ const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBo
     if (!data) return <></>
 
     return (
-        <Table.Body ref={ref} id="dataTable.body">
+        <Table.Body ref={ref} id={`dataTable.body.${id}`}>
             {data.map((item: any) => {
                 return (
                     <Row {...props} key={`row-${item.id}`} data={item} ref={(el) => rowRef.current = el} />
