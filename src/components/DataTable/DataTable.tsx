@@ -10,8 +10,8 @@ import styled from "styled-components";
 import { Filter } from "./Filter/Filter";
 import Toolbar from "./internal/Toolbar";
 import { columnSelectorReducer } from "./ColumnSelector/columnSelectorReducer";
-// import StickyHeader from "./StickyHeader";
-// import useWindowScrollPosition from '../useWindowScrollPosition';
+import { makeId } from "../utils";
+import { StickyHeader } from "./StickyHeader/StickyHeader";
 
 const Wrapper = styled.div`
     /* overflow-x: auto; */
@@ -88,6 +88,9 @@ export const DataTable = forwardRef<TableRef, DataTableProps>((props: DataTableP
     const pagination: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Pagination');
     const columnSelector: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.ColumnSelector');
     const filter: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Filter');
+    const stickyHeader: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.StickyHeader');
+
+    const id = makeId()
 
     /**
      * Add scroll event handler to the table wrapper. It is the wrapper that gets a horizontal scrollbar
@@ -95,11 +98,8 @@ export const DataTable = forwardRef<TableRef, DataTableProps>((props: DataTableP
      */
     useEffect((): any => {
         const wrapperReference = wrapperRef.current
-
         const handleScroll = () => onScroll && onScroll()
-        
         wrapperReference.addEventListener('scroll', handleScroll);
-       
         return () => wrapperReference.removeEventListener('scroll', handleScroll);
     }, []);
     
@@ -114,16 +114,15 @@ export const DataTable = forwardRef<TableRef, DataTableProps>((props: DataTableP
 
                 <TableWrapper ref={wrapperRef}>
 
-                    {components.filter((x: any) => x.type.displayName === 'DataTable.StickyHeader')}
-
-                    {/* {stickyHeader && <StickyHeader {...stickyHeader.props} ref={stickyHeader.ref}/>} */}
+                    {stickyHeader && <StickyHeader {...stickyHeader.props} id={id} ref={stickyHeader.ref} />}
 
                     <Table style={{ width: '100%' }}>
-                        <Header>
+                        <Header id={id}>
                             {components.filter((x: any) => x.type.displayName === 'DataTable.Column')}
                         </Header>
 
-                        <Body 
+                        <Body
+                            id={id}
                             {...row?.props} 
                             data={data && getData ? getData(data) : data} 
                             onFetch={onFetch}

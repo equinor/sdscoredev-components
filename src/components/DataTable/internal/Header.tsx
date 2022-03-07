@@ -9,7 +9,11 @@ const Head = styled(Table.Head)`
     white-space: normal;
 `;
 
-const Header: React.FC = ({ children }) => {
+type HeaderProps = {
+    id: string;
+}
+
+const Header: React.FC<HeaderProps> = ({ children, id }) => {
     const state: any = useContext(StateContext);
     const dispatch: any = useContext(DispatchContext);
 
@@ -25,7 +29,7 @@ const Header: React.FC = ({ children }) => {
     
     return (
         <Head>
-            <Table.Row id="dataTable.headerRow">
+            <Table.Row id={`dataTable.headerRow.${id}`}>
                 {state.checkboxReducer && (
                     <CheckboxHeaderCell key="checkbox-header" />
                 )}
