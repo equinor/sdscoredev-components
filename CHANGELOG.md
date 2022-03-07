@@ -1,3 +1,10 @@
+# 1.0.0 (2022-03-07)
+
+
+### Features
+
+* add allowance for multiple datatables ([4e304b4](https://github.com/equinor/sdscoredev-components/commit/4e304b4abd018956c7f5e22b258f9f6a995da36e))
+
 # [1.6.0](https://github.com/equinor/sdscoredev-components/compare/1.5.3...1.6.0) (2022-03-04)
 
 
