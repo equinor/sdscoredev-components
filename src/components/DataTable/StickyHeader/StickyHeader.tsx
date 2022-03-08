@@ -52,7 +52,7 @@ export const StickyHeader = forwardRef<StickyHeaderRef, StickyHeaderProps>((prop
      * Try calculating column widths
      */
     useEffect(() => {
-       if (state.columnSelectorReducer.visibleColumns.length) {
+       if (state.columnSelectorReducer.visibleColumns && state.columnSelectorReducer.visibleColumns.length) {
             var calculated = setInterval(function() {
                 if (true) {
                     dispatch({ type: "CALCULATE_COLUMN_WIDTH", payload: state.columnSelectorReducer.visibleColumns, id })

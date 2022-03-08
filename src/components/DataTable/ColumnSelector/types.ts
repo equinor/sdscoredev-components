@@ -6,3 +6,7 @@ export type ColumnSelectorProps = {
     icon?: JSX.Element;
     cache?: boolean;
 };
+
+export type ColumnSelectorRef = {
+    setColumn: (column: string, visible: boolean) => void;
+  } | null;
