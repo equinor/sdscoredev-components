@@ -1,28 +1,26 @@
 import { Meta, Story, Canvas, ArgsTable, Source } from '@storybook/addon-docs';
-// import Template from './Default.template';
-import { DataTable } from '../../components/DataTable';
-import dedent from 'ts-dedent';
+import { DataTable, columnSelectorReducer } from '../../components/DataTable';
 import { users } from '../data';
-
 
 <Meta title="Library/DataTable" component={DataTable} />
 
-# Default datatable
+# Datatable with column selector
 
-This is an example of a default table with minimum plugins activated.
+This is an example of a table with column selector.
 
 <Canvas>
-  <Story name="Default example">
+  <Story name="Columnselector example">
       {() => {
       const { Column, ColumnSelector, StickyHeader } = DataTable;
       return (
-          <DataTable data={users(10)}>
+          <DataTable data={users(10)} reducers={{ columnSelectorReducer }}>
             <Column id="id">Uuid</Column>
             <Column id="firstname">First name</Column>
             <Column id="lastname">Last name</Column>
             <Column id="email">Email</Column>
             <Column id="title">Title</Column>
             <Column id="country">Country</Column>
+            <ColumnSelector title="Column settings" icon={<Icon name="settings" title="Manage columns" size={24} />} />
         </DataTable>
       )
     }}

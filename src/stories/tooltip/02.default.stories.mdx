@@ -1,0 +1,18 @@
+import { Meta, Story, Canvas, ArgsTable, Source } from '@storybook/addon-docs';
+import { Tooltip } from '../../components/Tooltip';
+
+<Meta title="Library/Tooltip" component={Tooltip} />
+
+# Default tooltip
+
+This is an example of a default tooltip. It has a custom pointer and icon.
+
+<Canvas>
+  <Story name="Default example">
+      {() => {
+      return (
+          <Tooltip title="This is a helptext" placement="top" />
+      )
+    }}
+  </Story>
+</Canvas>

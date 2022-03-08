@@ -37,11 +37,6 @@ const reducer = (state = initialState, action: any): DataTableState => {
                 ...state,
                 width: calculateColumnWidth(action.payload, action.id)
             };
-        // case SET_WIDTH:
-        //     return {
-        //         ...state,
-        //         width: action.payload
-        //     };
         default:
             return state;
     }

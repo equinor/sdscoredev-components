@@ -1,0 +1,31 @@
+import { Meta, Story, Canvas, ArgsTable, Source } from '@storybook/addon-docs';
+import { useRef } from 'react';
+import { Dialog, DialogRef } from '../../components/Dialog';
+import { Tooltip } from '../../components/Tooltip';
+import { Button } from '@equinor/eds-core-react';
+
+<Meta title="Library/Dialog" component={Dialog} />
+
+# Default dialog
+
+This is an example of a default dialog.
+
+<Canvas>
+    <Story name="Default example">
+        {() => {
+        const dialogRef = useRef(null);
+        return (
+            <>
+                <Tooltip title="Manage columns" placement="top">
+                    <Button variant="ghost" onClick={() => dialogRef?.current?.open()}>
+                        Open dialog
+                    </Button>
+                </Tooltip>
+                <Dialog title="Dialog title" cancelButton="Cancel" primaryButton="Submit" ref={dialogRef}>
+                    This is a dialog 
+                </Dialog>
+            </>
+        )
+      }}
+    </Story>
+</Canvas>

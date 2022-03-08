@@ -18,7 +18,6 @@ const StyledIcon = styled(Icon)`
     fill: #6f6f6f;
     width: 16px;
     height: 16px;
-    top: -3px;
     position: relative;
 
     &:hover {
@@ -26,7 +25,8 @@ const StyledIcon = styled(Icon)`
     }
 `;
 
-interface EdsTooltipProps {
+export type TooltipProps = {
+    disabled?: boolean;
     className?: string;
     title?: string;
     open?: boolean;
@@ -36,11 +36,7 @@ interface EdsTooltipProps {
     maxWidth?: number;
 }
 
-interface TooltipProps {
-    disabled?: boolean;
-}
-
-const Tooltip: React.FC<EdsTooltipProps & TooltipProps> = (props) => {
+export const Tooltip = (props: TooltipProps) => {
     const { className, title, open, children, disabled, placement, maxWidth } = props;
 
     return (
