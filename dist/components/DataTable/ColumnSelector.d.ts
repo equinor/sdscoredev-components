@@ -11,6 +11,6 @@ export declare type ColumnSelectorProps = {
     /**
      * A ref to this element
      */
-    ref: Ref<any>;
+    ref?: Ref<any>;
 };
 export declare const ColumnSelector: React.FC<ColumnSelectorProps>;
