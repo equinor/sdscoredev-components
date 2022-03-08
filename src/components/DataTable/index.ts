@@ -10,6 +10,7 @@ import { StickyHeader } from './StickyHeader';
 
 import { checkboxReducer } from './reducers/checkboxReducer';
 import { columnSelectorReducer } from './ColumnSelector/columnSelectorReducer';
+import { defaultQueryReducer } from './DefaultQuery/defaultQueryReducer';
 import { oDataQueryReducer } from './ODataQuery/oDataQueryReducer';
 import { paginationReducer } from './Pagination/paginationReducer';
 import { sortingReducer } from './reducers/sortingReducer';
@@ -48,6 +49,7 @@ export {
     
     checkboxReducer,
     columnSelectorReducer,
+    defaultQueryReducer,
     oDataQueryReducer,
     paginationReducer,
     sortingReducer,
