@@ -1,9 +1,9 @@
-import React, { Children, useContext, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useContext, useImperativeHandle, useRef } from 'react';
 import { Button, Tooltip, Checkbox, Typography } from '@equinor/eds-core-react';
 import styled from 'styled-components';
 import { Dialog, DialogRef } from '../../Dialog';
 import { DispatchContext, StateContext } from '../DataTableStore';
-import { ColumnSelectorProps } from './types';
+import { ColumnSelectorProps, ColumnSelectorRef } from './types';
 
 const OptionsWrapper = styled.div`
     display: grid;
@@ -13,10 +13,12 @@ const OptionsWrapper = styled.div`
     margin-top: 8px;
 `;
 
-export const ColumnSelector: React.FC<ColumnSelectorProps> = ({ title, icon, cache, onChange }) => {
+export const ColumnSelector = forwardRef<ColumnSelectorRef, ColumnSelectorProps>((props: ColumnSelectorProps, ref) => {
+    const { title, icon, cache, onChange } = props;
     const state: any = useContext(StateContext);
     const dispatch: any = useContext(DispatchContext);
     const dialogRef = useRef<DialogRef>(null);
+    const init = useRef<boolean>(false);
 
     /**
      * Throw error if columnSelectorReducer is not added to the `reducers` prop of `<DataTable>`
@@ -25,8 +27,8 @@ export const ColumnSelector: React.FC<ColumnSelectorProps> = ({ title, icon, cac
         throw Error("No columnSelectorReducer was found. Add one in the <DataTable> reducers prop.")
     }
 
-    const handleChange = (column: JSX.Element): void => {
-        const { id } = column.props;
+    const handleChange = (column: JSX.Element | string): void => {
+        const id = typeof column === 'string' ? column : column.props.id;
 
         if (state.columnSelectorReducer.visibleColumns?.includes(id)) {
             dispatch({ type: 'SET_VISIBLE_COLUMNS', payload: state.columnSelectorReducer.visibleColumns.filter((x: any) => x !== id) })
@@ -37,17 +39,42 @@ export const ColumnSelector: React.FC<ColumnSelectorProps> = ({ title, icon, cac
         onChange && onChange()
     }
 
+    /**
+     * Exposes a way to set columns visible / hidden throught the component ref
+     * 
+     * @param column
+     * @param visible 
+     */
+    const setColumn = (column: string, visible: boolean) => {
+        if (!init.current) {
+            init.current = true
+            return
+        }
+
+        let result = [];
+
+        if (visible) {
+            result = [...new Set([...state.columnSelectorReducer.visibleColumns, column])]
+        } else {
+            result = state.columnSelectorReducer.visibleColumns.filter((x: string) => x !== column)
+        }
+
+        dispatch({ type: 'SET_VISIBLE_COLUMNS', payload: result })
+    }
+
     const handleResetColumns = (): void => {
         dispatch({ type: 'RESET_VISIBLE_COLUMNS', payload: state.dataTableReducer.columns })
     }
+
+    useImperativeHandle(ref, () => ({ setColumn }), [state.columnSelectorReducer.visibleColumns]);
 
     if (!state.dataTableReducer.columns.length) return <></>
 
     return (
         <>
             <Tooltip title="Manage columns" placement="top">
-                <Button variant="ghost" onClick={() => dialogRef?.current?.open()} data-cy="manage-columns">
-                {title}{icon}
+                <Button variant="ghost" onClick={() => dialogRef?.current?.open()}>
+                    {title}{icon}
                 </Button>
             </Tooltip>
             
@@ -87,4 +114,4 @@ export const ColumnSelector: React.FC<ColumnSelectorProps> = ({ title, icon, cac
             </Dialog>
         </>
     )
-}
+})

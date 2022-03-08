@@ -2,6 +2,7 @@ import { DataTable as BaseDataTable, DataTableProps } from './DataTable';
 import { CustomRenderProps } from './types';
 import { Row } from './Row';
 import { ColumnSelector } from './ColumnSelector';
+import { Export } from './Export';
 import { Column } from './Column';
 import { Pagination } from './Pagination';
 import { TableToolbar } from './TableToolbar';
@@ -17,6 +18,7 @@ import { stickyHeaderReducer } from './StickyHeader/stickyHeaderReducer';
 declare type DataTableCompound = typeof BaseDataTable & {
     Row: typeof Row;
     ColumnSelector: typeof ColumnSelector;
+    Export: typeof Export;
     Column: typeof Column;
     Pagination: typeof Pagination;
     TableToolbar: typeof TableToolbar;

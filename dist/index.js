@@ -934,10 +934,12 @@ const OptionsWrapper = styled__default["default"].div `
     grid-auto-flow: row;
     margin-top: 8px;
 `;
-const ColumnSelector$1 = ({ title, icon, cache, onChange }) => {
+const ColumnSelector$1 = React.forwardRef((props, ref) => {
+    const { title, icon, cache, onChange } = props;
     const state = React.useContext(StateContext$1);
     const dispatch = React.useContext(DispatchContext$1);
     const dialogRef = React.useRef(null);
+    const init = React.useRef(false);
     /**
      * Throw error if columnSelectorReducer is not added to the `reducers` prop of `<DataTable>`
      */
@@ -946,7 +948,7 @@ const ColumnSelector$1 = ({ title, icon, cache, onChange }) => {
     }
     const handleChange = (column) => {
         var _a;
-        const { id } = column.props;
+        const id = typeof column === 'string' ? column : column.props.id;
         if ((_a = state.columnSelectorReducer.visibleColumns) === null || _a === void 0 ? void 0 : _a.includes(id)) {
             dispatch({ type: 'SET_VISIBLE_COLUMNS', payload: state.columnSelectorReducer.visibleColumns.filter((x) => x !== id) });
         }
@@ -955,18 +957,44 @@ const ColumnSelector$1 = ({ title, icon, cache, onChange }) => {
         }
         onChange && onChange();
     };
+    /**
+     * Exposes a way to set columns visible / hidden throught the component ref
+     *
+     * @param column
+     * @param visible
+     */
+    const setColumn = (column, visible) => {
+        if (!init.current) {
+            init.current = true;
+            return;
+        }
+        let result = [];
+        if (visible) {
+            result = [...new Set([...state.columnSelectorReducer.visibleColumns, column])];
+        }
+        else {
+            result = state.columnSelectorReducer.visibleColumns.filter((x) => x !== column);
+        }
+        dispatch({ type: 'SET_VISIBLE_COLUMNS', payload: result });
+    };
     const handleResetColumns = () => {
         dispatch({ type: 'RESET_VISIBLE_COLUMNS', payload: state.dataTableReducer.columns });
     };
+    React.useImperativeHandle(ref, () => ({ setColumn }), [state.columnSelectorReducer.visibleColumns]);
     if (!state.dataTableReducer.columns.length)
         return jsxRuntime.jsx(jsxRuntime.Fragment, {}, void 0);
-    return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx(edsCoreReact.Tooltip, Object.assign({ title: "Manage columns", placement: "top" }, { children: jsxRuntime.jsxs(edsCoreReact.Button, Object.assign({ variant: "ghost", onClick: () => { var _a; return (_a = dialogRef === null || dialogRef === void 0 ? void 0 : dialogRef.current) === null || _a === void 0 ? void 0 : _a.open(); }, "data-cy": "manage-columns" }, { children: [title, icon] }), void 0) }), void 0), jsxRuntime.jsxs(Dialog, Object.assign({ title: title, width: 800, primaryButton: "Reset", cancelButton: "Close", noLoading: true, onPrimary: handleResetColumns, ref: dialogRef }, { children: [jsxRuntime.jsx(edsCoreReact.Typography, Object.assign({ variant: "h6" }, { children: "Default columns" }), void 0), jsxRuntime.jsx(OptionsWrapper, { children: state.dataTableReducer.columns.filter((x) => !x.props.optional).map((column) => {
+    return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx(edsCoreReact.Tooltip, Object.assign({ title: "Manage columns", placement: "top" }, { children: jsxRuntime.jsxs(edsCoreReact.Button, Object.assign({ variant: "ghost", onClick: () => { var _a; return (_a = dialogRef === null || dialogRef === void 0 ? void 0 : dialogRef.current) === null || _a === void 0 ? void 0 : _a.open(); } }, { children: [title, icon] }), void 0) }), void 0), jsxRuntime.jsxs(Dialog, Object.assign({ title: title, width: 800, primaryButton: "Reset", cancelButton: "Close", noLoading: true, onPrimary: handleResetColumns, ref: dialogRef }, { children: [jsxRuntime.jsx(edsCoreReact.Typography, Object.assign({ variant: "h6" }, { children: "Default columns" }), void 0), jsxRuntime.jsx(OptionsWrapper, { children: state.dataTableReducer.columns.filter((x) => !x.props.optional).map((column) => {
                             var _a;
                             return (jsxRuntime.jsx(edsCoreReact.Checkbox, { label: column.props.children, checked: (_a = state.columnSelectorReducer.visibleColumns) === null || _a === void 0 ? void 0 : _a.includes(column.props.id), onChange: () => handleChange(column) }, column.props.id));
                         }) }, void 0), jsxRuntime.jsx(edsCoreReact.Typography, Object.assign({ variant: "h6" }, { children: "Optional columns" }), void 0), jsxRuntime.jsx(OptionsWrapper, { children: state.dataTableReducer.columns.filter((x) => x.props.optional).map((column) => {
                             var _a;
                             return (jsxRuntime.jsx(edsCoreReact.Checkbox, { label: column.props.children, checked: (_a = state.columnSelectorReducer.visibleColumns) === null || _a === void 0 ? void 0 : _a.includes(column.props.id), onChange: () => handleChange(column) }, column.props.id));
                         }) }, void 0)] }), void 0)] }, void 0));
+});
+
+const Export$1 = ({ title, icon }) => {
+    const dialogRef = React.useRef(null);
+    return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx(edsCoreReact.Tooltip, Object.assign({ title: "Export data", placement: "top" }, { children: jsxRuntime.jsxs(edsCoreReact.Button, Object.assign({ variant: "ghost", onClick: () => { var _a; return (_a = dialogRef === null || dialogRef === void 0 ? void 0 : dialogRef.current) === null || _a === void 0 ? void 0 : _a.open(); } }, { children: [title, icon] }), void 0) }), void 0), jsxRuntime.jsx(Dialog, Object.assign({ title: title, width: 800, primaryButton: "Export", cancelButton: "Close", noLoading: true, onPrimary: () => { }, ref: dialogRef }, { children: jsxRuntime.jsx(edsCoreReact.Typography, Object.assign({ variant: "h6" }, { children: "NOT IMPLEMENTED YET" }), void 0) }), void 0)] }, void 0));
 };
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
@@ -2094,7 +2122,7 @@ const SET_COLUMNS = "SET_COLUMNS";
 const SET_VISIBLE_COLUMNS = "SET_VISIBLE_COLUMNS";
 const RESET_VISIBLE_COLUMNS = "RESET_VISIBLE_COLUMNS";
 const initialState$8 = {
-    visibleColumns: [],
+    visibleColumns: undefined,
 };
 const reducer$8 = (state = initialState$8, action) => {
     const getDefaultVisibleColumns = (columns) => {
@@ -2165,7 +2193,7 @@ const StickyHeader$1 = React.forwardRef((props, ref) => {
      * Try calculating column widths
      */
     React.useEffect(() => {
-        if (state.columnSelectorReducer.visibleColumns.length) {
+        if (state.columnSelectorReducer.visibleColumns && state.columnSelectorReducer.visibleColumns.length) {
             var calculated = setInterval(function () {
                 {
                     dispatch({ type: "CALCULATE_COLUMN_WIDTH", payload: state.columnSelectorReducer.visibleColumns, id });
@@ -2204,6 +2232,7 @@ const DataTable$1 = React.forwardRef((props, ref) => {
     const row = components.find((x) => x.type.displayName === 'DataTable.Row');
     const filter = components.find((x) => x.type.displayName === 'DataTable.Filter');
     const pagination = components.find((x) => x.type.displayName === 'DataTable.Pagination');
+    const exportPlugin = components.find((x) => x.type.displayName === 'DataTable.Export');
     const stickyHeader = components.find((x) => x.type.displayName === 'DataTable.StickyHeader');
     const columnSelector = components.find((x) => x.type.displayName === 'DataTable.ColumnSelector');
     const id = makeId();
@@ -2217,7 +2246,7 @@ const DataTable$1 = React.forwardRef((props, ref) => {
         wrapperReference.addEventListener('scroll', handleScroll);
         return () => wrapperReference.removeEventListener('scroll', handleScroll);
     }, []);
-    return (jsxRuntime.jsx(DataTableStore, Object.assign({ reducers: Object.assign({ dataTableReducer, columnSelectorReducer }, reducers) }, { children: jsxRuntime.jsxs(Wrapper$3, { children: [jsxRuntime.jsxs(Toolbar, { children: [columnSelector && jsxRuntime.jsx(ColumnSelector$1, Object.assign({}, columnSelector.props, { cache: cache }), void 0), filter && jsxRuntime.jsx(Filter$1, Object.assign({}, filter.props), void 0)] }, void 0), jsxRuntime.jsxs(TableWrapper, Object.assign({ ref: wrapperRef }, { children: [stickyHeader && jsxRuntime.jsx(StickyHeader$1, Object.assign({}, stickyHeader.props, { id: id, ref: stickyHeader.ref }), void 0), jsxRuntime.jsxs(edsCoreReact.Table, Object.assign({ style: { width: '100%' } }, { children: [jsxRuntime.jsx(Header$1, Object.assign({ id: id }, { children: components.filter((x) => x.type.displayName === 'DataTable.Column') }), void 0), jsxRuntime.jsx(Body, Object.assign({ id: id }, row === null || row === void 0 ? void 0 : row.props, { data: data && getData ? getData(data) : data, onFetch: onFetch }), void 0)] }), void 0)] }), void 0), pagination && jsxRuntime.jsx(Pagination$1, Object.assign({ count: pagination.props.getCount(data || 0) }, pagination.props), void 0)] }, void 0) }), void 0));
+    return (jsxRuntime.jsx(DataTableStore, Object.assign({ reducers: Object.assign({ dataTableReducer, columnSelectorReducer }, reducers) }, { children: jsxRuntime.jsxs(Wrapper$3, { children: [jsxRuntime.jsxs(Toolbar, { children: [exportPlugin && jsxRuntime.jsx(Export$1, Object.assign({}, exportPlugin.props), void 0), columnSelector && jsxRuntime.jsx(ColumnSelector$1, Object.assign({}, columnSelector.props, { cache: cache, ref: columnSelector.ref }), void 0), filter && jsxRuntime.jsx(Filter$1, Object.assign({}, filter.props), void 0)] }, void 0), jsxRuntime.jsxs(TableWrapper, Object.assign({ ref: wrapperRef }, { children: [stickyHeader && jsxRuntime.jsx(StickyHeader$1, Object.assign({}, stickyHeader.props, { id: id, ref: stickyHeader.ref }), void 0), jsxRuntime.jsxs(edsCoreReact.Table, Object.assign({ style: { width: '100%' } }, { children: [jsxRuntime.jsx(Header$1, Object.assign({ id: id }, { children: components.filter((x) => x.type.displayName === 'DataTable.Column') }), void 0), jsxRuntime.jsx(Body, Object.assign({ id: id }, row === null || row === void 0 ? void 0 : row.props, { data: data && getData ? getData(data) : data, onFetch: onFetch }), void 0)] }), void 0)] }), void 0), pagination && jsxRuntime.jsx(Pagination$1, Object.assign({ count: pagination.props.getCount(data || 0) }, pagination.props), void 0)] }, void 0) }), void 0));
 });
 
 const Row$1 = (props) => {
@@ -2225,6 +2254,10 @@ const Row$1 = (props) => {
 };
 
 const ColumnSelector = (props) => {
+    return (jsxRuntime.jsx(React__default["default"].Fragment, Object.assign({}, props), void 0));
+};
+
+const Export = (props) => {
     return (jsxRuntime.jsx(React__default["default"].Fragment, Object.assign({}, props), void 0));
 };
 
@@ -3437,6 +3470,7 @@ const stickyHeaderReducer = { reducer: reducer$2, initialState: initialState$2 }
 const DataTable = DataTable$1;
 DataTable.Column = Column;
 DataTable.ColumnSelector = ColumnSelector;
+DataTable.Export = Export;
 DataTable.Filter = Filter;
 DataTable.Pagination = Pagination;
 DataTable.Row = Row$1;
@@ -3444,6 +3478,7 @@ DataTable.TableToolbar = TableToolbar;
 DataTable.StickyHeader = StickyHeader;
 DataTable.Column.displayName = 'DataTable.Column';
 DataTable.ColumnSelector.displayName = 'DataTable.ColumnSelector';
+DataTable.Export.displayName = 'DataTable.Export';
 DataTable.Filter.displayName = 'DataTable.Filter';
 DataTable.Pagination.displayName = 'DataTable.Pagination';
 DataTable.Row.displayName = 'DataTable.Row';

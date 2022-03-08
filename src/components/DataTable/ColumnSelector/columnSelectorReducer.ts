@@ -9,7 +9,7 @@ interface ColumnSelectorState {
 }
 
 export const initialState: ColumnSelectorState = {
-    visibleColumns: [],
+    visibleColumns: undefined,
 };
 
 const reducer = (state = initialState, action: any): ColumnSelectorState => {

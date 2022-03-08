@@ -1,3 +1,3 @@
 import React from 'react';
-import { ColumnSelectorProps } from './types';
-export declare const ColumnSelector: React.FC<ColumnSelectorProps>;
+import { ColumnSelectorProps, ColumnSelectorRef } from './types';
+export declare const ColumnSelector: React.ForwardRefExoticComponent<ColumnSelectorProps & React.RefAttributes<ColumnSelectorRef>>;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Ref } from 'react';
 
 export type ColumnSelectorProps = {
     /**
@@ -9,6 +9,10 @@ export type ColumnSelectorProps = {
      * The trigger button icon
      */
     icon?: JSX.Element;
+    /**
+     * A ref to this element
+     */
+    ref: Ref<any>;
 };
 
 export const ColumnSelector: React.FC<ColumnSelectorProps> = (props) => {
