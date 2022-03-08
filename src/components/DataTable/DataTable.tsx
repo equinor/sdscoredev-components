@@ -3,6 +3,7 @@ import Header from './internal/Header';
 import Body from './internal/Body';
 import { Table } from '@equinor/eds-core-react';
 import { ColumnSelector } from "./ColumnSelector/ColumnSelector";
+import { Export } from "./Export/Export";
 import { Pagination } from "./Pagination/Pagination";
 import { DataTableStore } from "./DataTableStore";
 import { dataTableReducer } from "./reducers/dataTableReducer";
@@ -87,6 +88,7 @@ export const DataTable = forwardRef<TableRef, DataTableProps>((props: DataTableP
     const row: any = components.find((x: any) => x.type.displayName === 'DataTable.Row');
     const filter: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Filter');
     const pagination: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Pagination');
+    const exportPlugin: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Export');
     const stickyHeader: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.StickyHeader');
     const columnSelector: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.ColumnSelector');
 
@@ -108,7 +110,8 @@ export const DataTable = forwardRef<TableRef, DataTableProps>((props: DataTableP
             <Wrapper>
 
                 <Toolbar>
-                    {columnSelector && <ColumnSelector {...columnSelector.props} cache={cache} />}
+                    {exportPlugin && <Export {...exportPlugin.props} />}
+                    {columnSelector && <ColumnSelector {...columnSelector.props} cache={cache} ref={columnSelector.ref} />}
                     {filter && <Filter {...filter.props} />}
                 </Toolbar>
 
