@@ -1,5 +1,6 @@
-import React, { ReactElement } from 'react';
-interface EdsTooltipProps {
+import { ReactElement } from 'react';
+export declare type TooltipProps = {
+    disabled?: boolean;
     className?: string;
     title?: string;
     open?: boolean;
@@ -7,9 +8,6 @@ interface EdsTooltipProps {
     placement: string;
     optional?: boolean;
     maxWidth?: number;
-}
-interface TooltipProps {
-    disabled?: boolean;
-}
-declare const Tooltip: React.FC<EdsTooltipProps & TooltipProps>;
+};
+export declare const Tooltip: (props: TooltipProps) => JSX.Element;
 export default Tooltip;

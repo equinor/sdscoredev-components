@@ -905,25 +905,12 @@ const ColumnSelector$1 = ({ title, icon, cache, onChange }) => {
     const state = useContext(StateContext$1);
     const dispatch = useContext(DispatchContext$1);
     const dialogRef = useRef(null);
-    // const [defaultColumns, setDefaultColumns] = useState<Array<any>>([]);
-    // const [optionalColumns, setOptionalColumns] = useState<Array<any>>([]);
     /**
      * Throw error if columnSelectorReducer is not added to the `reducers` prop of `<DataTable>`
      */
     if (!state.columnSelectorReducer) {
         throw Error("No columnSelectorReducer was found. Add one in the <DataTable> reducers prop.");
     }
-    // useEffect(() => {
-    //     const optionalColumn = [];
-    //     const default = [];
-    //     state.dataTableReducer.columns.forEach((column: any) => {
-    //         if (column.props.optional) {
-    //             setOptionalColumns((state) => [...state, column])
-    //         } else {
-    //             setDefaultColumns((state) => [...state, column])
-    //         }
-    //     })
-    // }, [state.dataTableReducer.columns])
     const handleChange = (column) => {
         var _a;
         const { id } = column.props;
@@ -2022,11 +2009,11 @@ const Pagination$1 = ({ count, defaultPageSize }) => {
 const SET_COLUMNS$1 = "SET_COLUMNS";
 const SET_QUERY = "SET_QUERY";
 const SET_DATA$1 = "SET_DATA";
-const initialState$8 = {
+const initialState$9 = {
     columns: [],
     query: undefined,
 };
-const reducer$8 = (state = initialState$8, action) => {
+const reducer$9 = (state = initialState$9, action) => {
     switch (action.type) {
         case SET_DATA$1:
             return Object.assign(Object.assign({}, state), { data: action.payload });
@@ -2038,7 +2025,7 @@ const reducer$8 = (state = initialState$8, action) => {
             return state;
     }
 };
-const dataTableReducer = { reducer: reducer$8, initialState: initialState$8 };
+const dataTableReducer = { reducer: reducer$9, initialState: initialState$9 };
 
 const Filter$1 = ({ title, onClick }) => {
     return (jsx$1(Tooltip$1, Object.assign({ title: "Show filter", placement: "top" }, { children: jsxs(Button, Object.assign({ variant: "ghost", onClick: onClick }, { children: [title, jsx$1(Icon, { name: "filter_list", title: "Show filter", size: 24 }, void 0)] }), void 0) }), void 0));
@@ -2073,10 +2060,10 @@ const Toolbar = ({ children }) => {
 const SET_COLUMNS = "SET_COLUMNS";
 const SET_VISIBLE_COLUMNS = "SET_VISIBLE_COLUMNS";
 const RESET_VISIBLE_COLUMNS = "RESET_VISIBLE_COLUMNS";
-const initialState$7 = {
+const initialState$8 = {
     visibleColumns: [],
 };
-const reducer$7 = (state = initialState$7, action) => {
+const reducer$8 = (state = initialState$8, action) => {
     const getDefaultVisibleColumns = (columns) => {
         const visibleColumns = [];
         columns.forEach((column) => {
@@ -2101,7 +2088,7 @@ const reducer$7 = (state = initialState$7, action) => {
             return state;
     }
 };
-const columnSelectorReducer = { reducer: reducer$7, initialState: initialState$7 };
+const columnSelectorReducer = { reducer: reducer$8, initialState: initialState$8 };
 
 const Head = styled(Table.Head) `
     position: relative;
@@ -2182,10 +2169,10 @@ const DataTable$1 = forwardRef((props, ref) => {
     const components = Children.toArray(children);
     const wrapperRef = useRef(null);
     const row = components.find((x) => x.type.displayName === 'DataTable.Row');
-    const pagination = components.find((x) => x.type.displayName === 'DataTable.Pagination');
-    const columnSelector = components.find((x) => x.type.displayName === 'DataTable.ColumnSelector');
     const filter = components.find((x) => x.type.displayName === 'DataTable.Filter');
+    const pagination = components.find((x) => x.type.displayName === 'DataTable.Pagination');
     const stickyHeader = components.find((x) => x.type.displayName === 'DataTable.StickyHeader');
+    const columnSelector = components.find((x) => x.type.displayName === 'DataTable.ColumnSelector');
     const id = makeId();
     /**
      * Add scroll event handler to the table wrapper. It is the wrapper that gets a horizontal scrollbar
@@ -2242,11 +2229,11 @@ const StickyHeader = (props) => {
 
 const SET_PAGE_INDEX = "SET_PAGE_INDEX";
 const SET_PAGE_SIZE = "SET_PAGE_SIZE";
-const initialState$6 = {
+const initialState$7 = {
     pageIndex: 1,
     pageSize: undefined
 };
-const reducer$6 = (state = initialState$6, action) => {
+const reducer$7 = (state = initialState$7, action) => {
     switch (action.type) {
         case SET_PAGE_INDEX:
             return Object.assign(Object.assign({}, state), { pageIndex: action.payload });
@@ -2256,13 +2243,13 @@ const reducer$6 = (state = initialState$6, action) => {
             return state;
     }
 };
-const paginationReducer = { reducer: reducer$6, initialState: initialState$6 };
+const paginationReducer = { reducer: reducer$7, initialState: initialState$7 };
 
 const SET_SELECTED = "SET_SELECTED";
-const initialState$5 = {
+const initialState$6 = {
     selected: [],
 };
-const reducer$5 = (state = initialState$5, action) => {
+const reducer$6 = (state = initialState$6, action) => {
     switch (action.type) {
         case SET_SELECTED:
             return Object.assign(Object.assign({}, state), { selected: action.payload });
@@ -2274,7 +2261,63 @@ const reducer$5 = (state = initialState$5, action) => {
             return state;
     }
 };
-const checkboxReducer = { reducer: reducer$5, initialState: initialState$5 };
+const checkboxReducer = { reducer: reducer$6, initialState: initialState$6 };
+
+const DefaultQuery = ({ state, dispatch }) => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const sortingInitialized = useRef(false);
+    const paginationInitialized = useRef(false);
+    const setInitialPagination = (params) => {
+        if (!paginationInitialized.current) {
+            params.get('pageIndex') && dispatch({ type: 'SET_PAGE_INDEX', payload: params.get('pageIndex') });
+            params.get('pageSize') && dispatch({ type: 'SET_PAGE_SIZE', payload: params.get('pageSize') });
+        }
+    };
+    const setInitialSorting = (params) => {
+        if (!sortingInitialized.current) {
+            params.get('orderBy') && dispatch({ type: 'SET_ORDER_BY', payload: params.get('orderBy') });
+            params.get('desc') && dispatch({ type: 'SET_DIRECTION', payload: params.get('desc') });
+        }
+    };
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        setInitialPagination(params);
+        setInitialSorting(params);
+        dispatch({ type: 'SET_QUERY', payload: params.toString() });
+    }, [location]);
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        if (paginationInitialized.current) {
+            params.set('pageSize', state.paginationReducer.pageSize);
+            params.set('pageIndex', state.paginationReducer.pageIndex);
+            const url = [window.location.pathname, params.toString()].join('?');
+            navigate(url);
+        }
+        paginationInitialized.current = true;
+    }, [state.paginationReducer]);
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        if (sortingInitialized.current && state.sortingReducer.orderBy && typeof state.sortingReducer.ascending === 'boolean') {
+            params.set('orderBy', state.sortingReducer.orderBy);
+            params.set('desc', state.sortingReducer.ascending);
+            const url = [window.location.pathname, params.toString()].join('?');
+            navigate(url);
+        }
+        sortingInitialized.current = true;
+    }, [state.sortingReducer]);
+    return jsx$1(Fragment, {}, void 0);
+};
+
+const initialState$5 = {};
+const reducer$5 = (state = initialState$5, action) => {
+    switch (action.type) {
+        default:
+            return state;
+    }
+};
+const component$1 = DefaultQuery;
+const defaultQueryReducer = { reducer: reducer$5, initialState: initialState$5, component: component$1 };
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -3352,11 +3395,6 @@ const reducer$2 = (state = initialState$2, action) => {
     switch (action.type) {
         case CALCULATE_COLUMN_WIDTH:
             return Object.assign(Object.assign({}, state), { width: calculateColumnWidth(action.payload, action.id) });
-        // case SET_WIDTH:
-        //     return {
-        //         ...state,
-        //         width: action.payload
-        //     };
         default:
             return state;
     }
@@ -3607,7 +3645,6 @@ const StyledIcon = styled(Icon) `
     fill: #6f6f6f;
     width: 16px;
     height: 16px;
-    top: -3px;
     position: relative;
 
     &:hover {
@@ -10771,5 +10808,5 @@ Form.Validation.displayName = 'Form.Validation';
 
 addIcons();
 
-export { DataTable, Dialog, Form, checkboxReducer, columnSelectorReducer, oDataQueryReducer, paginationReducer, sortingReducer, stickyHeaderReducer, useForm, withInput };
+export { DataTable, Dialog, Form, checkboxReducer, columnSelectorReducer, defaultQueryReducer, oDataQueryReducer, paginationReducer, sortingReducer, stickyHeaderReducer, useForm, withInput };
 //# sourceMappingURL=index.es.js.map
