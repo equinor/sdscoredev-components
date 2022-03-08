@@ -85,10 +85,10 @@ export const DataTable = forwardRef<TableRef, DataTableProps>((props: DataTableP
     const wrapperRef = useRef<any>(null);
 
     const row: any = components.find((x: any) => x.type.displayName === 'DataTable.Row');
-    const pagination: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Pagination');
-    const columnSelector: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.ColumnSelector');
     const filter: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Filter');
+    const pagination: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Pagination');
     const stickyHeader: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.StickyHeader');
+    const columnSelector: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.ColumnSelector');
 
     const id = makeId()
 

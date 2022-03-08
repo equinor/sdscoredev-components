@@ -17,8 +17,6 @@ export const ColumnSelector: React.FC<ColumnSelectorProps> = ({ title, icon, cac
     const state: any = useContext(StateContext);
     const dispatch: any = useContext(DispatchContext);
     const dialogRef = useRef<DialogRef>(null);
-    // const [defaultColumns, setDefaultColumns] = useState<Array<any>>([]);
-    // const [optionalColumns, setOptionalColumns] = useState<Array<any>>([]);
 
     /**
      * Throw error if columnSelectorReducer is not added to the `reducers` prop of `<DataTable>`
@@ -26,19 +24,6 @@ export const ColumnSelector: React.FC<ColumnSelectorProps> = ({ title, icon, cac
     if (!state.columnSelectorReducer) {
         throw Error("No columnSelectorReducer was found. Add one in the <DataTable> reducers prop.")
     }
-
-    // useEffect(() => {
-    //     const optionalColumn = [];
-    //     const default = [];
-
-    //     state.dataTableReducer.columns.forEach((column: any) => {
-    //         if (column.props.optional) {
-    //             setOptionalColumns((state) => [...state, column])
-    //         } else {
-    //             setDefaultColumns((state) => [...state, column])
-    //         }
-    //     })
-    // }, [state.dataTableReducer.columns])
 
     const handleChange = (column: JSX.Element): void => {
         const { id } = column.props;

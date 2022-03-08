@@ -9,15 +9,15 @@ addons.setConfig({
  * Provides a simple theme solution based on if the current url is a story or page. It will
  * add `story` or `page` to the body tag 
  */
-(function(history){
+(function(history) {
   var pushState = history.pushState;
 
   var addTheme = function(body, url) {
-    var type = url.endsWith('story') ? 'story' : 'page';
+    var type = url.endsWith('example') ? 'story' : 'page';
     body.classList.remove('story')
     body.classList.remove('page')
     body.classList.add(type)
-  }
+}
 
   window.addEventListener('load', function() { 
 
@@ -32,7 +32,7 @@ addons.setConfig({
       }, 100);
   }, false);
 
-  
+
   history.pushState = function(state, val, url) {
     var previewIframe = document.getElementById('storybook-preview-iframe');
     var doc = previewIframe.contentDocument ? previewIframe.contentDocument : previewIframe.contentWindow.document;

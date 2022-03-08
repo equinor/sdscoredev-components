@@ -1,22 +1,19 @@
 import { Meta, Story, Canvas, ArgsTable, Source } from '@storybook/addon-docs';
-// import Template from './Default.template';
-import { DataTable } from '../../components/DataTable';
-import dedent from 'ts-dedent';
+import { DataTable, checkboxReducer } from '../../components/DataTable';
 import { users } from '../data';
-
 
 <Meta title="Library/DataTable" component={DataTable} />
 
-# Default datatable
+# Datatable with checkboxes
 
-This is an example of a default table with minimum plugins activated.
+This is an example of a table with checkboxes.
 
 <Canvas>
-  <Story name="Default example">
+  <Story name="Checkboxes example">
       {() => {
       const { Column, ColumnSelector, StickyHeader } = DataTable;
       return (
-          <DataTable data={users(10)}>
+          <DataTable data={users(10)} reducers={{ checkboxReducer }}>
             <Column id="id">Uuid</Column>
             <Column id="firstname">First name</Column>
             <Column id="lastname">Last name</Column>

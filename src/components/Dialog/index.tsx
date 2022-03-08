@@ -14,7 +14,7 @@ const StyledEdsDialog = styled(EdsDialog)<{ width: number }>`
     max-width: ${(props) => props.width ? `${props.width}px` : '600px'};
 `
 
-type DialogProps = {
+export type DialogProps = {
     children?: React.ReactNode | null;
     title?: string;
     onCancel?: Function;
