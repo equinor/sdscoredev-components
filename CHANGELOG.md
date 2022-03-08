@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/equinor/sdscoredev-components/compare/1.0.0...1.1.0) (2022-03-08)
+
+
+### Features
+
+* add defaultQuery ([06024c4](https://github.com/equinor/sdscoredev-components/commit/06024c49427646c473870a7539d00d0ce245d4c7))
+
 # 1.0.0 (2022-03-07)
 
 
