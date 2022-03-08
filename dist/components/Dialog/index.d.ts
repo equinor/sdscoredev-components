@@ -1,5 +1,5 @@
 import React, { MouseEventHandler } from 'react';
-declare type DialogProps = {
+export declare type DialogProps = {
     children?: React.ReactNode | null;
     title?: string;
     onCancel?: Function;
@@ -18,4 +18,3 @@ export declare type DialogRef = {
     close: () => void;
 } | null;
 export declare const Dialog: React.ForwardRefExoticComponent<DialogProps & React.RefAttributes<DialogRef>>;
-export {};

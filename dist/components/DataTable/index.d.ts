@@ -9,6 +9,7 @@ import { Filter } from './Filter';
 import { StickyHeader } from './StickyHeader';
 import { checkboxReducer } from './reducers/checkboxReducer';
 import { columnSelectorReducer } from './ColumnSelector/columnSelectorReducer';
+import { defaultQueryReducer } from './DefaultQuery/defaultQueryReducer';
 import { oDataQueryReducer } from './ODataQuery/oDataQueryReducer';
 import { paginationReducer } from './Pagination/paginationReducer';
 import { sortingReducer } from './reducers/sortingReducer';
@@ -23,5 +24,5 @@ declare type DataTableCompound = typeof BaseDataTable & {
     StickyHeader: typeof StickyHeader;
 };
 declare const DataTable: DataTableCompound;
-export { DataTable, checkboxReducer, columnSelectorReducer, oDataQueryReducer, paginationReducer, sortingReducer, stickyHeaderReducer, };
+export { DataTable, checkboxReducer, columnSelectorReducer, defaultQueryReducer, oDataQueryReducer, paginationReducer, sortingReducer, stickyHeaderReducer, };
 export type { DataTableProps, CustomRenderProps };

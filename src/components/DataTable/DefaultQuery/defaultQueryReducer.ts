@@ -1,22 +1,14 @@
-import { DefaultQuery } from ".";
+import { DefaultQuery } from './DefaultQuery';
 
-export const SET_QUERY = "SET_QUERY";
+interface DefaultQueryState {}
 
-interface DefaultQueryState {
-    query: any;
-}
-
-export const initialState: DefaultQueryState = {
-  query: {},
-};
+export const initialState: DefaultQueryState = {};
 
 const reducer = (state = initialState, action: any): DefaultQueryState => {
-  switch (action.type) {
-
-
-    default:
-      return state;
-  }
+    switch (action.type) {
+        default:
+            return state;
+    }
 };
 
 const component = DefaultQuery;
