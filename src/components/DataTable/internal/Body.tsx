@@ -40,11 +40,7 @@ const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBo
 
     return (
         <Table.Body ref={ref} id={`dataTable.body.${id}`}>
-            {data.map((item: any) => {
-                return (
-                    <Row {...props} key={`row-${item.id}`} data={item} ref={(el) => rowRef.current = el} />
-                )
-            })}
+            {data.map((item: any) => <Row {...props} data={item} ref={(el) => rowRef.current = el} key={`row-${item.id}`} />)}
         </Table.Body>
     );
 });
