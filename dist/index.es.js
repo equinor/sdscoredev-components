@@ -2193,7 +2193,7 @@ const TableWrapper = styled.div `
     clip-path: inset(0 0 0 0);
 `;
 const DataTable$1 = forwardRef((props, ref) => {
-    const { data = [], getData, children, reducers = [], onFetch, cache = false, onScroll } = props;
+    const { data = [], getData, children, reducers = [], onFetch, onScroll } = props;
     const components = Children.toArray(children);
     const wrapperRef = useRef(null);
     const row = components.find((x) => x.type.displayName === 'DataTable.Row');
@@ -2214,7 +2214,7 @@ const DataTable$1 = forwardRef((props, ref) => {
         wrapperReference.addEventListener('scroll', handleScroll);
         return () => wrapperReference.removeEventListener('scroll', handleScroll);
     }, []);
-    return (jsx$1(DataTableStore, Object.assign({ reducers: Object.assign({ dataTableReducer, columnSelectorReducer }, reducers) }, { children: jsxs(Wrapper$3, { children: [jsxs(Toolbar$1, { children: [exportPlugin && jsx$1(Export$1, Object.assign({}, exportPlugin.props), void 0), columnSelector && jsx$1(ColumnSelector$1, Object.assign({}, columnSelector.props, { cache: cache, ref: columnSelector.ref }), void 0), filter && jsx$1(Filter$1, Object.assign({}, filter.props), void 0), toolbar && jsx$1(Fragment, { children: toolbar.props.children }, void 0)] }, void 0), jsxs(TableWrapper, Object.assign({ ref: wrapperRef }, { children: [stickyHeader && jsx$1(StickyHeader$1, Object.assign({}, stickyHeader.props, { id: id, ref: stickyHeader.ref }), void 0), jsxs(Table, Object.assign({ style: { width: '100%' } }, { children: [jsx$1(Header$1, Object.assign({ id: id }, { children: components.filter((x) => x.type.displayName === 'DataTable.Column') }), void 0), jsx$1(Body, Object.assign({ id: id }, row === null || row === void 0 ? void 0 : row.props, { data: data && getData ? getData(data) : data, onFetch: onFetch }), void 0)] }), void 0)] }), void 0), pagination && jsx$1(Pagination$1, Object.assign({ count: pagination.props.getCount(data || 0) }, pagination.props), void 0)] }, void 0) }), void 0));
+    return (jsx$1(DataTableStore, Object.assign({ reducers: Object.assign({ dataTableReducer, columnSelectorReducer }, reducers) }, { children: jsxs(Wrapper$3, { children: [jsxs(Toolbar$1, { children: [exportPlugin && jsx$1(Export$1, Object.assign({}, exportPlugin.props), void 0), columnSelector && jsx$1(ColumnSelector$1, Object.assign({}, columnSelector.props, { ref: columnSelector.ref }), void 0), filter && jsx$1(Filter$1, Object.assign({}, filter.props), void 0), toolbar && jsx$1(Fragment, { children: toolbar.props.children }, void 0)] }, void 0), jsxs(TableWrapper, Object.assign({ ref: wrapperRef }, { children: [stickyHeader && jsx$1(StickyHeader$1, Object.assign({}, stickyHeader.props, { id: id, ref: stickyHeader.ref }), void 0), jsxs(Table, Object.assign({ style: { width: '100%' } }, { children: [jsx$1(Header$1, Object.assign({ id: id }, { children: components.filter((x) => x.type.displayName === 'DataTable.Column') }), void 0), jsx$1(Body, Object.assign({ id: id }, row === null || row === void 0 ? void 0 : row.props, { data: data && getData ? getData(data) : data, onFetch: onFetch }), void 0)] }), void 0)] }), void 0), pagination && jsx$1(Pagination$1, Object.assign({ count: pagination.props.getCount(data || 0) }, pagination.props), void 0)] }, void 0) }), void 0));
 });
 
 const Row$1 = (props) => {

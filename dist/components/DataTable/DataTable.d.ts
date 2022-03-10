@@ -37,7 +37,6 @@ export declare type DataTableProps = {
      * Provide caching of state to localStorage. If set, plugins will try get and set values in localStorage
      * @default false
      */
-    cache?: boolean;
     onScroll?: Function;
     children?: any;
 };

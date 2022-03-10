@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/equinor/sdscoredev-components/compare/1.3.0...1.3.1) (2022-03-10)
+
+
+### Bug Fixes
+
+* remove cach ([f482df2](https://github.com/equinor/sdscoredev-components/commit/f482df2d12b4c692271a76f5b2e5f38eaede496c))
+
 # [1.3.0](https://github.com/equinor/sdscoredev-components/compare/1.2.0...1.3.0) (2022-03-10)
 
 
