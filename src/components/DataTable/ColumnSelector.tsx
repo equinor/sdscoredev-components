@@ -1,5 +1,14 @@
 import React, { Ref } from 'react';
 
+export type ColumnSelectorRef = {
+    /**
+     * Sets a column to be visible / hidden
+     * @param column string
+     * @param visible boolean
+     */
+    setColumn: (column: string, visible: boolean) => void;
+} | null;
+
 export type ColumnSelectorProps = {
     /**
      * The trigger button label
@@ -12,9 +21,9 @@ export type ColumnSelectorProps = {
     /**
      * A ref to this element
      */
-    ref?: Ref<any>;
+    ref?: Ref<ColumnSelectorRef>;
 };
 
 export const ColumnSelector: React.FC<ColumnSelectorProps> = (props) => {
-    return (<React.Fragment {...props}></React.Fragment>)
+    return (<React.Fragment {...props}>ColumnSelector</React.Fragment>)
 }

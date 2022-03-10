@@ -1,5 +1,10 @@
 import React from 'react';
 
+export type ODataQueryProps = {
+    state: any;
+    dispatch: any;
+}
+
 /**
  * Empty
  * @returns 

@@ -5,7 +5,7 @@ import { ColumnSelector } from './ColumnSelector';
 import { Export } from './Export';
 import { Column } from './Column';
 import { Pagination } from './Pagination';
-import { TableToolbar } from './TableToolbar';
+import { Toolbar } from './Toolbar';
 import { Filter } from './Filter';
 import { StickyHeader } from './StickyHeader';
 
@@ -23,7 +23,7 @@ type DataTableCompound = typeof BaseDataTable & {
     Export: typeof Export
     Column: typeof Column
     Pagination: typeof Pagination
-    TableToolbar: typeof TableToolbar
+    Toolbar: typeof Toolbar
     Filter: typeof Filter
     StickyHeader: typeof StickyHeader
 }
@@ -36,7 +36,7 @@ DataTable.Export = Export
 DataTable.Filter = Filter
 DataTable.Pagination = Pagination
 DataTable.Row = Row
-DataTable.TableToolbar = TableToolbar
+DataTable.Toolbar = Toolbar
 DataTable.StickyHeader = StickyHeader
 
 DataTable.Column.displayName = 'DataTable.Column'
@@ -45,7 +45,7 @@ DataTable.Export.displayName = 'DataTable.Export'
 DataTable.Filter.displayName = 'DataTable.Filter'
 DataTable.Pagination.displayName = 'DataTable.Pagination'
 DataTable.Row.displayName = 'DataTable.Row'
-DataTable.TableToolbar.displayName = 'DataTable.TableToolbar'
+DataTable.Toolbar.displayName = 'DataTable.Toolbar'
 DataTable.StickyHeader.displayName = 'DataTable.StickyHeader'
 
 export { 

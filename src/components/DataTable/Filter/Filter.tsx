@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Tooltip, Icon } from '@equinor/eds-core-react';
-import { FilterProps } from './types';
+import { FilterProps } from '../Filter';
 
 export const Filter: React.FC<FilterProps> = ({ title, onClick }) => {
     return (

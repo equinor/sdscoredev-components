@@ -12,5 +12,5 @@ export type ExportProps = {
 };
 
 export const Export: React.FC<ExportProps> = (props) => {
-    return (<React.Fragment {...props}></React.Fragment>)
+    return (<React.Fragment {...props}>Export</React.Fragment>)
 }

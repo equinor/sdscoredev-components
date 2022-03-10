@@ -87,6 +87,7 @@ export const DataTable = forwardRef<TableRef, DataTableProps>((props: DataTableP
 
     const row: any = components.find((x: any) => x.type.displayName === 'DataTable.Row');
     const filter: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Filter');
+    const toolbar: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Toolbar');
     const pagination: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Pagination');
     const exportPlugin: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Export');
     const stickyHeader: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.StickyHeader');
@@ -113,6 +114,8 @@ export const DataTable = forwardRef<TableRef, DataTableProps>((props: DataTableP
                     {exportPlugin && <Export {...exportPlugin.props} />}
                     {columnSelector && <ColumnSelector {...columnSelector.props} cache={cache} ref={columnSelector.ref} />}
                     {filter && <Filter {...filter.props} />}
+
+                    {toolbar && <>{toolbar.props.children}</>}
                 </Toolbar>
 
                 <TableWrapper ref={wrapperRef}>
