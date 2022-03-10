@@ -49,24 +49,21 @@ const Row: React.FC<TableRowProps & RowProps & RefAttributes<HTMLTableRowElement
     return (
         <DefaultRow role="row" ref={ref}>
             {state.checkboxReducer &&
-                <CheckboxCell key="checkbox-header" item={props.data}/>
+                <CheckboxCell key={`checkbox-header-${props.data.id}`} item={props.data}/>
             }
 
-            {state.dataTableReducer.columns.map((column: any) => {
-                if (state.columnSelectorReducer.visibleColumns?.includes(column.props.id)) {
-                    return (
+            {state.dataTableReducer.columns.map((column: any) => (
+                <React.Fragment key={`${column.props.id}-${props.data.id}`} >
+                {state.columnSelectorReducer.visibleColumns?.includes(column.props.id) ? (
                         <Cell 
                             {...props}
                             column={column}
-                            key={`${column.props.id}-${props.data.id}`} 
                             onClick={handleClick}
                             item={props.data}
                             href={props.getLink ? props.getLink(props.data) : undefined} />
-                    )
-                } 
-                    
-                return <></> 
-            })}
+                    ) : <></>}
+                </React.Fragment>
+            ))}
         </DefaultRow>
     );
 });

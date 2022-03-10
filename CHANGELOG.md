@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/equinor/sdscoredev-components/compare/1.3.1...2.0.0) (2022-03-10)
+
+
+### Features
+
+* bump major ([6c057bf](https://github.com/equinor/sdscoredev-components/commit/6c057bf4397a975cc3ec596ade88e1cb3eb9c736))
+
+
+### BREAKING CHANGES
+
+* Bump major
+
 ## [1.3.1](https://github.com/equinor/sdscoredev-components/compare/1.3.0...1.3.1) (2022-03-10)
 
 
