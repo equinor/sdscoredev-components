@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/equinor/sdscoredev-components/compare/2.0.0...2.0.1) (2022-03-10)
+
+
+### Bug Fixes
+
+* missing unique key ([22894ca](https://github.com/equinor/sdscoredev-components/commit/22894ca7e3e86ec840f4a44f503cb4234cf65846))
+
 # [2.0.0](https://github.com/equinor/sdscoredev-components/compare/1.3.1...2.0.0) (2022-03-10)
 
 
