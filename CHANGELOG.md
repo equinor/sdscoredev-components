@@ -1,6 +1,30 @@
 # [1.2.0](https://github.com/equinor/sdscoredev-components/compare/1.1.0...1.2.0) (2022-03-08)
 
 
+### Bug Fixes
+
+* ref should be optional ([f4797f6](https://github.com/equinor/sdscoredev-components/commit/f4797f69249d1f45a28d309381bbed17515a808f))
+
+
+### Features
+
+* new minor datatable functionality ([bdf3ea6](https://github.com/equinor/sdscoredev-components/commit/bdf3ea6ca13401e82a2ac79b2063b01f2f56923e))
+
+# [1.2.0](https://github.com/equinor/sdscoredev-components/compare/1.1.0...1.2.0) (2022-03-08)
+
+
+### Bug Fixes
+
+* ref should be optional ([f4797f6](https://github.com/equinor/sdscoredev-components/commit/f4797f69249d1f45a28d309381bbed17515a808f))
+
+
+### Features
+
+* new minor datatable functionality ([bdf3ea6](https://github.com/equinor/sdscoredev-components/commit/bdf3ea6ca13401e82a2ac79b2063b01f2f56923e))
+
+# [1.2.0](https://github.com/equinor/sdscoredev-components/compare/1.1.0...1.2.0) (2022-03-08)
+
+
 ### Features
 
 * new minor datatable functionality ([bdf3ea6](https://github.com/equinor/sdscoredev-components/commit/bdf3ea6ca13401e82a2ac79b2063b01f2f56923e))

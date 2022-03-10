@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { DefaultQueryProps } from './types';
+import { DefaultQueryProps } from '../DefaultQuery';
 
 export const DefaultQuery: React.FC<DefaultQueryProps> = ({ state, dispatch }) => {
     const navigate = useNavigate();

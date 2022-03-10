@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { ODataQueryProps } from '../ODataQuery';
 import FilterParser from './parser';
-import { ODataQueryProps } from './types';
 
 export const ODataQuery: React.FC<ODataQueryProps> = ({ state, dispatch }) => {
     const navigate = useNavigate();

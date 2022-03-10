@@ -4,7 +4,7 @@ import { Table } from '@equinor/eds-core-react';
 import { DispatchContext, StateContext } from "../DataTableStore";
 import HeaderCell from "../internal/HeaderCell";
 import CheckboxHeaderCell from '../internal/CheckboxHeaderCell';
-import { StickyHeaderRef, StickyHeaderProps } from './types';
+import { StickyHeaderProps, StickyHeaderRef } from "../StickyHeader";
 
 const Head = styled(Table.Head)`
     position: relative;
@@ -20,7 +20,11 @@ const StickyTable = styled(Table)<{ stick: boolean, threshold: number | undefine
     z-index: 9;
 `
 
-export const StickyHeader = forwardRef<StickyHeaderRef, StickyHeaderProps>((props: StickyHeaderProps, ref) => {
+export type InternalStickyHeaderProps = {
+    id: string;
+} & StickyHeaderProps;
+
+export const StickyHeader = forwardRef<StickyHeaderRef, InternalStickyHeaderProps>((props: InternalStickyHeaderProps, ref) => {
     const { threshold, id } = props;
     const [stick, setStick] = useState<boolean>(false);
     const state: any = useContext(StateContext);
