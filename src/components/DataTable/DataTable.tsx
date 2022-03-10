@@ -63,7 +63,6 @@ export type DataTableProps = {
      * Provide caching of state to localStorage. If set, plugins will try get and set values in localStorage 
      * @default false
      */
-    cache?: boolean;
     onScroll?: Function;
     children?: any;
 }
@@ -78,8 +77,7 @@ export const DataTable = forwardRef<TableRef, DataTableProps>((props: DataTableP
         getData, 
         children, 
         reducers = [], 
-        onFetch, 
-        cache = false, 
+        onFetch,
         onScroll 
     } = props;
     const components = Children.toArray(children);
@@ -112,7 +110,7 @@ export const DataTable = forwardRef<TableRef, DataTableProps>((props: DataTableP
 
                 <Toolbar>
                     {exportPlugin && <Export {...exportPlugin.props} />}
-                    {columnSelector && <ColumnSelector {...columnSelector.props} cache={cache} ref={columnSelector.ref} />}
+                    {columnSelector && <ColumnSelector {...columnSelector.props} ref={columnSelector.ref} />}
                     {filter && <Filter {...filter.props} />}
 
                     {toolbar && <>{toolbar.props.children}</>}
