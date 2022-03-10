@@ -4,7 +4,7 @@ import { NativeSelect, Pagination as EDSPagination } from '@equinor/eds-core-rea
 import { tokens } from '@equinor/eds-tokens';
 import styled from 'styled-components';
 import { DispatchContext, StateContext } from '../DataTableStore';
-import { InternalPaginationProps, PaginationProps } from './types';
+import { PaginationProps } from '../Pagination';
 
 const {
     colors: {
@@ -22,7 +22,11 @@ const Wrapper = styled.div`
     padding-top: 32px;
 `;
 
-export const Pagination: React.FC<InternalPaginationProps & PaginationProps> = ({ count, defaultPageSize }) => {
+export type InternalPaginationProps = {
+    count?: number;
+} & PaginationProps;
+
+export const Pagination: React.FC<InternalPaginationProps> = ({ count, defaultPageSize }) => {
     const state: any = useContext(StateContext);
     const dispatch: any = useContext(DispatchContext);
     const pageSizeOptions = [5, 10, 20, 50, 100];

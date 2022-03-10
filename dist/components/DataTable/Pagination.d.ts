@@ -1,5 +1,8 @@
 import React from 'react';
-import { PaginationProps } from './Pagination/types';
+export declare type PaginationProps = {
+    getCount?: Function;
+    defaultPageSize?: number;
+};
 /**
  * Pagination plugin. Must be used together with `paginationReducer`
  *

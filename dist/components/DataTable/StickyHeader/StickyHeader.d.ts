@@ -1,3 +1,6 @@
 import React from "react";
-import { StickyHeaderRef, StickyHeaderProps } from './types';
-export declare const StickyHeader: React.ForwardRefExoticComponent<Pick<StickyHeaderProps, "id" | "threshold"> & React.RefAttributes<StickyHeaderRef>>;
+import { StickyHeaderProps, StickyHeaderRef } from "../StickyHeader";
+export declare type InternalStickyHeaderProps = {
+    id: string;
+} & StickyHeaderProps;
+export declare const StickyHeader: React.ForwardRefExoticComponent<Pick<InternalStickyHeaderProps, "id" | "threshold"> & React.RefAttributes<StickyHeaderRef>>;

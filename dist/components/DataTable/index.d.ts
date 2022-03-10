@@ -5,7 +5,7 @@ import { ColumnSelector } from './ColumnSelector';
 import { Export } from './Export';
 import { Column } from './Column';
 import { Pagination } from './Pagination';
-import { TableToolbar } from './TableToolbar';
+import { Toolbar } from './Toolbar';
 import { Filter } from './Filter';
 import { StickyHeader } from './StickyHeader';
 import { checkboxReducer } from './reducers/checkboxReducer';
@@ -21,7 +21,7 @@ declare type DataTableCompound = typeof BaseDataTable & {
     Export: typeof Export;
     Column: typeof Column;
     Pagination: typeof Pagination;
-    TableToolbar: typeof TableToolbar;
+    Toolbar: typeof Toolbar;
     Filter: typeof Filter;
     StickyHeader: typeof StickyHeader;
 };

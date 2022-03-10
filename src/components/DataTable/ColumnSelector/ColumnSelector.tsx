@@ -3,7 +3,7 @@ import { Button, Tooltip, Checkbox, Typography } from '@equinor/eds-core-react';
 import styled from 'styled-components';
 import { Dialog, DialogRef } from '../../Dialog';
 import { DispatchContext, StateContext } from '../DataTableStore';
-import { ColumnSelectorProps, ColumnSelectorRef } from './types';
+import { ColumnSelectorProps, ColumnSelectorRef } from '../ColumnSelector';
 
 const OptionsWrapper = styled.div`
     display: grid;
@@ -13,8 +13,14 @@ const OptionsWrapper = styled.div`
     margin-top: 8px;
 `;
 
-export const ColumnSelector = forwardRef<ColumnSelectorRef, ColumnSelectorProps>((props: ColumnSelectorProps, ref) => {
-    const { title, icon, cache, onChange } = props;
+export type InternalColumnSelectorProps = {
+    columns?: any;
+    visibleColumns?: Array<string>;
+    onChange?: Function;
+} & ColumnSelectorProps;
+
+export const ColumnSelector = forwardRef<ColumnSelectorRef, InternalColumnSelectorProps>((props: InternalColumnSelectorProps, ref) => {
+    const { title, icon, onChange } = props;
     const state: any = useContext(StateContext);
     const dispatch: any = useContext(DispatchContext);
     const dialogRef = useRef<DialogRef>(null);
@@ -89,7 +95,7 @@ export const ColumnSelector = forwardRef<ColumnSelectorRef, ColumnSelectorProps>
             >
                 <Typography variant="h6">Default columns</Typography>
                 <OptionsWrapper>
-                    {state.dataTableReducer.columns.filter((x: any) => !x.props.optional).map((column: any) => (
+                    {state.dataTableReducer.columns.filter((x: any) => !x.props.optional && !x.props.id.startsWith('__')).map((column: any) => (
                             <Checkbox
                                 key={column.props.id}
                                 label={column.props.children}
@@ -101,7 +107,7 @@ export const ColumnSelector = forwardRef<ColumnSelectorRef, ColumnSelectorProps>
                 </OptionsWrapper>
                 <Typography variant="h6">Optional columns</Typography>
                 <OptionsWrapper>
-                    {state.dataTableReducer.columns.filter((x: any) => x.props.optional).map((column: any) => (
+                    {state.dataTableReducer.columns.filter((x: any) => x.props.optional && !x.props.id.startsWith('__')).map((column: any) => (
                             <Checkbox
                                 key={column.props.id}
                                 label={column.props.children}
