@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/equinor/sdscoredev-components/compare/1.2.0...1.3.0) (2022-03-10)
+
+
+### Features
+
+* add toolbar ([e8beb1d](https://github.com/equinor/sdscoredev-components/commit/e8beb1db55ac16885823a12b1e0ff27142df3a98))
+
 # [1.2.0](https://github.com/equinor/sdscoredev-components/compare/1.1.0...1.2.0) (2022-03-08)
 
 
