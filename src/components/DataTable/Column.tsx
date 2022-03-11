@@ -22,7 +22,7 @@ export type ColumnProps = {
     /**
      * Custom render callback
      */
-    render?: JSX.Element | Function;
+    render?: JSX.Element | Function | [Function, { [key: string]: any }];
     /**
      * Key representing what this column will be sortet by. Can be either a simple string or
      * a string in this format `user.firstname`
