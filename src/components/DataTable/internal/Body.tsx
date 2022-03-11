@@ -24,6 +24,10 @@ const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBo
     }, [data])
 
     useEffect(() => {
+        onFetch && onFetch(state.dataTableReducer.query)
+    }, [])
+
+    useEffect(() => {
         if (typeof state.dataTableReducer.query !== 'undefined') {
             onFetch && onFetch(state.dataTableReducer.query);
         }
