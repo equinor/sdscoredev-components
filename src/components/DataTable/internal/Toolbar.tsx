@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { ReactChild, ReactElement, ReactFragment, ReactPortal, useContext } from "react";
 import styled from 'styled-components';
 import { DispatchContext } from "../DataTableStore";
 
@@ -26,13 +26,35 @@ const Right = styled.div`
     align-items: center;
 `;
 
-const Toolbar: React.FC = ({ children }) => {
+const RightInner = styled.div`
+    padding-left: 16px;
+`;
+
+export type ToolbarProps = {
+    components?: (ReactChild | ReactFragment | ReactPortal)[];
+}
+
+const Toolbar: React.FC<ToolbarProps> = ({ children, components }) => {
     const dispatch: any = useContext(DispatchContext);
     
     return (
         <Wrapper>
-            <Left></Left>
-            <Right>{children}</Right>
+            <Left>
+                {components && components.filter((x: any) => x.props.placement === 'left' || !x.props.placement).map((component: any, index: number) => (
+                    <React.Fragment key={`lt-${index}`}>
+                        {component.props.children}
+                    </React.Fragment>
+                ))}
+            </Left>
+            <Right>
+                {children}
+            
+                {components && components.filter((x: any) => x.props.placement === 'right').map((component: any, index: number) => (
+                    <RightInner key={`rt-${index}`}>
+                        {component.props.children}
+                    </RightInner>
+                ))}
+            </Right>
         </Wrapper>
     );
 };

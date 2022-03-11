@@ -1,6 +1,8 @@
 import React from 'react';
 
-type ToolbarProps = {}
+type ToolbarProps = {
+    placement?: 'right' | 'left';
+}
 
 /**
  * Toolbar plugin

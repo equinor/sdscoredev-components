@@ -32,35 +32,36 @@ type TableRowProps = {
 }
 
 const Row: React.FC<TableRowProps & RowProps & RefAttributes<HTMLTableRowElement>> = forwardRef((props, ref) => {
+    const { data, onClick, getLink, getStyle } = props;
     const state: any = useContext(StateContext);
 
     const handleClick = (e: any) => {
         e.preventDefault();
 
-        if (props.getLink) {
-            props.onClick && props.onClick(props.getLink(props.data))
+        if (getLink) {
+            onClick && onClick(getLink(data))
         }
        
-        props.onClick && props.onClick()
+        onClick && onClick()
     }
 
-    if (!props.data || !state.dataTableReducer.columns) return <></>
+    if (!data || !state.dataTableReducer.columns) return <></>
 
     return (
-        <DefaultRow role="row" ref={ref}>
+        <DefaultRow role="row" ref={ref} style={getStyle && getStyle(data)}>
             {state.checkboxReducer &&
-                <CheckboxCell key={`checkbox-header-${props.data.id}`} item={props.data}/>
+                <CheckboxCell key={`checkbox-header-${data.id}`} item={data}/>
             }
 
             {state.dataTableReducer.columns.map((column: any) => (
-                <React.Fragment key={`${column.props.id}-${props.data.id}`} >
+                <React.Fragment key={`${column.props.id}-${data.id}`} >
                 {state.columnSelectorReducer.visibleColumns?.includes(column.props.id) ? (
                         <Cell 
                             {...props}
                             column={column}
                             onClick={handleClick}
-                            item={props.data}
-                            href={props.getLink ? props.getLink(props.data) : undefined} />
+                            item={data}
+                            href={getLink ? getLink(data) : undefined} />
                     ) : <></>}
                 </React.Fragment>
             ))}
