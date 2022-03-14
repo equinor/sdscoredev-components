@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/equinor/sdscoredev-components/compare/2.0.1...2.1.0) (2022-03-11)
+
+
+### Features
+
+* add toolbar and row styling ([73c3135](https://github.com/equinor/sdscoredev-components/commit/73c3135d3cbcfad322e22f75802b5f0a663de7d2))
+
 ## [2.0.1](https://github.com/equinor/sdscoredev-components/compare/2.0.0...2.0.1) (2022-03-10)
 
 

@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Button, Tooltip, Typography } from '@equinor/eds-core-react';
-import { Dialog, DialogRef } from '../../Dialog';
-import { ExportProps } from '../Export';
+import { Dialog, DialogRef } from '../../../Dialog';
+import { ExportProps } from '.';
 
 export const Export: React.FC<ExportProps> = ({ title, icon }) => {
     const dialogRef = useRef<DialogRef>(null);

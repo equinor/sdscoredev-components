@@ -1,10 +1,10 @@
 import React, { forwardRef, useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
 import styled from 'styled-components';
 import { Table } from '@equinor/eds-core-react';
-import { DispatchContext, StateContext } from "../DataTableStore";
-import HeaderCell from "../internal/HeaderCell";
-import CheckboxHeaderCell from '../internal/CheckboxHeaderCell';
-import { StickyHeaderProps, StickyHeaderRef } from "../StickyHeader";
+import { DispatchContext, StateContext } from "../../DataTableStore";
+import HeaderCell from "../../internal/HeaderCell";
+import CheckboxHeaderCell from '../../internal/CheckboxHeaderCell';
+import { StickyHeaderProps, StickyHeaderRef } from ".";
 
 const Head = styled(Table.Head)`
     position: relative;

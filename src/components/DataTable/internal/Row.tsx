@@ -55,7 +55,16 @@ const Row: React.FC<TableRowProps & RowProps & RefAttributes<HTMLTableRowElement
 
             {state.dataTableReducer.columns.map((column: any) => (
                 <React.Fragment key={`${column.props.id}-${data.id}`} >
-                {state.columnSelectorReducer.visibleColumns?.includes(column.props.id) ? (
+                {state.columnSelectorReducer && state.columnSelectorReducer.visibleColumns?.includes(column.props.id) ? (
+                        <Cell 
+                            {...props}
+                            column={column}
+                            onClick={handleClick}
+                            item={data}
+                            href={getLink ? getLink(data) : undefined} />
+                    ) : <></>}
+
+                {!state.columnSelectorReducer && !column.props.optional ? (
                         <Cell 
                             {...props}
                             column={column}

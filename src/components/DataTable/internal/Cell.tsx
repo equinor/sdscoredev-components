@@ -1,8 +1,8 @@
 import React from "react";
 import styled from 'styled-components';
 import { CellProps, Table } from '@equinor/eds-core-react';
-import { RowProps } from '../Row';
 import { resolve } from '../../utils';
+import { useNavigate } from "react-router-dom";
 
 const StyledCell = styled(Table.Cell)<CellProps & { slim?: boolean, truncate?: number}>`
     border-top: unset !important;
@@ -20,12 +20,12 @@ const StyledCell = styled(Table.Cell)<CellProps & { slim?: boolean, truncate?: n
         margin-left: 0 !important;
     }
 
-    & a {
+    & a.row-link {
         text-decoration: none;
         color: inherit;
     }
 
-    & a::after {
+    & a.row-link::after {
         content: '';
         position: absolute;
         top: 0;
@@ -89,6 +89,7 @@ type TableCellProps = {
 const Cell: React.FC<TableCellProps> = (props) => {
     const { column, onClick, item, href } = props;
     const { slim, id, render, truncate } = column.props;
+    const navigate = useNavigate();
 
     const RenderCell = () => {
         /* If render prop is an element */
@@ -128,7 +129,10 @@ const Cell: React.FC<TableCellProps> = (props) => {
             id={id}
             onClick={() => onClick && onClick}
         >
-            {href ? <a href={href}>{RenderCell()}</a> : RenderCell()}
+            {href ? <a className="row-link" href={href} onClick={(e) => {
+                e.preventDefault();
+                navigate(href);
+            }}>{RenderCell()}</a> : RenderCell()}
         </StyledCell>
     )
 };

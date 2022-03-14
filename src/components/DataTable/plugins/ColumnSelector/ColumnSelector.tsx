@@ -1,9 +1,9 @@
-import React, { forwardRef, useContext, useImperativeHandle, useRef } from 'react';
+import React, { forwardRef, ForwardRefExoticComponent, ForwardRefRenderFunction, PropsWithoutRef, RefAttributes, useContext, useEffect, useImperativeHandle, useRef } from 'react';
 import { Button, Tooltip, Checkbox, Typography } from '@equinor/eds-core-react';
 import styled from 'styled-components';
-import { Dialog, DialogRef } from '../../Dialog';
-import { DispatchContext, StateContext } from '../DataTableStore';
-import { ColumnSelectorProps, ColumnSelectorRef } from '../ColumnSelector';
+import { Dialog, DialogRef } from '../../../Dialog';
+import { DispatchContext, StateContext } from '../../DataTableStore';
+import { ColumnSelectorProps, ColumnSelectorRef } from '.';
 
 const OptionsWrapper = styled.div`
     display: grid;
@@ -29,16 +29,18 @@ export const ColumnSelector = forwardRef<ColumnSelectorRef, InternalColumnSelect
     /**
      * Throw error if columnSelectorReducer is not added to the `reducers` prop of `<DataTable>`
      */
-    if (!state.columnSelectorReducer) {
-        throw Error("No columnSelectorReducer was found. Add one in the <DataTable> reducers prop.")
-    }
+    // if (!state.columnSelectorReducer) {
+    //     throw Error("No columnSelectorReducer was found. Add one in the <DataTable> reducers prop.")
+    // }
 
     const handleChange = (column: JSX.Element | string): void => {
         const id = typeof column === 'string' ? column : column.props.id;
 
         if (state.columnSelectorReducer.visibleColumns?.includes(id)) {
+            console.log(2);
             dispatch({ type: 'SET_VISIBLE_COLUMNS', payload: state.columnSelectorReducer.visibleColumns.filter((x: any) => x !== id) })
         } else {
+            console.log(3);
             dispatch({ type: 'SET_VISIBLE_COLUMNS', payload: [...state.columnSelectorReducer.visibleColumns, id] })
         }
 
@@ -52,7 +54,7 @@ export const ColumnSelector = forwardRef<ColumnSelectorRef, InternalColumnSelect
      * @param visible 
      */
     const setColumn = (column: string, visible: boolean) => {
-        if (!init.current) {
+        if (!init.current || !state.columnSelectorReducer.visibleColumns) {
             init.current = true
             return
         }
@@ -65,10 +67,13 @@ export const ColumnSelector = forwardRef<ColumnSelectorRef, InternalColumnSelect
             result = state.columnSelectorReducer.visibleColumns.filter((x: string) => x !== column)
         }
 
+        console.log(1);
+
         dispatch({ type: 'SET_VISIBLE_COLUMNS', payload: result })
     }
 
     const handleResetColumns = (): void => {
+        console.log(4);
         dispatch({ type: 'RESET_VISIBLE_COLUMNS', payload: state.dataTableReducer.columns })
     }
 

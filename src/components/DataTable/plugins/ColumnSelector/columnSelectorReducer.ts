@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 
 export const SET_COLUMNS = "SET_COLUMNS";
 export const SET_VISIBLE_COLUMNS = "SET_VISIBLE_COLUMNS";
@@ -28,6 +28,10 @@ const reducer = (state = initialState, action: any): ColumnSelectorState => {
 
     switch (action.type) {
         case SET_COLUMNS:
+            // If state is set by cache return state
+            if (state.visibleColumns) return state;
+
+            // Default, get visible columns from column definitions
             return {
                 ...state,
                 visibleColumns: getDefaultVisibleColumns(action.payload),

@@ -1,3 +1,4 @@
+import { FC } from '../../types';
 import React from 'react';
 
 export type ExportProps = {
@@ -11,6 +12,8 @@ export type ExportProps = {
     icon?: JSX.Element;
 };
 
-export const Export: React.FC<ExportProps> = (props) => {
+const Export: FC<ExportProps> = (props) => {
     return (<React.Fragment {...props}>Export</React.Fragment>)
 }
+
+export { Export };

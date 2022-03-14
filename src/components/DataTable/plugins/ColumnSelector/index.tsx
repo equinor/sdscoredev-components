@@ -1,4 +1,6 @@
+import { FC } from '../../types';
 import React, { Ref } from 'react';
+import { columnSelectorReducer } from './columnSelectorReducer';
 
 export type ColumnSelectorRef = {
     /**
@@ -22,8 +24,16 @@ export type ColumnSelectorProps = {
      * A ref to this element
      */
     ref?: Ref<ColumnSelectorRef>;
+    /**
+     * If set, save the selected columns to session storage
+     */
+    cacheKey?: string;
 };
 
-export const ColumnSelector: React.FC<ColumnSelectorProps> = (props) => {
+const ColumnSelector: FC<ColumnSelectorProps> = (props) => {
     return (<React.Fragment {...props}>ColumnSelector</React.Fragment>)
 }
+
+ColumnSelector.reducer = { columnSelectorReducer }
+
+export { ColumnSelector }

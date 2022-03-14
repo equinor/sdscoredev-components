@@ -1,21 +1,19 @@
 import { DataTable as BaseDataTable, DataTableProps } from './DataTable';
 import { CustomRenderProps } from './types';
 import { Row } from './Row';
-import { ColumnSelector } from './ColumnSelector';
-import { Export } from './Export';
+import { ColumnSelector } from './plugins/ColumnSelector';
+import { Export } from './plugins/Export';
 import { Column } from './Column';
-import { Pagination } from './Pagination';
+import { Pagination } from './plugins/Pagination';
 import { Toolbar } from './Toolbar';
-import { Filter } from './Filter';
-import { StickyHeader } from './StickyHeader';
+import { Filter } from './plugins/Filter';
+import { StickyHeader } from './plugins/StickyHeader';
+import { DefaultQuery } from './plugins/DefaultQuery';
 
-import { checkboxReducer } from './reducers/checkboxReducer';
-import { columnSelectorReducer } from './ColumnSelector/columnSelectorReducer';
-import { defaultQueryReducer } from './DefaultQuery/defaultQueryReducer';
-import { oDataQueryReducer } from './ODataQuery/oDataQueryReducer';
-import { paginationReducer } from './Pagination/paginationReducer';
-import { sortingReducer } from './reducers/sortingReducer';
-import { stickyHeaderReducer } from './StickyHeader/stickyHeaderReducer';
+import { checkboxReducer } from './plugins/checkboxReducer';
+import { defaultQueryReducer } from './plugins/DefaultQuery/defaultQueryReducer';
+import { oDataQueryReducer } from './plugins/ODataQuery/oDataQueryReducer';
+import { sortingReducer } from './plugins/sortingReducer';
 
 type DataTableCompound = typeof BaseDataTable & {
     Row: typeof Row
@@ -26,6 +24,7 @@ type DataTableCompound = typeof BaseDataTable & {
     Toolbar: typeof Toolbar
     Filter: typeof Filter
     StickyHeader: typeof StickyHeader
+    DefaultQuery: typeof DefaultQuery
 }
 
 const DataTable = BaseDataTable as DataTableCompound
@@ -38,6 +37,7 @@ DataTable.Pagination = Pagination
 DataTable.Row = Row
 DataTable.Toolbar = Toolbar
 DataTable.StickyHeader = StickyHeader
+DataTable.DefaultQuery = DefaultQuery
 
 DataTable.Column.displayName = 'DataTable.Column'
 DataTable.ColumnSelector.displayName = 'DataTable.ColumnSelector'
@@ -47,17 +47,15 @@ DataTable.Pagination.displayName = 'DataTable.Pagination'
 DataTable.Row.displayName = 'DataTable.Row'
 DataTable.Toolbar.displayName = 'DataTable.Toolbar'
 DataTable.StickyHeader.displayName = 'DataTable.StickyHeader'
+DataTable.DefaultQuery.displayName = 'DataTable.DefaultQuery'
 
 export { 
     DataTable,
     
     checkboxReducer,
-    columnSelectorReducer,
     defaultQueryReducer,
     oDataQueryReducer,
-    paginationReducer,
     sortingReducer,
-    stickyHeaderReducer,
 }
 
 // TODO: Add more types to export

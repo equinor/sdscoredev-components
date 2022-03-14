@@ -1,18 +1,18 @@
-import React, { Children, forwardRef, useEffect, useImperativeHandle, useRef } from "react";
+import React, { Children, forwardRef, useEffect, useRef } from "react";
 import Header from './internal/Header';
 import Body from './internal/Body';
 import { Table } from '@equinor/eds-core-react';
-import { ColumnSelector } from "./ColumnSelector/ColumnSelector";
-import { Export } from "./Export/Export";
-import { Pagination } from "./Pagination/Pagination";
+import { ColumnSelector } from "./plugins/ColumnSelector/ColumnSelector";
+import { Export } from "./plugins/Export/Export";
+import { Pagination } from "./plugins/Pagination/Pagination";
 import { DataTableStore } from "./DataTableStore";
 import { dataTableReducer } from "./reducers/dataTableReducer";
 import styled from "styled-components";
-import { Filter } from "./Filter/Filter";
+import { Filter } from "./plugins/Filter/Filter";
 import Toolbar from "./internal/Toolbar";
-import { columnSelectorReducer } from "./ColumnSelector/columnSelectorReducer";
+import { columnSelectorReducer } from "./plugins/ColumnSelector/columnSelectorReducer";
 import { makeId } from "../utils";
-import { StickyHeader } from "./StickyHeader/StickyHeader";
+import { StickyHeader } from "./plugins/StickyHeader/StickyHeader";
 
 const Wrapper = styled.div`
     /* overflow-x: auto; */
@@ -67,11 +67,7 @@ export type DataTableProps = {
     children?: any;
 }
 
-export type TableRef = {
-    handleResize: Function;
-  } | null;
-
-export const DataTable = forwardRef<TableRef, DataTableProps>((props: DataTableProps, ref) => {
+export const DataTable = React.memo((props: DataTableProps) => {
     const { 
         data = [], 
         getData, 
@@ -104,7 +100,7 @@ export const DataTable = forwardRef<TableRef, DataTableProps>((props: DataTableP
     }, []);
     
     return (
-        <DataTableStore reducers={{ dataTableReducer, columnSelectorReducer, ...reducers}}>
+        <DataTableStore components={components} reducers={{dataTableReducer, ...reducers}}>
             <Wrapper>
 
                 <Toolbar components={components.filter((x: any) => x.type.displayName === 'DataTable.Toolbar')}>
