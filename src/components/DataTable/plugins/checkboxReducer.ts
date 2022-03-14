@@ -1,4 +1,4 @@
-import { SET_PAGE_INDEX, SET_PAGE_SIZE } from '../Pagination/paginationReducer';
+import { SET_PAGE_INDEX, SET_PAGE_SIZE } from './Pagination/paginationReducer';
 
 export const SET_SELECTED = "SET_SELECTED";
 

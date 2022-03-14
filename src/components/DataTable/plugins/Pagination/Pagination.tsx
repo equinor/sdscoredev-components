@@ -3,8 +3,8 @@ import React, { useContext, useEffect } from 'react';
 import { NativeSelect, Pagination as EDSPagination } from '@equinor/eds-core-react';
 import { tokens } from '@equinor/eds-tokens';
 import styled from 'styled-components';
-import { DispatchContext, StateContext } from '../DataTableStore';
-import { PaginationProps } from '../Pagination';
+import { DispatchContext, StateContext } from '../../DataTableStore';
+import { PaginationProps } from '.';
 
 const {
     colors: {
@@ -30,13 +30,6 @@ export const Pagination: React.FC<InternalPaginationProps> = ({ count, defaultPa
     const state: any = useContext(StateContext);
     const dispatch: any = useContext(DispatchContext);
     const pageSizeOptions = [5, 10, 20, 50, 100];
-
-    /**
-     * Throw error if paginationReducer is not added to the `reducers` prop of `<DataTable>`
-     */
-    if (!state.paginationReducer) {
-        throw Error("No paginationReducer was found. Add one in the <DataTable> reducers prop.")
-    }
 
     const { pageIndex, pageSize } = state.paginationReducer;
 

@@ -1,4 +1,6 @@
+import { FC } from '../../types';
 import React, { Ref } from 'react';
+import { stickyHeaderReducer } from './stickyHeaderReducer';
 
 export type StickyHeaderRef = {
     /**
@@ -22,7 +24,10 @@ export type StickyHeaderProps = {
      ref: Ref<StickyHeaderRef>;
 };
 
-
-export const StickyHeader: React.FC<StickyHeaderProps> = (props) => {
+const StickyHeader: FC<StickyHeaderProps> = (props) => {
     return (<React.Fragment {...props}>StickyHeader</React.Fragment>)
 }
+
+StickyHeader.reducer = { stickyHeaderReducer }
+
+export { StickyHeader }

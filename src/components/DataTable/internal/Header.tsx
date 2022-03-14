@@ -34,9 +34,19 @@ const Header: React.FC<HeaderProps> = ({ children, id }) => {
                     <CheckboxHeaderCell key="checkbox-header" />
                 )}
 
-                {state.dataTableReducer.columns?.filter((x: any) => state.columnSelectorReducer.visibleColumns?.includes(x.props.id)).map((column: JSX.Element) => (
-                    <HeaderCell key={column.props.id} id={column.props.id} column={column} onClick={() => handleClick(column.props.orderBy)} />
-                ))}
+                {state.columnSelectorReducer && state.dataTableReducer.columns?.
+                    filter((x: any) => state.columnSelectorReducer.visibleColumns?.includes(x.props.id)).
+                    map((column: JSX.Element) => (
+                        <HeaderCell key={column.props.id} id={column.props.id} column={column} onClick={() => handleClick(column.props.orderBy)} />
+                    ))
+                }
+
+                {!state.columnSelectorReducer && state.dataTableReducer.columns?.
+                    filter((x: any) => !x.props.optional).
+                    map((column: JSX.Element) => (
+                        <HeaderCell key={column.props.id} id={column.props.id} column={column} onClick={() => handleClick(column.props.orderBy)} />
+                    ))
+                }
             </Table.Row>
         </Head>
     );

@@ -1,3 +1,4 @@
+import { FC } from '../../types';
 import React, { MouseEventHandler } from 'react';
 
 export type FilterProps = {
@@ -11,6 +12,8 @@ export type FilterProps = {
     onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
-export const Filter: React.FC<FilterProps> = (props) => {
+const Filter: FC<FilterProps> = (props) => {
     return (<React.Fragment {...props}></React.Fragment>)
 }
+
+export { Filter };

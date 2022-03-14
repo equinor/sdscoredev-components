@@ -1,34 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef } from 'react';
+import { DispatchContext, StateContext } from 'components/DataTable/DataTableStore';
+import React, { useContext, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ODataQueryProps } from '../ODataQuery';
-import FilterParser from './parser';
+import { DefaultQueryProps } from '.';
 
-export const ODataQuery: React.FC<ODataQueryProps> = ({ state, dispatch }) => {
+export const DefaultQuery: React.FC<DefaultQueryProps> = ({ state, dispatch }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const sortingInitialized = useRef(false);
     const paginationInitialized = useRef(false);
 
     const setInitialPagination = (params: URLSearchParams) => {
-        const pagination = params.get('pagination');
-
-        if (!paginationInitialized.current && pagination) {
-            const items = pagination.split(',');
-
-            dispatch({ type: 'SET_PAGE_INDEX', payload: +items[0] });
-            dispatch({ type: 'SET_PAGE_SIZE', payload: +items[1] });
+        if (!paginationInitialized.current) {
+            params.get('pageIndex') && dispatch({ type: 'SET_PAGE_INDEX', payload: params.get('pageIndex') });
+            params.get('pageSize') && dispatch({ type: 'SET_PAGE_SIZE', payload: params.get('pageSize') });
         }
     }
 
     const setInitialSorting = (params: URLSearchParams) => {
-        const sort = params.get('sort');
-
-        if (!sortingInitialized.current && sort) {
-            const items = sort.split(',');
-
-            dispatch({ type: 'SET_ORDER_BY', payload: items[0] });
-            dispatch({ type: 'SET_DIRECTION', payload: items[1] === 'ascending' ? true : false });
+        if (!sortingInitialized.current) {
+            params.get('orderBy') && dispatch({ type: 'SET_ORDER_BY', payload: params.get('orderBy') });
+            params.get('desc') && dispatch({ type: 'SET_DIRECTION', payload: params.get('desc') });
         }
     }
 
@@ -38,8 +30,7 @@ export const ODataQuery: React.FC<ODataQueryProps> = ({ state, dispatch }) => {
         setInitialPagination(params)
         setInitialSorting(params)
 
-        let filterQuery = new FilterParser(params, { logging: false, defaultPagination: '1,10' }).parse();
-        dispatch({ type: 'SET_QUERY', payload: filterQuery});
+        dispatch({ type: 'SET_QUERY', payload: params.toString()});
 
     }, [location])
 
@@ -47,7 +38,8 @@ export const ODataQuery: React.FC<ODataQueryProps> = ({ state, dispatch }) => {
         const params = new URLSearchParams(window.location.search);
        
         if (paginationInitialized.current) {
-            params.set('pagination', [state.paginationReducer.pageIndex, state.paginationReducer.pageSize].join(','));
+            params.set('pageSize', state.paginationReducer.pageSize);
+            params.set('pageIndex', state.paginationReducer.pageIndex);
             const url = [window.location.pathname, params.toString()].join('?')
             navigate(url)
         }
@@ -60,7 +52,8 @@ export const ODataQuery: React.FC<ODataQueryProps> = ({ state, dispatch }) => {
         const params = new URLSearchParams(window.location.search);
        
         if (sortingInitialized.current && state.sortingReducer.orderBy && typeof state.sortingReducer.ascending === 'boolean') {
-            params.set('sort', [state.sortingReducer.orderBy, state.sortingReducer.ascending ? 'ascending' : 'descending'].join(','));
+            params.set('orderBy', state.sortingReducer.orderBy);
+            params.set('desc', state.sortingReducer.ascending);
             const url = [window.location.pathname, params.toString()].join('?')
             navigate(url)
         }
