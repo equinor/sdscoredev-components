@@ -34,7 +34,7 @@ const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBo
     }, [state.dataTableReducer.query])
 
     useEffect(() => {
-        if (redraw.current < 3 && state.columnSelectorReducer.visibleColumns) {
+        if (redraw.current < 3 && state.columnSelectorReducer && state.columnSelectorReducer.visibleColumns) {
             dispatch({ type: "CALCULATE_COLUMN_WIDTH", payload: state.columnSelectorReducer.visibleColumns, id })
             redraw.current++;
         }
