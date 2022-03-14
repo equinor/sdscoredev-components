@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/equinor/sdscoredev-components/compare/2.1.0...2.2.0) (2022-03-14)
+
+
+### Features
+
+* add session cache for column selector ([f1b921b](https://github.com/equinor/sdscoredev-components/commit/f1b921b04e37da7370d3e32c481eae3844d60959))
+
 # [2.1.0](https://github.com/equinor/sdscoredev-components/compare/2.0.1...2.1.0) (2022-03-11)
 
 
