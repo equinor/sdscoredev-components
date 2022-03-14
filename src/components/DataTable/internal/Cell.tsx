@@ -89,7 +89,6 @@ type TableCellProps = {
 const Cell: React.FC<TableCellProps> = (props) => {
     const { column, onClick, item, href } = props;
     const { slim, id, render, truncate } = column.props;
-    const navigate = useNavigate();
 
     const RenderCell = () => {
         /* If render prop is an element */
@@ -131,7 +130,7 @@ const Cell: React.FC<TableCellProps> = (props) => {
         >
             {href ? <a className="row-link" href={href} onClick={(e) => {
                 e.preventDefault();
-                navigate(href);
+                window.location.replace(href);
             }}>{RenderCell()}</a> : RenderCell()}
         </StyledCell>
     )

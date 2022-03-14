@@ -11,9 +11,12 @@ import { StickyHeader } from './plugins/StickyHeader';
 import { DefaultQuery } from './plugins/DefaultQuery';
 
 import { checkboxReducer } from './plugins/checkboxReducer';
+import { columnSelectorReducer } from './plugins/ColumnSelector/columnSelectorReducer';
 import { defaultQueryReducer } from './plugins/DefaultQuery/defaultQueryReducer';
 import { oDataQueryReducer } from './plugins/ODataQuery/oDataQueryReducer';
+import { paginationReducer } from './plugins/Pagination/paginationReducer';
 import { sortingReducer } from './plugins/sortingReducer';
+import { stickyHeaderReducer } from './plugins/StickyHeader/stickyHeaderReducer';
 
 type DataTableCompound = typeof BaseDataTable & {
     Row: typeof Row
@@ -53,9 +56,12 @@ export {
     DataTable,
     
     checkboxReducer,
+    columnSelectorReducer,
     defaultQueryReducer,
     oDataQueryReducer,
+    paginationReducer,
     sortingReducer,
+    stickyHeaderReducer,
 }
 
 // TODO: Add more types to export
