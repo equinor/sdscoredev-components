@@ -1,7 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { Meta, Story, Canvas, ArgsTable, Source } from '@storybook/addon-docs';
-// import Template from './Default.template';
-import { DataTable, stickyHeaderReducer } from '../../components/DataTable';
+import { DataTable, columnSelectorReducer } from '../../components/DataTable';
 import { users } from '../data';
 
 
@@ -9,7 +8,7 @@ import { users } from '../data';
 
 # Datatable with sticky header
 
-This is an example of a table with sticky header.
+This is an example of a table with sticky header. It is dependent on the `columnSelectorReducer` for now.
 
 <Canvas>
   <Story name="Stickyheader example">
@@ -33,7 +32,7 @@ This is an example of a table with sticky header.
         }
       }, [stickyHeaderRef.current])
       return (
-          <DataTable data={users(40)} onScroll={() => stickyHeaderRef.current.handleScroll()} reducers={{ stickyHeaderReducer }}>
+          <DataTable data={users(40)} onScroll={() => stickyHeaderRef.current.handleScroll()} reducers={{ columnSelectorReducer }}>
             <Column id="id">Uuid</Column>
             <Column id="firstname">First name</Column>
             <Column id="lastname">Last name</Column>

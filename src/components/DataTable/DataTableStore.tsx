@@ -1,7 +1,7 @@
 import React, { createContext, ReactElement, useReducer } from 'react';
 import { useCombinedReducers } from '../utils';
 import { DataTableStoreProps, FC, ReducerProp } from './types';
-import createPersistedReducer from 'components/createPersistedReducer';
+import createPersistedReducer from '../createPersistedReducer';
 import { dataTableReducer } from './reducers/dataTableReducer';
 
 export const StateContext = createContext({});
