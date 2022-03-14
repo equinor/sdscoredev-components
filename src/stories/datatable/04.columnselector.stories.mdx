@@ -1,26 +1,27 @@
 import { Meta, Story, Canvas, ArgsTable, Source } from '@storybook/addon-docs';
-import { DataTable, columnSelectorReducer } from '../../components/DataTable';
+import { DataTable } from '../../components/DataTable';
 import { users } from '../data';
 
 <Meta title="Library/DataTable" component={DataTable} />
 
 # Datatable with column selector
 
-This is an example of a table with column selector.
+This is an example of a table with column selector. In this example the cache is activated, so that the selections are persistent between sessions.
+It uses the `window.location.href` as `cacheKey` in Session Storage.
 
 <Canvas>
   <Story name="Columnselector example">
       {() => {
       const { Column, ColumnSelector, StickyHeader } = DataTable;
       return (
-          <DataTable data={users(10)} reducers={{ columnSelectorReducer }}>
+          <DataTable data={users(10)}>
             <Column id="id">Uuid</Column>
             <Column id="firstname">First name</Column>
             <Column id="lastname">Last name</Column>
             <Column id="email">Email</Column>
             <Column id="title">Title</Column>
             <Column id="country">Country</Column>
-            <ColumnSelector title="Column settings" icon={<Icon name="settings" title="Manage columns" size={24} />} />
+            <ColumnSelector title="Column settings" icon={<Icon name="settings" title="Manage columns" size={24} />} cacheKey={window.location.href} />
         </DataTable>
       )
     }}
