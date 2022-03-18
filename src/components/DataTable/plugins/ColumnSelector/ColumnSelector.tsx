@@ -37,10 +37,8 @@ export const ColumnSelector = forwardRef<ColumnSelectorRef, InternalColumnSelect
         const id = typeof column === 'string' ? column : column.props.id;
 
         if (state.columnSelectorReducer.visibleColumns?.includes(id)) {
-            console.log(2);
             dispatch({ type: 'SET_VISIBLE_COLUMNS', payload: state.columnSelectorReducer.visibleColumns.filter((x: any) => x !== id) })
         } else {
-            console.log(3);
             dispatch({ type: 'SET_VISIBLE_COLUMNS', payload: [...state.columnSelectorReducer.visibleColumns, id] })
         }
 
@@ -67,13 +65,10 @@ export const ColumnSelector = forwardRef<ColumnSelectorRef, InternalColumnSelect
             result = state.columnSelectorReducer.visibleColumns.filter((x: string) => x !== column)
         }
 
-        console.log(1);
-
         dispatch({ type: 'SET_VISIBLE_COLUMNS', payload: result })
     }
 
     const handleResetColumns = (): void => {
-        console.log(4);
         dispatch({ type: 'RESET_VISIBLE_COLUMNS', payload: state.dataTableReducer.columns })
     }
 
