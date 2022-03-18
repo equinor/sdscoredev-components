@@ -3,7 +3,7 @@ import { Icon, TextField as EdsTextField } from '@equinor/eds-core-react';
 import { InputProps, withInput, Error } from './withInput';
 
 
-const TextField: React.FC<InputProps> = (props: any) => {
+export const TextField: React.FC<InputProps> = (props: any) => {
     const { id, label, meta, value, onChange, error, tooltip } = props;
 
     return (
