@@ -11,7 +11,7 @@ type Object = { [key: string]: any };
 const ColumnsWrapper = styled.div<{count: number}>`
     display: grid;
     grid-template-rows: ${(props: any) => Array(props.count + 1).join('max-content ')};
-    grid-row-gap: 30px;
+    grid-row-gap: 12px;
     width: 100%;
 `
 

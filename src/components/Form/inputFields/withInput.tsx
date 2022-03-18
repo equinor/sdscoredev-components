@@ -1,8 +1,8 @@
 /* eslint-disable */
-import { Label } from '@equinor/eds-core-react';
+import { Label as EdsLabel } from '@equinor/eds-core-react';
 import React, { ChangeEventHandler, useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Tooltip from '../../Tooltip';
+import { Tooltip } from '../../Tooltip';
 import { DispatchContext, StateContext } from '../FormStore';
 
 export interface InputProps {
@@ -13,6 +13,7 @@ export interface InputProps {
     tooltip?: string;
     isRequired?: boolean;
     onChange?: any;
+    edit?: boolean;
 }
 
 export type Error = {
@@ -28,13 +29,28 @@ const InputWrapper = styled.div``
 const Header = styled.div`
     display: grid;
     grid-template-columns: min-content min-content;
-    grid-row-gap: 30px;
+    padding-bottom: 2px;
     width: 100%;
     white-space: nowrap;
 `
 
-const ValidationError = styled(Label)`
+const ValidationError = styled(EdsLabel)`
     color: rgb(235, 0, 0);
+    margin-top: 4px;
+    height: 16px;
+`
+
+const Label = styled(EdsLabel)`
+    height: 16px;
+
+    & span {
+        display: inline-flex;
+        align-items: center;
+        line-height: 0.750rem;
+    }
+`
+
+const Empty = styled.div`
     margin-top: 4px;
     height: 16px;
 `
@@ -48,7 +64,7 @@ export const withInput = ({ debounceTime = 0 }: Options = {}) => <TOriginalProps
     const Input = (props: ResultProps) => {
 
         const { id, value, label, tooltip } = props;
-        const [validationErrors, setValidationErrors] = useState<Array<string>>([])
+        const [validationErrors, setValidationErrors] = useState<Array<string> | undefined>(undefined)
         const state: any = useContext(StateContext);
         const dispatch: any = useContext(DispatchContext);
 
@@ -73,7 +89,7 @@ export const withInput = ({ debounceTime = 0 }: Options = {}) => <TOriginalProps
          * Reset the validation errors if input value changes
          */
         useEffect(() => {
-            if (validationErrors) setValidationErrors([])
+            if (validationErrors) setValidationErrors(undefined)
         }, [value])
 
         return (
@@ -83,9 +99,9 @@ export const withInput = ({ debounceTime = 0 }: Options = {}) => <TOriginalProps
                     {tooltip && <Tooltip title={tooltip} placement="bottom" />}
                 </Header>
                 <Component {...props} />
-                {validationErrors.map((validationError: string) => (
+                {validationErrors ? validationErrors.map((validationError: string) => (
                     <ValidationError label={validationError} />
-                ))}
+                )) : <Empty></Empty>}
             </InputWrapper>
         );
     };

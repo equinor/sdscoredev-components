@@ -5,6 +5,7 @@ import { DispatchContext, StateContext } from "../../DataTableStore";
 import HeaderCell from "../../internal/HeaderCell";
 import CheckboxHeaderCell from '../../internal/CheckboxHeaderCell';
 import { StickyHeaderProps, StickyHeaderRef } from ".";
+import { ColumnProps } from "components/DataTable/Column";
 
 const Head = styled(Table.Head)`
     position: relative;
@@ -34,8 +35,13 @@ export const StickyHeader = forwardRef<StickyHeaderRef, InternalStickyHeaderProp
     const init = useRef<number>(0);
     const left = useRef<number>();
 
-    const handleClick = (orderBy: string) => {
-        dispatch({ type: 'SORT', payload: orderBy });
+    const handleClick = (columnProps: ColumnProps) => {
+        if (columnProps.sort) {
+            typeof columnProps.sort === 'boolean' ? dispatch({ type: 'SORT', payload: columnProps.id }) : dispatch({ type: 'SORT', payload: columnProps.sort });
+            // TODO: Deprecated, should be removed
+        } else if (columnProps.orderBy) {
+            dispatch({ type: 'SORT', payload: columnProps.orderBy });
+        }
     }
 
     /**
@@ -94,7 +100,7 @@ export const StickyHeader = forwardRef<StickyHeaderRef, InternalStickyHeaderProp
                             width={state.stickyHeaderReducer.width[column.props.id]} 
                             id={`sticky-${column.props.id}`} 
                             column={column} 
-                            onClick={() => handleClick(column.props.orderBy)} 
+                            onClick={() => handleClick(column.props)} 
                         />
                     ))}
                 </Table.Row>
