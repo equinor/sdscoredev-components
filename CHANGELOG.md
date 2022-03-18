@@ -1,3 +1,11 @@
+## [2.2.1](https://github.com/equinor/sdscoredev-components/compare/2.2.0...2.2.1) (2022-03-18)
+
+
+### Bug Fixes
+
+* add sort prop on Column ([a61fe71](https://github.com/equinor/sdscoredev-components/commit/a61fe7119ab0249296e288cdf1716a4aaaad843b))
+* form style errors ([532285c](https://github.com/equinor/sdscoredev-components/commit/532285c80532f035d8e4107b17d7cb497d5e50a7))
+
 # [2.2.0](https://github.com/equinor/sdscoredev-components/compare/2.1.0...2.2.0) (2022-03-14)
 
 
