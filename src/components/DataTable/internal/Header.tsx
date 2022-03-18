@@ -4,6 +4,7 @@ import { Table } from '@equinor/eds-core-react';
 import { DispatchContext, StateContext } from "../DataTableStore";
 import HeaderCell from "./HeaderCell";
 import CheckboxHeaderCell from './CheckboxHeaderCell';
+import { ColumnProps } from "../Column";
 
 const Head = styled(Table.Head)`
     white-space: normal;
@@ -21,8 +22,13 @@ const Header: React.FC<HeaderProps> = ({ children, id }) => {
         dispatch({ type: 'SET_COLUMNS', payload: Children.toArray(children) });
     }, [])
 
-    const handleClick = (orderBy: string) => {
-        dispatch({ type: 'SORT', payload: orderBy });
+    const handleClick = (columnProps: ColumnProps) => {
+        if (columnProps.sort) {
+            typeof columnProps.sort === 'boolean' ? dispatch({ type: 'SORT', payload: columnProps.id }) : dispatch({ type: 'SORT', payload: columnProps.sort });
+            // TODO: Deprecated, should be removed
+        } else if (columnProps.orderBy) {
+            dispatch({ type: 'SORT', payload: columnProps.orderBy });
+        }
     }
 
     if (!state.dataTableReducer.columns) return <></>
@@ -37,7 +43,7 @@ const Header: React.FC<HeaderProps> = ({ children, id }) => {
                 {state.columnSelectorReducer && state.dataTableReducer.columns?.
                     filter((x: any) => state.columnSelectorReducer.visibleColumns?.includes(x.props.id)).
                     map((column: JSX.Element) => (
-                        <HeaderCell key={column.props.id} id={column.props.id} column={column} onClick={() => handleClick(column.props.orderBy)} />
+                        <HeaderCell key={column.props.id} id={column.props.id} column={column} onClick={() => handleClick(column.props)} />
                     ))
                 }
 
