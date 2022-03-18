@@ -6,6 +6,9 @@ const Wrapper = styled.div<{count: number, gap: number}>`
     flex-wrap: wrap;
     gap: ${(props) => `${props.gap}px`};
     max-width: 100%;
+    align-items: center;
+    float: right;
+    height: 48px;
 `
 
 /**
@@ -14,11 +17,11 @@ const Wrapper = styled.div<{count: number, gap: number}>`
  */
 const FixedInner = styled.div<{count: number, fixed: number, gap: number}>`
     min-width: ${(props) => `${props.fixed}px`};
-    width: ${(props) => `calc(100% / ${props.count} - ${props.gap * (props.count - 1) / props.count}px)`};
+    /* width: ${(props) => `calc(100% / ${props.count} - ${props.gap * (props.count - 1) / props.count}px)`}; */
 `
 
 const DynamicInner = styled.div<{count: number, gap: number}>`
-    width: ${(props) => `calc(100% / ${props.count} - ${props.gap * (props.count - 1) / props.count}px)`};
+    /* width: ${(props) => `calc(100% / ${props.count} - ${props.gap * (props.count - 1) / props.count}px)`}; */
 `
 
 type RowProps = {
