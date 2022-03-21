@@ -5,6 +5,10 @@ export declare type ColumnProps = {
      */
     id: string;
     /**
+     * Old compability method of using key
+     */
+    key?: string;
+    /**
      * ** Deprecated **
      */
     maxWidth?: number;
