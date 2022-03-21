@@ -65,6 +65,10 @@ export type DataTableProps = {
      */
     onScroll?: Function;
     children?: any;
+    /**
+     * Adds edit column and render inputs fields in the current row when clicked
+     */
+    editable?: boolean;
 }
 
 export const DataTable = React.memo((props: DataTableProps) => {
@@ -74,7 +78,8 @@ export const DataTable = React.memo((props: DataTableProps) => {
         children, 
         reducers = [], 
         onFetch,
-        onScroll 
+        onScroll,
+        editable 
     } = props;
     const components = Children.toArray(children);
     const wrapperRef = useRef<any>(null);
@@ -116,7 +121,7 @@ export const DataTable = React.memo((props: DataTableProps) => {
                     {stickyHeader && <StickyHeader {...stickyHeader.props} id={id} ref={stickyHeader.ref} />}
 
                     <Table style={{ width: '100%' }}>
-                        <Header id={id}>
+                        <Header id={id} {...props}>
                             {components.filter((x: any) => x.type.displayName === 'DataTable.Column')}
                         </Header>
 
@@ -125,6 +130,7 @@ export const DataTable = React.memo((props: DataTableProps) => {
                             {...row?.props} 
                             data={data && getData ? getData(data) : data} 
                             onFetch={onFetch}
+                            editable={editable}
                         />
 
                     </Table>

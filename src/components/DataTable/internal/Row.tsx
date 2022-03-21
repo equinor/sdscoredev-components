@@ -5,6 +5,7 @@ import { RowProps } from '../Row';
 import { StateContext } from "../DataTableStore";
 import CheckboxCell from "./CheckboxCell";
 import Cell from "./Cell";
+import EditCell from "./EditCell";
 
 const DefaultRow = styled(Table.Row)`
     display: table-row;
@@ -29,10 +30,11 @@ const DefaultRow = styled(Table.Row)`
 
 type TableRowProps = {
     data?: any;
+    editable?: boolean;
 }
 
 const Row: React.FC<TableRowProps & RowProps & RefAttributes<HTMLTableRowElement>> = forwardRef((props, ref) => {
-    const { data, onClick, getLink, getStyle } = props;
+    const { data, onClick, getLink, getStyle, editable } = props;
     const state: any = useContext(StateContext);
 
     const handleClick = (e: any) => {
@@ -74,6 +76,10 @@ const Row: React.FC<TableRowProps & RowProps & RefAttributes<HTMLTableRowElement
                     ) : <></>}
                 </React.Fragment>
             ))}
+
+            {props.editable &&
+                <EditCell key={`edit-cell-${data.id}`} item={data}/>
+            }
         </DefaultRow>
     );
 });

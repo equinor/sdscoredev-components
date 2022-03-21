@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
+import { StateContext } from "../DataTableStore";
 import styled from 'styled-components';
-import { CellProps, Table } from '@equinor/eds-core-react';
+import { CellProps, Table, TextField } from '@equinor/eds-core-react';
 import { resolve } from '../../utils';
 import { useNavigate } from "react-router-dom";
 
@@ -87,6 +88,7 @@ type TableCellProps = {
 }
 
 const Cell: React.FC<TableCellProps> = (props) => {
+    const state: any = useContext(StateContext);
     const { column, onClick, item, href } = props;
     const { slim, id, render, truncate } = column.props;
 
@@ -103,6 +105,17 @@ const Cell: React.FC<TableCellProps> = (props) => {
                 content: resolve(item, id, ''),
                 renderProps: render[1],
             })
+        }
+
+        /* If edit mode */
+        if (state.dataTableReducer.editRow) {
+            return (
+                <TextField
+                    id={item.id}
+                    value={item[column.props.id] || ""}
+                    onChange={() => null}
+                />
+            )
         }
 
         if (!render && truncate) {
