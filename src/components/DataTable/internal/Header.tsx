@@ -19,8 +19,23 @@ const Header: React.FC<HeaderProps> = ({ children, id }) => {
     const dispatch: any = useContext(DispatchContext);
 
     useEffect(() => {
-        dispatch({ type: 'SET_COLUMNS', payload: Children.toArray(children) });
-    }, [])
+        const columns = Children.toArray(children).map((x: JSX.Element) => {
+            if (state.dataTableReducer.pluginColumnProps) {
+                const pluginProps = state.dataTableReducer.pluginColumnProps[x.props.id]
+
+                /* If the id of the Column in prop exist in the pluginColumnProps object as a key,
+                then we want to manipulate the props of that column. 
+                `pluginColumnProps` can be set by plugins. */
+                if (pluginProps) {
+                    return (<x.type {...x.props} {...pluginProps} />)
+                } 
+            }
+            
+            return x  
+        })
+
+        dispatch({ type: 'SET_COLUMNS', payload: columns });
+    }, [state.dataTableReducer.pluginColumnProps])
 
     const handleClick = (columnProps: ColumnProps) => {
         if (columnProps.sort) {

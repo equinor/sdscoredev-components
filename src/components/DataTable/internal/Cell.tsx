@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from 'styled-components';
 import { CellProps, Table } from '@equinor/eds-core-react';
 import { resolve } from '../../utils';
 import { useNavigate } from "react-router-dom";
+import { StateContext } from "../DataTableStore";
 
 const StyledCell = styled(Table.Cell)<CellProps & { slim?: boolean, truncate?: number}>`
     border-top: unset !important;
@@ -84,16 +85,18 @@ type TableCellProps = {
     onClick?: Function;
     item?: any;
     href?: string;
+    depth?: number; // TODO: Try refactor out depth prop, it belongs to Tree plugin
 }
 
 const Cell: React.FC<TableCellProps> = (props) => {
-    const { column, onClick, item, href } = props;
+    const { column, onClick, item, href, depth } = props;
     const { slim, id, render, truncate } = column.props;
+    const state: any = useContext(StateContext);
 
     const RenderCell = () => {
         /* If render prop is an element */
         if (render && typeof render === 'function') {
-            return render({ column, item, content: resolve(item, id, '') })
+            return render({ column, item, content: resolve(item, id, ''), depth })
         }
 
         /* If render prop is an array */
@@ -116,7 +119,7 @@ const Cell: React.FC<TableCellProps> = (props) => {
             )
         }
 
-        /* Defautl render */
+        /* Default render */
         return resolve(item, id, '')
     }
 
