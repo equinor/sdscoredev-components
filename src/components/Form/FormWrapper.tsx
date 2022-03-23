@@ -1,9 +1,6 @@
-import React, { Children, cloneElement, forwardRef, useContext, useEffect } from 'react';
-import styled from 'styled-components';
-import { DispatchContext, FormStore, StateContext } from './FormStore';
-import { FormProps } from './Form';
-
-export type FormRef = {} | null;
+import React, { forwardRef, useContext, useEffect } from 'react';
+import { DispatchContext, StateContext } from './FormStore';
+import { FormProps, FormRef } from './Form';
 
 /**
  * Provides a container to add rows to. The rows will contain input components, 
@@ -12,7 +9,7 @@ export type FormRef = {} | null;
  * @param props 
  * @returns 
  */
- export const FormWrapper: React.FC<FormProps> = (props) => {
+ export const FormWrapper = forwardRef<FormRef, FormProps>((props: FormProps, ref) => {
     const { data } = props;
     const state: any = useContext(StateContext);
     const dispatch: any = useContext(DispatchContext);
@@ -22,13 +19,16 @@ export type FormRef = {} | null;
     }, [])
 
     const submit = () => {
-        if (typeof props.onSubmit === 'function') props.onSubmit(state.formReducer.data)
+        if (typeof props.onSubmit === 'function') {
+            dispatch({ type: 'SET_ERRORS', payload: {} })
+            props.onSubmit(state.formReducer.data)
+        }
     }
 
     const cancel = () => {
+        dispatch({ type: 'SET_ERRORS', payload: {} })
         dispatch({ type: 'RESET_TO_DEFAULT' })
     }
-
 
     /**
      * Forwards a reducer update. The payload can either be an Input event or an object with key values
@@ -45,4 +45,4 @@ export type FormRef = {} | null;
     }
 
     return props.children({ data: state.formReducer.data, submit, cancel, update })
-};
+});

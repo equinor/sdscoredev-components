@@ -14,6 +14,7 @@ export interface InputProps {
     isRequired?: boolean;
     onChange?: any;
     edit?: boolean;
+    disabled?: boolean;
 }
 
 export type Error = {
@@ -28,7 +29,6 @@ const InputWrapper = styled.div``
 
 const Header = styled.div`
     display: grid;
-    grid-template-columns: min-content min-content;
     padding-bottom: 2px;
     width: 100%;
     white-space: nowrap;
@@ -63,11 +63,9 @@ export const withInput = ({ debounceTime = 0 }: Options = {}) => <TOriginalProps
     type ResultProps = TOriginalProps & InputProps;
     const Input = (props: ResultProps) => {
 
-        const { id, value, label, tooltip } = props;
+        const { id, value, label, tooltip, isRequired, disabled } = props;
         const [validationErrors, setValidationErrors] = useState<Array<string> | undefined>(undefined)
         const state: any = useContext(StateContext);
-        const dispatch: any = useContext(DispatchContext);
-
 
         /**
          * If errors exist in the errorReducer, 
@@ -95,7 +93,7 @@ export const withInput = ({ debounceTime = 0 }: Options = {}) => <TOriginalProps
         return (
             <InputWrapper>
                 <Header>
-                    {label && <Label label={label} />}
+                    {label && <Label style={{ color: disabled ? 'rgba(190, 190, 190, 1)' : 'unset' }} label={label} meta={isRequired ? '*Required' : undefined}/>}
                     {tooltip && <Tooltip title={tooltip} placement="bottom" />}
                 </Header>
                 <Component {...props} />
@@ -108,5 +106,3 @@ export const withInput = ({ debounceTime = 0 }: Options = {}) => <TOriginalProps
 
     return Input;
 };
-
-

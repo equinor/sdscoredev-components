@@ -1,4 +1,4 @@
-import { Form as BaseForm, FormProps } from './Form';
+import { Form as BaseForm, FormProps, FormRef } from './Form';
 import { Row } from './Row';
 import { Label } from './Label';
 import { Actions } from './Actions';
@@ -39,4 +39,4 @@ export {
     InputProps
 }
 
-export type { FormProps } 
+export type { FormProps, FormRef } 
