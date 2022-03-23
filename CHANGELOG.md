@@ -1,3 +1,10 @@
+## [2.2.2](https://github.com/equinor/sdscoredev-components/compare/2.2.1...2.2.2) (2022-03-21)
+
+
+### Bug Fixes
+
+* add compability key to ColumnProps ([ccf99a6](https://github.com/equinor/sdscoredev-components/commit/ccf99a6d003342a53028748f8d2ebb1f56a26588))
+
 ## [2.2.1](https://github.com/equinor/sdscoredev-components/compare/2.2.0...2.2.1) (2022-03-18)
 
 

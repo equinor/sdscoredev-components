@@ -4,16 +4,28 @@ export const useForm = (defaultData: any, props: any) => {
     const [data, setData] = useState<any>(null);
 
     const submit = () => {
-        if (typeof props.onSubmit === 'function') props.onSubmit(data)
+        if (typeof props.onSubmit === 'function') {
+            const response = props.onSubmit(data)
+
+            if (!response.error && typeof props.onSuccess === 'function') {
+                props.onSuccess(response.data)
+                setData(null)
+            }
+        }
     }
 
     const cancel = () => {
         setData(defaultData);
     }
 
-    const update = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { id, value } = e.target;
-        setData((state: any) => ({ ...state, [id]: value }));
+    const update = (e: any) => {
+        const { id, value, checked, type } = e.target;
+
+        if (type === 'checkbox') {
+            setData((state: any) => ({ ...state, [id]: checked }));
+        } else {
+            setData((state: any) => ({ ...state, [id]: value }));
+        }
     }
 
     useEffect(() => {
