@@ -13,6 +13,7 @@ import Toolbar from "./internal/Toolbar";
 import { columnSelectorReducer } from "./plugins/ColumnSelector/columnSelectorReducer";
 import { makeId } from "../utils";
 import { StickyHeader } from "./plugins/StickyHeader/StickyHeader";
+import { Tree } from "./plugins/Tree/Tree";
 
 const Wrapper = styled.div`
     /* overflow-x: auto; */
@@ -80,6 +81,7 @@ export const DataTable = React.memo((props: DataTableProps) => {
     const wrapperRef = useRef<any>(null);
 
     const row: any = components.find((x: any) => x.type.displayName === 'DataTable.Row');
+    const tree: any = components.find((x: any) => x.type.displayName === 'DataTable.Tree');
     const filter: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Filter');
     const pagination: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Pagination');
     const exportPlugin: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Export');
@@ -131,6 +133,8 @@ export const DataTable = React.memo((props: DataTableProps) => {
                 </TableWrapper>
 
                 {pagination && <Pagination count={pagination.props.getCount(data || 0)} {...pagination.props} />}
+
+                {tree && <Tree {...tree.props} />}
 
             </Wrapper>
         </DataTableStore>

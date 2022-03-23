@@ -9,6 +9,10 @@ type TableBodyProps = {
     children?: any;
     id?: string;
 }
+
+/**
+ * TODO: Needs to be split in two separate Body components, One default, and one for the Tree plugin
+ */
 const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBodyProps, ref) => {
     const { data, onFetch, id } = props;
     const state: any = useContext(StateContext);
@@ -40,11 +44,26 @@ const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBo
         }
     }, [redraw.current])
 
+    /** 
+     * Provides rows recursively for tree rows that is open and has children 
+     */
+    const generateRows = (items: any, depth: number | undefined = undefined) => {
+        typeof depth == 'number' ? depth++ : depth = 0;
+
+        return items.map((item: any, index: number) => 
+        (
+            <React.Fragment key={index}>
+                <Row {...props} depth={depth} data={item} ref={(el) => rowRef.current = el} key={`row-${item.id}`} />
+                {item.children && state.treeReducer.open.includes(item.id) && generateRows(item.children, depth)}
+            </React.Fragment>
+        ))
+    }
+
     if (!data) return <></>
 
     return (
         <Table.Body ref={ref} id={`dataTable.body.${id}`}>
-            {data.map((item: any) => <Row {...props} data={item} ref={(el) => rowRef.current = el} key={`row-${item.id}`} />)}
+            {generateRows(data)}
         </Table.Body>
     );
 });
