@@ -2,9 +2,8 @@ import React from 'react';
 import { Icon, TextField as EdsTextField } from '@equinor/eds-core-react';
 import { InputProps, withInput, Error } from './withInput';
 
-
 export const TextField: React.FC<InputProps> = (props: any) => {
-    const { id, label, meta, value, onChange, error, tooltip } = props;
+    const { id, meta, value, onChange, error, disabled } = props;
 
     return (
         <EdsTextField
@@ -15,6 +14,7 @@ export const TextField: React.FC<InputProps> = (props: any) => {
             variant={error ? "error" : "default"}
             helperText={error}
             helperIcon={error && <Icon name="error_filled" title="Error" />}
+            disabled={disabled}
         />
     );
 };
