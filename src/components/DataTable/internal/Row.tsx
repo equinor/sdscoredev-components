@@ -18,7 +18,7 @@ const DefaultRow = styled(Table.Row)`
 
     &:hover {
         cursor: pointer;
-        background: rgba(234,234,234,1);
+        background: rgba(247,247,247,1);
     }
     & > td {
         border: none;
@@ -29,10 +29,11 @@ const DefaultRow = styled(Table.Row)`
 
 type TableRowProps = {
     data?: any;
+    depth?: number;
 }
 
 const Row: React.FC<TableRowProps & RowProps & RefAttributes<HTMLTableRowElement>> = forwardRef((props, ref) => {
-    const { data, onClick, getLink, getStyle } = props;
+    const { data, onClick, getLink, getStyle, depth } = props;
     const state: any = useContext(StateContext);
 
     const handleClick = (e: any) => {

@@ -5,6 +5,7 @@ import { Row } from '../../components/DataTable/Row';
 import { ColumnSelector } from '../../components/DataTable/plugins/ColumnSelector';
 import { Filter } from '../../components/DataTable/plugins/Filter';
 import { StickyHeader } from '../../components/DataTable/plugins/StickyHeader';
+import { Tree } from '../../components/DataTable/plugins/Tree';
 
 <Meta title="Library/DataTable/Documentation" />
 
@@ -56,4 +57,11 @@ having `onScroll={() => stickyHeaderRef.current.handleScroll()}` set.
 This component need the `ref` prop to be set.
 
 <ArgsTable of={StickyHeader} />
+
+## `<Tree>`
+
+Can be added as a child to render the table as a tree structure. It will dynamically set a render prop on a defined column. That column will then be 
+providing the tree functionality.
+
+<ArgsTable of={Tree} />
 

@@ -5,6 +5,7 @@ import { ColumnSelector } from './plugins/ColumnSelector';
 import { Export } from './plugins/Export';
 import { Column } from './Column';
 import { Pagination } from './plugins/Pagination';
+import { Tree } from './plugins/Tree';
 import { Toolbar } from './Toolbar';
 import { Filter } from './plugins/Filter';
 import { StickyHeader } from './plugins/StickyHeader';
@@ -25,6 +26,7 @@ type DataTableCompound = typeof BaseDataTable & {
     Column: typeof Column
     Pagination: typeof Pagination
     Toolbar: typeof Toolbar
+    Tree: typeof Tree
     Filter: typeof Filter
     StickyHeader: typeof StickyHeader
     DefaultQuery: typeof DefaultQuery
@@ -39,6 +41,7 @@ DataTable.Filter = Filter
 DataTable.Pagination = Pagination
 DataTable.Row = Row
 DataTable.Toolbar = Toolbar
+DataTable.Tree = Tree
 DataTable.StickyHeader = StickyHeader
 DataTable.DefaultQuery = DefaultQuery
 
@@ -49,6 +52,7 @@ DataTable.Filter.displayName = 'DataTable.Filter'
 DataTable.Pagination.displayName = 'DataTable.Pagination'
 DataTable.Row.displayName = 'DataTable.Row'
 DataTable.Toolbar.displayName = 'DataTable.Toolbar'
+DataTable.Tree.displayName = 'DataTable.Tree'
 DataTable.StickyHeader.displayName = 'DataTable.StickyHeader'
 DataTable.DefaultQuery.displayName = 'DataTable.DefaultQuery'
 
