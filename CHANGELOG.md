@@ -1,3 +1,10 @@
+## [2.2.3](https://github.com/equinor/sdscoredev-components/compare/2.2.2...2.2.3) (2022-03-23)
+
+
+### Bug Fixes
+
+* some input and form bugs ([e3dc3c3](https://github.com/equinor/sdscoredev-components/commit/e3dc3c3d11986d47bb3e62e483dc73d5a9237337))
+
 ## [2.2.2](https://github.com/equinor/sdscoredev-components/compare/2.2.1...2.2.2) (2022-03-21)
 
 
