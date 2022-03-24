@@ -1,3 +1,11 @@
+## [2.3.1](https://github.com/equinor/sdscoredev-components/compare/2.3.0...2.3.1) (2022-03-24)
+
+
+### Bug Fixes
+
+* meta messed up tooltip placement ([3ed5a5b](https://github.com/equinor/sdscoredev-components/commit/3ed5a5bc26b5b31006f046688ff5022aa5ea0ed3))
+* no check for existing treeReducer ([bf31a90](https://github.com/equinor/sdscoredev-components/commit/bf31a90275881b823ae97f69760e4b403dc4ff93))
+
 # [2.3.0](https://github.com/equinor/sdscoredev-components/compare/2.2.3...2.3.0) (2022-03-23)
 
 
