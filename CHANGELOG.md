@@ -1,3 +1,10 @@
+# [2.3.0](https://github.com/equinor/sdscoredev-components/compare/2.2.3...2.3.0) (2022-03-23)
+
+
+### Features
+
+* Add tree structure plugin ([11d1f9e](https://github.com/equinor/sdscoredev-components/commit/11d1f9e2f4d8db51e386b4d2770929e02ee47524))
+
 ## [2.2.3](https://github.com/equinor/sdscoredev-components/compare/2.2.2...2.2.3) (2022-03-23)
 
 
