@@ -29,6 +29,7 @@ const InputWrapper = styled.div``
 
 const Header = styled.div`
     display: grid;
+    grid-template-columns: min-content auto auto;
     padding-bottom: 2px;
     width: 100%;
     white-space: nowrap;
@@ -93,8 +94,9 @@ export const withInput = ({ debounceTime = 0 }: Options = {}) => <TOriginalProps
         return (
             <InputWrapper>
                 <Header>
-                    {label && <Label style={{ color: disabled ? 'rgba(190, 190, 190, 1)' : 'unset' }} label={label} meta={isRequired ? '*Required' : undefined}/>}
+                    {label && <Label style={{ color: disabled ? 'rgba(190, 190, 190, 1)' : 'unset' }} label={label} />}
                     {tooltip && <Tooltip title={tooltip} placement="bottom" />}
+                    {isRequired && <Label label={''} style={{ color: disabled ? 'rgba(190, 190, 190, 1)' : 'unset' }} meta={'*Required'}/>}
                 </Header>
                 <Component {...props} />
                 {validationErrors ? validationErrors.map((validationError: string) => (
