@@ -54,7 +54,7 @@ const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBo
         (
             <React.Fragment key={index}>
                 <Row {...props} depth={depth} data={item} ref={(el) => rowRef.current = el} key={`row-${item.id}`} />
-                {item.children && state.treeReducer.open.includes(item.id) && generateRows(item.children, depth)}
+                {item.children && state.treeReducer && state.treeReducer.open.includes(item.id) && generateRows(item.children, depth)}
             </React.Fragment>
         ))
     }
