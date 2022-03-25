@@ -1,9 +1,9 @@
-import { SET_PAGE_INDEX, SET_PAGE_SIZE } from './Pagination/paginationReducer';
+import { SET_PAGE_INDEX, SET_PAGE_SIZE } from '../Pagination/paginationReducer';
 
 export const SET_SELECTED = "SET_SELECTED";
 
 interface SortingState {
-    selected?: Array<any>
+    selected: Array<any>
 }
 
 export const initialState: SortingState = {
@@ -18,15 +18,23 @@ const reducer = (state = initialState, action: any): SortingState => {
                 selected: action.payload
             };
         case SET_PAGE_INDEX:
-            return {
-                ...state,
-                selected: []
-            };
+            if (state.selected.length > 0) {
+                return {
+                    ...state,
+                    selected: []
+                };
+            }
+
+            return state;
         case SET_PAGE_SIZE:
-            return {
-                ...state,
-                selected: []
-            };
+            if (state.selected.length > 0) {
+                return {
+                    ...state,
+                    selected: []
+                };
+            }
+
+            return state;
         default:
             return state;
     }
