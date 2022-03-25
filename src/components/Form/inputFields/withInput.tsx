@@ -4,6 +4,7 @@ import React, { ChangeEventHandler, useContext, useEffect, useState } from 'reac
 import styled from 'styled-components';
 import { Tooltip } from '../../Tooltip';
 import { DispatchContext, StateContext } from '../FormStore';
+import { ReadOnly } from './ReadOnly';
 
 export interface InputProps {
     id: string;
@@ -64,7 +65,7 @@ export const withInput = ({ debounceTime = 0 }: Options = {}) => <TOriginalProps
     type ResultProps = TOriginalProps & InputProps;
     const Input = (props: ResultProps) => {
 
-        const { id, value, label, tooltip, isRequired, disabled } = props;
+        const { id, value, label, tooltip, isRequired, disabled, edit } = props;
         const [validationErrors, setValidationErrors] = useState<Array<string> | undefined>(undefined)
         const state: any = useContext(StateContext);
 
@@ -98,7 +99,9 @@ export const withInput = ({ debounceTime = 0 }: Options = {}) => <TOriginalProps
                     {tooltip && <Tooltip title={tooltip} placement="bottom" />}
                     {isRequired && <Label label={''} style={{ color: disabled ? 'rgba(190, 190, 190, 1)' : 'unset' }} meta={'*Required'}/>}
                 </Header>
-                <Component {...props} />
+
+                {edit ? <Component {...props} /> : <ReadOnly {...props} />}
+
                 {validationErrors ? validationErrors.map((validationError: string) => (
                     <ValidationError label={validationError} />
                 )) : <Empty></Empty>}
