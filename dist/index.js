@@ -822,7 +822,7 @@ const CheckboxCell = ({ item }) => {
         }
         dispatch({ type: 'SET_SELECTED', payload: selected });
     };
-    const isSelected = () => state.checkboxReducer.selected.findIndex((x) => x.id === item.id) !== -1;
+    const isSelected = () => state.checkboxReducer.selected && state.checkboxReducer.selected.findIndex((x) => x.id === item.id) !== -1;
     return (jsxRuntime.jsx(Cell$1, { children: jsxRuntime.jsx(edsCoreReact.EdsProvider, Object.assign({ density: "compact" }, { children: jsxRuntime.jsx(Wrapper$7, Object.assign({ onClick: select }, { children: jsxRuntime.jsx(edsCoreReact.Checkbox, { name: "multiple", checked: isSelected(), readOnly: true }, void 0) }), void 0) }), void 0) }, void 0));
 };
 
@@ -2332,6 +2332,18 @@ const Tree$1 = ({ id }) => {
     return jsxRuntime.jsx(jsxRuntime.Fragment, {}, void 0);
 };
 
+const Checkbox$1 = ({ onChange }) => {
+    const state = React.useContext(StateContext$1);
+    /**
+     * TODO: This fires one time at initialization. Must do something to prevent it. Maybe with a useRef count.
+     */
+    React.useEffect(() => {
+        if (typeof onChange === 'function')
+            onChange(state.checkboxReducer.selected);
+    }, [state.checkboxReducer.selected]);
+    return jsxRuntime.jsx(jsxRuntime.Fragment, {}, void 0);
+};
+
 const Wrapper$3 = styled__default["default"].div `
     /* overflow-x: auto; */
     white-space: nowrap;
@@ -2348,6 +2360,7 @@ const DataTable$1 = React__default["default"].memo((props) => {
     const row = components.find((x) => x.type.displayName === 'DataTable.Row');
     const tree = components.find((x) => x.type.displayName === 'DataTable.Tree');
     const filter = components.find((x) => x.type.displayName === 'DataTable.Filter');
+    const checkbox = components.find((x) => x.type.displayName === 'DataTable.Checkbox');
     const pagination = components.find((x) => x.type.displayName === 'DataTable.Pagination');
     const exportPlugin = components.find((x) => x.type.displayName === 'DataTable.Export');
     const stickyHeader = components.find((x) => x.type.displayName === 'DataTable.StickyHeader');
@@ -2363,7 +2376,7 @@ const DataTable$1 = React__default["default"].memo((props) => {
         wrapperReference.addEventListener('scroll', handleScroll);
         return () => wrapperReference.removeEventListener('scroll', handleScroll);
     }, []);
-    return (jsxRuntime.jsx(DataTableStore, Object.assign({ components: components, reducers: Object.assign({ dataTableReducer }, reducers) }, { children: jsxRuntime.jsxs(Wrapper$3, { children: [jsxRuntime.jsx(Toolbar$1, Object.assign({ components: components.filter((x) => x.type.displayName === 'DataTable.Toolbar') }, { children: jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [exportPlugin && jsxRuntime.jsx(Export$1, Object.assign({}, exportPlugin.props), void 0), columnSelector && jsxRuntime.jsx(ColumnSelector$1, Object.assign({}, columnSelector.props, { ref: columnSelector.ref }), void 0), filter && jsxRuntime.jsx(Filter$1, Object.assign({}, filter.props), void 0)] }, void 0) }), void 0), jsxRuntime.jsxs(TableWrapper, Object.assign({ ref: wrapperRef }, { children: [stickyHeader && jsxRuntime.jsx(StickyHeader$1, Object.assign({}, stickyHeader.props, { id: id, ref: stickyHeader.ref }), void 0), jsxRuntime.jsxs(edsCoreReact.Table, Object.assign({ style: { width: '100%' } }, { children: [jsxRuntime.jsx(Header$1, Object.assign({ id: id }, { children: components.filter((x) => x.type.displayName === 'DataTable.Column') }), void 0), jsxRuntime.jsx(Body, Object.assign({ id: id }, row === null || row === void 0 ? void 0 : row.props, { data: data && getData ? getData(data) : data, onFetch: onFetch }), void 0)] }), void 0)] }), void 0), pagination && jsxRuntime.jsx(Pagination$1, Object.assign({ count: pagination.props.getCount(data || 0) }, pagination.props), void 0), tree && jsxRuntime.jsx(Tree$1, Object.assign({}, tree.props), void 0)] }, void 0) }), void 0));
+    return (jsxRuntime.jsx(DataTableStore, Object.assign({ components: components, reducers: Object.assign({ dataTableReducer }, reducers) }, { children: jsxRuntime.jsxs(Wrapper$3, { children: [jsxRuntime.jsx(Toolbar$1, Object.assign({ components: components.filter((x) => x.type.displayName === 'DataTable.Toolbar') }, { children: jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [exportPlugin && jsxRuntime.jsx(Export$1, Object.assign({}, exportPlugin.props), void 0), columnSelector && jsxRuntime.jsx(ColumnSelector$1, Object.assign({}, columnSelector.props, { ref: columnSelector.ref }), void 0), filter && jsxRuntime.jsx(Filter$1, Object.assign({}, filter.props), void 0)] }, void 0) }), void 0), jsxRuntime.jsxs(TableWrapper, Object.assign({ ref: wrapperRef }, { children: [stickyHeader && jsxRuntime.jsx(StickyHeader$1, Object.assign({}, stickyHeader.props, { id: id, ref: stickyHeader.ref }), void 0), jsxRuntime.jsxs(edsCoreReact.Table, Object.assign({ style: { width: '100%' } }, { children: [jsxRuntime.jsx(Header$1, Object.assign({ id: id }, { children: components.filter((x) => x.type.displayName === 'DataTable.Column') }), void 0), jsxRuntime.jsx(Body, Object.assign({ id: id }, row === null || row === void 0 ? void 0 : row.props, { data: data && getData ? getData(data) : data, onFetch: onFetch }), void 0)] }), void 0)] }), void 0), pagination && jsxRuntime.jsx(Pagination$1, Object.assign({ count: pagination.props.getCount(data || 0) }, pagination.props), void 0), tree && jsxRuntime.jsx(Tree$1, Object.assign({}, tree.props), void 0), checkbox && jsxRuntime.jsx(Checkbox$1, Object.assign({}, checkbox.props), void 0)] }, void 0) }), void 0));
 });
 
 const Row$1 = (props) => {
@@ -2540,14 +2553,25 @@ const reducer$5 = (state = initialState$5, action) => {
         case SET_SELECTED:
             return Object.assign(Object.assign({}, state), { selected: action.payload });
         case SET_PAGE_INDEX:
-            return Object.assign(Object.assign({}, state), { selected: [] });
+            if (state.selected.length > 0) {
+                return Object.assign(Object.assign({}, state), { selected: [] });
+            }
+            return state;
         case SET_PAGE_SIZE:
-            return Object.assign(Object.assign({}, state), { selected: [] });
+            if (state.selected.length > 0) {
+                return Object.assign(Object.assign({}, state), { selected: [] });
+            }
+            return state;
         default:
             return state;
     }
 };
 const checkboxReducer = { reducer: reducer$5, initialState: initialState$5 };
+
+const Checkbox = (props) => {
+    return (jsxRuntime.jsx(React__default["default"].Fragment, Object.assign({}, props, { children: "Checkbox" }), void 0));
+};
+Checkbox.reducer = { checkboxReducer };
 
 const DefaultQuery = ({ state, dispatch }) => {
     const navigate = reactRouterDom.useNavigate();
@@ -3656,26 +3680,28 @@ const reducer$2 = (state = initialState$2, action) => {
 const sortingReducer = { reducer: reducer$2, initialState: initialState$2 };
 
 const DataTable = DataTable$1;
+DataTable.Checkbox = Checkbox;
 DataTable.Column = Column;
 DataTable.ColumnSelector = ColumnSelector;
+DataTable.DefaultQuery = DefaultQuery$1;
 DataTable.Export = Export;
 DataTable.Filter = Filter;
 DataTable.Pagination = Pagination;
 DataTable.Row = Row$1;
+DataTable.StickyHeader = StickyHeader;
 DataTable.Toolbar = Toolbar;
 DataTable.Tree = Tree;
-DataTable.StickyHeader = StickyHeader;
-DataTable.DefaultQuery = DefaultQuery$1;
+DataTable.Checkbox.displayName = 'DataTable.Checkbox';
 DataTable.Column.displayName = 'DataTable.Column';
 DataTable.ColumnSelector.displayName = 'DataTable.ColumnSelector';
+DataTable.DefaultQuery.displayName = 'DataTable.DefaultQuery';
 DataTable.Export.displayName = 'DataTable.Export';
 DataTable.Filter.displayName = 'DataTable.Filter';
 DataTable.Pagination.displayName = 'DataTable.Pagination';
 DataTable.Row.displayName = 'DataTable.Row';
+DataTable.StickyHeader.displayName = 'DataTable.StickyHeader';
 DataTable.Toolbar.displayName = 'DataTable.Toolbar';
 DataTable.Tree.displayName = 'DataTable.Tree';
-DataTable.StickyHeader.displayName = 'DataTable.StickyHeader';
-DataTable.DefaultQuery.displayName = 'DataTable.DefaultQuery';
 
 const SET_DATA = "SET_DATA";
 const SET_DEFAULT_DATA = "SET_DEFAULT_DATA";
@@ -3922,6 +3948,17 @@ const Tooltip = (props) => {
     return (jsxRuntime.jsx(jsxRuntime.Fragment, { children: !disabled ? (jsxRuntime.jsx(StyledEdsTooltip, Object.assign({ className: className, title: title, open: open, placement: placement, maxWidth: maxWidth }, { children: children || (jsxRuntime.jsx(StyledIcon, { name: "help_outline", size: 16, color: "#007079" }, void 0)) }), void 0)) : (jsxRuntime.jsx(jsxRuntime.Fragment, { children: children }, void 0)) }, void 0));
 };
 
+const ReadOnly = (props) => {
+    const { render, value, childKey } = props;
+    if (render) {
+        return jsxRuntime.jsx(jsxRuntime.Fragment, { children: render({ options: value, getTagProps: () => { }, childKey }) }, void 0);
+    }
+    if (typeof value === 'object' && childKey) {
+        return jsxRuntime.jsx(jsxRuntime.Fragment, { children: value[childKey] }, void 0);
+    }
+    return jsxRuntime.jsx(jsxRuntime.Fragment, { children: value }, void 0);
+};
+
 const InputWrapper = styled__default["default"].div ``;
 const Header = styled__default["default"].div `
     display: grid;
@@ -3951,7 +3988,7 @@ const Empty = styled__default["default"].div `
 const withInput = ({ debounceTime = 0 } = {}) => (Component) => {
     const Input = (props) => {
         var _a;
-        const { id, value, label, tooltip, isRequired, disabled } = props;
+        const { id, value, label, tooltip, isRequired, disabled, edit } = props;
         const [validationErrors, setValidationErrors] = React.useState(undefined);
         const state = React.useContext(StateContext);
         /**
@@ -3976,7 +4013,7 @@ const withInput = ({ debounceTime = 0 } = {}) => (Component) => {
             if (validationErrors)
                 setValidationErrors(undefined);
         }, [value]);
-        return (jsxRuntime.jsxs(InputWrapper, { children: [jsxRuntime.jsxs(Header, { children: [label && jsxRuntime.jsx(Label, { style: { color: disabled ? 'rgba(190, 190, 190, 1)' : 'unset' }, label: label }, void 0), tooltip && jsxRuntime.jsx(Tooltip, { title: tooltip, placement: "bottom" }, void 0), isRequired && jsxRuntime.jsx(Label, { label: '', style: { color: disabled ? 'rgba(190, 190, 190, 1)' : 'unset' }, meta: '*Required' }, void 0)] }, void 0), jsxRuntime.jsx(Component, Object.assign({}, props), void 0), validationErrors ? validationErrors.map((validationError) => (jsxRuntime.jsx(ValidationError, { label: validationError }, void 0))) : jsxRuntime.jsx(Empty, {}, void 0)] }, void 0));
+        return (jsxRuntime.jsxs(InputWrapper, { children: [jsxRuntime.jsxs(Header, { children: [label && jsxRuntime.jsx(Label, { style: { color: disabled ? 'rgba(190, 190, 190, 1)' : 'unset' }, label: label }, void 0), tooltip && jsxRuntime.jsx(Tooltip, { title: tooltip, placement: "bottom" }, void 0), isRequired && jsxRuntime.jsx(Label, { label: '', style: { color: disabled ? 'rgba(190, 190, 190, 1)' : 'unset' }, meta: '*Required' }, void 0)] }, void 0), edit ? jsxRuntime.jsx(Component, Object.assign({}, props), void 0) : jsxRuntime.jsx(ReadOnly, Object.assign({}, props), void 0), validationErrors ? validationErrors.map((validationError) => (jsxRuntime.jsx(ValidationError, { label: validationError }, void 0))) : jsxRuntime.jsx(Empty, {}, void 0)] }, void 0));
     };
     return Input;
 };
