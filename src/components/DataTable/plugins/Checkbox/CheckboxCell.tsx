@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Checkbox, EdsProvider, Table } from '@equinor/eds-core-react';
-import { DispatchContext, StateContext } from "../DataTableStore";
+import { DispatchContext, StateContext } from "../../DataTableStore";
 import styled from "styled-components";
 
 type CheckboxCellProps = {
@@ -41,7 +41,7 @@ const CheckboxCell: React.FC<CheckboxCellProps> = ({ item }) => {
         dispatch({ type: 'SET_SELECTED', payload: selected });
     };
 
-    const isSelected = () => state.checkboxReducer.selected.findIndex((x: any) => x.id === item.id) !== -1;
+    const isSelected = () => state.checkboxReducer.selected && state.checkboxReducer.selected.findIndex((x: any) => x.id === item.id) !== -1;
     
     return (
         <Cell>

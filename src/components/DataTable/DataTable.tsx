@@ -1,4 +1,4 @@
-import React, { Children, forwardRef, useEffect, useRef } from "react";
+import React, { Children, useEffect, useRef } from "react";
 import Header from './internal/Header';
 import Body from './internal/Body';
 import { Table } from '@equinor/eds-core-react';
@@ -10,10 +10,10 @@ import { dataTableReducer } from "./reducers/dataTableReducer";
 import styled from "styled-components";
 import { Filter } from "./plugins/Filter/Filter";
 import Toolbar from "./internal/Toolbar";
-import { columnSelectorReducer } from "./plugins/ColumnSelector/columnSelectorReducer";
 import { makeId } from "../utils";
 import { StickyHeader } from "./plugins/StickyHeader/StickyHeader";
 import { Tree } from "./plugins/Tree/Tree";
+import {Checkbox } from "./plugins/Checkbox/Checkbox";
 
 const Wrapper = styled.div`
     /* overflow-x: auto; */
@@ -80,9 +80,10 @@ export const DataTable = React.memo((props: DataTableProps) => {
     const components = Children.toArray(children);
     const wrapperRef = useRef<any>(null);
 
-    const row: any = components.find((x: any) => x.type.displayName === 'DataTable.Row');
-    const tree: any = components.find((x: any) => x.type.displayName === 'DataTable.Tree');
+    const row: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Row');
+    const tree: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Tree');
     const filter: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Filter');
+    const checkbox: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Checkbox');
     const pagination: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Pagination');
     const exportPlugin: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Export');
     const stickyHeader: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.StickyHeader');
@@ -135,6 +136,8 @@ export const DataTable = React.memo((props: DataTableProps) => {
                 {pagination && <Pagination count={pagination.props.getCount(data || 0)} {...pagination.props} />}
 
                 {tree && <Tree {...tree.props} />}
+
+                {checkbox && <Checkbox {...checkbox.props} />}
 
             </Wrapper>
         </DataTableStore>

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Table } from '@equinor/eds-core-react';
 import { RowProps } from '../Row';
 import { StateContext } from "../DataTableStore";
-import CheckboxCell from "./CheckboxCell";
+import CheckboxCell from "../plugins/Checkbox/CheckboxCell";
 import Cell from "./Cell";
 
 const DefaultRow = styled(Table.Row)`
@@ -50,9 +50,12 @@ const Row: React.FC<TableRowProps & RowProps & RefAttributes<HTMLTableRowElement
 
     return (
         <DefaultRow role="row" ref={ref} style={getStyle && getStyle(data)}>
+
+            {/* ---- Checkbox plugin implementation start -------------------------------------- */}
             {state.checkboxReducer &&
                 <CheckboxCell key={`checkbox-header-${data.id}`} item={data}/>
             }
+            {/* ---- Checkbox plugin implementation end ---------------------------------------- */}
 
             {state.dataTableReducer.columns.map((column: any) => (
                 <React.Fragment key={`${column.props.id}-${data.id}`} >

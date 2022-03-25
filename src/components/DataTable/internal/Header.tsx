@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Table } from '@equinor/eds-core-react';
 import { DispatchContext, StateContext } from "../DataTableStore";
 import HeaderCell from "./HeaderCell";
-import CheckboxHeaderCell from './CheckboxHeaderCell';
+import CheckboxHeaderCell from '../plugins/Checkbox/CheckboxHeaderCell';
 import { ColumnProps } from "../Column";
 
 const Head = styled(Table.Head)`

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Checkbox, EdsProvider, Table } from '@equinor/eds-core-react';
-import { DispatchContext, StateContext } from "../DataTableStore";
+import { DispatchContext, StateContext } from "../../DataTableStore";
 import styled from "styled-components";
 
 type CheckboxCellProps = {
