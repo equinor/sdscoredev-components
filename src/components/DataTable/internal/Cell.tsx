@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StateContext } from "../DataTableStore";
 import styled from 'styled-components';
 import { CellProps, Table, TextField } from '@equinor/eds-core-react';
@@ -92,6 +92,13 @@ const Cell: React.FC<TableCellProps> = (props) => {
     const { column, onClick, item, href } = props;
     const { slim, id, render, truncate } = column.props;
 
+    const [data, setData] = useState<any>('');
+
+    /* Reset cell data on cancel edit */
+    useEffect(() => {
+        setData(item[column.props.id])
+    }, [state.dataTableReducer.editRow])
+
     const RenderCell = () => {
         /* If render prop is an element */
         if (render && typeof render === 'function') {
@@ -112,8 +119,8 @@ const Cell: React.FC<TableCellProps> = (props) => {
             return (
                 <TextField
                     id={item.id}
-                    value={item[column.props.id] || ""}
-                    onChange={() => null}
+                    value={data}
+                    onChange={(e: any) => setData(e.target.value)}
                 />
             )
         }

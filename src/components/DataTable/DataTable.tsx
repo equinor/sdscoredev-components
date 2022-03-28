@@ -11,6 +11,7 @@ import styled from "styled-components";
 import { Filter } from "./plugins/Filter/Filter";
 import Toolbar from "./internal/Toolbar";
 import { columnSelectorReducer } from "./plugins/ColumnSelector/columnSelectorReducer";
+import { editableTableReducer } from "./plugins/EditableTable/editableTableReducer";
 import { makeId } from "../utils";
 import { StickyHeader } from "./plugins/StickyHeader/StickyHeader";
 
@@ -69,6 +70,10 @@ export type DataTableProps = {
      * Adds edit column and render inputs fields in the current row when clicked
      */
     editable?: boolean;
+    /**
+     * Gets called when save icon in an editable table is clicked
+     */
+    onSave?: Function;
 }
 
 export const DataTable = React.memo((props: DataTableProps) => {
@@ -79,7 +84,8 @@ export const DataTable = React.memo((props: DataTableProps) => {
         reducers = [], 
         onFetch,
         onScroll,
-        editable 
+        editable,
+        onSave
     } = props;
     const components = Children.toArray(children);
     const wrapperRef = useRef<any>(null);
@@ -131,6 +137,7 @@ export const DataTable = React.memo((props: DataTableProps) => {
                             data={data && getData ? getData(data) : data} 
                             onFetch={onFetch}
                             editable={editable}
+                            onSave={onSave}
                         />
 
                     </Table>

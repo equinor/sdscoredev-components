@@ -1,5 +1,5 @@
 import { Meta, Story, Canvas, ArgsTable, Source } from '@storybook/addon-docs';
-import { DataTable, checkboxReducer } from '../../components/DataTable';
+import { DataTable, editableTableReducer } from '../../components/DataTable';
 import { users } from '../data';
 
 <Meta title="Library/DataTable" component={DataTable} />
@@ -12,8 +12,11 @@ This is an example of an editable table.
   <Story name="Editable example">
       {() => {
       const { Column, ColumnSelector, StickyHeader } = DataTable;
+      const onSave = (data) => {
+        console.log("To API: ", data)
+      }
       return (
-          <DataTable data={users(10)} editable>
+          <DataTable data={users(10)} reducers={{ editableTableReducer }} onSave={() => toApi}>
             <Column id="id">Uuid</Column>
             <Column id="firstname">First name</Column>
             <Column id="lastname">Last name</Column>

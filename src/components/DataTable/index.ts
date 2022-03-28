@@ -9,6 +9,7 @@ import { Toolbar } from './Toolbar';
 import { Filter } from './plugins/Filter';
 import { StickyHeader } from './plugins/StickyHeader';
 import { DefaultQuery } from './plugins/DefaultQuery';
+import { EditableTable } from './plugins/EditableTable';
 
 import { checkboxReducer } from './plugins/checkboxReducer';
 import { columnSelectorReducer } from './plugins/ColumnSelector/columnSelectorReducer';
@@ -17,6 +18,7 @@ import { oDataQueryReducer } from './plugins/ODataQuery/oDataQueryReducer';
 import { paginationReducer } from './plugins/Pagination/paginationReducer';
 import { sortingReducer } from './plugins/sortingReducer';
 import { stickyHeaderReducer } from './plugins/StickyHeader/stickyHeaderReducer';
+import { editableTableReducer } from './plugins/EditableTable/editableTableReducer';
 
 type DataTableCompound = typeof BaseDataTable & {
     Row: typeof Row
@@ -28,6 +30,7 @@ type DataTableCompound = typeof BaseDataTable & {
     Filter: typeof Filter
     StickyHeader: typeof StickyHeader
     DefaultQuery: typeof DefaultQuery
+    EditableTable: typeof EditableTable
 }
 
 const DataTable = BaseDataTable as DataTableCompound
@@ -41,6 +44,7 @@ DataTable.Row = Row
 DataTable.Toolbar = Toolbar
 DataTable.StickyHeader = StickyHeader
 DataTable.DefaultQuery = DefaultQuery
+DataTable.EditableTable = EditableTable
 
 DataTable.Column.displayName = 'DataTable.Column'
 DataTable.ColumnSelector.displayName = 'DataTable.ColumnSelector'
@@ -51,6 +55,7 @@ DataTable.Row.displayName = 'DataTable.Row'
 DataTable.Toolbar.displayName = 'DataTable.Toolbar'
 DataTable.StickyHeader.displayName = 'DataTable.StickyHeader'
 DataTable.DefaultQuery.displayName = 'DataTable.DefaultQuery'
+DataTable.EditableTable.displayName = 'DataTable.EditableTable'
 
 export { 
     DataTable,
@@ -62,6 +67,7 @@ export {
     paginationReducer,
     sortingReducer,
     stickyHeaderReducer,
+    editableTableReducer
 }
 
 // TODO: Add more types to export

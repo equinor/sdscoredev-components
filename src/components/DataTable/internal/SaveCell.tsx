@@ -1,11 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import { EdsProvider, Icon, Table } from '@equinor/eds-core-react';
-import { edit, clear } from '@equinor/eds-icons' // import "save" icon
+import { save } from '@equinor/eds-icons' // import "save" icon
 import { DispatchContext, StateContext } from "../DataTableStore";
 import styled from "styled-components";
 
-type EditCelllProps = {
+type SaveCellProps = {
    item: any;
+   onSave?: Function;
 }
 
 const Wrapper = styled.div`
@@ -27,23 +28,23 @@ const Cell = styled(Table.Cell)`
     }
 `;
 
-const EditCell: React.FC<EditCelllProps> = ({ item }) => {
+const SaveCell: React.FC<SaveCellProps> = ({ item, onSave }) => {
     const state: any = useContext(StateContext);
     const dispatch: any = useContext(DispatchContext);
 
-    const editRow = () => {
-        dispatch({ type: 'SET_EDIT_ROW', payload: !state.editableTableReducer.editRowIndex })
+    const onSubmit = (d: any) => {
+        onSave && onSave("data", d);
     };
     
     return (
         <Cell>
             <EdsProvider density="compact">
-                <Wrapper onClick={editRow}>
-                    <Icon data={state.editableTableReducer.editRowIndex ? clear : edit} onClick={editRow} color="#007079" />
+                <Wrapper>
+                    <Icon data={save} onClick={onSubmit} color="#007079" />
                 </Wrapper>
             </EdsProvider>
         </Cell>
     );
 }
 
-export default EditCell;
+export default SaveCell;
