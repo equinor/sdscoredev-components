@@ -1,3 +1,10 @@
+## [2.3.7](https://github.com/equinor/sdscoredev-components/compare/2.3.6...2.3.7) (2022-03-30)
+
+
+### Bug Fixes
+
+* revert storybook commit ([8754dce](https://github.com/equinor/sdscoredev-components/commit/8754dce2131ff89fdf9510463487054295fd1c93))
+
 ## [2.3.6](https://github.com/equinor/sdscoredev-components/compare/2.3.5...2.3.6) (2022-03-30)
 
 
