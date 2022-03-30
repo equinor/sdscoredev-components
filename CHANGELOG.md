@@ -1,3 +1,10 @@
+## [2.3.2](https://github.com/equinor/sdscoredev-components/compare/2.3.1...2.3.2) (2022-03-25)
+
+
+### Bug Fixes
+
+* add checkbox event and refactor ([12e3e8b](https://github.com/equinor/sdscoredev-components/commit/12e3e8b8a98346ee8a718e9e794a62d882012411))
+
 ## [2.3.1](https://github.com/equinor/sdscoredev-components/compare/2.3.0...2.3.1) (2022-03-24)
 
 
