@@ -53,13 +53,12 @@ const StyledCell = styled(Table.Cell)<CellProps & { slim?: boolean, truncate?: n
             div {
                 display: none;
                 position: absolute;
-                height: 50px;
-                top: -18px;
+                height: 48px;
+                top: -17px;
                 margin-top: 0;
                 z-index: -1;
                 width: 100%;
-                background: rgba(234, 234, 234, 1);
-                border-right: 1px dashed rgba(220, 220, 220, 1);
+                background: rgba(247,247,247,1);
             }
         }
     }
@@ -70,7 +69,7 @@ const StyledCell = styled(Table.Cell)<CellProps & { slim?: boolean, truncate?: n
             z-index: 66;
 
             span {
-                background: rgba(234, 234, 234, 1);
+                background: rgba(247,247,247,1);
 
                 div {
                     display: block;
