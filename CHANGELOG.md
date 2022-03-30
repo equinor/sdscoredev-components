@@ -3,6 +3,7 @@
 
 ### Bug Fixes
 
+* remove dist from relese ([b7e9ffd](https://github.com/equinor/sdscoredev-components/commit/b7e9ffda8bf1ca228392425366c96fa0f2efc99f))
 * remove from changelog ([5a0377a](https://github.com/equinor/sdscoredev-components/commit/5a0377a558d24d7a6f822cf7848b7aec83bde694))
 
 ## [2.3.2](https://github.com/equinor/sdscoredev-components/compare/2.3.1...2.3.2) (2022-03-25)
