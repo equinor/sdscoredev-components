@@ -1,3 +1,37 @@
+# 1.0.0 (2022-03-30)
+
+
+### Bug Fixes
+
+* add checkbox event and refactor ([f3a2f4f](https://github.com/equinor/sdscoredev-components/commit/f3a2f4f729e652cd17a0255638e2343dc4474cdf))
+* add compability key to ColumnProps ([fe3a776](https://github.com/equinor/sdscoredev-components/commit/fe3a776215e4dc8c3555fe60f712f069f7e08890))
+* add sort prop on Column ([cd5e537](https://github.com/equinor/sdscoredev-components/commit/cd5e537b223e6f09e7de3ba8b666e976bd6d47fe))
+* button triggered parent ([55d0e67](https://github.com/equinor/sdscoredev-components/commit/55d0e673971a1a8f37ebcf724253e47445e4c606))
+* form style errors ([162338e](https://github.com/equinor/sdscoredev-components/commit/162338e9125255e1a306347f80bf4592b17bc92a))
+* meta messed up tooltip placement ([7be97c1](https://github.com/equinor/sdscoredev-components/commit/7be97c1731c451a6300decdbb3811a54dfdf99e3))
+* missing unique key ([ffb0f01](https://github.com/equinor/sdscoredev-components/commit/ffb0f015efc2b7df0854723ef4d1ae29505be9d6))
+* no check for existing treeReducer ([dbcb476](https://github.com/equinor/sdscoredev-components/commit/dbcb476818d2a6ca041498f243242ac6f4def5a5))
+* ref should be optional ([37de801](https://github.com/equinor/sdscoredev-components/commit/37de801e76c2fadc03f46530d4d8ed8c59f628fe))
+* remove cach ([a5fec1d](https://github.com/equinor/sdscoredev-components/commit/a5fec1d4000e88f70217edb1b0dcbf5f8bfa56c8))
+* some input and form bugs ([db54987](https://github.com/equinor/sdscoredev-components/commit/db54987fcd8bcfc5baab561f10c215e5d4bde018))
+
+
+### Features
+
+* add allowance for multiple datatables ([4e304b4](https://github.com/equinor/sdscoredev-components/commit/4e304b4abd018956c7f5e22b258f9f6a995da36e))
+* add defaultQuery ([8dcc179](https://github.com/equinor/sdscoredev-components/commit/8dcc179cb7889df509da3f21194f2d692a85c74e))
+* add session cache for column selector ([6d510d9](https://github.com/equinor/sdscoredev-components/commit/6d510d92fdcfff3e1a6cdcb70ac007937726d3c2))
+* add toolbar ([269d874](https://github.com/equinor/sdscoredev-components/commit/269d874e075e54b07c7095bf5314af1988590ec1))
+* add toolbar and row styling ([79d82e3](https://github.com/equinor/sdscoredev-components/commit/79d82e32dde702d372dcfcdb6c7e8acf475e75a2))
+* Add tree structure plugin ([42d0e9f](https://github.com/equinor/sdscoredev-components/commit/42d0e9f287978fe87976da19e64f55e3208c4e0c))
+* bump major ([16e834a](https://github.com/equinor/sdscoredev-components/commit/16e834add536e2ede55962c1b94c60fd9c1bfb60))
+* new minor datatable functionality ([bbfb672](https://github.com/equinor/sdscoredev-components/commit/bbfb6722d5500fdbfb1422e311c5256f9255fe37))
+
+
+### BREAKING CHANGES
+
+* Bump major
+
 ## [2.3.2](https://github.com/equinor/sdscoredev-components/compare/2.3.1...2.3.2) (2022-03-25)
 
 
