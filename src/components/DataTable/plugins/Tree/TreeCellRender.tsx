@@ -1,4 +1,4 @@
-import { Button, EdsProvider, Icon } from "@equinor/eds-core-react";
+import { Button as EdsButton, EdsProvider, Icon } from "@equinor/eds-core-react";
 import { DispatchContext, StateContext } from "../../DataTableStore";
 import { CustomRenderProps } from "index";
 import React, { useContext } from "react";
@@ -15,12 +15,20 @@ const Wrapper = styled.span<{ depth: number }>`
     margin-left: -8px; // TODO: should probably not be hard coded, rather make cells have no padding, and wrap content with a padding that can be dynamically changed
 `;
 
+const Button = styled(EdsButton)`
+    z-index: 999;
+`
+
 export const TreeCellRender = (props: CustomRenderProps) => {
     const { item, content, depth } = props;
     const state: any = useContext(StateContext);
     const dispatch: any = useContext(DispatchContext);
 
-    const handleClick = () => dispatch({ type: "TREE_TOGGLE", payload: item.id })
+    const handleClick = (e: any) => {
+        e.stopPropagation();
+        e.preventDefault();
+        dispatch({ type: "TREE_TOGGLE", payload: item.id })
+    }
 
     const isOpen = () => state.treeReducer.open.includes(item.id)
 
