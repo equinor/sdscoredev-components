@@ -5,6 +5,7 @@ import { DispatchContext, StateContext } from "../DataTableStore";
 import HeaderCell from "./HeaderCell";
 import CheckboxHeaderCell from '../plugins/Checkbox/CheckboxHeaderCell';
 import { ColumnProps } from "../Column";
+import { SubrowHeaderCell } from "../plugins/Subrow/SubrowHeaderCell";
 
 const Head = styled(Table.Head)`
     white-space: normal;
@@ -12,9 +13,10 @@ const Head = styled(Table.Head)`
 
 type HeaderProps = {
     id: string;
+    plugins?: any;
 }
 
-const Header: React.FC<HeaderProps> = ({ children, id }) => {
+const Header: React.FC<HeaderProps> = ({ children, id, plugins }) => {
     const state: any = useContext(StateContext);
     const dispatch: any = useContext(DispatchContext);
 
@@ -51,9 +53,10 @@ const Header: React.FC<HeaderProps> = ({ children, id }) => {
     return (
         <Head>
             <Table.Row id={`dataTable.headerRow.${id}`}>
-                {state.checkboxReducer && (
-                    <CheckboxHeaderCell key="checkbox-header" />
-                )}
+
+                {/* ---- Checkbox plugin implementation start --------------------- */}
+                {state.checkboxReducer && <CheckboxHeaderCell key="checkbox-header" />}
+                {/* ---- Checkbox plugin implementation end ----------------------- */}
 
                 {state.columnSelectorReducer && state.dataTableReducer.columns?.
                     filter((x: any) => state.columnSelectorReducer.visibleColumns?.includes(x.props.id)).
@@ -68,6 +71,11 @@ const Header: React.FC<HeaderProps> = ({ children, id }) => {
                         <HeaderCell key={column.props.id} id={column.props.id} column={column} onClick={() => handleClick(column.props.orderBy)} />
                     ))
                 }
+
+                {/* ---- Subrow plugin implementation start ---------------------------------------------------------------------------------------- */}
+                {plugins.subrow && state.subrowReducer && <SubrowHeaderCell key="subrow-header" id="__subrow">{plugins.subrow.props.columnHeader}</SubrowHeaderCell>}
+                {/* ---- Subrow plugin implementation end ------------------------------------------------------------------------------------------ */}
+
             </Table.Row>
         </Head>
     );

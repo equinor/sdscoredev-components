@@ -39,7 +39,7 @@ const CheckboxHeaderCell: React.FC<CheckboxCellProps> = () => {
     };
     
     return (
-        <Cell>
+        <Cell id="__checkbox">
             <EdsProvider density="compact">
                 <Wrapper onClick={selectAll}>
                     <Checkbox

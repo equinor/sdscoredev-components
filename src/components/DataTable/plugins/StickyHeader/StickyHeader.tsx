@@ -6,6 +6,7 @@ import HeaderCell from "../../internal/HeaderCell";
 import CheckboxHeaderCell from '../Checkbox/CheckboxHeaderCell';
 import { StickyHeaderProps, StickyHeaderRef } from ".";
 import { ColumnProps } from "components/DataTable/Column";
+import { SubrowHeaderCell } from "../Subrow/SubrowHeaderCell";
 
 const Head = styled(Table.Head)`
     position: relative;
@@ -23,10 +24,11 @@ const StickyTable = styled(Table)<{ stick: boolean, threshold: number | undefine
 
 export type InternalStickyHeaderProps = {
     id: string;
+    plugins: any;
 } & StickyHeaderProps;
 
 export const StickyHeader = forwardRef<StickyHeaderRef, InternalStickyHeaderProps>((props: InternalStickyHeaderProps, ref) => {
-    const { threshold, id } = props;
+    const { threshold, id, plugins } = props;
     const [stick, setStick] = useState<boolean>(false);
     const state: any = useContext(StateContext);
     const dispatch: any = useContext(DispatchContext);
@@ -63,9 +65,12 @@ export const StickyHeader = forwardRef<StickyHeaderRef, InternalStickyHeaderProp
      */
     useEffect(() => {
        if (state.columnSelectorReducer.visibleColumns && state.columnSelectorReducer.visibleColumns.length) {
-            var calculated = setInterval(function() {
+            let payload = state.columnSelectorReducer.visibleColumns;
+            if (plugins.subrow) payload.push('__subrow')
+
+            let calculated = setInterval(function() {
                 if (true) {
-                    dispatch({ type: "CALCULATE_COLUMN_WIDTH", payload: state.columnSelectorReducer.visibleColumns, id })
+                    dispatch({ type: "CALCULATE_COLUMN_WIDTH", payload, id })
                     clearInterval(calculated);
                 }
                 init.current++
@@ -77,7 +82,9 @@ export const StickyHeader = forwardRef<StickyHeaderRef, InternalStickyHeaderProp
     useImperativeHandle(ref, () => ({
         handleScroll: () => determineStickyState(),
         handleResize: () => {
-            dispatch({ type: "CALCULATE_COLUMN_WIDTH", payload: state.columnSelectorReducer.visibleColumns, id })
+            let payload = state.columnSelectorReducer.visibleColumns;
+            if (plugins.subrow) payload.push('__subrow')
+            dispatch({ type: "CALCULATE_COLUMN_WIDTH", payload, id })
         },
     }));
 
@@ -90,9 +97,10 @@ export const StickyHeader = forwardRef<StickyHeaderRef, InternalStickyHeaderProp
         <StickyTable stick={stick} threshold={threshold}>
             <Head id={`dataTable.stickyHeaderRow.${id}`}>
                 <Table.Row>
-                    {state.checkboxReducer && (
-                        <CheckboxHeaderCell key="checkbox-header" />
-                    )}
+                    
+                    {/* ---- Checkbox plugin implementation start TODO: Do the same as with Subrow --------------------- */}
+                    {state.checkboxReducer && <CheckboxHeaderCell key="checkbox-header" />}
+                    {/* ---- Checkbox plugin implementation end ----------------------- */}
 
                     {state.dataTableReducer.columns?.filter((x: any) => state.columnSelectorReducer.visibleColumns?.includes(x.props.id)).map((column: JSX.Element) => (
                         <HeaderCell 
@@ -103,6 +111,17 @@ export const StickyHeader = forwardRef<StickyHeaderRef, InternalStickyHeaderProp
                             onClick={() => handleClick(column.props)} 
                         />
                     ))}
+
+                    {/* ---- Subrow plugin implementation start ---------------------------------------------------------------------------------- */}
+                    {plugins.subrow && state.subrowReducer && (
+                        <SubrowHeaderCell 
+                            key="subrow-header"
+                            width={state.stickyHeaderReducer.width['__subrow']}
+                            id="sticky-__subrow">
+                                {plugins.subrow.props.columnHeader}
+                        </SubrowHeaderCell>
+                    )}
+                    {/* ---- Subrow plugin implementation end ------------------------------------------------------------------------------------ */}
                 </Table.Row>
             </Head>
         </StickyTable>

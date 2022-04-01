@@ -1,7 +1,7 @@
 import React, { Children, useEffect, useRef } from "react";
 import Header from './internal/Header';
 import Body from './internal/Body';
-import { Table } from '@equinor/eds-core-react';
+import { EdsProvider, Table } from '@equinor/eds-core-react';
 import { ColumnSelector } from "./plugins/ColumnSelector/ColumnSelector";
 import { Export } from "./plugins/Export/Export";
 import { Pagination } from "./plugins/Pagination/Pagination";
@@ -65,6 +65,10 @@ export type DataTableProps = {
      * @default false
      */
     onScroll?: Function;
+    /**
+     * Makes the table compact
+     */
+    compact?: boolean;
     children?: any;
 }
 
@@ -75,7 +79,8 @@ export const DataTable = React.memo((props: DataTableProps) => {
         children, 
         reducers = [], 
         onFetch,
-        onScroll 
+        onScroll,
+        compact = false,
     } = props;
     const components = Children.toArray(children);
     const wrapperRef = useRef<any>(null);
@@ -83,6 +88,8 @@ export const DataTable = React.memo((props: DataTableProps) => {
     const row: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Row');
     const tree: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Tree');
     const filter: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Filter');
+    const subrow: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Subrow');
+    const toolbar: any = components.filter((x: JSX.Element) => x.type.displayName === 'DataTable.Toolbar');
     const checkbox: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Checkbox');
     const pagination: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Pagination');
     const exportPlugin: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Export');
@@ -106,31 +113,45 @@ export const DataTable = React.memo((props: DataTableProps) => {
         <DataTableStore components={components} reducers={{dataTableReducer, ...reducers}}>
             <Wrapper>
 
-                <Toolbar components={components.filter((x: any) => x.type.displayName === 'DataTable.Toolbar')}>
-                    <>
-                        {exportPlugin && <Export {...exportPlugin.props} />}
-                        {columnSelector && <ColumnSelector {...columnSelector.props} ref={columnSelector.ref} />}
-                        {filter && <Filter {...filter.props} />}
-                    </>
-                </Toolbar>
+                {(toolbar.length || exportPlugin || columnSelector || filter) && (
+                    <Toolbar components={toolbar}>
+                        <>
+                            {exportPlugin && <Export {...exportPlugin.props} />}
+                            {columnSelector && <ColumnSelector {...columnSelector.props} ref={columnSelector.ref} />}
+                            {filter && <Filter {...filter.props} />}
+                        </>
+                    </Toolbar>
+                )}
 
                 <TableWrapper ref={wrapperRef}>
 
-                    {stickyHeader && <StickyHeader {...stickyHeader.props} id={id} ref={stickyHeader.ref} />}
+                    {stickyHeader && <StickyHeader {...stickyHeader.props} id={id} ref={stickyHeader.ref} plugins={{ subrow }} />}
 
+                    <EdsProvider density={compact ? 'compact' : 'comfortable'}>
                     <Table style={{ width: '100%' }}>
-                        <Header id={id}>
+
+                        {/**
+                         * Header can be provided with plugins. 
+                         * Children must contain only the column definitions.
+                         */}
+                        <Header id={id} plugins={{ subrow }}>
                             {components.filter((x: any) => x.type.displayName === 'DataTable.Column')}
                         </Header>
 
+                        {/**
+                         * Body can be provided with plugins. 
+                         * TODO: Try refactor away `{...row?.props}` and add row to plugins  
+                         */}
                         <Body
                             id={id}
                             {...row?.props} 
                             data={data && getData ? getData(data) : data} 
                             onFetch={onFetch}
+                            plugins={{ subrow }}
                         />
 
                     </Table>
+                    </EdsProvider>
                 </TableWrapper>
 
                 {pagination && <Pagination count={pagination.props.getCount(data || 0)} {...pagination.props} />}
