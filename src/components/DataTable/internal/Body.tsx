@@ -2,19 +2,21 @@ import React, { forwardRef, useContext, useEffect, useRef } from "react";
 import { Table } from '@equinor/eds-core-react';
 import Row from './Row';
 import { DispatchContext, StateContext } from "../DataTableStore";
+import { Subrow } from "../plugins/Subrow/Subrow";
 
 type TableBodyProps = {
     data?: any;
     onFetch?: Function;
     children?: any;
     id?: string;
+    plugins?: any;
 }
 
 /**
  * TODO: Needs to be split in two separate Body components, One default, and one for the Tree plugin
  */
 const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBodyProps, ref) => {
-    const { data, onFetch, id } = props;
+    const { data, onFetch, id, plugins } = props;
     const state: any = useContext(StateContext);
     const dispatch: any = useContext(DispatchContext);
     const rowRef = useRef<any>(null)
@@ -39,7 +41,10 @@ const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBo
 
     useEffect(() => {
         if (redraw.current < 3 && state.columnSelectorReducer && state.columnSelectorReducer.visibleColumns) {
-            dispatch({ type: "CALCULATE_COLUMN_WIDTH", payload: state.columnSelectorReducer.visibleColumns, id })
+            let payload = state.columnSelectorReducer.visibleColumns;
+            if (plugins.subrow) payload.push('__subrow')
+
+            dispatch({ type: "CALCULATE_COLUMN_WIDTH", payload, id })
             redraw.current++;
         }
     }, [redraw.current])
@@ -54,7 +59,8 @@ const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBo
         (
             <React.Fragment key={index}>
                 <Row {...props} depth={depth} data={item} ref={(el) => rowRef.current = el} key={`row-${item.id}`} />
-                {item.children && state.treeReducer && state.treeReducer.open.includes(item.id) && generateRows(item.children, depth)}
+                {state.treeReducer && item.children && state.treeReducer.open.includes(item.id) && generateRows(item.children, depth)}
+                {plugins.subrow && state.subrowReducer && state.subrowReducer.open.includes(item.id) && <Subrow {...plugins.subrow.props} data={item} key={`row-${item.id}-subrow`} />}
             </React.Fragment>
         ))
     }

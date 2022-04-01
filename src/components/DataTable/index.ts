@@ -1,16 +1,17 @@
 import { DataTable as BaseDataTable, DataTableProps } from './DataTable';
-import { CustomRenderProps } from './types';
-import { Row } from './Row';
-import { ColumnSelector } from './plugins/ColumnSelector';
-import { Export } from './plugins/Export';
-import { Column } from './Column';
-import { Pagination } from './plugins/Pagination';
-import { Tree } from './plugins/Tree';
-import { Toolbar } from './Toolbar';
-import { Filter } from './plugins/Filter';
-import { StickyHeader } from './plugins/StickyHeader';
-import { DefaultQuery } from './plugins/DefaultQuery';
 import { Checkbox } from './plugins/Checkbox';
+import { Column } from './Column';
+import { ColumnSelector } from './plugins/ColumnSelector';
+import { CustomRenderProps } from './types';
+import { DefaultQuery } from './plugins/DefaultQuery';
+import { Export } from './plugins/Export';
+import { Filter } from './plugins/Filter';
+import { Pagination } from './plugins/Pagination';
+import { Row } from './Row';
+import { StickyHeader } from './plugins/StickyHeader';
+import { Subrow } from './plugins/Subrow';
+import { Toolbar } from './Toolbar';
+import { Tree } from './plugins/Tree';
 
 import { checkboxReducer } from './plugins/Checkbox/checkboxReducer';
 import { columnSelectorReducer } from './plugins/ColumnSelector/columnSelectorReducer';
@@ -30,6 +31,7 @@ type DataTableCompound = typeof BaseDataTable & {
     Pagination: typeof Pagination
     Row: typeof Row
     StickyHeader: typeof StickyHeader
+    Subrow: typeof Subrow
     Toolbar: typeof Toolbar
     Tree: typeof Tree
 }
@@ -45,6 +47,7 @@ DataTable.Filter = Filter
 DataTable.Pagination = Pagination
 DataTable.Row = Row
 DataTable.StickyHeader = StickyHeader
+DataTable.Subrow = Subrow
 DataTable.Toolbar = Toolbar
 DataTable.Tree = Tree
 
@@ -57,6 +60,7 @@ DataTable.Filter.displayName = 'DataTable.Filter'
 DataTable.Pagination.displayName = 'DataTable.Pagination'
 DataTable.Row.displayName = 'DataTable.Row'
 DataTable.StickyHeader.displayName = 'DataTable.StickyHeader'
+DataTable.Subrow.displayName = 'DataTable.Subrow'
 DataTable.Toolbar.displayName = 'DataTable.Toolbar'
 DataTable.Tree.displayName = 'DataTable.Tree'
 

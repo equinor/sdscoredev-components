@@ -5,6 +5,7 @@ import { RowProps } from '../Row';
 import { StateContext } from "../DataTableStore";
 import CheckboxCell from "../plugins/Checkbox/CheckboxCell";
 import Cell from "./Cell";
+import SubrowCell from "../plugins/Subrow/SubrowCell";
 
 const DefaultRow = styled(Table.Row)`
     display: table-row;
@@ -30,10 +31,11 @@ const DefaultRow = styled(Table.Row)`
 type TableRowProps = {
     data?: any;
     depth?: number;
+    plugins?: any;
 }
 
 const Row: React.FC<TableRowProps & RowProps & RefAttributes<HTMLTableRowElement>> = forwardRef((props, ref) => {
-    const { data, onClick, getLink, getStyle, depth } = props;
+    const { data, onClick, getLink, getStyle, plugins } = props;
     const state: any = useContext(StateContext);
 
     const handleClick = (e: any) => {
@@ -51,11 +53,9 @@ const Row: React.FC<TableRowProps & RowProps & RefAttributes<HTMLTableRowElement
     return (
         <DefaultRow role="row" ref={ref} style={getStyle && getStyle(data)}>
 
-            {/* ---- Checkbox plugin implementation start -------------------------------------- */}
-            {state.checkboxReducer &&
-                <CheckboxCell key={`checkbox-header-${data.id}`} item={data}/>
-            }
-            {/* ---- Checkbox plugin implementation end ---------------------------------------- */}
+            {/* ---- Checkbox plugin implementation start --------------------------------------- */}
+            {state.checkboxReducer && <CheckboxCell key={`checkbox-header-${data.id}`} item={data}/>}
+            {/* ---- Checkbox plugin implementation end ----------------------------------------- */}
 
             {state.dataTableReducer.columns.map((column: any) => (
                 <React.Fragment key={`${column.props.id}-${data.id}`} >
@@ -78,6 +78,11 @@ const Row: React.FC<TableRowProps & RowProps & RefAttributes<HTMLTableRowElement
                     ) : <></>}
                 </React.Fragment>
             ))}
+
+            {/* ---- Subrow plugin implementation start ---- */}
+            {plugins.subrow && state.subrowReducer && <SubrowCell item={data} render={plugins.subrow.props.columnRender} />}
+            {/* ---- Subrow plugin implementation end ------ */}
+
         </DefaultRow>
     );
 });
