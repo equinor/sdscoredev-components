@@ -1,12 +1,19 @@
 import React from 'react';
 import { Icon, TextField as EdsTextField } from '@equinor/eds-core-react';
-import { InputProps, withInput, Error } from './withInput';
+import { InputProps, withInput } from './withInput';
+import styled from 'styled-components';
 
+const StyledTextField = styled(EdsTextField)`
+    input {
+        padding-top: 7px;
+        height: 37px;
+    }
+`
 export const TextField: React.FC<InputProps> = (props: any) => {
     const { id, meta, value, onChange, error, disabled } = props;
 
     return (
-        <EdsTextField
+        <StyledTextField
             id={id}
             meta={meta}
             value={value || ''}

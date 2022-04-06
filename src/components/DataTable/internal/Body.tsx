@@ -59,7 +59,7 @@ const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBo
         (
             <React.Fragment key={index}>
                 <Row {...props} depth={depth} data={item} ref={(el) => rowRef.current = el} key={`row-${item.id}`} />
-                {state.treeReducer && item.children && state.treeReducer.open.includes(item.id) && generateRows(item.children, depth)}
+                {state.treeReducer && item[state.treeReducer.childrenProp] && state.treeReducer.open.includes(item.id) && generateRows(item[state.treeReducer.childrenProp], depth)}
                 {plugins.subrow && state.subrowReducer && state.subrowReducer.open.includes(item.id) && <Subrow {...plugins.subrow.props} data={item} key={`row-${item.id}-subrow`} />}
             </React.Fragment>
         ))

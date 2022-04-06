@@ -47,7 +47,7 @@ export type ColumnProps = {
      */
     truncate?: number;
     
-    children: Array<JSX.Element> | JSX.Element | string;
+    children: any;
 }
 
 export const Column: React.FC<ColumnProps> = ({ children }) => {

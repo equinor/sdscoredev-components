@@ -5,6 +5,9 @@ import { Actions } from './Actions';
 import TextField from './inputFields/TextField';
 import SelectField from './inputFields/SelectField';
 import { Validation } from './Validation';
+import { ValidationProvider } from './Validation/ValidationProvider';
+
+import { validationReducer } from './Validation/validationReducer';
 
 import { useForm } from './useForm';
 import { withInput, InputProps } from './inputFields/withInput';
@@ -36,7 +39,10 @@ export {
     Form,
     useForm,
     withInput,
-    InputProps
+    InputProps,
+    ValidationProvider,
+
+    validationReducer
 }
 
 export type { FormProps, FormRef } 

@@ -7,6 +7,10 @@ export type TreeProps = {
      * The id of the column to add the tree arrow trigger
      */
     id: string;
+    /**
+     * If set, it will override the 'children' key
+     */
+    childrenProp?: string;
 };
 
 const Tree: FC<TreeProps> = (props) => {

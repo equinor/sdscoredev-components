@@ -1,7 +1,7 @@
 import React from 'react';
 
 type ToolbarProps = {
-    placement?: 'right' | 'left';
+    placement?: 'right' | 'left' | 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
 }
 
 /**

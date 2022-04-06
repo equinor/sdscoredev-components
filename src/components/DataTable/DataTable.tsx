@@ -24,6 +24,7 @@ const Wrapper = styled.div`
 const TableWrapper = styled.div<any>`
     overflow-x: auto;
     clip-path: inset(0 0 0 0);
+    padding-bottom: 16px;
 `
 
 export type DataTableProps = {
@@ -113,8 +114,12 @@ export const DataTable = React.memo((props: DataTableProps) => {
         <DataTableStore components={components} reducers={{dataTableReducer, ...reducers}}>
             <Wrapper>
 
+                {/**
+                 * Top toolbar will list all toolbars with placement beginning with string `top` | `right` | `left` 
+                 * or plugins `export` | `columnSelector` | `filter`
+                 */}
                 {(toolbar.length || exportPlugin || columnSelector || filter) && (
-                    <Toolbar components={toolbar}>
+                    <Toolbar components={toolbar.filter((x: any) => x.props.placement.startsWith('top') || x.props.placement.startsWith('right') || x.props.placement.startsWith('left'))}>
                         <>
                             {exportPlugin && <Export {...exportPlugin.props} />}
                             {columnSelector && <ColumnSelector {...columnSelector.props} ref={columnSelector.ref} />}
@@ -155,6 +160,13 @@ export const DataTable = React.memo((props: DataTableProps) => {
                 </TableWrapper>
 
                 {pagination && <Pagination count={pagination.props.getCount(data || 0)} {...pagination.props} />}
+
+                {/**
+                 * Bottom toolbar will list all toolbars with placement beginning with string `bottom`
+                 */}
+                {toolbar.length && (
+                    <Toolbar components={toolbar.filter((x: any) => x.props.placement.startsWith('bottom'))} />
+                )}
 
                 {tree && <Tree {...tree.props} />}
 
