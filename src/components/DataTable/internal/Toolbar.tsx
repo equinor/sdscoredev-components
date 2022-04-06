@@ -36,11 +36,13 @@ export type ToolbarProps = {
 
 const Toolbar: React.FC<ToolbarProps> = ({ children, components }) => {
     const dispatch: any = useContext(DispatchContext);
+
+    if (!components?.length) return <></>;
     
     return (
         <Wrapper>
             <Left>
-                {components && components.filter((x: any) => x.props.placement === 'left' || !x.props.placement).map((component: any, index: number) => (
+                {components.filter((x: any) => x.props.placement.endsWith('left') || !x.props.placement).map((component: any, index: number) => (
                     <React.Fragment key={`lt-${index}`}>
                         {component.props.children}
                     </React.Fragment>
@@ -49,7 +51,7 @@ const Toolbar: React.FC<ToolbarProps> = ({ children, components }) => {
             <Right>
                 {children}
             
-                {components && components.filter((x: any) => x.props.placement === 'right').map((component: any, index: number) => (
+                {components.filter((x: any) => x.props.placement.endsWith('right')).map((component: any, index: number) => (
                     <RightInner key={`rt-${index}`}>
                         {component.props.children}
                     </RightInner>
