@@ -1,3 +1,16 @@
+# [2.5.0](https://github.com/equinor/sdscoredev-components/compare/2.4.0...2.5.0) (2022-04-06)
+
+
+### Bug Fixes
+
+* some tree errors ([50bd38b](https://github.com/equinor/sdscoredev-components/commit/50bd38b15a8601619526497f74519f6e89087e4d))
+
+
+### Features
+
+* add bottom toolbar ([3864cb9](https://github.com/equinor/sdscoredev-components/commit/3864cb9bb7060d1ab5d5f1fb61debff47eb05053))
+* add validation context to form hook ([ad4c87e](https://github.com/equinor/sdscoredev-components/commit/ad4c87e3bcc3eeeb18981ecc186d85e01ebec3d2))
+
 # [2.4.0](https://github.com/equinor/sdscoredev-components/compare/2.3.7...2.4.0) (2022-04-01)
 
 
