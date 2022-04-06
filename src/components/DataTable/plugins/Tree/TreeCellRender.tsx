@@ -37,7 +37,7 @@ export const TreeCellRender = (props: CustomRenderProps) => {
             <Wrapper depth={depth || 0}>
                 <div />
 
-                {item.children ? (
+                {item[state.treeReducer.childrenProp] ? (
                     <Button variant="ghost_icon" onClick={handleClick}>
                         <Icon name={isOpen() ? 'chevron_down' : 'chevron_right'} size={24} style={{ color: "#007079" }} />
                     </Button>
