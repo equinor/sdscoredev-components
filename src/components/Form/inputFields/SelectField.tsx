@@ -47,17 +47,17 @@ const SelectField: React.FC<SelectFieldProps & InputProps & Error> = (
         // Fixes the overlapping problem of the component
         menu: (provided) => ({ ...provided, zIndex: 9999 }),
         menuPortal: (provided) => ({ ...provided, zIndex: 9999 }),
+        indicatorSeparator: () => ({ display: 'none' }),
+        indicatorsContainer: (provided) => ({ ...provided }),
         control: (provided) => ({
           ...provided,
           backgroundColor: "#F7F7F7",
           borderRadius: "0px",
           borderStyle: "none",
-
-          borderBottom: "ridge",
         }),
       }}
       filterOption={filterOption}
-      isClearable={true}
+      isClearable={false}
       menuPortalTarget={document.body}
       menuPosition="fixed"
       // menuIsOpen

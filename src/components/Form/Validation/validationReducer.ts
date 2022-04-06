@@ -1,5 +1,3 @@
-import { ReactNode } from "react";
-
 export const SET_ERRORS = "SET_ERRORS";
 
 interface ValidationState {
