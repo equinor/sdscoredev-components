@@ -1,3 +1,16 @@
+# [2.4.0](https://github.com/equinor/sdscoredev-components/compare/2.3.7...2.4.0) (2022-04-01)
+
+
+### Bug Fixes
+
+* background color for truncate cell wrong ([d22f4f4](https://github.com/equinor/sdscoredev-components/commit/d22f4f46c03a2854384f35555952f9fa5d2e95a3))
+* dependency failure ([91948a3](https://github.com/equinor/sdscoredev-components/commit/91948a3d0cf7a26cf6444a8dc056bf7c9db59bea))
+
+
+### Features
+
+* Add subrow functionality ([dc8bb4c](https://github.com/equinor/sdscoredev-components/commit/dc8bb4c82296116f001149407ae583adcde11aa5))
+
 ## [2.3.7](https://github.com/equinor/sdscoredev-components/compare/2.3.6...2.3.7) (2022-03-30)
 
 
