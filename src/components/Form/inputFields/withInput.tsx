@@ -147,7 +147,7 @@ export const withInput = ({ variant = 'text', noFocus = false, rightPadding = 37
                     }
                 })
             } else {
-                setValidationErrors([])
+                setValidationErrors(undefined)
             }
         }, [state.validationReducer.errors])
 
