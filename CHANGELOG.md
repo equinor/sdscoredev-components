@@ -1,3 +1,10 @@
+## [2.5.1](https://github.com/equinor/sdscoredev-components/compare/2.5.0...2.5.1) (2022-04-06)
+
+
+### Bug Fixes
+
+* validation error height was gone ([a96d087](https://github.com/equinor/sdscoredev-components/commit/a96d08793d60bdb7fbb012cb0cddff86db208c87))
+
 # [2.5.0](https://github.com/equinor/sdscoredev-components/compare/2.4.0...2.5.0) (2022-04-06)
 
 
