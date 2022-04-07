@@ -1,3 +1,10 @@
+## [2.5.2](https://github.com/equinor/sdscoredev-components/compare/2.5.1...2.5.2) (2022-04-07)
+
+
+### Bug Fixes
+
+* toolbar button is gone ([5d1df07](https://github.com/equinor/sdscoredev-components/commit/5d1df074ffc7dbd50b173aeeee7b1a67bb60460f))
+
 ## [2.5.1](https://github.com/equinor/sdscoredev-components/compare/2.5.0...2.5.1) (2022-04-06)
 
 

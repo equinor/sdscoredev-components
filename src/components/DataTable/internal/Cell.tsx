@@ -24,6 +24,11 @@ const StyledCell = styled(Table.Cell)<CellProps & { slim?: boolean, truncate?: n
     & a.row-link {
         text-decoration: none;
         color: inherit;
+
+        /* Moves all children of a anchor wrapped cell to fron so that they can receive mouse events */
+        & > * {
+            z-index: 9;
+        }
     }
 
     & a.row-link::after {
@@ -81,7 +86,7 @@ const StyledCell = styled(Table.Cell)<CellProps & { slim?: boolean, truncate?: n
 
 type TableCellProps = {
     column?: any;
-    onClick?: Function;
+    onClick?: Function; // Not in use
     item?: any;
     href?: string;
     depth?: number; // TODO: Try refactor out depth prop, it belongs to Tree plugin
@@ -128,12 +133,16 @@ const Cell: React.FC<TableCellProps> = (props) => {
             truncate={truncate}
             scope="col" 
             id={id}
-            onClick={() => onClick && onClick}
+            // onClick={() => onClick && onClick}
         >
-            {href ? <a className="row-link" href={href} onClick={(e) => {
-                e.preventDefault();
-                window.location.replace(href);
-            }}>{RenderCell()}</a> : RenderCell()}
+            {href ? <a 
+                className="row-link" 
+                href={href} 
+                onClick={(e) => {
+                    e.preventDefault();
+                    window.location.replace(href);
+                }}
+            >{RenderCell()}</a> : RenderCell()}
         </StyledCell>
     )
 };
