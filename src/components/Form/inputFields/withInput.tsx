@@ -76,7 +76,7 @@ export interface Options {
 
 const InputWrapper = styled.div<{ flexGrow?: boolean, edit?: boolean, width?: number }>`
     min-width: ${(props) => props.width ? `${props.width}px` : '350px'};
-    flex-grow: ${(props) => props.edit && props.flexGrow ? 1 : 'none'};
+    /* flex-grow: ${(props) => props.flexGrow ? 1 : 0}; */
 `
 
 const Header = styled.div`
@@ -119,7 +119,7 @@ const Empty = styled.div`
     height: 32px;
 `
 
-export const withInput = ({ variant = 'text', noFocus = false, rightPadding = 37 }: Options = {}) => <TOriginalProps extends {}>(
+export const withInput = ({ variant = 'text', noFocus = false, rightPadding = 0 }: Options = {}) => <TOriginalProps extends {}>(
     Component:
         | React.ComponentClass<TOriginalProps & InputProps>
         | React.FunctionComponent<TOriginalProps & InputProps>,
