@@ -6,7 +6,7 @@ import TextField from './inputFields/TextField';
 import SelectField from './inputFields/SelectField';
 import { Validation } from './Validation';
 import { ValidationProvider } from './Validation/ValidationProvider';
-
+import { useValidation } from './Validation/useValidation';
 import { validationReducer } from './Validation/validationReducer';
 
 import { useForm } from './useForm';
@@ -41,7 +41,7 @@ export {
     withInput,
     InputProps,
     ValidationProvider,
-
+    useValidation,
     validationReducer
 }
 

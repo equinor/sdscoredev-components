@@ -97,6 +97,9 @@ export const DataTable = React.memo((props: DataTableProps) => {
     const stickyHeader: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.StickyHeader');
     const columnSelector: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.ColumnSelector');
 
+    const bottomComponents = toolbar.filter((x: any) => x.props.placement.startsWith('bottom'))
+    const topComponents = toolbar.filter((x: any) => x.props.placement.startsWith('top') || x.props.placement.startsWith('right') || x.props.placement.startsWith('left'))
+
     const id = makeId()
 
     /**
@@ -118,8 +121,8 @@ export const DataTable = React.memo((props: DataTableProps) => {
                  * Top toolbar will list all toolbars with placement beginning with string `top` | `right` | `left` 
                  * or plugins `export` | `columnSelector` | `filter`
                  */}
-                {(toolbar.length || exportPlugin || columnSelector || filter) && (
-                    <Toolbar components={toolbar.filter((x: any) => x.props.placement.startsWith('top') || x.props.placement.startsWith('right') || x.props.placement.startsWith('left'))}>
+                {(topComponents.length > 0 || exportPlugin || columnSelector || filter) && (
+                    <Toolbar components={topComponents}>
                         <>
                             {exportPlugin && <Export {...exportPlugin.props} />}
                             {columnSelector && <ColumnSelector {...columnSelector.props} ref={columnSelector.ref} />}
@@ -164,8 +167,8 @@ export const DataTable = React.memo((props: DataTableProps) => {
                 {/**
                  * Bottom toolbar will list all toolbars with placement beginning with string `bottom`
                  */}
-                {toolbar.length && (
-                    <Toolbar components={toolbar.filter((x: any) => x.props.placement.startsWith('bottom'))} />
+                {bottomComponents.length > 0 && (
+                    <Toolbar components={bottomComponents} />
                 )}
 
                 {tree && <Tree {...tree.props} />}

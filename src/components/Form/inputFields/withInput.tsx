@@ -58,6 +58,10 @@ export interface InputProps {
      * If set, it overrides the min-width value
      */
     width?: number;
+    /**
+     * If set, disable validation
+     */
+    noValidation?: boolean;
 }
 
 export type Error = {
@@ -72,7 +76,7 @@ export interface Options {
 
 const InputWrapper = styled.div<{ flexGrow?: boolean, edit?: boolean, width?: number }>`
     min-width: ${(props) => props.width ? `${props.width}px` : '350px'};
-    flex-grow: ${(props) => props.edit && props.flexGrow ? 1 : 'none'};
+    /* flex-grow: ${(props) => props.flexGrow ? 1 : 0}; */
 `
 
 const Header = styled.div`
@@ -115,7 +119,7 @@ const Empty = styled.div`
     height: 32px;
 `
 
-export const withInput = ({ variant = 'text', noFocus = false, rightPadding = 37 }: Options = {}) => <TOriginalProps extends {}>(
+export const withInput = ({ variant = 'text', noFocus = false, rightPadding = 0 }: Options = {}) => <TOriginalProps extends {}>(
     Component:
         | React.ComponentClass<TOriginalProps & InputProps>
         | React.FunctionComponent<TOriginalProps & InputProps>,
@@ -123,7 +127,7 @@ export const withInput = ({ variant = 'text', noFocus = false, rightPadding = 37
     type ResultProps = TOriginalProps & InputProps;
     const Input = (props: ResultProps) => {
 
-        const { id, value, label, tooltip, isRequired, disabled, edit, flexGrow, width } = props;
+        const { id, value, label, tooltip, isRequired, disabled, edit, flexGrow, width, noValidation } = props;
         const [validationErrors, setValidationErrors] = useState<Array<string> | undefined>(undefined)
 
         const state: any = useContext(ValidationStateContext);
@@ -158,6 +162,20 @@ export const withInput = ({ variant = 'text', noFocus = false, rightPadding = 37
             if (validationErrors) setValidationErrors(undefined)
         }, [value])
 
+        const Validation = () => {
+            if (validationErrors) {
+                return (
+                    <>
+                        {validationErrors.map((validationError: string, index: number) => (
+                            <ValidationError key={index} label={validationError} />
+                        ))}
+                    </>
+                )
+            } else {
+                return <Empty></Empty>;
+            }
+        }
+
         return (
             <InputWrapper flexGrow={flexGrow} edit={edit} width={width}>
                 <Header>
@@ -173,9 +191,7 @@ export const withInput = ({ variant = 'text', noFocus = false, rightPadding = 37
                     : <ReadOnly {...props} variant={variant} rightPadding={rightPadding} />    
                 }
 
-                {validationErrors ? validationErrors.map((validationError: string, index) => (
-                    <ValidationError key={index} label={validationError} />
-                )) : <Empty></Empty>}
+                {!noValidation && <Validation />}
             </InputWrapper>
         );
     };

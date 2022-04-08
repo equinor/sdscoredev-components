@@ -1,3 +1,10 @@
+## [2.5.3](https://github.com/equinor/sdscoredev-components/compare/2.5.2...2.5.3) (2022-04-07)
+
+
+### Bug Fixes
+
+* cell items not able to receive mouse events ([bb4bb03](https://github.com/equinor/sdscoredev-components/commit/bb4bb03bd0fdb01f3815a821210e7d9d51fcdb7f))
+
 ## [2.5.2](https://github.com/equinor/sdscoredev-components/compare/2.5.1...2.5.2) (2022-04-07)
 
 
