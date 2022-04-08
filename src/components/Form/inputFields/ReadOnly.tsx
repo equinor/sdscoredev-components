@@ -10,6 +10,15 @@ const Wrapper = styled.div<{ rightPadding?: number }>`
     letter-spacing: 0.025em;
 `;
 
+const HtmlWrapper = styled.div<{ rightPadding?: number }>`
+    padding-left: 8px;
+    padding-right: ${(props) => props.rightPadding ? `${props.rightPadding}px` : '0' };
+    min-height: 37px;
+    display: inline-block;
+    align-content: center;
+    letter-spacing: 0.025em;
+`;
+
 export const ReadOnly = (props: any) => {
     const { render, value, childKey, options, variant, rightPadding, id } = props;
 
@@ -24,7 +33,7 @@ export const ReadOnly = (props: any) => {
     }
 
     if (variant === 'html') {
-        return <Wrapper rightPadding={rightPadding} dangerouslySetInnerHTML={{ __html: value || '' }} />
+        return <HtmlWrapper rightPadding={rightPadding} dangerouslySetInnerHTML={{ __html: value || '' }} />
     }
     
     if (typeof value === 'object' && value !== null) {
