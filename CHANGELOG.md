@@ -1,3 +1,10 @@
+## [2.6.1](https://github.com/equinor/sdscoredev-components/compare/2.6.0...2.6.1) (2022-04-12)
+
+
+### Bug Fixes
+
+* improve readonly and form ([bd5118b](https://github.com/equinor/sdscoredev-components/commit/bd5118bd3158a0b3dcaad9a962a187b7095e0d9b))
+
 # [2.6.0](https://github.com/equinor/sdscoredev-components/compare/2.5.3...2.6.0) (2022-04-08)
 
 
