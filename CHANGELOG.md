@@ -1,3 +1,17 @@
+# [2.6.0](https://github.com/equinor/sdscoredev-components/compare/2.5.3...2.6.0) (2022-04-08)
+
+
+### Bug Fixes
+
+* 0 was shown when bottom toolbar was empty ([15906eb](https://github.com/equinor/sdscoredev-components/commit/15906eb668d40a82f4de34d978c1120a8d5fe7ae))
+* padding and wrapping fixes ([e9b401a](https://github.com/equinor/sdscoredev-components/commit/e9b401a6b556eaa7870436d68dc823d6f9d5a2c7))
+
+
+### Features
+
+* ability to disable validation ([9b848bd](https://github.com/equinor/sdscoredev-components/commit/9b848bd7333489e71fa97a531d812f2acf626313))
+* add useValidation hook ([d4b71b2](https://github.com/equinor/sdscoredev-components/commit/d4b71b21c14c316e7c58d36207a0654803d63bb2))
+
 ## [2.5.3](https://github.com/equinor/sdscoredev-components/compare/2.5.2...2.5.3) (2022-04-07)
 
 
