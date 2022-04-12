@@ -27,17 +27,17 @@ export const TreeCellRender = (props: CustomRenderProps) => {
     const handleClick = (e: any) => {
         e.stopPropagation();
         e.preventDefault();
-        dispatch({ type: "TREE_TOGGLE", payload: item.id })
+        dispatch({ type: "TREE_TOGGLE", payload: item?.id })
     }
 
-    const isOpen = () => state.treeReducer.open.includes(item.id)
+    const isOpen = () => state.treeReducer.open.includes(item?.id)
 
     return (
         <EdsProvider density="compact">
             <Wrapper depth={depth || 0}>
                 <div />
 
-                {item[state.treeReducer.childrenProp] ? (
+                {item && item[state.treeReducer.childrenProp] ? (
                     <Button variant="ghost_icon" onClick={handleClick}>
                         <Icon name={isOpen() ? 'chevron_down' : 'chevron_right'} size={24} style={{ color: "#007079" }} />
                     </Button>
