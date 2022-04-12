@@ -1,9 +1,7 @@
-import React, { ReactChild, ReactElement, ReactFragment, ReactPortal, useContext } from "react";
+import React, { ReactChild, ReactFragment, ReactPortal } from "react";
 import styled from 'styled-components';
-import { DispatchContext } from "../DataTableStore";
 
 const Wrapper = styled.div`
-    justify-content: right;
     width: 100%;
     display: grid;
     grid-template-columns: auto auto;
@@ -36,7 +34,11 @@ export type ToolbarProps = {
 
 const Toolbar: React.FC<ToolbarProps> = ({ children, components }) => {
 
+    console.log(components)
+
     if (!components?.length && !children) return <></>;
+
+    console.log(components)
     
     return (
         <Wrapper>
