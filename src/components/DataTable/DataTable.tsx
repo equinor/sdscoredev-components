@@ -15,8 +15,9 @@ import { StickyHeader } from "./plugins/StickyHeader/StickyHeader";
 import { Tree } from "./plugins/Tree/Tree";
 import {Checkbox } from "./plugins/Checkbox/Checkbox";
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ width?: number }>`
     /* overflow-x: auto; */
+    max-width: ${(props) => props.width ? `${props.width}px` : '100%'};
     white-space: nowrap;
     display: block;
 `;
@@ -70,6 +71,10 @@ export type DataTableProps = {
      * Makes the table compact
      */
     compact?: boolean;
+    /**
+     * Sets the maximum width of table
+     */
+    width?: number;
     children?: any;
 }
 
@@ -82,6 +87,7 @@ export const DataTable = React.memo((props: DataTableProps) => {
         onFetch,
         onScroll,
         compact = false,
+        width,
     } = props;
     const components = Children.toArray(children);
     const wrapperRef = useRef<any>(null);
@@ -115,7 +121,7 @@ export const DataTable = React.memo((props: DataTableProps) => {
     
     return (
         <DataTableStore components={components} reducers={{dataTableReducer, ...reducers}}>
-            <Wrapper>
+            <Wrapper width={width}>
 
                 {/**
                  * Top toolbar will list all toolbars with placement beginning with string `top` | `right` | `left` 
