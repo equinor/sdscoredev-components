@@ -52,7 +52,7 @@ export const useForm = (formData: any, props: any) => {
             }
         }
 
-        if (formState.data !== formData && !dirty.current) {
+        if (formState.data !== formData) {
             if (typeof props.onRender === 'function') {
                 const manipulatedData = props.onRender(formData)
                 setFormState((state: any) => ({ ...state, data: manipulatedData }));

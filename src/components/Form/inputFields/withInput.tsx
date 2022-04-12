@@ -1,11 +1,10 @@
 /* eslint-disable */
 import { Label as EdsLabel } from '@equinor/eds-core-react';
-import React, { ChangeEventHandler, useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Tooltip } from '../../Tooltip';
-import { DispatchContext, StateContext } from '../FormStore';
-import { ValidationDispatchContext, ValidationStateContext } from '../Validation/ValidationProvider';
-import { ReadOnly } from './ReadOnly';
+import { ValidationStateContext } from '../Validation/ValidationProvider';
+import { ReadOnlyValue } from './ReadOnlyValue';
 
 export interface InputProps {
     /**
@@ -72,6 +71,8 @@ export interface Options {
     variant?: string;
     noFocus?: boolean;
     rightPadding?: number;
+    noWrapper?: boolean;
+    noLabel?: boolean;
 }
 
 const InputWrapper = styled.div<{ flexGrow?: boolean, edit?: boolean, width?: number }>`
@@ -119,7 +120,13 @@ const Empty = styled.div`
     height: 32px;
 `
 
-export const withInput = ({ variant = 'text', noFocus = false, rightPadding = 0 }: Options = {}) => <TOriginalProps extends {}>(
+export const withInput = ({ 
+    variant = 'text',
+    noFocus = false,
+    rightPadding = 0,
+    noWrapper = false,
+    noLabel = false 
+}: Options = {}) => <TOriginalProps extends {}>(
     Component:
         | React.ComponentClass<TOriginalProps & InputProps>
         | React.FunctionComponent<TOriginalProps & InputProps>,
@@ -178,18 +185,27 @@ export const withInput = ({ variant = 'text', noFocus = false, rightPadding = 0 
 
         return (
             <InputWrapper flexGrow={flexGrow} edit={edit} width={width}>
-                <Header>
-                    {label && <Label style={{ color: disabled ? 'rgba(190, 190, 190, 1)' : 'unset' }} label={label} />}
-                    {tooltip && <Tooltip title={tooltip} placement="top" />}
-                    {isRequired && <Label label={''} style={{ color: disabled ? 'rgba(190, 190, 190, 1)' : 'unset' }} meta={'*Required'}/>}
-                </Header>
+                {!noLabel && (
+                    <Header>
+                        {label && <Label style={{ color: disabled ? 'rgba(190, 190, 190, 1)' : 'unset' }} label={label} />}
+                        {tooltip && <Tooltip title={tooltip} placement="top" />}
+                        {isRequired && <Label label={''} style={{ color: disabled ? 'rgba(190, 190, 190, 1)' : 'unset' }} meta={'*Required'}/>}
+                    </Header>
+                )}
 
-                {edit ? 
+                {edit && !noWrapper && (
                     <ComponentWrapper noFocus={noFocus}>
                         <Component {...props} />
                     </ComponentWrapper> 
-                    : <ReadOnly {...props} variant={variant} rightPadding={rightPadding} />    
-                }
+                )}
+
+                {edit && noWrapper && (
+                    <Component {...props} />
+                )}
+
+                {!edit && (
+                    <ReadOnlyValue {...props} variant={variant} rightPadding={rightPadding} />    
+                )}
 
                 {!noValidation && <Validation />}
             </InputWrapper>
