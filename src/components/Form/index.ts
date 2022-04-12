@@ -4,6 +4,7 @@ import { Label } from './Label';
 import { Actions } from './Actions';
 import TextField from './inputFields/TextField';
 import SelectField from './inputFields/SelectField';
+import ReadOnlyField from './inputFields/ReadOnlyField';
 import { Validation } from './Validation';
 import { ValidationProvider } from './Validation/ValidationProvider';
 import { useValidation } from './Validation/useValidation';
@@ -18,6 +19,7 @@ type FormCompound = typeof BaseForm & {
     Actions: typeof Actions
     TextField: typeof TextField
     SelectField: typeof SelectField
+    ReadOnlyField: typeof ReadOnlyField
     Validation: typeof Validation
 }
 
@@ -28,6 +30,7 @@ Form.Label = Label
 Form.Actions = Actions
 Form.TextField = TextField
 Form.SelectField = SelectField
+Form.ReadOnlyField = ReadOnlyField
 Form.Validation = Validation
 
 

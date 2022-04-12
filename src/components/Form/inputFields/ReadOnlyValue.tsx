@@ -19,7 +19,7 @@ const HtmlWrapper = styled.div<{ rightPadding?: number }>`
     letter-spacing: 0.025em;
 `;
 
-export const ReadOnly = (props: any) => {
+export const ReadOnlyValue = (props: any) => {
     const { render, value, childKey, options, variant, rightPadding, id } = props;
     const html = useRef(null);
 
