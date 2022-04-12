@@ -1,3 +1,11 @@
+## [2.6.2](https://github.com/equinor/sdscoredev-components/compare/2.6.1...2.6.2) (2022-04-12)
+
+
+### Bug Fixes
+
+* add max width option for table ([9686b14](https://github.com/equinor/sdscoredev-components/commit/9686b14df3440e004fa61a6e1d86270b3af1b2ff))
+* justify toolbar wrong ([6424e26](https://github.com/equinor/sdscoredev-components/commit/6424e26df07a34720d60dddd1bbb51a6c5ee69bb))
+
 ## [2.6.1](https://github.com/equinor/sdscoredev-components/compare/2.6.0...2.6.1) (2022-04-12)
 
 
