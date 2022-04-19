@@ -1,3 +1,10 @@
+## [2.6.3](https://github.com/equinor/sdscoredev-components/compare/2.6.2...2.6.3) (2022-04-19)
+
+
+### Bug Fixes
+
+* add onBlur to prevent excessive reloads ([c3648a1](https://github.com/equinor/sdscoredev-components/commit/c3648a11938136406c172b18646108fef8baf44e))
+
 ## [2.6.2](https://github.com/equinor/sdscoredev-components/compare/2.6.1...2.6.2) (2022-04-12)
 
 
