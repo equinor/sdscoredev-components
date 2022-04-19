@@ -38,6 +38,10 @@ export interface InputProps {
      */
     onChange?: any;
     /**
+     * Callback for changes in the input on focus loss
+     */
+    onBlur?: any;
+    /**
      * Toogles the input between edit mode and read only mode
      */
     edit?: boolean;
