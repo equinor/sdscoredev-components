@@ -1,3 +1,10 @@
+## [2.6.4](https://github.com/equinor/sdscoredev-components/compare/2.6.3...2.6.4) (2022-04-19)
+
+
+### Bug Fixes
+
+* add typing for onBlur in inputProps ([3a6edb8](https://github.com/equinor/sdscoredev-components/commit/3a6edb8eea302e806ef1787f952d1244fb775678))
+
 ## [2.6.3](https://github.com/equinor/sdscoredev-components/compare/2.6.2...2.6.3) (2022-04-19)
 
 
