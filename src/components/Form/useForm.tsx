@@ -3,21 +3,18 @@ import React, { useState, useEffect, useContext, useRef} from 'react'
 import { ValidationDispatchContext, ValidationStateContext } from './Validation/ValidationProvider';
 
 export const useForm = (formData: any, props: any) => {
-    const [formState, setFormState] = useState<any>({
-        data: null,
-        errors: {}
-    });
+    const [data, setData] = useState<any>(null);
 
     const state: any = useContext(ValidationStateContext);
     const dispatch: any = useContext(ValidationDispatchContext);
-    const dirty = useRef(false);
 
     const submit = async () => {
         if (typeof props.onSubmit === 'function') {
-            const { data: result, error } = await props.onSubmit(formState.data)
+            const { data: result, error } = await props.onSubmit(data)
 
             if (!error && typeof props.onSuccess === 'function') {
-                props.onSuccess(formState.data)
+                dispatch({type: 'SET_ERRORS', payload: undefined })
+                props.onSuccess(result)
             } else {
                 dispatch({type: 'SET_ERRORS', payload: error.response.data })
             }
@@ -25,7 +22,7 @@ export const useForm = (formData: any, props: any) => {
     }
 
     const cancel = () => {
-        setFormState((state: any) => ({ ...state, data: formData }));
+        setData((state: any) => ({ ...state, ...formData }));
         dispatch({ type: 'SET_ERRORS', payload: undefined})
     }
 
@@ -33,42 +30,21 @@ export const useForm = (formData: any, props: any) => {
         const { id, value, checked, type } = e.target;
 
         if (type === 'checkbox') {
-            setFormState((state: any) => ({ ...state, data: { ...state.data, [id]: checked } }));
+            setData((state: any) => ({ ...state, [id]: checked }));
         } else {
-            setFormState((state: any) => { 
-                const data = {...state.data}
-                set(data, id, value)
-                return {...state, data}
+            setData((state: any) => { 
+                const newData = {...state}
+                set(newData, id, value)
+                return {...state, ...newData}
             });
         }
     }
 
     useEffect(() => {
-        console.log(1)
-        if (!formData && !dirty.current) {
-            console.log(2)
-            if (typeof props.onRender === 'function') {
-                console.log(3)
-                const manipulatedData = props.onRender({})
-                setFormState((state: any) => ({ ...state, data: manipulatedData }));
-                dirty.current = true
-            }
+        if (!data && formData) {
+            setData(formData);
         }
-
-        if (formState.data !== formData) {
-            console.log(4)
-            if (typeof props.onRender === 'function') {
-                console.log(5)
-                const manipulatedData = props.onRender(formData)
-                setFormState((state: any) => ({ ...state, data: manipulatedData }));
-            } else {
-                console.log(6)
-                setFormState((state: any) => ({ ...state, data: formData }));
-            }
-
-            dirty.current = true
-        }
-    }, []);
+    }, [formData]);
 
     /**
      * Run validation on the internal data if `onValidation` is defined in the Hook properties
@@ -77,11 +53,13 @@ export const useForm = (formData: any, props: any) => {
      */
     const valid = () => {
         if (typeof props.onValidate === 'function') {
-            return props.onValidate(formState.data)
+            return props.onValidate(data)
         }
 
         return true;
     }
 
-    return { data: formState.data, submit, update, cancel, valid };
+    if (!data) return <></>
+
+    return { data, submit, update, cancel, valid };
 }
