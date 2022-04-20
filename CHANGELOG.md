@@ -1,3 +1,10 @@
+## [2.6.6](https://github.com/equinor/sdscoredev-components/compare/2.6.5...2.6.6) (2022-04-20)
+
+
+### Bug Fixes
+
+* rerenders forever when useForm prop has empty object ([5d35e36](https://github.com/equinor/sdscoredev-components/commit/5d35e36f27590b9371755669e8df4d84fb389668))
+
 ## [2.6.5](https://github.com/equinor/sdscoredev-components/compare/2.6.4...2.6.5) (2022-04-19)
 
 
