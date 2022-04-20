@@ -34,11 +34,7 @@ export type ToolbarProps = {
 
 const Toolbar: React.FC<ToolbarProps> = ({ children, components }) => {
 
-    console.log(components)
-
     if (!components?.length && !children) return <></>;
-
-    console.log(components)
     
     return (
         <Wrapper>

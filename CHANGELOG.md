@@ -1,3 +1,32 @@
+## [2.6.5](https://github.com/equinor/sdscoredev-components/compare/2.6.4...2.6.5) (2022-04-19)
+
+
+### Bug Fixes
+
+* remove console.log ([1404907](https://github.com/equinor/sdscoredev-components/commit/14049076edaf343babbab9c8d24e57308e27777d))
+
+## [2.6.4](https://github.com/equinor/sdscoredev-components/compare/2.6.3...2.6.4) (2022-04-19)
+
+
+### Bug Fixes
+
+* add typing for onBlur in inputProps ([3a6edb8](https://github.com/equinor/sdscoredev-components/commit/3a6edb8eea302e806ef1787f952d1244fb775678))
+
+## [2.6.3](https://github.com/equinor/sdscoredev-components/compare/2.6.2...2.6.3) (2022-04-19)
+
+
+### Bug Fixes
+
+* add onBlur to prevent excessive reloads ([c3648a1](https://github.com/equinor/sdscoredev-components/commit/c3648a11938136406c172b18646108fef8baf44e))
+
+## [2.6.2](https://github.com/equinor/sdscoredev-components/compare/2.6.1...2.6.2) (2022-04-12)
+
+
+### Bug Fixes
+
+* add max width option for table ([9686b14](https://github.com/equinor/sdscoredev-components/commit/9686b14df3440e004fa61a6e1d86270b3af1b2ff))
+* justify toolbar wrong ([6424e26](https://github.com/equinor/sdscoredev-components/commit/6424e26df07a34720d60dddd1bbb51a6c5ee69bb))
+
 ## [2.6.1](https://github.com/equinor/sdscoredev-components/compare/2.6.0...2.6.1) (2022-04-12)
 
 
