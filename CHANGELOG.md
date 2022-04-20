@@ -1,3 +1,10 @@
+## [2.6.5](https://github.com/equinor/sdscoredev-components/compare/2.6.4...2.6.5) (2022-04-19)
+
+
+### Bug Fixes
+
+* remove console.log ([1404907](https://github.com/equinor/sdscoredev-components/commit/14049076edaf343babbab9c8d24e57308e27777d))
+
 ## [2.6.4](https://github.com/equinor/sdscoredev-components/compare/2.6.3...2.6.4) (2022-04-19)
 
 

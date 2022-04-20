@@ -44,8 +44,11 @@ export const useForm = (formData: any, props: any) => {
     }
 
     useEffect(() => {
+        console.log(1)
         if (!formData && !dirty.current) {
+            console.log(2)
             if (typeof props.onRender === 'function') {
+                console.log(3)
                 const manipulatedData = props.onRender({})
                 setFormState((state: any) => ({ ...state, data: manipulatedData }));
                 dirty.current = true
@@ -53,16 +56,19 @@ export const useForm = (formData: any, props: any) => {
         }
 
         if (formState.data !== formData) {
+            console.log(4)
             if (typeof props.onRender === 'function') {
+                console.log(5)
                 const manipulatedData = props.onRender(formData)
                 setFormState((state: any) => ({ ...state, data: manipulatedData }));
             } else {
+                console.log(6)
                 setFormState((state: any) => ({ ...state, data: formData }));
             }
 
             dirty.current = true
         }
-    }, [formData]);
+    }, []);
 
     /**
      * Run validation on the internal data if `onValidation` is defined in the Hook properties
