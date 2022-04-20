@@ -16,7 +16,7 @@ export const TextField: React.FC<InputProps> = (props: any) => {
         <StyledTextField
             id={id}
             meta={meta}
-            value={value || ''}
+            defaultValue={value || ''}
             onChange={onChange}
             onBlur={onBlur}
             variant={error ? "error" : "default"}

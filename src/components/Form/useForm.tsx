@@ -1,8 +1,15 @@
 import { set } from 'components/utils';
-import React, { useState, useEffect, useContext, useRef} from 'react'
+import React, { useState, useEffect, useContext, ReactFragment} from 'react'
 import { ValidationDispatchContext, ValidationStateContext } from './Validation/ValidationProvider';
 
-export const useForm = (formData: any, props: any) => {
+type UseFormHook = {
+    data: any;
+    submit: any;
+    update: Function;
+    cancel: Function;
+    valid: boolean
+}
+export const useForm = (formData: any, props: any): UseFormHook | ReactFragment => {
     const [data, setData] = useState<any>(null);
 
     const state: any = useContext(ValidationStateContext);
