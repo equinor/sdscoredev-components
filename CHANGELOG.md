@@ -1,3 +1,10 @@
+## [2.6.7](https://github.com/equinor/sdscoredev-components/compare/2.6.6...2.6.7) (2022-04-20)
+
+
+### Bug Fixes
+
+* still some rerender problems ([823a7c3](https://github.com/equinor/sdscoredev-components/commit/823a7c3a07f9d73fac250e5acb5956c3617cd453))
+
 ## [2.6.6](https://github.com/equinor/sdscoredev-components/compare/2.6.5...2.6.6) (2022-04-20)
 
 
