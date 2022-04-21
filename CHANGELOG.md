@@ -1,3 +1,10 @@
+## [2.6.8](https://github.com/equinor/sdscoredev-components/compare/2.6.7...2.6.8) (2022-04-20)
+
+
+### Bug Fixes
+
+* add type, fix console error ([85c8828](https://github.com/equinor/sdscoredev-components/commit/85c8828b5ffe176c1482f456ad4f1df4591ede73))
+
 ## [2.6.7](https://github.com/equinor/sdscoredev-components/compare/2.6.6...2.6.7) (2022-04-20)
 
 
