@@ -1,3 +1,11 @@
+## [2.6.9](https://github.com/equinor/sdscoredev-components/compare/2.6.8...2.6.9) (2022-04-21)
+
+
+### Bug Fixes
+
+* add onClick for Row ([265c83f](https://github.com/equinor/sdscoredev-components/commit/265c83f9e1c76f232080eee276c1a21870d1ffb4))
+* handle dirty form data ([c195ca3](https://github.com/equinor/sdscoredev-components/commit/c195ca378cd19f706dc646fe1044bf5666fb6690))
+
 ## [2.6.8](https://github.com/equinor/sdscoredev-components/compare/2.6.7...2.6.8) (2022-04-20)
 
 
