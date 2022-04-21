@@ -1,9 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from 'styled-components';
 import { CellProps, Table } from '@equinor/eds-core-react';
 import { resolve } from '../../utils';
-import { useNavigate } from "react-router-dom";
-import { StateContext } from "../DataTableStore";
 
 const StyledCell = styled(Table.Cell)<CellProps & { slim?: boolean, truncate?: number}>`
     border-top: unset !important;
@@ -93,9 +91,8 @@ type TableCellProps = {
 }
 
 const Cell: React.FC<TableCellProps> = (props) => {
-    const { column, onClick, item, href, depth } = props;
+    const { column, item, href, depth, onClick } = props;
     const { slim, id, render, truncate } = column.props;
-    const state: any = useContext(StateContext);
 
     const RenderCell = () => {
         /* If render prop is an element */
@@ -127,22 +124,33 @@ const Cell: React.FC<TableCellProps> = (props) => {
         return resolve(item, id, '')
     }
 
+    if (onClick && !href) {
+        return (
+            <StyledCell 
+                slim={slim}
+                truncate={truncate}
+                id={id}
+                onClick={(e: any) => onClick(e)}
+            >
+                {RenderCell()}
+            </StyledCell>
+        )
+    }
+
     return (
         <StyledCell 
             slim={slim}
             truncate={truncate}
-            scope="col" 
             id={id}
-            // onClick={() => onClick && onClick}
         >
-            {href ? <a 
+            <a 
                 className="row-link" 
                 href={href} 
                 onClick={(e) => {
                     e.preventDefault();
-                    window.location.replace(href);
+                    window.location.replace(href || '');
                 }}
-            >{RenderCell()}</a> : RenderCell()}
+            >{RenderCell()}</a>
         </StyledCell>
     )
 };

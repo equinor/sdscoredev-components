@@ -45,7 +45,7 @@ const Row: React.FC<TableRowProps & RowProps & RefAttributes<HTMLTableRowElement
             onClick && onClick(getLink(data))
         }
        
-        onClick && onClick()
+        onClick && onClick(data)
     }
 
     if (!data || !state.dataTableReducer.columns) return <></>

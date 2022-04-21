@@ -46,7 +46,7 @@ export interface InputProps {
      */
     edit?: boolean;
     /**
-     * TODO: Not used, probably deprecated
+     * Disables a field for editing
      */
     disabled?: boolean;
     /**
@@ -110,14 +110,20 @@ const Label = styled(EdsLabel)`
 `
 
 const ComponentWrapper = styled.div<{ noFocus: boolean }>`
+    color: rgba(61,61,61,1);
     background: #f7f7f7;
     box-shadow: inset 0 -1px 0 0 #6f6f6f;
 
     &:focus-within {
         outline: ${(props: any) => props.noFocus ? 'none' : '2px solid #007079' };
-        box-shadow: ${(props: any) => props.noFocus ? 'inherit' : 'none' };;
-    }
+        box-shadow: ${(props: any) => props.noFocus ? 'inherit' : 'none' };
+    };
 `
+
+const DisabledComponentWrapper = styled.div`
+    color: rgba(190,190,190,1);
+    background: #f7f7f7;
+`;
 
 const Empty = styled.div`
     margin-top: 4px;
@@ -197,10 +203,16 @@ export const withInput = ({
                     </Header>
                 )}
 
-                {edit && !noWrapper && (
+                {edit && !noWrapper && !disabled && (
                     <ComponentWrapper noFocus={noFocus}>
                         <Component {...props} />
                     </ComponentWrapper> 
+                )}
+
+                {edit && !noWrapper && disabled && (
+                    <DisabledComponentWrapper>
+                        <Component {...props} />
+                    </DisabledComponentWrapper> 
                 )}
 
                 {edit && noWrapper && (
