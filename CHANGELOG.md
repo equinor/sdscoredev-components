@@ -1,3 +1,10 @@
+# [2.7.0](https://github.com/equinor/sdscoredev-components/compare/2.6.9...2.7.0) (2022-04-22)
+
+
+### Features
+
+* add hasChanged to useForm ([d90a06f](https://github.com/equinor/sdscoredev-components/commit/d90a06f0ac946d6f9f06614292d24aaf9b54b62f))
+
 ## [2.6.9](https://github.com/equinor/sdscoredev-components/compare/2.6.8...2.6.9) (2022-04-21)
 
 
