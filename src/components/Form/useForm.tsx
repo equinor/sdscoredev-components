@@ -35,6 +35,7 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
 
             if (!error && typeof props.onSuccess === 'function') {
                 dispatch({type: 'SET_ERRORS', payload: undefined })
+                setHasChanged(false)
                 props.onSuccess(result)
             } else {
                 dispatch({type: 'SET_ERRORS', payload: error.response.data })
