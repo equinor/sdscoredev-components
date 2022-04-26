@@ -26,6 +26,10 @@ export interface ReadOnlyFieldProps {
      * If set, it overrides the min-width value
      */
     width?: number;
+    /**
+     * Type of data to be shown
+     */
+    variant?: 'html' | 'text';
 }
 
 const InputWrapper = styled.div<{ width?: number }>`
