@@ -1,3 +1,10 @@
+## [2.7.1](https://github.com/equinor/sdscoredev-components/compare/2.7.0...2.7.1) (2022-04-25)
+
+
+### Bug Fixes
+
+* setHasChanged after submit success ([68a51d3](https://github.com/equinor/sdscoredev-components/commit/68a51d3a0a59607ed90b4cf172be5c202e54eb65))
+
 # [2.7.0](https://github.com/equinor/sdscoredev-components/compare/2.6.9...2.7.0) (2022-04-22)
 
 

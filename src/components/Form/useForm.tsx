@@ -18,7 +18,8 @@ type UseFormHookProps = {
 }
 
 export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | ReactFragment => {
-    const [data, setData] = useState<any>(null);
+    const [form, setForm] = useState<any>(undefined);
+    const data = useRef(undefined);
     const dirty = useRef(true);
     const [submitting, setSubmitting] = useState<boolean>(false);
     const [hasChanged, setHasChanged] = useState<boolean>(false);
@@ -26,12 +27,12 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
     const dispatch: any = useContext(ValidationDispatchContext);
 
     const propagateSubmit = () => {
-        if (typeof props.onSubmit === 'function') props.onSubmit(data)
+        if (typeof props.onSubmit === 'function') props.onSubmit(form)
     }
 
     const promiseSubmit = async () => {
         if (typeof props.onSubmit === 'function') {
-            const { data: result, error } = await props.onSubmit(data)
+            const { data: result, error } = await props.onSubmit(form)
 
             if (!error && typeof props.onSuccess === 'function') {
                 dispatch({type: 'SET_ERRORS', payload: undefined })
@@ -48,7 +49,7 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
     }
 
     const cancel = () => {
-        setData((state: any) => ({ ...state, ...formData }));
+        setForm((state: any) => ({ ...state, ...formData }));
         dispatch({ type: 'SET_ERRORS', payload: undefined})
     }
 
@@ -61,9 +62,9 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
         }
 
         if (type === 'checkbox') {
-            setData((state: any) => ({ ...state, [id]: checked }));
+            setForm((state: any) => ({ ...state, [id]: checked }));
         } else {
-            setData((state: any) => { 
+            setForm((state: any) => { 
                 const newData = {...state}
                 set(newData, id, value)
                 return {...state, ...newData}
@@ -72,23 +73,13 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
     }
 
     useEffect(() => {
-        if (!data && formData) {
-            setData(formData);
-            dirty.current = false;
+        if (data.current) {
+            setForm(data.current);
         }
-
-        if (formData && !dirty.current) {
-            setData(formData);
-        }
-    }, [formData]);
+    }, [data.current])
 
     useEffect(() => {
-        dirty.current = false;
-    }, [data])
-
-    useEffect(() => {
-        
-        if (!dirty.current && submitting) {
+        if (submitting) {
             if (props.propagate) {
                 propagateSubmit()
             } else {
@@ -97,7 +88,7 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
 
             setSubmitting(false);
         }
-    }, [dirty.current, submitting])
+    }, [submitting])
 
     /**
      * Run validation on the internal data if `onValidation` is defined in the Hook properties
@@ -112,7 +103,9 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
         return true;
     }
 
-    if (!data) return <></>
+    data.current = formData
 
-    return { data, submit, update, cancel, valid, hasChanged };
+    if (!data.current) return <></>
+
+    return { data: form || data.current, submit, update, cancel, valid, hasChanged };
 }
