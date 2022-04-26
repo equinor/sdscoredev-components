@@ -22,6 +22,7 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
     const data = useRef(undefined);
     const dirty = useRef(true);
     const [submitting, setSubmitting] = useState<boolean>(false);
+    const [hasChanged, setHasChanged] = useState<boolean>(false);
 
     const dispatch: any = useContext(ValidationDispatchContext);
 
@@ -35,6 +36,7 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
 
             if (!error && typeof props.onSuccess === 'function') {
                 dispatch({type: 'SET_ERRORS', payload: undefined })
+                setHasChanged(false)
                 props.onSuccess(result)
             } else {
                 dispatch({type: 'SET_ERRORS', payload: error.response.data })
@@ -54,6 +56,10 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
     const update = (e: any) => {
         dirty.current = true;
         const { id, value, checked, type } = e.target;
+
+        if(data[id] !== value) {
+            setHasChanged(true);
+        }
 
         if (type === 'checkbox') {
             setForm((state: any) => ({ ...state, [id]: checked }));
@@ -101,5 +107,5 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
 
     if (!data.current) return <></>
 
-    return { data: form || data.current, submit, update, cancel, valid };
+    return { data: form || data.current, submit, update, cancel, valid, hasChanged };
 }
