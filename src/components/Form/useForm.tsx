@@ -18,8 +18,7 @@ type UseFormHookProps = {
 }
 
 export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | ReactFragment => {
-    const [form, setForm] = useState<any>(undefined);
-    const data = useRef(undefined);
+    const [form, setForm] = useState<any>(null);
     const dirty = useRef(true);
     const [submitting, setSubmitting] = useState<boolean>(false);
     const [hasChanged, setHasChanged] = useState<boolean>(false);
@@ -32,12 +31,12 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
 
     const promiseSubmit = async () => {
         if (typeof props.onSubmit === 'function') {
-            const { data: result, error } = await props.onSubmit(form)
+            const { data, error } = await props.onSubmit(form)
 
-            if (!error && typeof props.onSuccess === 'function') {
+            if (data && !error && typeof props.onSuccess === 'function') {
                 dispatch({type: 'SET_ERRORS', payload: undefined })
                 setHasChanged(false)
-                props.onSuccess(result)
+                props.onSuccess(data.result)
             } else {
                 dispatch({type: 'SET_ERRORS', payload: error.response.data })
             }
@@ -54,10 +53,9 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
     }
 
     const update = (e: any) => {
-        dirty.current = true;
         const { id, value, checked, type } = e.target;
 
-        if(data[id] !== value) {
+        if(form[id] !== value) {
             setHasChanged(true);
         }
 
@@ -73,10 +71,11 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
     }
 
     useEffect(() => {
-        if (data.current) {
-            setForm(data.current);
+        if (formData && dirty.current) {
+            setForm(formData);
+            dirty.current = false;
         }
-    }, [data.current])
+    }, [formData])
 
     useEffect(() => {
         if (submitting) {
@@ -97,15 +96,13 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
      */
     const valid = () => {
         if (typeof props.onValidate === 'function') {
-            return props.onValidate(data)
+            return props.onValidate(form)
         }
 
         return true;
     }
 
-    data.current = formData
+    if (!form) return <></>
 
-    if (!data.current) return <></>
-
-    return { data: form || data.current, submit, update, cancel, valid, hasChanged };
+    return { data: form, submit, update, cancel, valid, hasChanged };
 }
