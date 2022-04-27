@@ -19,7 +19,7 @@ type UseFormHookProps = {
 
 export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | ReactFragment => {
     const [form, setForm] = useState<any>(null);
-    const dirty = useRef(true);
+    const init = useRef(0);
     const [submitting, setSubmitting] = useState<boolean>(false);
     const [hasChanged, setHasChanged] = useState<boolean>(false);
 
@@ -71,9 +71,10 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
     }
 
     useEffect(() => {
-        if (formData && dirty.current) {
+        if (formData) {
             setForm(formData);
-            dirty.current = false;
+        } else {
+            setForm({});
         }
     }, [formData])
 
