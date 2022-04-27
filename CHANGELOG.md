@@ -1,3 +1,10 @@
+## [2.7.5](https://github.com/equinor/sdscoredev-components/compare/2.7.4...2.7.5) (2022-04-27)
+
+
+### Bug Fixes
+
+* useForm infinit loop ([f18a5a7](https://github.com/equinor/sdscoredev-components/commit/f18a5a78453b96293e9d639a996c7bd32e5c6c04))
+
 ## [2.7.4](https://github.com/equinor/sdscoredev-components/compare/2.7.3...2.7.4) (2022-04-26)
 
 
