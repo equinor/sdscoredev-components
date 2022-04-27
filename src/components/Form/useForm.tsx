@@ -14,12 +14,13 @@ type UseFormHookProps = {
     onSubmit?: (payload: any) => Promise<any> | void;
     onSuccess?: (result: any) => void;
     onValidate?: (payload: any) => boolean;
+    onRender?: (formData: any) => void;
     propagate?: boolean;
 }
 
 export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | ReactFragment => {
     const [form, setForm] = useState<any>(null);
-    const init = useRef(0);
+    const init = useRef(false);
     const [submitting, setSubmitting] = useState<boolean>(false);
     const [hasChanged, setHasChanged] = useState<boolean>(false);
 
@@ -71,12 +72,22 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
     }
 
     useEffect(() => {
-        if (formData) {
-            setForm(formData);
-        } else {
-            setForm({});
-        }
+            if (formData) {
+                setForm(formData);
+            } else {
+                setForm({});
+            }
     }, [formData])
+
+    /**
+     * Only run onRender one time, and only after form state is set
+     */
+    useEffect(() => {
+        if (form && props.onRender && !init.current) {
+            init.current = true
+            props.onRender(form)
+        }
+    }, [form])
 
     useEffect(() => {
         if (submitting) {
