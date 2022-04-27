@@ -1,3 +1,10 @@
+## [2.7.4](https://github.com/equinor/sdscoredev-components/compare/2.7.3...2.7.4) (2022-04-26)
+
+
+### Bug Fixes
+
+* add variant to readonly field ([eae8a2a](https://github.com/equinor/sdscoredev-components/commit/eae8a2ac46423066bbe1d0f94214fc85199a417e))
+
 ## [2.7.3](https://github.com/equinor/sdscoredev-components/compare/2.7.2...2.7.3) (2022-04-26)
 
 
