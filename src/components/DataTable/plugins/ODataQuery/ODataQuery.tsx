@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { DispatchContext, StateContext } from 'components/DataTable/DataTableStore';
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ODataQueryProps } from '.';
 import FilterParser from './parser';
