@@ -2,6 +2,7 @@ import React from "react";
 import styled from 'styled-components';
 import { CellProps, Table } from '@equinor/eds-core-react';
 import { resolve } from '../../utils';
+import { Link } from "react-router-dom";
 
 const StyledCell = styled(Table.Cell)<CellProps & { slim?: boolean, truncate?: number}>`
     border-top: unset !important;
@@ -143,14 +144,7 @@ const Cell: React.FC<TableCellProps> = (props) => {
             truncate={truncate}
             id={id}
         >
-            <a 
-                className="row-link" 
-                href={href} 
-                onClick={(e) => {
-                    e.preventDefault();
-                    window.location.replace(href || '');
-                }}
-            >{RenderCell()}</a>
+            <Link className="row-link" to={{ pathname: href }}>{RenderCell()}</Link>
         </StyledCell>
     )
 };
