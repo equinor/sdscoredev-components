@@ -1,3 +1,10 @@
+## [2.7.6](https://github.com/equinor/sdscoredev-components/compare/2.7.5...2.7.6) (2022-04-27)
+
+
+### Bug Fixes
+
+* some more errors ([a1498fa](https://github.com/equinor/sdscoredev-components/commit/a1498faaaae3a55882ac086dc229f3529f6731fc))
+
 ## [2.7.5](https://github.com/equinor/sdscoredev-components/compare/2.7.4...2.7.5) (2022-04-27)
 
 
