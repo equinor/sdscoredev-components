@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { createContext, ReactElement, useReducer } from 'react';
 import { useCombinedReducers } from '../utils';
 import { DataTableStoreProps, ReducerProp } from './types';
@@ -20,6 +21,16 @@ export const DataTableStore: React.FC<DataTableStoreProps> = React.memo((props) 
     }
 
     /**
+     * Provides a storage
+     * 
+     * @param component 
+     * @returns 
+     */
+     const getStorage = (component: any) => {
+        return component.props.storage || window.sessionStorage;
+    }
+
+    /**
      * Provides cached reducers that are declared in the component.
      * The index file of the Plugin must contain `Plugin.reducer = { pluginReducer }`
      * 
@@ -31,7 +42,7 @@ export const DataTableStore: React.FC<DataTableStoreProps> = React.memo((props) 
             if (!component.type.reducer) return []
 
             const [name, reducer]: any = Object.entries(component.type.reducer)[0]
-            const usePersistedReducer = createPersistedReducer(getCacheKey(component), window.sessionStorage);
+            const usePersistedReducer = createPersistedReducer(getCacheKey(component), getStorage(component));
             return [name, usePersistedReducer(reducer.reducer, reducer.initialState)]
 
     }))

@@ -28,6 +28,10 @@ export type ColumnSelectorProps = {
      * If set, save the selected columns to session storage
      */
     cacheKey?: string;
+    /**
+     * Storage, either `window.localStorage` or `window.sessionStorage`, default is `window.sessionStorage`
+     */
+    storage?: Storage;
 };
 
 const ColumnSelector: FC<ColumnSelectorProps> = (props) => {
