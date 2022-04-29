@@ -1,3 +1,10 @@
+## [2.8.1](https://github.com/equinor/sdscoredev-components/compare/2.8.0...2.8.1) (2022-04-29)
+
+
+### Bug Fixes
+
+* change styling ([7d54957](https://github.com/equinor/sdscoredev-components/commit/7d549577ad7cd1dafafcdc44d395c33909c6c6d6))
+
 # [2.8.0](https://github.com/equinor/sdscoredev-components/compare/2.7.6...2.8.0) (2022-04-28)
 
 
