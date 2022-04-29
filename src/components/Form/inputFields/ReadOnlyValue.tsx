@@ -4,16 +4,17 @@ import styled from 'styled-components';
 const Wrapper = styled.div<{ rightPadding?: number }>`
     padding-left: 8px;
     padding-right: ${(props) => props.rightPadding ? `${props.rightPadding}px` : '0' };
-    min-height: 37px;
-    display: grid;
-    align-content: center;
+    min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     letter-spacing: 0.025em;
 `;
 
 const HtmlWrapper = styled.div<{ rightPadding?: number }>`
     padding-left: 8px;
     padding-right: ${(props) => props.rightPadding ? `${props.rightPadding}px` : '0' };
-    min-height: 37px;
+    min-height: 38px;
     display: inline-block;
     align-content: center;
     letter-spacing: 0.025em;
@@ -76,7 +77,8 @@ export const ReadOnlyValue = (props: any) => {
     }, [html.current])
 
     if (render) {
-        return <Wrapper rightPadding={rightPadding}>{render(value)}</Wrapper>;
+        console.log(value)
+        return <Wrapper rightPadding={rightPadding}>{render({ value, getTagProps: undefined, childKey })}</Wrapper>;
     }
 
     if (variant === 'html') {

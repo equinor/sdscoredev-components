@@ -1,3 +1,15 @@
+# [2.8.0](https://github.com/equinor/sdscoredev-components/compare/2.7.6...2.8.0) (2022-04-28)
+
+
+### Bug Fixes
+
+* history was overwritten ([b5a8e48](https://github.com/equinor/sdscoredev-components/commit/b5a8e48b8d039ea8448bc66cb8d84e2f33b3fc1b))
+
+
+### Features
+
+* add option for changing storage ([965251d](https://github.com/equinor/sdscoredev-components/commit/965251df0f61cc9a3450a033343b36b66bc6992e))
+
 ## [2.7.6](https://github.com/equinor/sdscoredev-components/compare/2.7.5...2.7.6) (2022-04-27)
 
 
