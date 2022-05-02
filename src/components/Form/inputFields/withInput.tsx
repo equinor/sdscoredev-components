@@ -117,6 +117,10 @@ const ComponentWrapper = styled.div<{ noFocus: boolean }>`
     &:focus-within {
         outline: ${(props: any) => props.noFocus ? 'none' : '2px solid #007079' };
         box-shadow: ${(props: any) => props.noFocus ? 'inherit' : 'none' };
+
+        & > * {
+            box-shadow: ${(props: any) => props.noFocus ? 'inherit' : 'none' };
+        }
     };
 `
 
@@ -180,6 +184,8 @@ export const withInput = ({
         }, [value])
 
         const Validation = () => {
+            console.log(validationErrors)
+            
             if (validationErrors) {
                 return (
                     <>

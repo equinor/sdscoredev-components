@@ -77,7 +77,6 @@ export const ReadOnlyValue = (props: any) => {
     }, [html.current])
 
     if (render) {
-        console.log(value)
         return <Wrapper rightPadding={rightPadding}>{render({ value, getTagProps: undefined, childKey })}</Wrapper>;
     }
 
