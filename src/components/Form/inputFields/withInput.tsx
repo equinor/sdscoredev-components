@@ -90,7 +90,7 @@ const InputWrapper = styled.div<{ flexGrow?: boolean, edit?: boolean, width?: nu
 
 const Header = styled.div`
     display: grid;
-    grid-template-columns: min-content auto auto;
+    grid-template-columns: min-content auto min-content;
     padding-bottom: 2px;
     width: 100%;
     white-space: nowrap;
