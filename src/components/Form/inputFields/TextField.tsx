@@ -10,7 +10,7 @@ const StyledTextField = styled(EdsTextField)`
     }
 `
 export const TextField: React.FC<InputProps> = (props: any) => {
-    const { id, meta, value, onChange, error, disabled, onBlur } = props;
+    const { id, meta, value, onChange, error, disabled, onBlur, placeholder } = props;
 
     return (
         <StyledTextField
@@ -23,6 +23,7 @@ export const TextField: React.FC<InputProps> = (props: any) => {
             helperText={error}
             helperIcon={error && <Icon name="error_filled" title="Error" />}
             disabled={disabled}
+            placeholder={placeholder}
         />
     );
 };
