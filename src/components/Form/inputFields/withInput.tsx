@@ -65,6 +65,10 @@ export interface InputProps {
      * If set, disable validation
      */
     noValidation?: boolean;
+    /**
+     * Placeholder text to display in an empty textField
+     */
+    placeholder?: string | Array<string>;
 }
 
 export type Error = {
