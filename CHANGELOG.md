@@ -1,3 +1,10 @@
+## [2.8.3](https://github.com/equinor/sdscoredev-components/compare/2.8.2...2.8.3) (2022-05-03)
+
+
+### Bug Fixes
+
+* add placeholder ([5866286](https://github.com/equinor/sdscoredev-components/commit/58662866b3d1c63289f725180ce104d46209499a))
+
 ## [2.8.2](https://github.com/equinor/sdscoredev-components/compare/2.8.1...2.8.2) (2022-05-02)
 
 
