@@ -1,3 +1,10 @@
+## [2.8.2](https://github.com/equinor/sdscoredev-components/compare/2.8.1...2.8.2) (2022-05-02)
+
+
+### Bug Fixes
+
+* box shadow not resetting ([7ab06fb](https://github.com/equinor/sdscoredev-components/commit/7ab06fb597d5fb0c6a705d06bfa40149e62c5dd6))
+
 ## [2.8.1](https://github.com/equinor/sdscoredev-components/compare/2.8.0...2.8.1) (2022-04-29)
 
 
