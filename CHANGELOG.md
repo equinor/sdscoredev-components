@@ -1,3 +1,10 @@
+## [2.8.4](https://github.com/equinor/sdscoredev-components/compare/2.8.3...2.8.4) (2022-05-03)
+
+
+### Bug Fixes
+
+* required label wrong margins ([57446c9](https://github.com/equinor/sdscoredev-components/commit/57446c9791b85816ae3b0c1982da8590ed585ff0))
+
 ## [2.8.3](https://github.com/equinor/sdscoredev-components/compare/2.8.2...2.8.3) (2022-05-03)
 
 
