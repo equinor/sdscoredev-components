@@ -21,6 +21,7 @@ type UseFormHookProps = {
 export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | ReactFragment => {
     const [form, setForm] = useState<any>(null);
     const init = useRef(false);
+    const hasError = useRef(false);
     const [submitting, setSubmitting] = useState<boolean>(false);
     const [hasChanged, setHasChanged] = useState<boolean>(false);
 
@@ -36,9 +37,11 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
 
             if (data && !error && typeof props.onSuccess === 'function') {
                 dispatch({type: 'SET_ERRORS', payload: undefined })
+                hasError.current = false;
                 setHasChanged(false)
                 props.onSuccess(data.result)
             } else {
+                hasError.current = true;
                 dispatch({type: 'SET_ERRORS', payload: error.response.data })
             }
         }
@@ -72,11 +75,13 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
     }
 
     useEffect(() => {
+        if (!hasError.current) {
             if (formData) {
                 setForm(formData);
             } else {
                 setForm({});
             }
+        }
     }, [formData])
 
     /**
