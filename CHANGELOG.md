@@ -1,3 +1,10 @@
+## [2.8.5](https://github.com/equinor/sdscoredev-components/compare/2.8.4...2.8.5) (2022-05-04)
+
+
+### Bug Fixes
+
+* form resetting when validation error ([86b6a0c](https://github.com/equinor/sdscoredev-components/commit/86b6a0ced19f2afd94bd3d1df002e34dd68738c6))
+
 ## [2.8.4](https://github.com/equinor/sdscoredev-components/compare/2.8.3...2.8.4) (2022-05-03)
 
 
