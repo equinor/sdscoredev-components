@@ -188,8 +188,6 @@ export const withInput = ({
         }, [value])
 
         const Validation = () => {
-            console.log(validationErrors)
-            
             if (validationErrors) {
                 return (
                     <>
