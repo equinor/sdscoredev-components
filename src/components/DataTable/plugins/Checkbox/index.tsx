@@ -7,6 +7,10 @@ export type CheckboxProps = {
      * Callback that triggers when rows are selected. will provide an `Array<any>` of the selected `items` .
      */
     onChange: (items: Array<any>) => void;
+    /**
+     * Set the key to compare agains, default is `id`
+     */
+    getKey?: string;
 };
 
 const Checkbox: FC<CheckboxProps> = (props) => {

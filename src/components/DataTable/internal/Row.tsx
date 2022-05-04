@@ -54,7 +54,7 @@ const Row: React.FC<TableRowProps & RowProps & RefAttributes<HTMLTableRowElement
         <DefaultRow role="row" ref={ref} style={getStyle && getStyle(data)}>
 
             {/* ---- Checkbox plugin implementation start --------------------------------------- */}
-            {state.checkboxReducer && <CheckboxCell key={`checkbox-header-${data.id}`} item={data}/>}
+            {state.checkboxReducer && <CheckboxCell key={`checkbox-header-${data.id}`} item={data} getKey={plugins.checkbox.props.getKey} />}
             {/* ---- Checkbox plugin implementation end ----------------------------------------- */}
 
             {state.dataTableReducer.columns.map((column: any) => (
