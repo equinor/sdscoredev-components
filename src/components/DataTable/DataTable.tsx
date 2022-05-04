@@ -148,7 +148,7 @@ export const DataTable = React.memo((props: DataTableProps) => {
                          * Header can be provided with plugins. 
                          * Children must contain only the column definitions.
                          */}
-                        <Header id={id} plugins={{ subrow }}>
+                        <Header id={id} plugins={{ subrow, checkbox }}>
                             {components.filter((x: any) => x.type.displayName === 'DataTable.Column')}
                         </Header>
 
@@ -161,7 +161,7 @@ export const DataTable = React.memo((props: DataTableProps) => {
                             {...row?.props} 
                             data={data && getData ? getData(data) : data} 
                             onFetch={onFetch}
-                            plugins={{ subrow }}
+                            plugins={{ subrow, checkbox }}
                         />
 
                     </Table>

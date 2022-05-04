@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 type CheckboxCellProps = {
    item: any;
+   getKey?: string;
 }
 
 const Wrapper = styled.div`
@@ -26,30 +27,29 @@ const Cell = styled(Table.Cell)`
     }
 `;
 
-const CheckboxCell: React.FC<CheckboxCellProps> = ({ item }) => {
+const CheckboxCell: React.FC<CheckboxCellProps> = ({ item, getKey }) => {
     const state: any = useContext(StateContext);
     const dispatch: any = useContext(DispatchContext);
 
     const select = () => {
-        const index = state.checkboxReducer.selected?.findIndex((x: any) => x.id === item.id);
+        const index = state.checkboxReducer.selected?.findIndex((x: any) => x[getKey || 'id'] === item[getKey || 'id']);
         const selected = [...state.checkboxReducer.selected];
         if (index > -1) {
             selected.splice(index, 1);
         } else {
             selected.push(item);
         }
+
         dispatch({ type: 'SET_SELECTED', payload: selected });
     };
 
-    const isSelected = () => state.checkboxReducer.selected && state.checkboxReducer.selected.findIndex((x: any) => x.id === item.id) !== -1;
-    
     return (
         <Cell>
             <EdsProvider density="compact">
                 <Wrapper onClick={select}>
                     <Checkbox
                         name="multiple"
-                        checked={isSelected()}
+                        checked={state.checkboxReducer.selected.findIndex((x: any) => x[getKey || 'id'] === item[getKey || 'id']) >= 0}
                         readOnly
                     />
                 </Wrapper>
