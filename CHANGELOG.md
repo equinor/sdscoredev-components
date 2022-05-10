@@ -1,3 +1,10 @@
+## [2.8.8](https://github.com/equinor/sdscoredev-components/compare/2.8.7...2.8.8) (2022-05-10)
+
+
+### Bug Fixes
+
+* clean console log ([c85deff](https://github.com/equinor/sdscoredev-components/commit/c85deff397f7db26bca8ba37d205e58d256557fe))
+
 ## [2.8.7](https://github.com/equinor/sdscoredev-components/compare/2.8.6...2.8.7) (2022-05-10)
 
 
