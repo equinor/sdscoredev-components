@@ -1,3 +1,10 @@
+## [2.8.7](https://github.com/equinor/sdscoredev-components/compare/2.8.6...2.8.7) (2022-05-10)
+
+
+### Bug Fixes
+
+* add cypress support ([65a2f52](https://github.com/equinor/sdscoredev-components/commit/65a2f52fafbc8fa9f8be29889a6345fffb7eb0de))
+
 ## [2.8.6](https://github.com/equinor/sdscoredev-components/compare/2.8.5...2.8.6) (2022-05-04)
 
 

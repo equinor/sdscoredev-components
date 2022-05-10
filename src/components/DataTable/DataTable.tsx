@@ -119,8 +119,6 @@ export const DataTable = React.memo((props: DataTableProps) => {
         return () => wrapperReference.removeEventListener('scroll', handleScroll);
     }, []);
 
-    console.log(getDataProps(props))
-    
     return (
         <DataTableStore components={components} reducers={{dataTableReducer, ...reducers}}>
             <Wrapper width={width}>
