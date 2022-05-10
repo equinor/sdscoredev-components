@@ -10,7 +10,7 @@ import { dataTableReducer } from "./reducers/dataTableReducer";
 import styled from "styled-components";
 import { Filter } from "./plugins/Filter/Filter";
 import Toolbar from "./internal/Toolbar";
-import { makeId } from "../utils";
+import { makeId, getDataProps } from "../utils";
 import { StickyHeader } from "./plugins/StickyHeader/StickyHeader";
 import { Tree } from "./plugins/Tree/Tree";
 import {Checkbox } from "./plugins/Checkbox/Checkbox";
@@ -118,6 +118,8 @@ export const DataTable = React.memo((props: DataTableProps) => {
         wrapperReference.addEventListener('scroll', handleScroll);
         return () => wrapperReference.removeEventListener('scroll', handleScroll);
     }, []);
+
+    console.log(getDataProps(props))
     
     return (
         <DataTableStore components={components} reducers={{dataTableReducer, ...reducers}}>
@@ -142,7 +144,7 @@ export const DataTable = React.memo((props: DataTableProps) => {
                     {stickyHeader && <StickyHeader {...stickyHeader.props} id={id} ref={stickyHeader.ref} plugins={{ subrow }} />}
 
                     <EdsProvider density={compact ? 'compact' : 'comfortable'}>
-                    <Table style={{ width: '100%' }}>
+                    <Table style={{ width: '100%' }} {...getDataProps(props)}>
 
                         {/**
                          * Header can be provided with plugins. 

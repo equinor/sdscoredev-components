@@ -68,3 +68,16 @@ export const makeId = () => {
   const finalStep = keys[keys.length - 1];
   curStep[finalStep] = value;
 };
+
+export const getDataProps = (props: any) => {
+    const result = {}
+    Object.keys(props).forEach((key: any, index: number) => {
+        if (key.startsWith("data-")) result[key] = props[key]
+    })
+
+    return result
+}
+
+export const camelize = (str: string) => {
+    return str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase());
+}
