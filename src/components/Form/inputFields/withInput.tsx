@@ -202,9 +202,9 @@ export const withInput = ({
         }
 
         return (
-            <InputWrapper flexGrow={flexGrow} edit={edit} width={width}>
+            <InputWrapper flexGrow={flexGrow} edit={edit} width={width} data-cy={`Input-${id}`}>
                 {!noLabel && (
-                    <Header>
+                    <Header data-cy={`Input-Header-${id}`}>
                         {label && <Label style={{ color: disabled ? 'rgba(190, 190, 190, 1)' : 'unset' }} label={label} />}
                         {tooltip && <Tooltip title={tooltip} placement="top" />}
                         {isRequired && <Label label={''} style={{ color: disabled ? 'rgba(190, 190, 190, 1)' : 'unset' }} meta={'*Required'}/>}
@@ -228,10 +228,10 @@ export const withInput = ({
                 )}
 
                 {!edit && (
-                    <ReadOnlyValue {...props} variant={variant} rightPadding={rightPadding} />    
+                    <ReadOnlyValue {...props} variant={variant} rightPadding={rightPadding} data-cy={`Input-ReadOnly-${id}`}/>    
                 )}
 
-                {!noValidation && <Validation />}
+                {!noValidation && <Validation data-cy={`Input-Validation-${id}`}/>}
             </InputWrapper>
         );
     };
