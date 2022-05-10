@@ -1,3 +1,10 @@
+## [2.8.6](https://github.com/equinor/sdscoredev-components/compare/2.8.5...2.8.6) (2022-05-04)
+
+
+### Bug Fixes
+
+* checkbox cell not working ([c87e4c0](https://github.com/equinor/sdscoredev-components/commit/c87e4c0c0730077b9e0606e61d34ed343e1b2844))
+
 ## [2.8.5](https://github.com/equinor/sdscoredev-components/compare/2.8.4...2.8.5) (2022-05-04)
 
 
