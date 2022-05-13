@@ -5,7 +5,7 @@ import { FilterProps } from '.';
 export const Filter: React.FC<FilterProps> = ({ title, onClick }) => {
     return (
         <Tooltip title="Show filter" placement="top">
-            <Button variant="ghost" onClick={onClick}>
+            <Button variant="ghost" onClick={onClick} data-cy="sdscc-DataTable-Button-filter">
             {title}<Icon name="filter_list" title="Show filter" size={24} />
             </Button>
         </Tooltip>
