@@ -202,7 +202,7 @@ export const withInput = ({
         }
 
         return (
-            <InputWrapper flexGrow={flexGrow} edit={edit} width={width} data-cy={`Input-${id}`}>
+            <InputWrapper flexGrow={flexGrow} edit={edit} width={width} data-cy={`Input-${id.replace('.', '_')}`}>
                 {!noLabel && (
                     <Header data-cy={`Input-Header-${id}`}>
                         {label && <Label style={{ color: disabled ? 'rgba(190, 190, 190, 1)' : 'unset' }} label={label} />}
