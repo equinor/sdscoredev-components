@@ -1,3 +1,10 @@
+## [2.8.9](https://github.com/equinor/sdscoredev-components/compare/2.8.8...2.8.9) (2022-05-13)
+
+
+### Bug Fixes
+
+* add data-cy ([c81647c](https://github.com/equinor/sdscoredev-components/commit/c81647ccd6987dc1ce4ec61300893febd6ef591d))
+
 ## [2.8.8](https://github.com/equinor/sdscoredev-components/compare/2.8.7...2.8.8) (2022-05-10)
 
 
