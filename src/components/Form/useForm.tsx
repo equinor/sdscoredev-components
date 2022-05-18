@@ -114,9 +114,14 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
     const valid = () => {
         if (typeof props.onValidate === 'function') {
             return props.onValidate(form)
+        } else {
+            function temp() {
+                return true
+            }
+            
+            // Return a function so it doesn't throw error
+            return temp;
         }
-
-        return true;
     }
 
     if (!form) return <></>
