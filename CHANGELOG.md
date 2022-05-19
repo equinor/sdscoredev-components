@@ -1,3 +1,10 @@
+## [2.8.10](https://github.com/equinor/sdscoredev-components/compare/2.8.9...2.8.10) (2022-05-19)
+
+
+### Bug Fixes
+
+* add exit button to header i dialog and change some styling ([3c4e587](https://github.com/equinor/sdscoredev-components/commit/3c4e5870a60f6a76a066c97fb4b10b0a9b636537))
+
 ## [2.8.9](https://github.com/equinor/sdscoredev-components/compare/2.8.8...2.8.9) (2022-05-13)
 
 
