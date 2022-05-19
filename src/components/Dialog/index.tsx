@@ -4,6 +4,7 @@ import React, {
   forwardRef,
   MouseEventHandler,
 } from "react";
+import styled from "styled-components";
 import {
   Button,
   Dialog as EdsDialog,
@@ -11,7 +12,6 @@ import {
   DotProgress,
   Icon,
 } from "@equinor/eds-core-react";
-import styled from "styled-components";
 
 const ButtonWrapper = styled.div`
   display: flex;
