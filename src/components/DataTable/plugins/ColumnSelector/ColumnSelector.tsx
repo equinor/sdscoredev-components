@@ -93,6 +93,33 @@ export const ColumnSelector = forwardRef<
     dispatch({ type: "SET_VISIBLE_COLUMNS", payload: result });
   };
 
+  /**
+   * Exposes a way to set columns visible / hidden throught the component ref
+   *
+   * @param columns
+   * @param visible
+   */
+   const setColumns = (columns: Array<string>, visible: boolean) => {
+    if (!init.current || !state.columnSelectorReducer.visibleColumns) {
+      init.current = true;
+      return;
+    }
+
+    let result = [];
+
+    if (visible) {
+      result = [
+        ...new Set([...state.columnSelectorReducer.visibleColumns, ...columns]),
+      ];
+    } else {
+      result = state.columnSelectorReducer.visibleColumns.filter(
+        (x: string) => !columns.includes(x)
+      );
+    }
+
+    dispatch({ type: "SET_VISIBLE_COLUMNS", payload: result });
+  };
+
   const handleResetColumns = (): void => {
     dispatch({
       type: "RESET_VISIBLE_COLUMNS",
@@ -100,7 +127,7 @@ export const ColumnSelector = forwardRef<
     });
   };
 
-  useImperativeHandle(ref, () => ({ setColumn }), [
+  useImperativeHandle(ref, () => ({ setColumn, setColumns }), [
     state.columnSelectorReducer.visibleColumns,
   ]);
 
