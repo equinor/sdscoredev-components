@@ -180,7 +180,7 @@ export const DataTable = React.memo((props: DataTableProps) => {
 
                 {tree && <Tree {...tree.props} />}
 
-                {checkbox && <Checkbox {...checkbox.props} />}
+                {checkbox && <Checkbox {...checkbox.props} ref={checkbox.ref} />}
 
             </Wrapper>
         </DataTableStore>

@@ -1,6 +1,15 @@
 import { FC } from '../../types';
-import React from 'react';
+import React, { Ref } from 'react';
 import { checkboxReducer } from './checkboxReducer';
+
+export type CheckboxRef = {
+    /**
+     * Selects a row 
+     * @param item any
+     */
+    check: (item: any) => void;
+    uncheck: (item: any) => void;
+} | null;
 
 export type CheckboxProps = {
     /**
@@ -11,6 +20,10 @@ export type CheckboxProps = {
      * Set the key to compare agains, default is `id`
      */
     getKey?: string;
+    /**
+      * A ref to this element
+      */
+    ref?: Ref<CheckboxRef>;
 };
 
 const Checkbox: FC<CheckboxProps> = (props) => {
