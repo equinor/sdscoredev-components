@@ -67,7 +67,7 @@ export const ColumnSelector = forwardRef<
   };
 
   /**
-   * Exposes a way to set column visible / hidden throught the component ref
+   * Exposes a way to set a column visible / hidden throught the component ref
    *
    * @param column
    * @param visible
