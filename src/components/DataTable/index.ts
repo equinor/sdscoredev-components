@@ -1,5 +1,5 @@
 import { DataTable as BaseDataTable, DataTableProps } from './DataTable';
-import { Checkbox } from './plugins/Checkbox';
+import { Checkbox, CheckboxRef } from './plugins/Checkbox';
 import { Column } from './Column';
 import { ColumnSelector } from './plugins/ColumnSelector';
 import { CustomRenderProps } from './types';
@@ -77,4 +77,4 @@ export {
 }
 
 // TODO: Add more types to export
-export type { DataTableProps, CustomRenderProps } 
+export type { DataTableProps, CustomRenderProps, CheckboxRef } 
