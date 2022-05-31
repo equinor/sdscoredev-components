@@ -43,6 +43,11 @@ export type ColumnProps = {
      */
     slim?: boolean;
     /**
+     * If set, the cell will take up the smallest space possible, but text in header will not wrap. 
+     * Width will be set to 1% and header will have `white-space: nowrap`
+     */
+    fit?: boolean;
+    /**
      * If set, the cell will truncate the text if exceding the value in pixels
      */
     truncate?: number;

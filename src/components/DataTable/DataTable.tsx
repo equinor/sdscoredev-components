@@ -18,8 +18,9 @@ import {Checkbox } from "./plugins/Checkbox/Checkbox";
 const Wrapper = styled.div<{ width?: number }>`
     /* overflow-x: auto; */
     max-width: ${(props) => props.width ? `${props.width}px` : '100%'};
+    width: ${(props) => !props.width ? '100%' : 'unset'};
     white-space: nowrap;
-    display: block;
+    display: inline-block;
 `;
 
 const TableWrapper = styled.div<any>`
