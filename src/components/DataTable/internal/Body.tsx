@@ -3,6 +3,11 @@ import { Table } from '@equinor/eds-core-react';
 import Row from './Row';
 import { DispatchContext, StateContext } from "../DataTableStore";
 import { Subrow } from "../plugins/Subrow/Subrow";
+import styled from "styled-components";
+
+const PaddedText = styled.div`
+    padding: 16px;
+`
 
 type TableBodyProps = {
     data?: any;
@@ -54,6 +59,10 @@ const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBo
      */
     const generateRows = (items: any, depth: number | undefined = undefined) => {
         typeof depth == 'number' ? depth++ : depth = 0;
+
+        if (!items || items.length === 0) {
+            return <PaddedText>No data was found</PaddedText>
+        }
 
         return items.map((item: any, index: number) => 
         (

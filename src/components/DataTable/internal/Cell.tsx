@@ -93,7 +93,7 @@ type TableCellProps = {
 
 const Cell: React.FC<TableCellProps> = (props) => {
     const { column, item, href, depth, onClick } = props;
-    const { slim, id, render, truncate } = column.props;
+    const { slim, fit, id, render, truncate } = column.props;
 
     const RenderCell = () => {
         /* If render prop is an element */
@@ -128,7 +128,7 @@ const Cell: React.FC<TableCellProps> = (props) => {
     if (onClick && !href) {
         return (
             <StyledCell 
-                slim={slim}
+                slim={slim || fit}
                 truncate={truncate}
                 id={id}
                 onClick={(e: any) => onClick(e)}
@@ -140,7 +140,7 @@ const Cell: React.FC<TableCellProps> = (props) => {
 
     return (
         <StyledCell 
-            slim={slim}
+            slim={slim || fit}
             truncate={truncate}
             id={id}
         >

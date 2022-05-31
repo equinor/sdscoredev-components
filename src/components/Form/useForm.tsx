@@ -15,6 +15,7 @@ type UseFormHookProps = {
     onSuccess?: (result: any) => void;
     onValidate?: (payload: any) => boolean;
     onRender?: (formData: any) => void;
+    onError?: (error: any) => void;
     propagate?: boolean;
 }
 
@@ -43,6 +44,10 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
             } else {
                 hasError.current = true;
                 dispatch({type: 'SET_ERRORS', payload: error.response.data })
+
+                if (typeof props.onError === 'function') {
+                    props.onError(error.response.data)
+                }
             }
         }
     }
