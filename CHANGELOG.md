@@ -1,3 +1,10 @@
+# [2.9.0](https://github.com/equinor/sdscoredev-components/compare/2.8.10...2.9.0) (2022-05-31)
+
+
+### Features
+
+* add setColumns function ([d0fc943](https://github.com/equinor/sdscoredev-components/commit/d0fc9437b0a91e385ef9494dda5a459135372b07))
+
 ## [2.8.10](https://github.com/equinor/sdscoredev-components/compare/2.8.9...2.8.10) (2022-05-19)
 
 
