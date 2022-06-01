@@ -53,7 +53,5 @@ export const Checkbox = forwardRef<
 
     useImperativeHandle(ref, () => ({ check, uncheck }), [state.checkboxReducer.selected]);
 
-    return (<>
-    <Typography variant="h6">Default columns</Typography>
-    </>);
+    return <></>;
 })
