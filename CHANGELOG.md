@@ -1,3 +1,10 @@
+# [2.10.0](https://github.com/equinor/sdscoredev-components/compare/2.9.1...2.10.0) (2022-05-31)
+
+
+### Features
+
+* add ability to check by ref ([83181d3](https://github.com/equinor/sdscoredev-components/commit/83181d3aabfb069926d1b210caa2bb6d04d0b736))
+
 ## [2.9.1](https://github.com/equinor/sdscoredev-components/compare/2.9.0...2.9.1) (2022-05-31)
 
 
