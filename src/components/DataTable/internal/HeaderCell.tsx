@@ -32,10 +32,10 @@ const HeaderCell: React.FC<TableHeaderCellProps> = ({ column, onClick, id, width
 
     const sortIcon = () => {
         // TODO: Remove orderBy, its deprecated
-        if (!state.sortingReducer || (!column.props.orderBy && !column.props.sort)) return <></>;
+        if (!state.sortReducer || (!column.props.orderBy && !column.props.sort)) return <></>;
 
-        if (column.props.orderBy === state.sortingReducer.orderBy || column.props.sort === state.sortingReducer.orderBy) {
-            return <Icon size={18} name={state.sortingReducer.ascending ? 'chevron_up' : 'chevron_down'} />
+        if (column.props.orderBy === state.sortReducer.orderBy || column.props.sort === state.sortReducer.orderBy) {
+            return <Icon size={18} name={state.sortReducer.ascending ? 'chevron_up' : 'chevron_down'} />
         } else {
             return (
                 <SortIcon>

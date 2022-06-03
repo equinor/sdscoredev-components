@@ -59,15 +59,15 @@ export const ODataQuery: React.FC<ODataQueryProps> = ({ state, dispatch }) => {
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
        
-        if (sortingInitialized.current && state.sortingReducer.orderBy && typeof state.sortingReducer.ascending === 'boolean') {
-            params.set('sort', [state.sortingReducer.orderBy, state.sortingReducer.ascending ? 'ascending' : 'descending'].join(','));
+        if (sortingInitialized.current && state.sortReducer.orderBy && typeof state.sortReducer.ascending === 'boolean') {
+            params.set('sort', [state.sortReducer.orderBy, state.sortReducer.ascending ? 'ascending' : 'descending'].join(','));
             const url = [window.location.pathname, params.toString()].join('?')
             navigate(url)
         }
 
         sortingInitialized.current = true;
         
-    }, [state.sortingReducer])
+    }, [state.sortReducer])
 
     return <></>;
 }

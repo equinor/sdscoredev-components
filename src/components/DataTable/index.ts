@@ -8,6 +8,7 @@ import { Export } from './plugins/Export';
 import { Filter } from './plugins/Filter';
 import { Pagination } from './plugins/Pagination';
 import { Row } from './Row';
+import { Sort } from './plugins/Sort';
 import { StickyHeader } from './plugins/StickyHeader';
 import { Subrow } from './plugins/Subrow';
 import { Toolbar } from './Toolbar';
@@ -18,7 +19,7 @@ import { columnSelectorReducer } from './plugins/ColumnSelector/columnSelectorRe
 import { defaultQueryReducer } from './plugins/DefaultQuery/defaultQueryReducer';
 import { oDataQueryReducer } from './plugins/ODataQuery/oDataQueryReducer';
 import { paginationReducer } from './plugins/Pagination/paginationReducer';
-import { sortingReducer } from './plugins/sortingReducer';
+import { sortReducer } from './plugins/Sort/sortReducer';
 import { stickyHeaderReducer } from './plugins/StickyHeader/stickyHeaderReducer';
 
 type DataTableCompound = typeof BaseDataTable & {
@@ -30,6 +31,7 @@ type DataTableCompound = typeof BaseDataTable & {
     Filter: typeof Filter
     Pagination: typeof Pagination
     Row: typeof Row
+    Sort: typeof Sort
     StickyHeader: typeof StickyHeader
     Subrow: typeof Subrow
     Toolbar: typeof Toolbar
@@ -46,6 +48,7 @@ DataTable.Export = Export
 DataTable.Filter = Filter
 DataTable.Pagination = Pagination
 DataTable.Row = Row
+DataTable.Sort = Sort
 DataTable.StickyHeader = StickyHeader
 DataTable.Subrow = Subrow
 DataTable.Toolbar = Toolbar
@@ -59,6 +62,7 @@ DataTable.Export.displayName = 'DataTable.Export'
 DataTable.Filter.displayName = 'DataTable.Filter'
 DataTable.Pagination.displayName = 'DataTable.Pagination'
 DataTable.Row.displayName = 'DataTable.Row'
+DataTable.Sort.displayName = 'DataTable.Sort'
 DataTable.StickyHeader.displayName = 'DataTable.StickyHeader'
 DataTable.Subrow.displayName = 'DataTable.Subrow'
 DataTable.Toolbar.displayName = 'DataTable.Toolbar'
@@ -72,7 +76,7 @@ export {
     defaultQueryReducer,
     oDataQueryReducer,
     paginationReducer,
-    sortingReducer,
+    sortReducer,
     stickyHeaderReducer,
 }
 
