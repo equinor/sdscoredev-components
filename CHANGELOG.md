@@ -1,3 +1,12 @@
+## [2.10.2](https://github.com/equinor/sdscoredev-components/compare/2.10.1...2.10.2) (2022-06-07)
+
+
+### Bug Fixes
+
+* dev dependencies ([4003435](https://github.com/equinor/sdscoredev-components/commit/4003435a025261a40b5cb6d5c366ce4b2aae5afb))
+* remove deprecated ([ff7fe13](https://github.com/equinor/sdscoredev-components/commit/ff7fe13065d4268407a9688613d66ba5ede83bb3))
+* remove orderBy and fix problem ([058072b](https://github.com/equinor/sdscoredev-components/commit/058072b7b556ba01bcd8bbdd717c399d8b2ed404))
+
 ## [2.10.1](https://github.com/equinor/sdscoredev-components/compare/2.10.0...2.10.1) (2022-06-01)
 
 
