@@ -99,7 +99,7 @@ export const ColumnSelector = forwardRef<
    * @param columns
    * @param visible
    */
-   const setColumns = (columns: Array<string>, visible: boolean) => {
+  const setColumns = (columns: Array<string>, visible: boolean) => {
     if (!init.current || !state.columnSelectorReducer.visibleColumns) {
       init.current = true;
       return;

@@ -57,30 +57,39 @@ export const StickyHeader = forwardRef<StickyHeaderRef, InternalStickyHeaderProp
         if (stickyHeaderElement && left.current) stickyHeaderElement.style.left = `${boundingBox.left - left.current}px`
     }
 
+    useEffect(() => {
+        let payload = state.columnSelectorReducer.visibleColumns;
+        if (payload && state.dataTableReducer.data) {
+
+            if (plugins.subrow && !payload.includes('__subrow')) payload.push('__subrow')
+
+            dispatch({ type: "CALCULATE_COLUMN_WIDTH", payload, id })
+        }
+    }, [state.columnSelectorReducer.visibleColumns, state.dataTableReducer.data])
+
     /**
      * Try calculating column widths
      */
-    useEffect(() => {
-       if (state.columnSelectorReducer.visibleColumns && state.columnSelectorReducer.visibleColumns.length) {
-            let payload = state.columnSelectorReducer.visibleColumns;
-            if (plugins.subrow) payload.push('__subrow')
+    // useEffect(() => {
+    //    if (state.columnSelectorReducer.visibleColumns && state.columnSelectorReducer.visibleColumns.length) {
+    //         let payload = state.columnSelectorReducer.visibleColumns;
+    //         if (plugins.subrow && !payload.includes('__subrow')) payload.push('__subrow')
 
-            let calculated = setInterval(function() {
-                if (true) {
-                    dispatch({ type: "CALCULATE_COLUMN_WIDTH", payload, id })
-                    clearInterval(calculated);
-                }
-                init.current++
-            }, 100);
-        }
-
-    }, [state.columnSelectorReducer.visibleColumns])
+    //         let calculated = setInterval(function() {
+    //             if (true) {
+    //                 dispatch({ type: "CALCULATE_COLUMN_WIDTH", payload, id })
+    //                 clearInterval(calculated);
+    //             }
+    //             init.current++
+    //         }, 100);
+    //     }
+    // }, [state.columnSelectorReducer.visibleColumns])
 
     useImperativeHandle(ref, () => ({
         handleScroll: () => determineStickyState(),
         handleResize: () => {
             let payload = state.columnSelectorReducer.visibleColumns;
-            if (plugins.subrow) payload.push('__subrow')
+            if (payload && plugins.subrow && !payload.includes('__subrow')) payload.push('__subrow')
             dispatch({ type: "CALCULATE_COLUMN_WIDTH", payload, id })
         },
     }));
