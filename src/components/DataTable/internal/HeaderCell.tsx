@@ -31,10 +31,13 @@ const HeaderCell: React.FC<TableHeaderCellProps> = ({ column, onClick, id, width
     const state: any = useContext(StateContext);
 
     const sortIcon = () => {
-        // TODO: Remove orderBy, its deprecated
-        if (!state.sortReducer || (!column.props.orderBy && !column.props.sort)) return <></>;
+        if (!state.sortReducer || !column.props.sort) return <></>;
 
-        if (column.props.orderBy === state.sortReducer.orderBy || column.props.sort === state.sortReducer.orderBy) {
+        /**
+         * Because sort can either be a boolean or a string, we need to check if 
+         * `column prop sort = sortReducer orderBy` or `column prop id` = sort = sortReducer`
+         */
+        if (column.props.sort === state.sortReducer.orderBy || (column.props.sort &&  column.props.id === state.sortReducer.orderBy)) {
             return <Icon size={18} name={state.sortReducer.ascending ? 'chevron_up' : 'chevron_down'} />
         } else {
             return (
