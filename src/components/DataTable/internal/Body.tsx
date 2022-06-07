@@ -47,9 +47,9 @@ const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBo
     useEffect(() => {
         if (redraw.current < 3 && state.columnSelectorReducer && state.columnSelectorReducer.visibleColumns) {
             let payload = state.columnSelectorReducer.visibleColumns;
-            if (plugins.subrow) payload.push('__subrow')
+            if (plugins.subrow && !payload.includes('__subrow')) payload.push('__subrow')
 
-            dispatch({ type: "CALCULATE_COLUMN_WIDTH", payload, id })
+            // dispatch({ type: "CALCULATE_COLUMN_WIDTH", payload, id })
             redraw.current++;
         }
     }, [redraw.current])

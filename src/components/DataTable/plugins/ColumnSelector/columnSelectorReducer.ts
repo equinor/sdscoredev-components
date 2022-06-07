@@ -16,7 +16,7 @@ const reducer = (state = initialState, action: any): ColumnSelectorState => {
     
     const getDefaultVisibleColumns = (columns: Array<ReactNode>) => {
         const visibleColumns: Array<string> = []
-    
+
         columns.forEach((column: any) => {
             if (typeof column.props.optional === 'undefined') {
                 if (column.props.id) visibleColumns.push(column.props.id)

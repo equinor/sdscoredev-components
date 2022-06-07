@@ -20,7 +20,8 @@ const reducer = (state = initialState, action: any): DataTableState => {
      */
      const calculateColumnWidth = (visibleColumns: Array<string>, id: string) => {
         const headerElement = document.getElementById(`dataTable.headerRow.${id}`);
-        if (!headerElement) return
+
+        if (!headerElement) return state.width
 
         const payload = {}
         Array.from(headerElement.children).forEach((child: any) => {

@@ -11,8 +11,6 @@ type SubrowCellProps = {
 const Cell = styled(Table.Cell)<{ width?: number }>`
     border-top: unset !important;
     min-width: ${(props: any) => (props.width ? `${props.width}px`  : 'unset')};
-    padding: 0 8px;
-
     background-image: linear-gradient(to bottom, #cfcfcf, transparent 50%);
     background-position: right top, right bottom;
     background-repeat: repeat-y;

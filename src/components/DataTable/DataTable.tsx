@@ -81,6 +81,8 @@ export type DataTableProps = {
     children?: any;
 }
 
+const id = makeId()
+
 export const DataTable = React.memo((props: DataTableProps) => {
     const { 
         data = [], 
@@ -109,8 +111,6 @@ export const DataTable = React.memo((props: DataTableProps) => {
 
     const bottomComponents = toolbar.filter((x: any) => x.props.placement.startsWith('bottom'))
     const topComponents = toolbar.filter((x: any) => x.props.placement.startsWith('top') || x.props.placement.startsWith('right') || x.props.placement.startsWith('left'))
-
-    const id = makeId()
 
     /**
      * Add scroll event handler to the table wrapper. It is the wrapper that gets a horizontal scrollbar
