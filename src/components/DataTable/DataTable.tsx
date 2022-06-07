@@ -14,6 +14,7 @@ import { makeId, getDataProps } from "../utils";
 import { StickyHeader } from "./plugins/StickyHeader/StickyHeader";
 import { Tree } from "./plugins/Tree/Tree";
 import {Checkbox } from "./plugins/Checkbox/Checkbox";
+import { Sort } from "./plugins/Sort/Sort";
 
 const Wrapper = styled.div<{ width?: number }>`
     /* overflow-x: auto; */
@@ -60,7 +61,8 @@ export type DataTableProps = {
      */
     reducers?: any;
     /**
-     * Callback for fetching data from API
+     * Callback for fetching data from API. If not used, 
+     * sorting will be applied on the frontend
      */
     onFetch?: Function;
     /**
@@ -94,6 +96,7 @@ export const DataTable = React.memo((props: DataTableProps) => {
     const wrapperRef = useRef<any>(null);
 
     const row: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Row');
+    const sort: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Sort');
     const tree: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Tree');
     const filter: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Filter');
     const subrow: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.Subrow');
@@ -149,7 +152,7 @@ export const DataTable = React.memo((props: DataTableProps) => {
                          * Header can be provided with plugins. 
                          * Children must contain only the column definitions.
                          */}
-                        <Header id={id} plugins={{ subrow, checkbox }}>
+                        <Header id={id} plugins={{ subrow, checkbox, sort }}>
                             {components.filter((x: any) => x.type.displayName === 'DataTable.Column')}
                         </Header>
 
@@ -181,6 +184,11 @@ export const DataTable = React.memo((props: DataTableProps) => {
                 {tree && <Tree {...tree.props} />}
 
                 {checkbox && <Checkbox {...checkbox.props} ref={checkbox.ref} />}
+
+                {/**
+                 * Only allow internal sorting if onFetch is not defined.
+                 */}
+                {(sort && !onFetch) && <Sort {...sort.props} />}
 
             </Wrapper>
         </DataTableStore>

@@ -42,9 +42,6 @@ const Header: React.FC<HeaderProps> = ({ children, id, plugins }) => {
     const handleClick = (columnProps: ColumnProps) => {
         if (columnProps.sort) {
             typeof columnProps.sort === 'boolean' ? dispatch({ type: 'SORT', payload: columnProps.id }) : dispatch({ type: 'SORT', payload: columnProps.sort });
-            // TODO: Deprecated, should be removed
-        } else if (columnProps.orderBy) {
-            dispatch({ type: 'SORT', payload: columnProps.orderBy });
         }
     }
 
@@ -68,7 +65,7 @@ const Header: React.FC<HeaderProps> = ({ children, id, plugins }) => {
                 {!state.columnSelectorReducer && state.dataTableReducer.columns?.
                     filter((x: any) => !x.props.optional).
                     map((column: JSX.Element) => (
-                        <HeaderCell key={column.props.id} id={column.props.id} column={column} onClick={() => handleClick(column.props.orderBy)} />
+                        <HeaderCell key={column.props.id} id={column.props.id} column={column} onClick={() => handleClick(column.props)} />
                     ))
                 }
 

@@ -28,12 +28,6 @@ export type ColumnProps = {
      */
     render?: JSX.Element | Function | [Function, { [key: string]: any }];
     /**
-     * ** Deprecated ** Use sort instead
-     * Key representing what this column will be sortet by. Can be either a simple string or
-     * a string in this format `user.firstname`
-     */
-    orderBy?: string;
-    /**
      * If set as true, it will add option to sort the column by the `<Column>` id prop. 
      * If set as a string, it will sort by the string and not the id prop.
      */

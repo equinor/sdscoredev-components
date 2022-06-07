@@ -51,16 +51,16 @@ export const DefaultQuery: React.FC<DefaultQueryProps> = ({ state, dispatch }) =
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
        
-        if (sortingInitialized.current && state.sortingReducer.orderBy && typeof state.sortingReducer.ascending === 'boolean') {
-            params.set('orderBy', state.sortingReducer.orderBy);
-            params.set('desc', state.sortingReducer.ascending);
+        if (sortingInitialized.current && state.sortReducer.orderBy && typeof state.sortReducer.ascending === 'boolean') {
+            params.set('orderBy', state.sortReducer.orderBy);
+            params.set('desc', state.sortReducer.ascending);
             const url = [window.location.pathname, params.toString()].join('?')
             navigate(url)
         }
 
         sortingInitialized.current = true;
         
-    }, [state.sortingReducer])
+    }, [state.sortReducer])
 
     return <></>;
 }

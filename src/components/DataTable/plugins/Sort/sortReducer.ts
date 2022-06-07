@@ -2,17 +2,17 @@ export const SET_ORDER_BY = "SET_ORDER_BY";
 export const SET_DIRECTION = "SET_DIRECTION";
 export const SORT = "SORT";
 
-interface SortingState {
+interface SortState {
     orderBy?: string,
     ascending?: boolean,
 }
 
-export const initialState: SortingState = {
+export const initialState: SortState = {
     orderBy: undefined,
     ascending: undefined
 };
 
-const reducer = (state = initialState, action: any): SortingState => {
+const reducer = (state = initialState, action: any): SortState => {
     switch (action.type) {
         case SET_ORDER_BY:
             return {
@@ -35,4 +35,4 @@ const reducer = (state = initialState, action: any): SortingState => {
     }
 };
 
-export const sortingReducer = {reducer, initialState}
+export const sortReducer = {reducer, initialState}
