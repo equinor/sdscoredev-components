@@ -1,3 +1,10 @@
+## [2.10.1](https://github.com/equinor/sdscoredev-components/compare/2.10.0...2.10.1) (2022-06-01)
+
+
+### Bug Fixes
+
+* remove text ([8b6cfb5](https://github.com/equinor/sdscoredev-components/commit/8b6cfb584ce6961da7fb4878684f3289a5d64f97))
+
 # [2.10.0](https://github.com/equinor/sdscoredev-components/compare/2.9.1...2.10.0) (2022-05-31)
 
 
