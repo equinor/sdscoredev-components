@@ -55,7 +55,7 @@ const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBo
     }, [redraw.current])
 
     /** 
-     * Provides rows recursively for tree rows that is open and has children 
+     * Provides rows recursively
      */
     const generateRows = (items: any, depth: number | undefined = undefined) => {
         typeof depth == 'number' ? depth++ : depth = 0;
@@ -74,11 +74,11 @@ const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBo
         ))
     }
 
-    if (!data) return <></>
+    if (!state.dataTableReducer.data) return <></>
 
     return (
         <Table.Body ref={ref} id={`dataTable.body.${id}`}>
-            {generateRows(data)}
+            {generateRows(state.dataTableReducer.data)}
         </Table.Body>
     );
 });
