@@ -1,3 +1,10 @@
+## [2.10.5](https://github.com/equinor/sdscoredev-components/compare/2.10.4...2.10.5) (2022-06-07)
+
+
+### Bug Fixes
+
+* add back plugins ([60c7fbf](https://github.com/equinor/sdscoredev-components/commit/60c7fbf7ea1bd1f3da5a3226512790bfb7ff451d))
+
 ## [2.10.2](https://github.com/equinor/sdscoredev-components/compare/2.10.1...2.10.2) (2022-06-07)
 
 
