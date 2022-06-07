@@ -11,6 +11,12 @@ export const Sort = (props: SortProps) => {
     const state: any = useContext(StateContext);
     const dispatch: any = useContext(DispatchContext);
 
+    /**
+     * @ref https://github.com/snovakovic/fast-sort
+     *
+     * @param orderBy 
+     * @param ascending 
+     */
     const sortTable = (orderBy: string, ascending: boolean) => {
         let sorted: Array<any> = []
 
