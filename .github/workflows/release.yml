@@ -41,7 +41,8 @@ jobs:
       - name: semantic-release-prerequisites
         run: |
           npm install --no-package-lock --no-save \
-            @semantic-release/changelog
+            @semantic-release/changelog \
+            @semantic-release/git
 
       - name: semantic-release-dry-run
         env:
