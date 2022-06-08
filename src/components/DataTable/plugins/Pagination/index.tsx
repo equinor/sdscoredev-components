@@ -1,5 +1,5 @@
 import React from 'react';
-import { FC } from '../../types';
+import { FC, ReducerProp } from '../../types';
 import { paginationReducer } from './paginationReducer';
 
 export type PaginationProps = {
@@ -13,7 +13,7 @@ export type PaginationProps = {
  * @param props `<PaginationProps>`
  * @returns `JSX.Element`
  */
-const Pagination: FC<PaginationProps> = (props) => {
+const Pagination: React.FC<PaginationProps> & ReducerProp = (props) => {
     return (<React.Fragment {...props}>Pagination</React.Fragment>)
 }
 

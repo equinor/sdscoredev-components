@@ -1,5 +1,5 @@
-import { FC } from '../../types';
-import React, { Ref } from 'react';
+import { FC, ReducerProp } from '../../types';
+import React, { FunctionComponent, Ref } from 'react';
 import { columnSelectorReducer } from './columnSelectorReducer';
 
 export type ColumnSelectorRef = {
@@ -9,6 +9,12 @@ export type ColumnSelectorRef = {
      * @param visible boolean
      */
     setColumn: (column: string, visible: boolean) => void;
+    /**
+     * Sets multiple columns to be visible / hidden
+     * @param column string
+     * @param visible boolean
+     */
+    setColumns: (column: Array<string>, visible: boolean) => void;
 } | null;
 
 export type ColumnSelectorProps = {
@@ -34,7 +40,7 @@ export type ColumnSelectorProps = {
     storage?: Storage;
 };
 
-const ColumnSelector: FC<ColumnSelectorProps> = (props) => {
+const ColumnSelector: React.FC<ColumnSelectorProps> & ReducerProp = (props) => {
     return (<React.Fragment {...props}>ColumnSelector</React.Fragment>)
 }
 

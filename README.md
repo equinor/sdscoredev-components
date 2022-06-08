@@ -6,7 +6,6 @@ Composite react components that extend Equinor Design Systems (EDS)
 ## Components
 
 ### `<DataTable>`
-
 SDSCoredev Components provides an advanced datatable that offer you pagination, sorting, filter 
 integration, column settings, query handling, sticky headers and much more. It is based on Equinor 
 Design System components to comply with Equinor design standards.
@@ -14,18 +13,45 @@ Design System components to comply with Equinor design standards.
 It is created so that developers can easily integrate it into their applications. The complexity that 
 a datatable generate over time is avoided by abstractions and combined reducers.
 
-### `<Form>`
-...
+### `useForm`
+A hook that simplify working with form requests. It handles most common use cases when the task is to work with data sent to and from backend.
 
-### `<Tooltip>`
-
-A tooltip that can be added to texts, input labels or basically anywhere. 
-It contains a question mark icon that when hovered will display a message.
-
-### `<Dialog>`
-...
+### `withInput`
+A hoc component to wrap your input fields with that handles validation, labeling, tooltips and more.
 
 ---
+## Development
+1. Clone the repo from [https://github.com/equinor/sdscoredev-components](https://github.com/equinor/sdscoredev-components) as a sibling to your local project.
+2. Run 
+
+```
+npm install
+```
+
+3. Because sdscoredev-components and your project might be running two 
+separate react libraries you need to link them. Do this for `react` and `react-dom` and you should be good to go. From sdscoredev-components directory, run:
+
+```
+npm link ../[local project]/node_modules/react
+```
+4. In your local project run 
+
+```
+npm install ../sdscoredev-components
+```
+to install the local library.
+5. In sdscoredev-components folder run 
+
+```
+npm run watch
+```
+to activate hot reloading. Now when you make changes to sdscoredev-components, your local project will catch the changes as well. 
+
+### Caveats
+
+When you refactor or add imports/exports in sdscoredev-components you need to run `npm install ../sdscoredev-components` again to let the changes take effect in your local project.
+
+___
 
 ## Contributing
 
