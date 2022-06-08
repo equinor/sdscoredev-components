@@ -1,3 +1,10 @@
+## [2.10.7](https://github.com/equinor/sdscoredev-components/compare/2.10.6...2.10.7) (2022-06-08)
+
+
+### Bug Fixes
+
+* could not handle checkbox ([d304a8d](https://github.com/equinor/sdscoredev-components/commit/d304a8ddd683e58a21c87ab15c224a8862e03cb4))
+
 ## [2.10.6](https://github.com/equinor/sdscoredev-components/compare/2.10.5...2.10.6) (2022-06-07)
 
 
