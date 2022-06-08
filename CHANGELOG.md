@@ -1,3 +1,10 @@
+## [2.10.6](https://github.com/equinor/sdscoredev-components/compare/2.10.5...2.10.6) (2022-06-07)
+
+
+### Bug Fixes
+
+* stickyHeader not working ([37b3fb3](https://github.com/equinor/sdscoredev-components/commit/37b3fb37969b4ee80fff8b1e0673332dc7ebe0f4))
+
 ## [2.10.5](https://github.com/equinor/sdscoredev-components/compare/2.10.4...2.10.5) (2022-06-07)
 
 

@@ -1,4 +1,4 @@
-import React, { forwardRef, useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
+import React, { forwardRef, useCallback, useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
 import styled from 'styled-components';
 import { Table } from '@equinor/eds-core-react';
 import { DispatchContext, StateContext } from "../../DataTableStore";
@@ -34,13 +34,34 @@ export const StickyHeader = forwardRef<StickyHeaderRef, InternalStickyHeaderProp
     const dispatch: any = useContext(DispatchContext);
     const stickyHeaderElement = document.getElementById(`dataTable.stickyHeaderRow.${id}`);
     const headerElement = document.getElementById(`dataTable.headerRow.${id}`);
-    const init = useRef<number>(0);
     const left = useRef<number>();
 
     const handleClick = (columnProps: ColumnProps) => {
         if (columnProps.sort) {
             typeof columnProps.sort === 'boolean' ? dispatch({ type: 'SORT', payload: columnProps.id }) : dispatch({ type: 'SORT', payload: columnProps.sort });
         } 
+    }
+
+    const getVisibleColumns = useCallback((): Array<string> => {
+        let payload: Array<string> = [];
+
+        /** If we are using a columnSelector, we need to only calculate width of the visible Columns */
+        if (state.columnSelectorReducer && state.columnSelectorReducer.visibleColumns && state.dataTableReducer.data) {
+            payload = state.columnSelectorReducer.visibleColumns;
+        } else if (headerElement) {
+            payload = Array.from(headerElement.children).map((x: any) => x.id)
+        }
+
+        /** In case column plugins exist, we need to add them to the payload */
+        if (plugins.subrow && !payload.includes('__subrow')) payload.push('__subrow')
+        if (plugins.checkbox && !payload.includes('__checkbox')) payload.push('__checkbox')
+
+        return payload
+    }, [headerElement, state.columnSelectorReducer])
+
+    const calculateColumnWidths = () => {
+        const payload = getVisibleColumns()
+        dispatch({ type: "CALCULATE_COLUMN_WIDTH", payload, id })
     }
 
     /**
@@ -58,40 +79,12 @@ export const StickyHeader = forwardRef<StickyHeaderRef, InternalStickyHeaderProp
     }
 
     useEffect(() => {
-        let payload = state.columnSelectorReducer.visibleColumns;
-        if (payload && state.dataTableReducer.data) {
-
-            if (plugins.subrow && !payload.includes('__subrow')) payload.push('__subrow')
-
-            dispatch({ type: "CALCULATE_COLUMN_WIDTH", payload, id })
-        }
-    }, [state.columnSelectorReducer.visibleColumns, state.dataTableReducer.data])
-
-    /**
-     * Try calculating column widths
-     */
-    // useEffect(() => {
-    //    if (state.columnSelectorReducer.visibleColumns && state.columnSelectorReducer.visibleColumns.length) {
-    //         let payload = state.columnSelectorReducer.visibleColumns;
-    //         if (plugins.subrow && !payload.includes('__subrow')) payload.push('__subrow')
-
-    //         let calculated = setInterval(function() {
-    //             if (true) {
-    //                 dispatch({ type: "CALCULATE_COLUMN_WIDTH", payload, id })
-    //                 clearInterval(calculated);
-    //             }
-    //             init.current++
-    //         }, 100);
-    //     }
-    // }, [state.columnSelectorReducer.visibleColumns])
+        calculateColumnWidths()
+    }, [state.columnSelectorReducer, state.dataTableReducer.data])
 
     useImperativeHandle(ref, () => ({
         handleScroll: () => determineStickyState(),
-        handleResize: () => {
-            let payload = state.columnSelectorReducer.visibleColumns;
-            if (payload && plugins.subrow && !payload.includes('__subrow')) payload.push('__subrow')
-            dispatch({ type: "CALCULATE_COLUMN_WIDTH", payload, id })
-        },
+        handleResize: () => calculateColumnWidths(),
     }));
 
     // Get left position of header element
@@ -108,7 +101,7 @@ export const StickyHeader = forwardRef<StickyHeaderRef, InternalStickyHeaderProp
                     {state.checkboxReducer && <CheckboxHeaderCell key="checkbox-header" />}
                     {/* ---- Checkbox plugin implementation end ----------------------- */}
 
-                    {state.dataTableReducer.columns?.filter((x: any) => state.columnSelectorReducer.visibleColumns?.includes(x.props.id)).map((column: JSX.Element) => (
+                    {state.dataTableReducer.columns?.filter((x: any) => getVisibleColumns().includes(x.props.id)).map((column: JSX.Element) => (
                         <HeaderCell 
                             key={column.props.id} 
                             width={state.stickyHeaderReducer.width[column.props.id]} 
