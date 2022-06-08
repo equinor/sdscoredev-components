@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactNode } from "react"
+import React, { FunctionComponent, ReactNode } from "react"
 import { ColumnProps } from "./Column"
 
 // From https://stackoverflow.com/a/50375286
@@ -34,7 +34,8 @@ export type ReducerProp = {
     reducer?: { [key: string]: Reducer };
 }
 
-export type FC<P = {}> = FunctionComponent<P> & ReducerProp;
+export type FC<P = {}> = React.FC<P> & ReducerProp;
+
 
 export type Action = {
     type: any;

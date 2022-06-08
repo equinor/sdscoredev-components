@@ -1,4 +1,4 @@
-import { FC } from '../../types';
+import { FC, ReducerProp } from '../../types';
 import React from 'react';
 import { subrowReducer } from './subrowReducer';
 
@@ -8,7 +8,7 @@ export type SubrowProps = {
     columnRender: Function | JSX.Element;
 };
 
-const Subrow: FC<SubrowProps> = (props) => {
+const Subrow: React.FC<SubrowProps> & ReducerProp = (props) => {
     return (<React.Fragment {...props}>Subrow</React.Fragment>)
 }
 

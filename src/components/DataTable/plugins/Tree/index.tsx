@@ -1,4 +1,4 @@
-import { FC } from '../../types';
+import { FC, ReducerProp } from '../../types';
 import React from 'react';
 import { treeReducer } from './treeReducer';
 
@@ -13,7 +13,7 @@ export type TreeProps = {
     childrenProp?: string;
 };
 
-const Tree: FC<TreeProps> = (props) => {
+const Tree: React.FC<TreeProps> & ReducerProp = (props) => {
     return (<React.Fragment {...props}>Tree</React.Fragment>)
 }
 

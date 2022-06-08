@@ -1,4 +1,4 @@
-import { FC } from '../../types';
+import { FC, ReducerProp } from '../../types';
 import React, { Ref } from 'react';
 import { checkboxReducer } from './checkboxReducer';
 
@@ -26,7 +26,7 @@ export type CheckboxProps = {
     ref?: Ref<CheckboxRef>;
 };
 
-const Checkbox: FC<CheckboxProps> = (props) => {
+const Checkbox: React.FC<CheckboxProps> & ReducerProp = (props) => {
     return (<React.Fragment {...props}>Checkbox</React.Fragment>)
 }
 
