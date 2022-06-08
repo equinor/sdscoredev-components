@@ -143,7 +143,7 @@ export const DataTable = React.memo((props: DataTableProps) => {
 
                 <TableWrapper ref={wrapperRef}>
 
-                    {stickyHeader && <StickyHeader {...stickyHeader.props} id={id} ref={stickyHeader.ref} plugins={{ subrow }} />}
+                    {stickyHeader && <StickyHeader {...stickyHeader.props} id={id} ref={stickyHeader.ref} plugins={{ subrow, checkbox }} />}
 
                     <EdsProvider density={compact ? 'compact' : 'comfortable'}>
                     <Table style={{ width: '100%' }} {...getDataProps(props)}>
