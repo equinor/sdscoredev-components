@@ -34,13 +34,13 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
 
     const promiseSubmit = async () => {
         if (typeof props.onSubmit === 'function') {
-            const { data, error } = await props.onSubmit(form)
+            const { data, error, status } = await props.onSubmit(form)
 
-            if (data && !error && typeof props.onSuccess === 'function') {
+            if (status == 200 && !error && typeof props.onSuccess === 'function') {
                 dispatch({type: 'SET_ERRORS', payload: undefined })
                 hasError.current = false;
                 setHasChanged(false)
-                props.onSuccess(data.result)
+                props.onSuccess(status)
             } else {
                 hasError.current = true;
                 dispatch({type: 'SET_ERRORS', payload: error.response.data })
