@@ -1,13 +1,13 @@
-import React, { forwardRef, useContext, useEffect, useRef } from "react";
+import React, { forwardRef, useContext, useEffect, useRef } from 'react';
 import { Table } from '@equinor/eds-core-react';
 import Row from './Row';
-import { DispatchContext, StateContext } from "../DataTableStore";
-import { Subrow } from "../plugins/Subrow/Subrow";
-import styled from "styled-components";
+import { DispatchContext, StateContext } from '../DataTableStore';
+import { Subrow } from '../plugins/Subrow/Subrow';
+import styled from 'styled-components';
 
 const PaddedText = styled.div`
     padding: 16px;
-`
+`;
 
 type TableBodyProps = {
     data?: any;
@@ -15,7 +15,7 @@ type TableBodyProps = {
     children?: any;
     id?: string;
     plugins?: any;
-}
+};
 
 /**
  * TODO: Needs to be split in two separate Body components, One default, and one for the Tree plugin
@@ -24,57 +24,67 @@ const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBo
     const { data, onFetch, id, plugins } = props;
     const state: any = useContext(StateContext);
     const dispatch: any = useContext(DispatchContext);
-    const rowRef = useRef<any>(null)
-    const redraw = useRef<number>(0)
+    const rowRef = useRef<any>(null);
+    const redraw = useRef<number>(0);
 
     /**
      * Initialize data so that we can draw the table rows
      */
     useEffect(() => {
         data && dispatch({ type: 'SET_DATA', payload: data });
-    }, [data])
+    }, [data]);
 
     useEffect(() => {
-        onFetch && onFetch(state.dataTableReducer.query)
-    }, [])
+        onFetch && onFetch(state.dataTableReducer.query);
+    }, []);
 
     useEffect(() => {
         if (typeof state.dataTableReducer.query !== 'undefined') {
             onFetch && onFetch(state.dataTableReducer.query);
         }
-    }, [state.dataTableReducer.query])
+    }, [state.dataTableReducer.query]);
 
     useEffect(() => {
         if (redraw.current < 3 && state.columnSelectorReducer && state.columnSelectorReducer.visibleColumns) {
             let payload = state.columnSelectorReducer.visibleColumns;
-            if (plugins.subrow && !payload.includes('__subrow')) payload.push('__subrow')
+            if (plugins.subrow && !payload.includes('__subrow')) payload.push('__subrow');
 
             // dispatch({ type: "CALCULATE_COLUMN_WIDTH", payload, id })
             redraw.current++;
         }
-    }, [redraw.current])
+    }, [redraw.current]);
 
-    /** 
+    /**
      * Provides rows recursively
      */
     const generateRows = (items: any, depth: number | undefined = undefined) => {
-        typeof depth == 'number' ? depth++ : depth = 0;
+        typeof depth == 'number' ? depth++ : (depth = 0);
 
-        if (!items || items.length === 0) {
-            return <PaddedText>No data was found</PaddedText>
+        if (!Array.isArray(items)) {
+            throw Error(
+                'It appears that you maybe have not defined `getData` properly. Try something like `getData={(data: any) => data.items}`',
+            );
         }
 
-        return items.map((item: any, index: number) => 
-        (
-            <React.Fragment key={index}>
-                <Row {...props} depth={depth} data={item} ref={(el) => rowRef.current = el} key={`row-${item.id}`} />
-                {state.treeReducer && item[state.treeReducer.childrenProp] && state.treeReducer.open.includes(item.id) && generateRows(item[state.treeReducer.childrenProp], depth)}
-                {plugins.subrow && state.subrowReducer && state.subrowReducer.open.includes(item.id) && <Subrow {...plugins.subrow.props} data={item} key={`row-${item.id}-subrow`} />}
-            </React.Fragment>
-        ))
-    }
+        if (!items || items.length === 0) {
+            return <PaddedText>No data was found</PaddedText>;
+        }
 
-    if (!state.dataTableReducer.data) return <></>
+        return items.map((item: any, index: number) => (
+            <React.Fragment key={index}>
+                <Row {...props} depth={depth} data={item} ref={(el) => (rowRef.current = el)} key={`row-${item.id}`} />
+                {state.treeReducer &&
+                    item[state.treeReducer.childrenProp] &&
+                    state.treeReducer.open.includes(item.id) &&
+                    generateRows(item[state.treeReducer.childrenProp], depth)}
+                {plugins.subrow && state.subrowReducer && state.subrowReducer.open.includes(item.id) && (
+                    <Subrow {...plugins.subrow.props} data={item} key={`row-${item.id}-subrow`} />
+                )}
+            </React.Fragment>
+        ));
+    };
+
+    if (!state.dataTableReducer.data) return <></>;
 
     return (
         <Table.Body ref={ref} id={`dataTable.body.${id}`}>
