@@ -1,3 +1,10 @@
+## [2.10.8](https://github.com/equinor/sdscoredev-components/compare/2.10.7...2.10.8) (2022-06-13)
+
+
+### Bug Fixes
+
+* add extra props for input ([443bf41](https://github.com/equinor/sdscoredev-components/commit/443bf4123d883c0920c6197f1d76c8b54e0d9721))
+
 ## [2.10.7](https://github.com/equinor/sdscoredev-components/compare/2.10.6...2.10.7) (2022-06-08)
 
 
