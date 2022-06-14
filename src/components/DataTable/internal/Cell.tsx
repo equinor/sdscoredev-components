@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 import styled from 'styled-components';
 import { CellProps, Table } from '@equinor/eds-core-react';
 import { resolve } from '../../utils';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
-const StyledCell = styled(Table.Cell)<CellProps & { slim?: boolean, truncate?: number}>`
+const StyledCell = styled(Table.Cell)<CellProps & { slim?: boolean; truncate?: number }>`
     border-top: unset !important;
     background-image: linear-gradient(to bottom, #cfcfcf, transparent 50%);
     background-position: right top, right bottom;
@@ -62,7 +62,7 @@ const StyledCell = styled(Table.Cell)<CellProps & { slim?: boolean, truncate?: n
                 margin-top: 0;
                 z-index: -1;
                 width: 100%;
-                background: rgba(247,247,247,1);
+                background: rgba(247, 247, 247, 1);
             }
         }
     }
@@ -73,7 +73,7 @@ const StyledCell = styled(Table.Cell)<CellProps & { slim?: boolean, truncate?: n
             z-index: 66;
 
             span {
-                background: rgba(247,247,247,1);
+                background: rgba(247, 247, 247, 1);
 
                 div {
                     display: block;
@@ -89,7 +89,7 @@ type TableCellProps = {
     item?: any;
     href?: string;
     depth?: number; // TODO: Try refactor out depth prop, it belongs to Tree plugin
-}
+};
 
 const Cell: React.FC<TableCellProps> = (props) => {
     const { column, item, href, depth, onClick } = props;
@@ -98,16 +98,17 @@ const Cell: React.FC<TableCellProps> = (props) => {
     const RenderCell = () => {
         /* If render prop is an element */
         if (render && typeof render === 'function') {
-            return render({ column, item, content: resolve(item, id, ''), depth })
+            return render({ column: column.props, item, content: resolve(item, id, ''), depth });
         }
 
         /* If render prop is an array */
         if (render && Array.isArray(render)) {
             return render[0]({
                 ...props,
+                column: column.props,
                 content: resolve(item, id, ''),
                 renderProps: render[1],
-            })
+            });
         }
 
         if (!render && truncate) {
@@ -118,35 +119,28 @@ const Cell: React.FC<TableCellProps> = (props) => {
                         <div />
                     </span>
                 </div>
-            )
+            );
         }
 
         /* Default render */
-        return resolve(item, id, '')
-    }
+        return resolve(item, id, '');
+    };
 
     if (onClick && !href) {
         return (
-            <StyledCell 
-                slim={slim || fit}
-                truncate={truncate}
-                id={id}
-                onClick={(e: any) => onClick(e)}
-            >
+            <StyledCell slim={slim || fit} truncate={truncate} id={id} onClick={(e: any) => onClick(e)}>
                 {RenderCell()}
             </StyledCell>
-        )
+        );
     }
 
     return (
-        <StyledCell 
-            slim={slim || fit}
-            truncate={truncate}
-            id={id}
-        >
-            <Link className="row-link" to={{ pathname: href }}>{RenderCell()}</Link>
+        <StyledCell slim={slim || fit} truncate={truncate} id={id}>
+            <Link className="row-link" to={{ pathname: href }}>
+                {RenderCell()}
+            </Link>
         </StyledCell>
-    )
+    );
 };
 
 export default Cell;
