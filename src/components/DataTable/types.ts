@@ -17,7 +17,7 @@ export type DataTableStoreProps = {
 
 export type CustomRenderProps = {
     column?: ColumnProps;
-    item?: { [key: string]: string };
+    item?: { [key: string]: any };
     content: any;
     renderProps?: { [key: string]: any };
     depth?: number;
