@@ -1,3 +1,10 @@
+## [2.10.9](https://github.com/equinor/sdscoredev-components/compare/2.10.8...2.10.9) (2022-06-14)
+
+
+### Bug Fixes
+
+* column props not exposed ([b0a8671](https://github.com/equinor/sdscoredev-components/commit/b0a867179f9ecbd045bc55397495f851d80a0d78))
+
 ## [2.10.8](https://github.com/equinor/sdscoredev-components/compare/2.10.7...2.10.8) (2022-06-13)
 
 
