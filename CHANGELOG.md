@@ -1,3 +1,15 @@
+# [2.11.0](https://github.com/equinor/sdscoredev-components/compare/2.10.9...2.11.0) (2022-06-15)
+
+
+### Bug Fixes
+
+* type error ([f59610b](https://github.com/equinor/sdscoredev-components/commit/f59610b3deaa1365809b1363c3669ff9dc78aee2))
+
+
+### Features
+
+* add ability to reset form ([b151965](https://github.com/equinor/sdscoredev-components/commit/b1519655353b81c120129f008b0f35594feec4e2))
+
 ## [2.10.9](https://github.com/equinor/sdscoredev-components/compare/2.10.8...2.10.9) (2022-06-14)
 
 
