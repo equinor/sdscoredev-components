@@ -17,7 +17,6 @@ type UseFormHookProps = {
     onValidate?: (payload: any) => boolean;
     onRender?: (formData: any) => any;
     onError?: (error: any) => void;
-    propagate?: boolean;
 };
 
 export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | ReactFragment => {
@@ -28,10 +27,6 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
     const [hasChanged, setHasChanged] = useState<boolean>(false);
 
     const dispatch: any = useContext(ValidationDispatchContext);
-
-    const propagateSubmit = () => {
-        if (typeof props.onSubmit === 'function') props.onSubmit(form);
-    };
 
     const promiseSubmit = async () => {
         if (typeof props.onSubmit === 'function') {
@@ -103,12 +98,7 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
 
     useEffect(() => {
         if (submitting) {
-            if (props.propagate) {
-                propagateSubmit();
-            } else {
-                promiseSubmit();
-            }
-
+            promiseSubmit();
             setSubmitting(false);
         }
     }, [submitting]);
