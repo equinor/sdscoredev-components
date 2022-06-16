@@ -1,3 +1,10 @@
+# [2.12.0](https://github.com/equinor/sdscoredev-components/compare/2.11.0...2.12.0) (2022-06-16)
+
+
+### Features
+
+* make onRender able to manipulate data ([17b2ef3](https://github.com/equinor/sdscoredev-components/commit/17b2ef3802aadf16ce67346acbcc541a97821faf))
+
 # [2.11.0](https://github.com/equinor/sdscoredev-components/compare/2.10.9...2.11.0) (2022-06-15)
 
 
