@@ -15,7 +15,7 @@ type UseFormHookProps = {
     onSubmit?: (payload: any) => Promise<any> | void;
     onSuccess?: (result: any) => void;
     onValidate?: (payload: any) => boolean;
-    onRender?: (formData: any) => void;
+    onRender?: (formData: any) => any;
     onError?: (error: any) => void;
     propagate?: boolean;
 };
@@ -96,7 +96,8 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
     useEffect(() => {
         if (form && props.onRender && !init.current) {
             init.current = true;
-            props.onRender(form);
+            const manipulatedValues = props.onRender(form);
+            setForm((state: any) => ({ ...state, ...manipulatedValues }));
         }
     }, [form]);
 
