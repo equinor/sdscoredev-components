@@ -10,13 +10,15 @@ const StyledTextField = styled(EdsTextField)`
         height: 37px;
     }
 `;
-export const TextField: React.FC<InputProps & PartialPick<TextFieldProps, 'unit'>> = (props: any) => {
-    const { value, error } = props;
+export const TextField: React.FC<InputProps> = (props: any) => {
+    const { id, value, error, onChange, unit } = props;
 
     return (
         <StyledTextField
-            {...props}
+            id={id}
             label=""
+            unit={unit}
+            onChange={onChange}
             defaultValue={value || ''}
             variant={error ? 'error' : 'default'}
             helperText={error}
