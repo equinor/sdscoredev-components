@@ -1,3 +1,10 @@
+## [2.12.1](https://github.com/equinor/sdscoredev-components/compare/2.12.0...2.12.1) (2022-06-16)
+
+
+### Bug Fixes
+
+* implement partial pick ([e6fd03c](https://github.com/equinor/sdscoredev-components/commit/e6fd03c637ae61991c62721ac809cf44aeea01a8))
+
 # [2.12.0](https://github.com/equinor/sdscoredev-components/compare/2.11.0...2.12.0) (2022-06-16)
 
 
