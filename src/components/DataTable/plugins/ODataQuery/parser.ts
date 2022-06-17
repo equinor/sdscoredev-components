@@ -7,6 +7,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-restricted-globals */
 import buildQuery, { ITEM_ROOT } from 'odata-query';
+import f from 'odata-filter-builder';
 import { mergeAdvanced } from 'object-merge-advanced';
 
 interface Filter {
@@ -286,9 +287,16 @@ class FilterParser {
      */
     private getContainsFilter(value: any, key: string) {
         value = value.substring(1, value.length - 1);
-        let result: Filter = [...new Set(key.split('|').map((x: any) => ({ [x]: { contains: value } })))];
-        result = this.or ? { or: result } : result;
-        return this.appendKeys(ITEM_ROOT, result);
+        let result: Filter = [...new Set(key.split('|').map((x: any) => ({ [`tolower(${x})`]: { contains: value } })))];
+        return this.appendKeys(ITEM_ROOT, { or: result });
+
+        // const g = f('or')
+
+        // key.split('|').forEach(x => {
+        //     g.contains(y => y.toLower(x), value.toLowerCase());
+        // })
+
+        // return g.toString()
     }
 
     /**
