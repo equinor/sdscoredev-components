@@ -99,17 +99,18 @@
     "styled-components": ">=5.3"
   },
   "dependencies": {
-    "@equinor/eds-core-react": "^0.18.0",
+    "@equinor/eds-core-react": ">=0.18.0",
     "@equinor/eds-icons": "^0.10.0",
     "@equinor/eds-tokens": "^0.7.0",
     "@types/react": "^17.0.43",
     "casual-browserify": "^1.5.19-2",
     "fast-sort": "^3.2.0",
     "object-merge-advanced": "^13.0.12",
+    "odata-filter-builder": "^1.0.0",
     "odata-query": "^6.7.1",
-    "react-dom": "^17.0.2",
+    "react-dom": ">=17.0",
     "react-select": "^5.2.2",
-    "styled-components": "5.3.5",
+    "styled-components": ">=5.3",
     "tsconfig-paths-webpack-plugin": "^3.5.2",
     "typescript": "^4.4.4"
   }
