@@ -92,7 +92,7 @@
     "webpack": "^5.70.0"
   },
   "peerDependencies": {
-    "@equinor/eds-core-react": ">=0.18.0",
+    "@equinor/eds-core-react": ">=0.20.1",
     "react": ">=17.0",
     "react-dom": ">=17.0",
     "react-router-dom": ">=6.2",
