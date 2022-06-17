@@ -287,7 +287,7 @@ class FilterParser {
      */
     private getContainsFilter(value: any, key: string) {
         value = value.substring(1, value.length - 1);
-        let result: Filter = [...new Set(key.split('|').map((x: any) => ({ [`tolower(${x})`]: { contains: value } })))];
+        let result: Filter = [...new Set(key.split('|').map((x: any) => ({ [`tolower(${x})`]: { contains: value.toLowerCase() } })))];
         return this.appendKeys(ITEM_ROOT, { or: result });
 
         // const g = f('or')

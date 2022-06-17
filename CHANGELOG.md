@@ -1,3 +1,12 @@
+## [2.12.3](https://github.com/equinor/sdscoredev-components/compare/2.12.2...2.12.3) (2022-06-17)
+
+
+### Bug Fixes
+
+* case sensitive ([123e051](https://github.com/equinor/sdscoredev-components/commit/123e05163b34ae3c09a305a79192a914160e3ce5))
+* dependency error ([7948028](https://github.com/equinor/sdscoredev-components/commit/794802856fe74bc23bd1e338caad156115c76436))
+* update eds ([4c0add2](https://github.com/equinor/sdscoredev-components/commit/4c0add2761d9a10dfdc780cdd622083c20c8af36))
+
 ## [2.12.2](https://github.com/equinor/sdscoredev-components/compare/2.12.1...2.12.2) (2022-06-16)
 
 
