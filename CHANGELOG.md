@@ -1,3 +1,10 @@
+## [2.13.1](https://github.com/equinor/sdscoredev-components/compare/2.13.0...2.13.1) (2022-06-24)
+
+
+### Bug Fixes
+
+* add user replaceable pageSizeOptions ([76b2d9f](https://github.com/equinor/sdscoredev-components/commit/76b2d9fef45a5c55d7dae02eaf3754ce6ba2a924))
+
 # [2.13.0](https://github.com/equinor/sdscoredev-components/compare/2.12.5...2.13.0) (2022-06-24)
 
 
