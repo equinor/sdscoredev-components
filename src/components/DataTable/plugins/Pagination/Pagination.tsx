@@ -34,29 +34,29 @@ export const Pagination: React.FC<InternalPaginationProps> = ({ count, defaultPa
     const { pageIndex, pageSize } = state.paginationReducer;
 
     useEffect(() => {
-        !pageSize && defaultPageSize && dispatch({ type: "SET_PAGE_SIZE", payload: defaultPageSize })
-    }, [])
+        !pageSize && defaultPageSize && dispatch({ type: 'SET_PAGE_SIZE', payload: defaultPageSize });
+    }, []);
 
     /**
      * Handler for updating page index
-     * 
-     * @param _e 
-     * @param value 
+     *
+     * @param _e
+     * @param value
      */
     const handleChangePage = (_e: any, payload: number) => {
-        dispatch({ type: "SET_PAGE_INDEX", payload })
-    }
+        dispatch({ type: 'SET_PAGE_INDEX', payload });
+    };
 
     /**
      * Handler for updating page size
-     * 
-     * @param e 
+     *
+     * @param e
      */
     const handleChangePageSize = (e: any) => {
-        dispatch({ type: "SET_PAGE_SIZE", payload: e.target.value })
-    }
+        dispatch({ type: 'SET_PAGE_SIZE', payload: e.target.value });
+    };
 
-    if (!pageSize) return <></>
+    if (!pageSize) return <></>;
 
     return (
         <Wrapper>
@@ -67,7 +67,11 @@ export const Pagination: React.FC<InternalPaginationProps> = ({ count, defaultPa
                 value={+pageSize}
                 onChange={handleChangePageSize}
             >
-                {pageSizeOptions.map((pageSize) => <option key={`pageSize-${pageSize}`} value={pageSize}>{pageSize} / page</option>)}
+                {pageSizeOptions.map((pageSize) => (
+                    <option key={`pageSize-${pageSize}`} value={pageSize}>
+                        {pageSize} / page
+                    </option>
+                ))}
             </NativeSelect>
             <EDSPagination
                 key={`pageIndex-${+pageIndex}`} // Must jave key so that it rerender on context update
@@ -83,5 +87,5 @@ export const Pagination: React.FC<InternalPaginationProps> = ({ count, defaultPa
                 }}
             />
         </Wrapper>
-    )
-}
+    );
+};

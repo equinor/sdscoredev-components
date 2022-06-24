@@ -1,4 +1,4 @@
-import React, { forwardRef, useContext, useEffect, useRef } from 'react';
+import React, { forwardRef, useContext, useEffect, useMemo, useRef } from 'react';
 import { Table } from '@equinor/eds-core-react';
 import Row from './Row';
 import { DispatchContext, StateContext } from '../DataTableStore';
@@ -26,6 +26,22 @@ const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBo
     const dispatch: any = useContext(DispatchContext);
     const rowRef = useRef<any>(null);
     const redraw = useRef<number>(0);
+
+    const currentTableData = useMemo(() => {
+        const firstPageIndex = (+state.paginationReducer?.pageIndex - 1) * +state.paginationReducer?.pageSize;
+        const lastPageIndex = firstPageIndex + +state.paginationReducer?.pageSize;
+        return data?.slice(firstPageIndex, lastPageIndex);
+    }, [state.paginationReducer]);
+
+    const usePagination = () => {
+        if (state.paginationReducer) {
+            if (state.oDataQueryReducer) {
+                return false;
+            }
+            return true;
+        }
+        return false;
+    };
 
     /**
      * Initialize data so that we can draw the table rows
@@ -88,7 +104,7 @@ const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBo
 
     return (
         <Table.Body ref={ref} id={`dataTable.body.${id}`}>
-            {generateRows(state.dataTableReducer.data)}
+            {generateRows(usePagination() ? currentTableData : state.dataTableReducer.data)}
         </Table.Body>
     );
 });
