@@ -1,3 +1,10 @@
+# [2.13.0](https://github.com/equinor/sdscoredev-components/compare/2.12.5...2.13.0) (2022-06-24)
+
+
+### Features
+
+* add support for page pagination support ([2a511b4](https://github.com/equinor/sdscoredev-components/commit/2a511b4da6080e77008b2e6aac3b40d4edb38172))
+
 ## [2.12.5](https://github.com/equinor/sdscoredev-components/compare/2.12.4...2.12.5) (2022-06-17)
 
 
