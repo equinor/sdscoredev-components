@@ -5,18 +5,19 @@ import { paginationReducer } from './paginationReducer';
 export type PaginationProps = {
     getCount?: Function;
     defaultPageSize?: number;
-}
+    pageSizeOptions?: Array<number>;
+};
 
 /**
  * Pagination plugin
- * 
+ *
  * @param props `<PaginationProps>`
  * @returns `JSX.Element`
  */
 const Pagination: React.FC<PaginationProps> & ReducerProp = (props) => {
-    return (<React.Fragment {...props}>Pagination</React.Fragment>)
-}
+    return <React.Fragment {...props}>Pagination</React.Fragment>;
+};
 
-Pagination.reducer = { paginationReducer }
+Pagination.reducer = { paginationReducer };
 
-export { Pagination }
+export { Pagination };

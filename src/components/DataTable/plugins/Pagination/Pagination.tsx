@@ -26,12 +26,21 @@ export type InternalPaginationProps = {
     count?: number;
 } & PaginationProps;
 
-export const Pagination: React.FC<InternalPaginationProps> = ({ count, defaultPageSize }) => {
+export const Pagination: React.FC<InternalPaginationProps> = ({
+    count,
+    defaultPageSize,
+    pageSizeOptions = [5, 10, 20, 50],
+}) => {
     const state: any = useContext(StateContext);
     const dispatch: any = useContext(DispatchContext);
-    const pageSizeOptions = [5, 10, 20, 50, 100];
 
     const { pageIndex, pageSize } = state.paginationReducer;
+
+    if (defaultPageSize && pageSizeOptions && pageSizeOptions.findIndex((x) => x === defaultPageSize) < 0) {
+        throw Error(
+            `It is not possible to set a defaultPageSize: ${defaultPageSize} that is not in ${pageSizeOptions}`,
+        );
+    }
 
     useEffect(() => {
         !pageSize && defaultPageSize && dispatch({ type: 'SET_PAGE_SIZE', payload: defaultPageSize });
