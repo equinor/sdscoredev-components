@@ -1,3 +1,10 @@
+## [2.12.5](https://github.com/equinor/sdscoredev-components/compare/2.12.4...2.12.5) (2022-06-17)
+
+
+### Bug Fixes
+
+* rework onSubmit ([5e3a6d5](https://github.com/equinor/sdscoredev-components/commit/5e3a6d53ec3084e3459083d1099fc36aae8d608c))
+
 ## [2.12.4](https://github.com/equinor/sdscoredev-components/compare/2.12.3...2.12.4) (2022-06-17)
 
 
