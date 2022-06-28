@@ -287,7 +287,9 @@ class FilterParser {
      */
     private getContainsFilter(value: any, key: string) {
         value = value.substring(1, value.length - 1);
-        let result: Filter = [...new Set(key.split('|').map((x: any) => ({ [`tolower(${x})`]: { contains: value.toLowerCase() } })))];
+        let result: Filter = [
+            ...new Set(key.split('|').map((x: any) => ({ [`tolower(${x})`]: { contains: value.toLowerCase() } }))),
+        ];
         return this.appendKeys(ITEM_ROOT, { or: result });
 
         // const g = f('or')
@@ -308,12 +310,13 @@ class FilterParser {
     private getSort = (value: any) => {
         const values = value.split(',');
         const order = values[1] === 'ascending' ? 'asc' : 'desc';
+        const sort = values[0].replace(/\./g, '/');
 
         if (this.logging) {
-            console.log('  \u25CB SORT: ', `${values[0].replace('.', '/')} ${order}`);
+            console.log('  \u25CB SORT: ', `${sort} ${order}`);
         }
 
-        return `${values[0].replace('.', '/')} ${order}`;
+        return `${sort} ${order}`;
     };
 
     /**

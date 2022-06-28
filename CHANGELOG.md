@@ -1,3 +1,11 @@
+## [2.14.1](https://github.com/equinor/sdscoredev-components/compare/2.14.0...2.14.1) (2022-06-28)
+
+
+### Bug Fixes
+
+* also add cache for default query ([ba41bb6](https://github.com/equinor/sdscoredev-components/commit/ba41bb6a807040787081b6f0d0f79d4dfc1b8382))
+* clean up ([eb25f2d](https://github.com/equinor/sdscoredev-components/commit/eb25f2d368bf66819802385ceee2951803425bbe))
+
 # [2.14.0](https://github.com/equinor/sdscoredev-components/compare/2.13.1...2.14.0) (2022-06-28)
 
 
