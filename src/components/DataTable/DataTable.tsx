@@ -1,25 +1,25 @@
-import React, { Children, useEffect, useRef } from "react";
+import React, { Children, useEffect, useRef } from 'react';
 import Header from './internal/Header';
 import Body from './internal/Body';
 import { EdsProvider, Table } from '@equinor/eds-core-react';
-import { ColumnSelector } from "./plugins/ColumnSelector/ColumnSelector";
-import { Export } from "./plugins/Export/Export";
-import { Pagination } from "./plugins/Pagination/Pagination";
-import { DataTableStore } from "./DataTableStore";
-import { dataTableReducer } from "./reducers/dataTableReducer";
-import styled from "styled-components";
-import { Filter } from "./plugins/Filter/Filter";
-import Toolbar from "./internal/Toolbar";
-import { makeId, getDataProps } from "../utils";
-import { StickyHeader } from "./plugins/StickyHeader/StickyHeader";
-import { Tree } from "./plugins/Tree/Tree";
-import {Checkbox } from "./plugins/Checkbox/Checkbox";
-import { Sort } from "./plugins/Sort/Sort";
+import { ColumnSelector } from './plugins/ColumnSelector/ColumnSelector';
+import { Export } from './plugins/Export/Export';
+import { Pagination } from './plugins/Pagination/Pagination';
+import { DataTableStore } from './DataTableStore';
+import { dataTableReducer } from './reducers/dataTableReducer';
+import styled from 'styled-components';
+import { Filter } from './plugins/Filter/Filter';
+import Toolbar from './internal/Toolbar';
+import { makeId, getDataProps } from '../utils';
+import { StickyHeader } from './plugins/StickyHeader/StickyHeader';
+import { Tree } from './plugins/Tree/Tree';
+import { Checkbox } from './plugins/Checkbox/Checkbox';
+import { Sort } from './plugins/Sort/Sort';
 
 const Wrapper = styled.div<{ width?: number }>`
     /* overflow-x: auto; */
-    max-width: ${(props) => props.width ? `${props.width}px` : '100%'};
-    width: ${(props) => !props.width ? '100%' : 'unset'};
+    max-width: ${(props) => (props.width ? `${props.width}px` : '100%')};
+    width: ${(props) => (!props.width ? '100%' : 'unset')};
     white-space: nowrap;
     display: inline-block;
 `;
@@ -28,7 +28,7 @@ const TableWrapper = styled.div<any>`
     overflow-x: auto;
     clip-path: inset(0 0 0 0);
     padding-bottom: 16px;
-`
+`;
 
 export type DataTableProps = {
     /**
@@ -38,7 +38,7 @@ export type DataTableProps = {
     data?: any;
     /**
      * Callback to define the path to the actual array of data.
-     * 
+     *
      * If data from api looks like this:
      * ```
      * { items: [{..}, {..}, ...], meta: { page: 1, count: 365 } }
@@ -46,7 +46,7 @@ export type DataTableProps = {
      * Then this param can be used like this:
      * ```
      * <DataTable getData={(data) => data.items} ... />
-     * ``` 
+     * ```
      * If param is not used, DataTable presume the data is an `Array` with objects
      * @default
      */
@@ -54,20 +54,19 @@ export type DataTableProps = {
     /**
      * Object containing additional reducers (plugins) to be used. They will be handled as reducer slices
      * and will manipulate the DataTable root state, as well as it's own separate states.
-     * 
+     *
      * `dataTableReducer` is the default reducer that will always be the root state, this reducer is automatically added.
-     * 
-     * Most common reducer to add is `paginationReducer`. It will add `pageSize` and `pageIndex` as state params. 
+     *
+     * Most common reducer to add is `paginationReducer`. It will add `pageSize` and `pageIndex` as state params.
      */
     reducers?: any;
     /**
-     * Callback for fetching data from API. If not used, 
+     * Callback for fetching data from API. If not used,
      * sorting will be applied on the frontend
      */
     onFetch?: Function;
     /**
-     * Provide caching of state to localStorage. If set, plugins will try get and set values in localStorage 
-     * @default false
+     * Callback for when page is scrolling
      */
     onScroll?: Function;
     /**
@@ -79,21 +78,12 @@ export type DataTableProps = {
      */
     width?: number;
     children?: any;
-}
+};
 
-const id = makeId()
+const id = makeId();
 
 export const DataTable = React.memo((props: DataTableProps) => {
-    const { 
-        data = [], 
-        getData, 
-        children, 
-        reducers = [], 
-        onFetch,
-        onScroll,
-        compact = false,
-        width,
-    } = props;
+    const { data = [], getData, children, reducers = [], onFetch, onScroll, compact = false, width } = props;
     const components = Children.toArray(children);
     const wrapperRef = useRef<any>(null);
 
@@ -109,26 +99,30 @@ export const DataTable = React.memo((props: DataTableProps) => {
     const stickyHeader: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.StickyHeader');
     const columnSelector: any = components.find((x: JSX.Element) => x.type.displayName === 'DataTable.ColumnSelector');
 
-    const bottomComponents = toolbar.filter((x: any) => x.props.placement.startsWith('bottom'))
-    const topComponents = toolbar.filter((x: any) => x.props.placement.startsWith('top') || x.props.placement.startsWith('right') || x.props.placement.startsWith('left'))
+    const bottomComponents = toolbar.filter((x: any) => x.props.placement.startsWith('bottom'));
+    const topComponents = toolbar.filter(
+        (x: any) =>
+            x.props.placement.startsWith('top') ||
+            x.props.placement.startsWith('right') ||
+            x.props.placement.startsWith('left'),
+    );
 
     /**
      * Add scroll event handler to the table wrapper. It is the wrapper that gets a horizontal scrollbar
      * when table overflows.
      */
     useEffect((): any => {
-        const wrapperReference = wrapperRef.current
-        const handleScroll = () => onScroll && onScroll()
+        const wrapperReference = wrapperRef.current;
+        const handleScroll = () => onScroll && onScroll();
         wrapperReference.addEventListener('scroll', handleScroll);
         return () => wrapperReference.removeEventListener('scroll', handleScroll);
     }, []);
 
     return (
-        <DataTableStore components={components} reducers={{dataTableReducer, ...reducers}}>
+        <DataTableStore components={components} reducers={{ dataTableReducer, ...reducers }}>
             <Wrapper width={width}>
-
                 {/**
-                 * Top toolbar will list all toolbars with placement beginning with string `top` | `right` | `left` 
+                 * Top toolbar will list all toolbars with placement beginning with string `top` | `right` | `left`
                  * or plugins `export` | `columnSelector` | `filter`
                  */}
                 {(topComponents.length > 0 || exportPlugin || columnSelector || filter) && (
@@ -142,33 +136,37 @@ export const DataTable = React.memo((props: DataTableProps) => {
                 )}
 
                 <TableWrapper ref={wrapperRef}>
-
-                    {stickyHeader && <StickyHeader {...stickyHeader.props} id={id} ref={stickyHeader.ref} plugins={{ subrow, checkbox }} />}
-
-                    <EdsProvider density={compact ? 'compact' : 'comfortable'}>
-                    <Table style={{ width: '100%' }} {...getDataProps(props)}>
-
-                        {/**
-                         * Header can be provided with plugins. 
-                         * Children must contain only the column definitions.
-                         */}
-                        <Header id={id} plugins={{ subrow, checkbox, sort }}>
-                            {components.filter((x: any) => x.type.displayName === 'DataTable.Column')}
-                        </Header>
-
-                        {/**
-                         * Body can be provided with plugins. 
-                         * TODO: Try refactor away `{...row?.props}` and add row to plugins  
-                         */}
-                        <Body
+                    {stickyHeader && (
+                        <StickyHeader
+                            {...stickyHeader.props}
                             id={id}
-                            {...row?.props} 
-                            data={data && getData ? getData(data) : data} 
-                            onFetch={onFetch}
+                            ref={stickyHeader.ref}
                             plugins={{ subrow, checkbox }}
                         />
+                    )}
 
-                    </Table>
+                    <EdsProvider density={compact ? 'compact' : 'comfortable'}>
+                        <Table style={{ width: '100%' }} {...getDataProps(props)}>
+                            {/**
+                             * Header can be provided with plugins.
+                             * Children must contain only the column definitions.
+                             */}
+                            <Header id={id} plugins={{ subrow, checkbox, sort }}>
+                                {components.filter((x: any) => x.type.displayName === 'DataTable.Column')}
+                            </Header>
+
+                            {/**
+                             * Body can be provided with plugins.
+                             * TODO: Try refactor away `{...row?.props}` and add row to plugins
+                             */}
+                            <Body
+                                id={id}
+                                {...row?.props}
+                                data={data && getData ? getData(data) : data}
+                                onFetch={onFetch}
+                                plugins={{ subrow, checkbox }}
+                            />
+                        </Table>
                     </EdsProvider>
                 </TableWrapper>
 
@@ -177,9 +175,7 @@ export const DataTable = React.memo((props: DataTableProps) => {
                 {/**
                  * Bottom toolbar will list all toolbars with placement beginning with string `bottom`
                  */}
-                {bottomComponents.length > 0 && (
-                    <Toolbar components={bottomComponents} />
-                )}
+                {bottomComponents.length > 0 && <Toolbar components={bottomComponents} />}
 
                 {tree && <Tree {...tree.props} />}
 
@@ -188,9 +184,8 @@ export const DataTable = React.memo((props: DataTableProps) => {
                 {/**
                  * Only allow internal sorting if onFetch is not defined.
                  */}
-                {(sort && !onFetch) && <Sort {...sort.props} />}
-
+                {sort && !onFetch && <Sort {...sort.props} />}
             </Wrapper>
         </DataTableStore>
     );
-})
+});
