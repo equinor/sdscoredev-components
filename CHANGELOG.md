@@ -1,3 +1,10 @@
+# [2.14.0](https://github.com/equinor/sdscoredev-components/compare/2.13.1...2.14.0) (2022-06-28)
+
+
+### Features
+
+* add cach storage of filter ([4956cbb](https://github.com/equinor/sdscoredev-components/commit/4956cbb12990802047de5a35e7e4ee6c6c4417b3))
+
 ## [2.13.1](https://github.com/equinor/sdscoredev-components/compare/2.13.0...2.13.1) (2022-06-24)
 
 

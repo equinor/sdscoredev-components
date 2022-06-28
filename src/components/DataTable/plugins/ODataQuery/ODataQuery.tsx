@@ -38,8 +38,6 @@ export const ODataQuery: React.FC<ODataQueryProps> = ({ state, dispatch }) => {
         setInitialPagination(params);
         setInitialSorting(params);
 
-        console.log(location.search);
-
         dispatch({ type: 'SET_SEARCH_STRING', payload: location.search });
 
         let filterQuery = new FilterParser(params, { logging: false, defaultPagination: '1,10' }).parse();
