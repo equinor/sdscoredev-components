@@ -41,9 +41,9 @@ export type ColumnSelectorProps = {
 };
 
 const ColumnSelector: React.FC<ColumnSelectorProps> & ReducerProp = (props) => {
-    return (<React.Fragment {...props}>ColumnSelector</React.Fragment>)
-}
+    return <React.Fragment {...props}>ColumnSelector</React.Fragment>;
+};
 
-ColumnSelector.reducer = { columnSelectorReducer }
+ColumnSelector.reducer = { columnSelectorReducer };
 
-export { ColumnSelector }
+export { ColumnSelector };
