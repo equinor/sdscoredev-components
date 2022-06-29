@@ -75,10 +75,6 @@ class FilterParser {
                     // Only wrap with `and` if child object contains multiple objects and the current parse is not `or`
                     // TODO: try refactor this.or
                     if (Object.keys(obj[k]).length > 1 && typeof Object.values(obj[k])[0] === 'object' && !this.or) {
-                        const m = { and: obj[k] };
-                        obj[k] = m;
-                        run(obj[k].and);
-                    } else {
                         run(obj[k]);
                     }
                 }
@@ -311,7 +307,6 @@ class FilterParser {
         const values = value.split(',');
         const order = values[1] === 'ascending' ? 'asc' : 'desc';
         const sort = values[0].replace(/\./g, '/');
-
         if (this.logging) {
             console.log('  \u25CB SORT: ', `${sort} ${order}`);
         }
