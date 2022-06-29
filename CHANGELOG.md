@@ -1,3 +1,10 @@
+## [2.14.4](https://github.com/equinor/sdscoredev-components/compare/2.14.3...2.14.4) (2022-06-29)
+
+
+### Bug Fixes
+
+* usePagination ([d20f34d](https://github.com/equinor/sdscoredev-components/commit/d20f34d88d6d66a836f0be17d0eb5a8b2b656edb))
+
 ## [2.14.3](https://github.com/equinor/sdscoredev-components/compare/2.14.2...2.14.3) (2022-06-29)
 
 

@@ -29,7 +29,7 @@ const HeaderWrapper = styled.div`
 
 const StyledEdsDialog = styled(EdsDialog)<{ width: number }>`
   width: 85vw;
-  max-width: ${(props) => (props.width ? `${props.width}px` : "600px")};
+  max-width: ${(props) => (props.width ? `${props.width}px` : "fit-content")};
 `;
 
 export type DialogProps = {
