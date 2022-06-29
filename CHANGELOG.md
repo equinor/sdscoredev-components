@@ -1,3 +1,10 @@
+## [2.14.2](https://github.com/equinor/sdscoredev-components/compare/2.14.1...2.14.2) (2022-06-28)
+
+
+### Bug Fixes
+
+* missing regex for sort ([04cff04](https://github.com/equinor/sdscoredev-components/commit/04cff04e8eb2a81502e2701cd0ea4df9c1d873f4))
+
 ## [2.14.1](https://github.com/equinor/sdscoredev-components/compare/2.14.0...2.14.1) (2022-06-28)
 
 
