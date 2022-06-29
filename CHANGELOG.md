@@ -1,3 +1,10 @@
+## [2.14.3](https://github.com/equinor/sdscoredev-components/compare/2.14.2...2.14.3) (2022-06-29)
+
+
+### Bug Fixes
+
+* some filter issue ([1e27d5e](https://github.com/equinor/sdscoredev-components/commit/1e27d5e718421ceb1a765dde3574724f83da023b))
+
 ## [2.14.2](https://github.com/equinor/sdscoredev-components/compare/2.14.1...2.14.2) (2022-06-28)
 
 
