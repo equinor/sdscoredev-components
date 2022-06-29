@@ -38,6 +38,9 @@ const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBo
             if (state.oDataQueryReducer) {
                 return false;
             }
+            if (state.defaultQueryReducer) {
+                return false;
+            }
             return true;
         }
         return false;
