@@ -1,3 +1,10 @@
+## [2.14.5](https://github.com/equinor/sdscoredev-components/compare/2.14.4...2.14.5) (2022-06-29)
+
+
+### Bug Fixes
+
+* dialog styling ([35afca2](https://github.com/equinor/sdscoredev-components/commit/35afca2174f64c5cc038b6df081a2d53cabf291f))
+
 ## [2.14.4](https://github.com/equinor/sdscoredev-components/compare/2.14.3...2.14.4) (2022-06-29)
 
 
