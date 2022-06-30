@@ -1,3 +1,10 @@
+## [2.14.6](https://github.com/equinor/sdscoredev-components/compare/2.14.5...2.14.6) (2022-06-30)
+
+
+### Bug Fixes
+
+* update Datatable if data changes ([8823f7c](https://github.com/equinor/sdscoredev-components/commit/8823f7cc3b9b6d538c0424dfea0e4bed763338f3))
+
 ## [2.14.5](https://github.com/equinor/sdscoredev-components/compare/2.14.4...2.14.5) (2022-06-29)
 
 
