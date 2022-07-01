@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { CellProps, Table } from '@equinor/eds-core-react';
-import { resolve } from '../../utils';
+import { resolve } from '../../helpers';
 import { Link } from 'react-router-dom';
 
 const StyledCell = styled(Table.Cell)<CellProps & { slim?: boolean; truncate?: number }>`

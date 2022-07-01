@@ -136,8 +136,8 @@ const icons = {
     visibility,
     visibility_off,
     warning_outlined,
-}
+};
 
 export const addIcons = () => {
     Icon.add(icons);
-}
+};

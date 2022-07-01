@@ -10,7 +10,7 @@ import { dataTableReducer } from './reducers/dataTableReducer';
 import styled from 'styled-components';
 import { Filter } from './plugins/Filter/Filter';
 import Toolbar from './internal/Toolbar';
-import { makeId, getDataProps } from '../utils';
+import { makeId, getDataProps } from '../helpers';
 import { StickyHeader } from './plugins/StickyHeader/StickyHeader';
 import { Tree } from './plugins/Tree/Tree';
 import { Checkbox } from './plugins/Checkbox/Checkbox';

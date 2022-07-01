@@ -1,6 +1,6 @@
-import { addIcons } from './components/icons';
+import { addIcons } from 'components/Utils/icons';
 
-addIcons()
+addIcons();
 
 export * from './components/DataTable';
 export * from './components/Dialog';
