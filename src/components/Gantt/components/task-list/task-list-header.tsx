@@ -1,65 +1,63 @@
-import React from "react";
-import styles from "./task-list-header.module.css";
+import React from 'react';
+import {
+    GanttTable,
+    GanttTable_Header,
+    GanttTable_HeaderItem,
+    GanttTable_HeaderSeparator,
+} from './task-list-header.style';
 
 export const TaskListHeaderDefault: React.FC<{
-  headerHeight: number;
-  rowWidth: string;
-  fontFamily: string;
-  fontSize: string;
+    headerHeight: number;
+    rowWidth: string;
+    fontFamily: string;
+    fontSize: string;
 }> = ({ headerHeight, fontFamily, fontSize, rowWidth }) => {
-  return (
-    <div
-      className={styles.ganttTable}
-      style={{
-        fontFamily: fontFamily,
-        fontSize: fontSize,
-      }}
-    >
-      <div
-        className={styles.ganttTable_Header}
-        style={{
-          height: headerHeight - 2,
-        }}
-      >
-        <div
-          className={styles.ganttTable_HeaderItem}
-          style={{
-            minWidth: rowWidth,
-          }}
+    return (
+        <GanttTable
+            style={{
+                fontFamily: fontFamily,
+                fontSize: fontSize,
+            }}
         >
-          &nbsp;Name
-        </div>
-        <div
-          className={styles.ganttTable_HeaderSeparator}
-          style={{
-            height: headerHeight * 0.5,
-            marginTop: headerHeight * 0.2,
-          }}
-        />
-        <div
-          className={styles.ganttTable_HeaderItem}
-          style={{
-            minWidth: rowWidth,
-          }}
-        >
-          &nbsp;From
-        </div>
-        <div
-          className={styles.ganttTable_HeaderSeparator}
-          style={{
-            height: headerHeight * 0.5,
-            marginTop: headerHeight * 0.25,
-          }}
-        />
-        <div
-          className={styles.ganttTable_HeaderItem}
-          style={{
-            minWidth: rowWidth,
-          }}
-        >
-          &nbsp;To
-        </div>
-      </div>
-    </div>
-  );
+            <GanttTable_Header
+                style={{
+                    height: headerHeight - 2,
+                }}
+            >
+                <GanttTable_HeaderItem
+                    style={{
+                        minWidth: rowWidth,
+                    }}
+                >
+                    &nbsp;Name
+                </GanttTable_HeaderItem>
+                <GanttTable_HeaderSeparator
+                    style={{
+                        height: headerHeight * 0.5,
+                        marginTop: headerHeight * 0.2,
+                    }}
+                />
+                <GanttTable_HeaderItem
+                    style={{
+                        minWidth: rowWidth,
+                    }}
+                >
+                    &nbsp;From
+                </GanttTable_HeaderItem>
+                <GanttTable_HeaderSeparator
+                    style={{
+                        height: headerHeight * 0.5,
+                        marginTop: headerHeight * 0.25,
+                    }}
+                />
+                <GanttTable_HeaderItem
+                    style={{
+                        minWidth: rowWidth,
+                    }}
+                >
+                    &nbsp;To
+                </GanttTable_HeaderItem>
+            </GanttTable_Header>
+        </GanttTable>
+    );
 };
