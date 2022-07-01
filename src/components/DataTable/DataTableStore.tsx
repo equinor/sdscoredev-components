@@ -2,7 +2,7 @@
 import React, { createContext, ReactElement, useReducer } from 'react';
 import { DataTableStoreProps, ReducerProp } from './types';
 import createPersistedReducer from '../Utils/createPersistedReducer';
-import { useCombinedReducers } from 'hooks/useCombinedReducer';
+import { useCombinedReducers } from '../../hooks/useCombinedReducer';
 
 export const StateContext = createContext({});
 export const DispatchContext = createContext({});

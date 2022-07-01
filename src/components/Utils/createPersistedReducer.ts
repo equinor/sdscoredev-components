@@ -1,4 +1,4 @@
-import usePersistedReducer from 'hooks/usePersistedReducer';
+import usePersistedReducer from '../../hooks/usePersistedReducer';
 import { useReducer } from 'react';
 
 import createStorage from './createStorage';
