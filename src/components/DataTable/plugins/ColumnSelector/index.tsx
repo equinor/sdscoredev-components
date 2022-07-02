@@ -38,6 +38,14 @@ export type ColumnSelectorProps = {
      * Storage, either `window.localStorage` or `window.sessionStorage`, default is `window.sessionStorage`
      */
     storage?: Storage;
+    /**
+     * The number of columns used to divide the columns options; default is `2`
+     */
+    columnsNumber?: number;
+    /**
+     * The number of rows to divide the columns options; default is `5`
+     */
+    rowsNumber?: number;
 };
 
 const ColumnSelector: React.FC<ColumnSelectorProps> & ReducerProp = (props) => {

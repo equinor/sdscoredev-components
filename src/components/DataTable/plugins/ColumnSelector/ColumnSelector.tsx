@@ -1,24 +1,21 @@
-import React, {
-  forwardRef,
-  ForwardRefExoticComponent,
-  ForwardRefRenderFunction,
-  PropsWithoutRef,
-  RefAttributes,
-  useContext,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-} from "react";
-import { Button, Tooltip, Checkbox, Typography } from "@equinor/eds-core-react";
-import styled from "styled-components";
-import { Dialog, DialogRef } from "../../../Dialog";
-import { DispatchContext, StateContext } from "../../DataTableStore";
-import { ColumnSelectorProps, ColumnSelectorRef } from ".";
+import React, { forwardRef, useContext, useImperativeHandle, useRef } from 'react';
+import styled from 'styled-components';
 
-const OptionsWrapper = styled.div`
+import { Button, Checkbox, Tooltip, Typography } from '@equinor/eds-core-react';
+
+import { Dialog, DialogRef } from '../../../Dialog';
+import { DispatchContext, StateContext } from '../../DataTableStore';
+import { ColumnSelectorProps, ColumnSelectorRef } from './';
+
+
+interface OptionsWrapperProps{
+  columnsNumber?: number;
+  rowsNumber?: number;
+}
+const OptionsWrapper = styled.div<OptionsWrapperProps>`
   display: grid;
-  grid-template-columns: repeat(2, auto);
-  grid-template-rows: repeat(5, auto);
+  grid-template-columns: ${({columnsNumber}) =>  columnsNumber ? `repeat(${columnsNumber}, auto)` :"repeat(2, auto)"};
+  grid-template-rows: ${({rowsNumber}) =>  rowsNumber ? `repeat(${rowsNumber}, auto)` :"repeat(5, auto)"};
   grid-auto-flow: row;
   margin-top: 8px;
 `;
@@ -33,7 +30,7 @@ export const ColumnSelector = forwardRef<
   ColumnSelectorRef,
   InternalColumnSelectorProps
 >((props: InternalColumnSelectorProps, ref) => {
-  const { title, icon, onChange } = props;
+  const { title, icon, onChange, columnsNumber, rowsNumber } = props;
   const state: any = useContext(StateContext);
   const dispatch: any = useContext(DispatchContext);
   const dialogRef = useRef<DialogRef>(null);
@@ -67,7 +64,7 @@ export const ColumnSelector = forwardRef<
   };
 
   /**
-   * Exposes a way to set a column visible / hidden throught the component ref
+   * Exposes a way to set a column visible / hidden through the component ref
    *
    * @param column
    * @param visible
@@ -94,7 +91,7 @@ export const ColumnSelector = forwardRef<
   };
 
   /**
-   * Exposes a way to set columns visible / hidden throught the component ref
+   * Exposes a way to set columns visible / hidden through the component ref
    *
    * @param columns
    * @param visible
@@ -154,7 +151,7 @@ export const ColumnSelector = forwardRef<
         ref={dialogRef}
       >
         <Typography variant="h6">Default columns</Typography>
-        <OptionsWrapper>
+        <OptionsWrapper columnsNumber={columnsNumber} rowsNumber={rowsNumber}>
           {state.dataTableReducer.columns
             .filter(
               (x: any) => !x.props.optional && !x.props.id.startsWith("__")
