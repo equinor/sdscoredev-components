@@ -1,3 +1,31 @@
+## [2.14.6](https://github.com/equinor/sdscoredev-components/compare/2.14.5...2.14.6) (2022-06-30)
+
+
+### Bug Fixes
+
+* update Datatable if data changes ([8823f7c](https://github.com/equinor/sdscoredev-components/commit/8823f7cc3b9b6d538c0424dfea0e4bed763338f3))
+
+## [2.14.5](https://github.com/equinor/sdscoredev-components/compare/2.14.4...2.14.5) (2022-06-29)
+
+
+### Bug Fixes
+
+* dialog styling ([35afca2](https://github.com/equinor/sdscoredev-components/commit/35afca2174f64c5cc038b6df081a2d53cabf291f))
+
+## [2.14.4](https://github.com/equinor/sdscoredev-components/compare/2.14.3...2.14.4) (2022-06-29)
+
+
+### Bug Fixes
+
+* usePagination ([d20f34d](https://github.com/equinor/sdscoredev-components/commit/d20f34d88d6d66a836f0be17d0eb5a8b2b656edb))
+
+## [2.14.3](https://github.com/equinor/sdscoredev-components/compare/2.14.2...2.14.3) (2022-06-29)
+
+
+### Bug Fixes
+
+* some filter issue ([1e27d5e](https://github.com/equinor/sdscoredev-components/commit/1e27d5e718421ceb1a765dde3574724f83da023b))
+
 ## [2.14.2](https://github.com/equinor/sdscoredev-components/compare/2.14.1...2.14.2) (2022-06-28)
 
 

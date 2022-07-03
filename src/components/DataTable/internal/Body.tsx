@@ -31,11 +31,14 @@ const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBo
         const firstPageIndex = (+state.paginationReducer?.pageIndex - 1) * +state.paginationReducer?.pageSize;
         const lastPageIndex = firstPageIndex + +state.paginationReducer?.pageSize;
         return data?.slice(firstPageIndex, lastPageIndex);
-    }, [state.paginationReducer]);
+    }, [state.paginationReducer, data]);
 
     const usePagination = () => {
         if (state.paginationReducer) {
             if (state.oDataQueryReducer) {
+                return false;
+            }
+            if (state.defaultQueryReducer) {
                 return false;
             }
             return true;
