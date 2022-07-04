@@ -1,5 +1,5 @@
-import { FC, ReducerProp } from '../../types';
 import React, { FunctionComponent, Ref } from 'react';
+import { ReducerProp } from 'types';
 import { columnSelectorReducer } from './columnSelectorReducer';
 
 export type ColumnSelectorRef = {

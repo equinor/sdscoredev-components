@@ -1,5 +1,5 @@
 import React from 'react';
-import { FC, ReducerProp } from '../../types';
+import { ReducerProp } from 'types';
 import { paginationReducer } from './paginationReducer';
 
 export type PaginationProps = {

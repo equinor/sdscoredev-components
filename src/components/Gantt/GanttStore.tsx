@@ -1,13 +1,12 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { createContext, ReactElement, useReducer } from 'react';
-import createPersistedReducer from '../Utils/createPersistedReducer';
 import { useCombinedReducers } from '../../hooks/useCombinedReducer';
 import { GeneralStoreProps, ReducerProp } from 'types';
 
 export const StateContext = createContext({});
 export const DispatchContext = createContext({});
 
-export const DataTableStore: React.FC<GeneralStoreProps> = React.memo((props) => {
+export const GanttStore: React.FC<GeneralStoreProps> = React.memo((props) => {
     const { children, components, reducers } = props;
 
     /**
@@ -29,28 +28,6 @@ export const DataTableStore: React.FC<GeneralStoreProps> = React.memo((props) =>
     const getStorage = (component: any) => {
         return component.props.storage || window.sessionStorage;
     };
-
-    /**
-     * Provides cached reducers that are declared in the component.
-     * The index file of the Plugin must contain `Plugin.reducer = { pluginReducer }`
-     *
-     * @returns
-     */
-    const persistedComponentReducers = () =>
-        Object.fromEntries(
-            components
-                .filter(
-                    (component: ReactElement<any, React.JSXElementConstructor<any> & ReducerProp>) =>
-                        component.type.reducer && component.props['cacheKey'],
-                )
-                .map((component: ReactElement<any, React.JSXElementConstructor<any> & ReducerProp>) => {
-                    if (!component.type.reducer) return [];
-
-                    const [name, reducer]: any = Object.entries(component.type.reducer)[0];
-                    const usePersistedReducer = createPersistedReducer(getCacheKey(component), getStorage(component));
-                    return [name, usePersistedReducer(reducer.reducer, reducer.initialState)];
-                }),
-        );
 
     /**
      * Provides reducers that are not cached, but declared in the component.
@@ -75,7 +52,7 @@ export const DataTableStore: React.FC<GeneralStoreProps> = React.memo((props) =>
 
     /**
      * Provides reducers from prop.
-     * These are fetched from the `DataTable` prop `reducers`
+     * These are fetched from the `Gantt` prop `reducers`
      *
      * @returns
      */
@@ -89,7 +66,6 @@ export const DataTableStore: React.FC<GeneralStoreProps> = React.memo((props) =>
 
     const [state, dispatch] = useCombinedReducers({
         ...propReducers(),
-        ...persistedComponentReducers(),
         ...componentReducers(),
     });
 

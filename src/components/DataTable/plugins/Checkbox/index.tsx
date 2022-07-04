@@ -1,10 +1,10 @@
-import { FC, ReducerProp } from '../../types';
 import React, { Ref } from 'react';
+import { ReducerProp } from 'types';
 import { checkboxReducer } from './checkboxReducer';
 
 export type CheckboxRef = {
     /**
-     * Selects a row 
+     * Selects a row
      * @param item any
      */
     check: (item: any) => void;
@@ -21,15 +21,15 @@ export type CheckboxProps = {
      */
     getKey?: string;
     /**
-      * A ref to this element
-      */
+     * A ref to this element
+     */
     ref?: Ref<CheckboxRef>;
 };
 
 const Checkbox: React.FC<CheckboxProps> & ReducerProp = (props) => {
-    return (<React.Fragment {...props}>Checkbox</React.Fragment>)
-}
+    return <React.Fragment {...props}>Checkbox</React.Fragment>;
+};
 
-Checkbox.reducer = { checkboxReducer }
+Checkbox.reducer = { checkboxReducer };
 
-export { Checkbox }
+export { Checkbox };

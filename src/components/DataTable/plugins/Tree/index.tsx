@@ -1,5 +1,5 @@
-import { FC, ReducerProp } from '../../types';
 import React from 'react';
+import { ReducerProp } from 'types';
 import { treeReducer } from './treeReducer';
 
 export type TreeProps = {
@@ -14,9 +14,9 @@ export type TreeProps = {
 };
 
 const Tree: React.FC<TreeProps> & ReducerProp = (props) => {
-    return (<React.Fragment {...props}>Tree</React.Fragment>)
-}
+    return <React.Fragment {...props}>Tree</React.Fragment>;
+};
 
-Tree.reducer = { treeReducer }
+Tree.reducer = { treeReducer };
 
-export { Tree }
+export { Tree };

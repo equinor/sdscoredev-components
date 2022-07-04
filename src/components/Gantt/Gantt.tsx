@@ -1,63 +1,86 @@
+import { Children, useContext } from 'react';
+import { DisplayOption, EventOption, StylingOption, Task, ViewMode } from './types/public-types';
 import React, { useState, SyntheticEvent, useRef, useEffect, useMemo } from 'react';
-import { ViewMode, GanttProps, Task } from '../../types/public-types';
-import { GridProps } from '../grid/grid';
-import { ganttDateRange, ganttDateRangeMulti, seedDates } from '../../helpers/date-helper';
-import { CalendarProps } from '../calendar/calendar';
-import { TaskGanttContentProps } from './task-gantt-content';
-import { TaskListHeaderDefault } from '../task-list/task-list-header';
-import { TaskListTableDefault } from '../task-list/task-list-table';
-import { StandardTooltipContent, Tooltip } from '../other/tooltip';
-import { VerticalScroll } from '../other/vertical-scroll';
-import { TaskListProps, TaskList } from '../task-list/task-list';
-import { TaskGantt } from './task-gantt';
-import { BarTask } from '../../types/bar-task';
-import { convertToBarTasks } from '../../helpers/bar-helper';
-import { GanttEvent } from '../../types/gantt-task-actions';
-import { DateSetup } from '../../types/date-setup';
-import { HorizontalScroll } from '../other/horizontal-scroll';
-import { removeHiddenTasks, sortTasks } from '../../helpers/other-helper';
-import { Wrapper } from './gantt.style';
+import { removeHiddenTasks, sortTasks } from './helpers/other-helper';
+import { ganttDateRangeMulti, seedDates } from './helpers/date-helper';
+import { convertToBarTasks } from './helpers/bar-helper';
+import { GridProps } from './components/grid/grid';
+import { CalendarProps } from './components/calendar/calendar';
+import { TaskGanttContentProps } from './components/gantt/task-gantt-content';
+import { TaskList, TaskListProps } from './components/task-list/task-list';
+import { TaskGantt } from './components/gantt/task-gantt';
+import { Wrapper } from './components/gantt/gantt.style';
+import { StandardTooltipContent, Tooltip } from './components/other/tooltip';
+import { VerticalScroll } from './components/other/vertical-scroll';
+import { HorizontalScroll } from './components/other/horizontal-scroll';
+import { BarTask } from './types/bar-task';
+import { DateSetup } from './types/date-setup';
+import { GanttEvent } from './types/gantt-task-actions';
+import { TaskListHeaderDefault } from './components/task-list/task-list-header';
+import { TaskListTableDefault } from './components/task-list/task-list-table';
+import { DispatchContext, GanttStore, StateContext } from './GanttStore';
+import { ganttReducer } from './reducers/ganttReducer';
 
-export const Gantt: React.FunctionComponent<GanttProps> = ({
-    tasks,
-    headerHeight = 50,
-    columnWidth = 60,
-    listCellWidth = '155px',
-    rowHeight = 50,
-    ganttHeight = 0,
-    viewMode = ViewMode.Day,
-    locale = 'en-GB',
-    barFill = 60,
-    barCornerRadius = 3,
-    barProgressColor = '#a3a3ff',
-    barProgressSelectedColor = '#8282f5',
-    barBackgroundColor = '#b8c2cc',
-    barBackgroundSelectedColor = '#aeb8c2',
-    projectProgressColor = '#7db59a',
-    projectProgressSelectedColor = '#59a985',
-    projectBackgroundColor = '#fac465',
-    projectBackgroundSelectedColor = '#f7bb53',
-    milestoneBackgroundColor = '#f1c453',
-    milestoneBackgroundSelectedColor = '#f29e4c',
-    handleWidth = 8,
-    timeStep = 300000,
-    arrowColor = 'grey',
-    fontFamily = 'Arial, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue',
-    fontSize = '14px',
-    arrowIndent = 20,
-    todayColor = 'rgba(252, 248, 227, 0.5)',
-    viewDate,
-    TooltipContent = StandardTooltipContent,
-    TaskListHeader = TaskListHeaderDefault,
-    TaskListTable = TaskListTableDefault,
-    onDateChange,
-    onProgressChange,
-    onDoubleClick,
-    onClick,
-    onDelete,
-    onSelect,
-    onExpanderClick,
-}) => {
+export interface GanttProps extends EventOption, DisplayOption, StylingOption {
+    tasks: Task[];
+    children?: any;
+    /**
+     * Object containing additional reducers (plugins) to be used. They will be handled as reducer slices
+     * and will manipulate the DataTable root state, as well as it's own separate states.
+     *
+     * `dataTableReducer` is the default reducer that will always be the root state, this reducer is automatically added.
+     *
+     * Most common reducer to add is `paginationReducer`. It will add `pageSize` and `pageIndex` as state params.
+     */
+    reducers?: any;
+}
+
+export const Gantt = (props: GanttProps) => {
+    const {
+        tasks,
+        headerHeight = 50,
+        columnWidth = 60,
+        listCellWidth = '155px',
+        rowHeight = 50,
+        ganttHeight = 0,
+        viewMode = ViewMode.Day,
+        locale = 'en-GB',
+        barFill = 60,
+        barCornerRadius = 3,
+        barProgressColor = '#a3a3ff',
+        barProgressSelectedColor = '#8282f5',
+        barBackgroundColor = '#b8c2cc',
+        barBackgroundSelectedColor = '#aeb8c2',
+        projectProgressColor = '#7db59a',
+        projectProgressSelectedColor = '#59a985',
+        projectBackgroundColor = '#fac465',
+        projectBackgroundSelectedColor = '#f7bb53',
+        milestoneBackgroundColor = '#f1c453',
+        milestoneBackgroundSelectedColor = '#f29e4c',
+        handleWidth = 8,
+        timeStep = 300000,
+        arrowColor = 'grey',
+        fontFamily = 'Arial, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue',
+        fontSize = '14px',
+        arrowIndent = 20,
+        todayColor = 'rgba(252, 248, 227, 0.5)',
+        viewDate,
+        TooltipContent = StandardTooltipContent,
+        TaskListHeader = TaskListHeaderDefault,
+        TaskListTable = TaskListTableDefault,
+        onDateChange,
+        onProgressChange,
+        onDoubleClick,
+        onClick,
+        onDelete,
+        onSelect,
+        onExpanderClick,
+        children,
+        reducers = [],
+    } = props;
+
+    const components = Children.toArray(children);
+
     const wrapperRef = useRef<HTMLDivElement>(null);
     const taskListRef = useRef<HTMLDivElement>(null);
     const [dateSetup, setDateSetup] = useState<DateSetup>(() => {
@@ -84,6 +107,13 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
     const [scrollY, setScrollY] = useState(0);
     const [scrollX, setScrollX] = useState(-1);
     const [ignoreScrollEvent, setIgnoreScrollEvent] = useState(false);
+
+    const state: any = useContext(StateContext);
+    const dispatch: any = useContext(DispatchContext);
+
+    useEffect(() => {
+        tasks.length && dispatch({ type: 'SET_TASKS', payload: tasks });
+    }, [tasks]);
 
     // task change events
     useEffect(() => {
@@ -148,7 +178,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
         ) {
             const dates = dateSetup.dates;
             const index = dates.findIndex(
-                (d, i) =>
+                (d: any, i: any) =>
                     viewDate.valueOf() >= d.valueOf() &&
                     i + 1 !== dates.length &&
                     viewDate.valueOf() < dates[i + 1].valueOf(),
@@ -396,18 +426,18 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
         TaskListTable,
     };
     return (
-        <div>
+        <GanttStore components={components} reducers={{ ganttReducer, ...reducers }}>
             <Wrapper onKeyDown={handleKeyDown} tabIndex={0} ref={wrapperRef}>
-                {listCellWidth && <TaskList {...tableProps} />}
-                <TaskGantt
+                {/* {listCellWidth && <TaskList {...tableProps} />} */}
+                {/* <TaskGantt
                     gridProps={gridProps}
                     calendarProps={calendarProps}
                     barProps={barProps}
                     ganttHeight={ganttHeight}
                     scrollY={scrollY}
                     scrollX={scrollX}
-                />
-                {ganttEvent.changedTask && (
+                /> */}
+                {/* {ganttEvent.changedTask && (
                     <Tooltip
                         arrowIndent={arrowIndent}
                         rowHeight={rowHeight}
@@ -423,7 +453,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
                         TooltipContent={TooltipContent}
                         svgWidth={svgWidth}
                     />
-                )}
+                )} */}
                 <VerticalScroll
                     ganttFullHeight={ganttFullHeight}
                     ganttHeight={ganttHeight}
@@ -438,6 +468,6 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
                 scroll={scrollX}
                 onScroll={handleScrollX}
             />
-        </div>
+        </GanttStore>
     );
 };
