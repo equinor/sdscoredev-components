@@ -1,5 +1,8 @@
+import React, { Ref } from 'react';
+
+import { Density } from '@equinor/eds-core-react';
+
 import { FC, ReducerProp } from '../../types';
-import React, { FunctionComponent, Ref } from 'react';
 import { columnSelectorReducer } from './columnSelectorReducer';
 
 export type ColumnSelectorRef = {
@@ -16,6 +19,21 @@ export type ColumnSelectorRef = {
      */
     setColumns: (column: Array<string>, visible: boolean) => void;
 } | null;
+
+interface DialogStyle {
+    /**
+     * The number of columns used to divide the columns options; default is `2`
+     */
+    columnsNumber?: number;
+    /**
+     * The number of rows to divide the columns options; default is `5`
+     */
+    rowsNumber?: number;
+    /**
+     * Whether the columns checkbox-options are in compact or comfortable mode; defaults to "comfortable"
+     */
+    density?: Density;
+}
 
 export type ColumnSelectorProps = {
     /**
@@ -39,13 +57,9 @@ export type ColumnSelectorProps = {
      */
     storage?: Storage;
     /**
-     * The number of columns used to divide the columns options; default is `2`
+     * Utilized to change the style of the columns options
      */
-    columnsNumber?: number;
-    /**
-     * The number of rows to divide the columns options; default is `5`
-     */
-    rowsNumber?: number;
+    optionsStyle?: DialogStyle;
 };
 
 const ColumnSelector: React.FC<ColumnSelectorProps> & ReducerProp = (props) => {
