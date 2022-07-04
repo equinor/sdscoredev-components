@@ -1,4 +1,4 @@
-import resolve from '@rollup/plugin-node-resolve'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
 import external from 'rollup-plugin-peer-deps-external'
 import commonjs from '@rollup/plugin-commonjs'
 import typescript from 'rollup-plugin-typescript2'
@@ -23,11 +23,7 @@ export default {
   ],
   external: ['react', 'react-dom', 'styled-components', 'react-router-dom'],
   plugins: [
-    resolve({
-		browser: true,
-		preferBuiltins: true,
-		extensions: ['.ts', '.tsx'],
-	}),
+    nodeResolve(),
     commonjs({
       include: ['node_modules/**'],
     }),
