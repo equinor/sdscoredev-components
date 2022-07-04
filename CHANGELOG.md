@@ -1,3 +1,10 @@
+# [2.15.0](https://github.com/equinor/sdscoredev-components/compare/2.14.6...2.15.0) (2022-07-04)
+
+
+### Features
+
+* add optionsStyle props to ColumnSelector plugin ([#16](https://github.com/equinor/sdscoredev-components/issues/16)) ([212c873](https://github.com/equinor/sdscoredev-components/commit/212c873a141090ef069276382e2f711a6167416f))
+
 ## [2.14.6](https://github.com/equinor/sdscoredev-components/compare/2.14.5...2.14.6) (2022-06-30)
 
 
