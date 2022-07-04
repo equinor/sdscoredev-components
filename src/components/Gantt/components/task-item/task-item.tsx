@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { BarTask } from '../../types/bar-task';
 import { GanttContentMoveAction } from '../../types/gantt-task-actions';
+import { ActionBar } from './action/actionBar';
 import { Bar } from './bar/bar';
 import { BarSmall } from './bar/bar-small';
 import { Milestone } from './milestone/milestone';
@@ -15,7 +16,6 @@ export type TaskItemProps = {
     isDateChangeable: boolean;
     isDelete: boolean;
     isSelected: boolean;
-    rtl: boolean;
     onEventStart: (
         action: GanttContentMoveAction,
         selectedTask: BarTask,
@@ -24,7 +24,7 @@ export type TaskItemProps = {
 };
 
 export const TaskItem: React.FC<TaskItemProps> = (props) => {
-    const { task, arrowIndent, isDelete, taskHeight, isSelected, rtl, onEventStart } = {
+    const { task, arrowIndent, isDelete, taskHeight, isSelected, onEventStart } = {
         ...props,
     };
     const textRef = useRef<SVGTextElement>(null);
@@ -41,6 +41,9 @@ export const TaskItem: React.FC<TaskItemProps> = (props) => {
                 break;
             case 'smalltask':
                 setTaskItem(<BarSmall {...props} />);
+                break;
+            case 'action':
+                setTaskItem(<ActionBar {...props} />);
                 break;
             default:
                 setTaskItem(<Bar {...props} />);
@@ -60,11 +63,8 @@ export const TaskItem: React.FC<TaskItemProps> = (props) => {
         if (isTextInside) {
             return task.x1 + width * 0.5;
         }
-        if (rtl && textRef.current) {
-            return task.x1 - textRef.current.getBBox().width - arrowIndent * +hasChild - arrowIndent * 0.2;
-        } else {
-            return task.x1 + width + arrowIndent * +hasChild + arrowIndent * 0.2;
-        }
+
+        return task.x1 + width + arrowIndent * +hasChild + arrowIndent * 0.2;
     };
 
     return (

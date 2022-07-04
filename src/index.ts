@@ -8,3 +8,4 @@ export * from './components/Form';
 export * from './components/Tooltip';
 export * from './components/DataTable/types';
 export * from './components/Gantt';
+export * from './components/CoredevLayout';

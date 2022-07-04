@@ -75,7 +75,7 @@ export const TaskListTableDefault: React.FC<{
                                 maxWidth: rowWidth,
                             }}
                         >
-                            &nbsp;{toLocaleDateString(t.start, dateTimeOptions)}
+                            &nbsp;{toLocaleDateString(t.dates[0], dateTimeOptions)}
                         </TaskListCell>
                         <TaskListCell
                             style={{
@@ -83,7 +83,7 @@ export const TaskListTableDefault: React.FC<{
                                 maxWidth: rowWidth,
                             }}
                         >
-                            &nbsp;{toLocaleDateString(t.end, dateTimeOptions)}
+                            &nbsp;{toLocaleDateString(t.dates[t.dates.length - 1], dateTimeOptions)}
                         </TaskListCell>
                     </TaskListTableRow>
                 );

@@ -15,7 +15,6 @@ export type CalendarProps = {
     dateSetup: DateSetup;
     locale: string;
     viewMode: ViewMode;
-    rtl: boolean;
     headerHeight: number;
     columnWidth: number;
     fontFamily: string;
@@ -26,7 +25,6 @@ export const Calendar: React.FC<CalendarProps> = ({
     dateSetup,
     locale,
     viewMode,
-    rtl,
     headerHeight,
     columnWidth,
     fontFamily,
@@ -51,11 +49,9 @@ export const Calendar: React.FC<CalendarProps> = ({
             if (i === 0 || date.getFullYear() !== dateSetup.dates[i - 1].getFullYear()) {
                 const topValue = date.getFullYear().toString();
                 let xText: number;
-                if (rtl) {
-                    xText = (6 + i + date.getMonth() + 1) * columnWidth;
-                } else {
-                    xText = (6 + i - date.getMonth()) * columnWidth;
-                }
+
+                xText = (6 + i - date.getMonth()) * columnWidth;
+
                 topValues.push(
                     <TopPartOfCalendar
                         key={topValue}
@@ -89,7 +85,7 @@ export const Calendar: React.FC<CalendarProps> = ({
             const bottomValue = `W${getWeekNumberISO8601(date)}`;
 
             bottomValues.push(
-                <CalendarBottomText key={date.getTime()} y={headerHeight * 0.8} x={columnWidth * (i + +rtl)}>
+                <CalendarBottomText key={date.getTime()} y={headerHeight * 0.8} x={columnWidth * i}>
                     {bottomValue}
                 </CalendarBottomText>,
             );
@@ -168,7 +164,7 @@ export const Calendar: React.FC<CalendarProps> = ({
                 <CalendarBottomText
                     key={date.getTime()}
                     y={headerHeight * 0.8}
-                    x={columnWidth * (i + +rtl)}
+                    x={columnWidth * i}
                     fontFamily={fontFamily}
                 >
                     {bottomValue}
@@ -211,7 +207,7 @@ export const Calendar: React.FC<CalendarProps> = ({
                 <CalendarBottomText
                     key={date.getTime()}
                     y={headerHeight * 0.8}
-                    x={columnWidth * (i + +rtl)}
+                    x={columnWidth * i}
                     fontFamily={fontFamily}
                 >
                     {bottomValue}

@@ -10,17 +10,8 @@ export type GridBodyProps = {
     rowHeight: number;
     columnWidth: number;
     todayColor: string;
-    rtl: boolean;
 };
-export const GridBody: React.FC<GridBodyProps> = ({
-    tasks,
-    dates,
-    rowHeight,
-    svgWidth,
-    columnWidth,
-    todayColor,
-    rtl,
-}) => {
+export const GridBody: React.FC<GridBodyProps> = ({ tasks, dates, rowHeight, svgWidth, columnWidth, todayColor }) => {
     let y = 0;
     const gridRows: ReactChild[] = [];
     const rowLines: ReactChild[] = [<GridRowLine key="RowLineFirst" x="0" y1={0} x2={svgWidth} y2={0} />];
@@ -49,15 +40,7 @@ export const GridBody: React.FC<GridBodyProps> = ({
         ) {
             today = <rect x={tickX} y={0} width={columnWidth} height={y} fill={todayColor} />;
         }
-        // rtl for today
-        if (
-            rtl &&
-            i + 1 !== dates.length &&
-            date.getTime() >= now.getTime() &&
-            dates[i + 1].getTime() < now.getTime()
-        ) {
-            today = <rect x={tickX + columnWidth} y={0} width={columnWidth} height={y} fill={todayColor} />;
-        }
+
         tickX += columnWidth;
     }
     return (
