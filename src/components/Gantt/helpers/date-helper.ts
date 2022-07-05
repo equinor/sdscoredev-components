@@ -1,4 +1,4 @@
-import { Task, ViewMode } from '../types/public-types';
+import { LOCALE, Task, ViewMode } from '../types/public-types';
 import DateTimeFormatOptions = Intl.DateTimeFormatOptions;
 import DateTimeFormat = Intl.DateTimeFormat;
 
@@ -184,16 +184,16 @@ export const seedDates = (startDate: Date, endDate: Date, viewMode: ViewMode) =>
     return dates;
 };
 
-export const getLocaleMonth = (date: Date, locale: string) => {
-    let bottomValue = getCachedDateTimeFormat(locale, {
+export const getLocaleMonth = (date: Date) => {
+    let bottomValue = getCachedDateTimeFormat(LOCALE, {
         month: 'long',
     }).format(date);
     bottomValue = bottomValue.replace(bottomValue[0], bottomValue[0].toLocaleUpperCase());
     return bottomValue;
 };
 
-export const getLocalDayOfWeek = (date: Date, locale: string, format?: 'long' | 'short' | 'narrow' | undefined) => {
-    let bottomValue = getCachedDateTimeFormat(locale, {
+export const getLocalDayOfWeek = (date: Date, format?: 'long' | 'short' | 'narrow' | undefined) => {
+    let bottomValue = getCachedDateTimeFormat(LOCALE, {
         weekday: format,
     }).format(date);
     bottomValue = bottomValue.replace(bottomValue[0], bottomValue[0].toLocaleUpperCase());

@@ -14,12 +14,8 @@ export type TooltipProps = {
     scrollX: number;
     scrollY: number;
     rowHeight: number;
-    fontSize: string;
-    fontFamily: string;
     TooltipContent: React.FC<{
         task: Task;
-        fontSize: string;
-        fontFamily: string;
     }>;
 };
 export const Tooltip: React.FC<TooltipProps> = ({
@@ -30,8 +26,6 @@ export const Tooltip: React.FC<TooltipProps> = ({
     scrollX,
     scrollY,
     arrowIndent,
-    fontSize,
-    fontFamily,
     headerHeight,
     taskListWidth,
     TooltipContent,
@@ -80,7 +74,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
 
     return (
         <TooltipDetailsContainer ref={tooltipRef} hidden={!relatedX} style={{ left: relatedX, top: relatedY }}>
-            <TooltipContent task={task} fontSize={fontSize} fontFamily={fontFamily} />
+            <TooltipContent task={task} />
         </TooltipDetailsContainer>
     );
 };

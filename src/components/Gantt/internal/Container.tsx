@@ -1,8 +1,22 @@
-import React, { useRef, useEffect } from 'react';
-import { GridProps, Grid } from '../grid/grid';
-import { CalendarProps, Calendar } from '../calendar/calendar';
-import { TaskGanttContentProps, TaskGanttContent } from './task-gantt-content';
-import { GanttVerticalContainer, HorizontalContainer } from './gantt.style';
+import React, { useRef, useEffect, useContext } from 'react';
+import { GridProps, Grid } from '../components/grid/grid';
+import { CalendarProps, Calendar } from '../components/calendar/calendar';
+import { TaskGanttContentProps, TaskGanttContent } from '../components/gantt/task-gantt-content';
+import { StateContext } from 'components/Gantt/GanttStore';
+import styled from 'styled-components';
+
+export const VerticalContainer = styled.div`
+    overflow: hidden;
+    font-size: 0;
+    margin: 0;
+    padding: 0;
+`;
+
+export const HorizontalContainer = styled.div`
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+`;
 
 export type TaskGanttProps = {
     gridProps: GridProps;
@@ -12,7 +26,7 @@ export type TaskGanttProps = {
     scrollY: number;
     scrollX: number;
 };
-export const TaskGantt: React.FC<TaskGanttProps> = ({
+export const Container: React.FC<TaskGanttProps> = ({
     gridProps,
     calendarProps,
     barProps,
@@ -24,6 +38,7 @@ export const TaskGantt: React.FC<TaskGanttProps> = ({
     const horizontalContainerRef = useRef<HTMLDivElement>(null);
     const verticalGanttContainerRef = useRef<HTMLDivElement>(null);
     const newBarProps = { ...barProps, svg: ganttSVGRef };
+    const state: any = useContext(StateContext);
 
     useEffect(() => {
         if (horizontalContainerRef.current) {
@@ -38,12 +53,15 @@ export const TaskGantt: React.FC<TaskGanttProps> = ({
     }, [scrollX]);
 
     return (
-        <GanttVerticalContainer ref={verticalGanttContainerRef} dir="ltr">
+        <VerticalContainer ref={verticalGanttContainerRef} dir="ltr">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width={gridProps.svgWidth}
                 height={calendarProps.headerHeight}
-                fontFamily={barProps.fontFamily}
+                style={{
+                    fontFamily: 'Equinor',
+                    fontSize: '12px',
+                }}
             >
                 <Calendar {...calendarProps} />
             </svg>
@@ -54,14 +72,17 @@ export const TaskGantt: React.FC<TaskGanttProps> = ({
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width={gridProps.svgWidth}
-                    height={barProps.rowHeight * barProps.tasks.length}
-                    fontFamily={barProps.fontFamily}
+                    height={barProps.rowHeight * state.ganttReducer.tasks.length}
                     ref={ganttSVGRef}
+                    style={{
+                        fontFamily: 'Equinor',
+                        fontSize: '12px',
+                    }}
                 >
                     <Grid {...gridProps} />
                     <TaskGanttContent {...newBarProps} />
                 </svg>
             </HorizontalContainer>
-        </GanttVerticalContainer>
+        </VerticalContainer>
     );
 };

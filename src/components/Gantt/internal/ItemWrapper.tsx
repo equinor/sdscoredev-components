@@ -1,14 +1,34 @@
+import { Bar, BarSmall, Milestone, Project } from 'components/Gantt/items';
 import React, { useEffect, useRef, useState } from 'react';
-import { BarTask } from '../../types/bar-task';
-import { GanttContentMoveAction } from '../../types/gantt-task-actions';
-import { ActionBar } from './action/actionBar';
-import { Bar } from './bar/bar';
-import { BarSmall } from './bar/bar-small';
-import { Milestone } from './milestone/milestone';
-import { Project } from './project/project';
-import { BarLabelInside, BarLabelOutside } from './task-list.style';
+import styled from 'styled-components';
+import { BarTask } from '../types/bar-task';
+import { GanttContentMoveAction } from '../types/gantt-task-actions';
 
-export type TaskItemProps = {
+export const BarLabelInside = styled.text`
+    fill: #fff;
+    text-anchor: middle;
+    font-weight: lighter;
+    dominant-baseline: central;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    pointer-events: none;
+`;
+
+export const BarLabelOutside = styled.text`
+    fill: #555;
+    text-anchor: start;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    pointer-events: none;
+`;
+
+export type ItemWrapperProps = {
     task: BarTask;
     arrowIndent: number;
     taskHeight: number;
@@ -23,7 +43,7 @@ export type TaskItemProps = {
     ) => any;
 };
 
-export const TaskItem: React.FC<TaskItemProps> = (props) => {
+export const ItemWrapper: React.FC<ItemWrapperProps> = (props) => {
     const { task, arrowIndent, isDelete, taskHeight, isSelected, onEventStart } = {
         ...props,
     };
@@ -41,9 +61,6 @@ export const TaskItem: React.FC<TaskItemProps> = (props) => {
                 break;
             case 'smalltask':
                 setTaskItem(<BarSmall {...props} />);
-                break;
-            case 'action':
-                setTaskItem(<ActionBar {...props} />);
                 break;
             default:
                 setTaskItem(<Bar {...props} />);

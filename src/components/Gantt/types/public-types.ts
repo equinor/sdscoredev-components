@@ -1,3 +1,5 @@
+export const LOCALE = 'no-NO';
+
 export enum ViewMode {
     Hour = 'Hour',
     QuarterDay = 'Quarter Day',

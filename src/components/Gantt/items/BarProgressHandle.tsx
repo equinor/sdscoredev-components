@@ -1,5 +1,12 @@
 import React from 'react';
-import { ProgressHandle } from './bar.style';
+import styled from 'styled-components';
+
+export const ProgressHandle = styled.polygon`
+    fill: #ddd;
+    cursor: ew-resize;
+    opacity: 0;
+    visibility: hidden;
+`;
 
 type BarProgressHandleProps = {
     progressPoint: string;

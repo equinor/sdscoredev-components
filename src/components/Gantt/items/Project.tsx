@@ -1,10 +1,24 @@
 import React from 'react';
-import { TaskItemProps } from '../task-item';
-import { ProjectBackground, ProjectWrapper } from './project.style';
+import styled from 'styled-components';
+import { ItemWrapperProps } from '../internal/ItemWrapper';
 
-export const Project: React.FC<TaskItemProps> = ({ task, isSelected }) => {
-    const barColor = isSelected ? task.styles.backgroundSelectedColor : task.styles.backgroundColor;
-    const processColor = isSelected ? task.styles.progressSelectedColor : task.styles.progressColor;
+export const ProjectWrapper = styled.g`
+    cursor: pointer;
+    outline: none;
+`;
+
+export const ProjectBackground = styled.rect`
+    user-select: none;
+    opacity: 0.6;
+`;
+
+export const ProjectTop = styled.rect`
+    user-select: none;
+`;
+
+export const Project: React.FC<ItemWrapperProps> = ({ task, isSelected }) => {
+    const barColor = isSelected ? '#f7bb53' : '#fac465';
+    const processColor = isSelected ? '#59a985' : '#7db59a';
     const projectWith = task.x2 - task.x1;
 
     const projectLeftTriangle = [
@@ -32,16 +46,16 @@ export const Project: React.FC<TaskItemProps> = ({ task, isSelected }) => {
                 width={projectWith}
                 y={task.y}
                 height={task.height}
-                rx={task.barCornerRadius}
-                ry={task.barCornerRadius}
+                rx={2}
+                ry={2}
             />
             <rect
                 x={task.progressX}
                 width={task.progressWidth}
                 y={task.y}
                 height={task.height}
-                ry={task.barCornerRadius}
-                rx={task.barCornerRadius}
+                ry={2}
+                rx={2}
                 fill={processColor}
             />
             <rect
@@ -50,8 +64,8 @@ export const Project: React.FC<TaskItemProps> = ({ task, isSelected }) => {
                 width={projectWith}
                 y={task.y}
                 height={task.height / 2}
-                rx={task.barCornerRadius}
-                ry={task.barCornerRadius}
+                rx={2}
+                ry={2}
                 style={{ userSelect: 'none' }}
             />
             <polygon style={{ userSelect: 'none' }} points={projectLeftTriangle} fill={barColor} />

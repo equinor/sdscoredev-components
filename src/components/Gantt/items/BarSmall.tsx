@@ -1,11 +1,34 @@
 import React from 'react';
-import { getProgressPoint } from '../../../helpers/bar-helper';
-import { BarDisplay } from './bar-display';
-import { BarProgressHandle } from './bar-progress-handle';
-import { TaskItemProps } from '../task-item';
-import { BarWrapper } from './bar.style';
+import styled from 'styled-components';
+import { BarDisplay, BarProgressHandle } from '.';
+import { ItemWrapperProps } from '../internal/ItemWrapper';
+import { getProgressPoint } from '../helpers/bar-helper';
 
-export const BarSmall: React.FC<TaskItemProps> = ({
+export const BarWrapper = styled.g`
+    cursor: pointer;
+    outline: none;
+
+    &:hover .barHandle {
+        visibility: visible;
+        opacity: 1;
+    }
+`;
+
+export const DateHandle = styled.rect`
+    fill: #ddd;
+    cursor: ew-resize;
+    opacity: 0;
+    visibility: hidden;
+`;
+
+export const ProgressHandle = styled.polygon`
+    fill: #ddd;
+    cursor: ew-resize;
+    opacity: 0;
+    visibility: hidden;
+`;
+
+export const BarSmall: React.FC<ItemWrapperProps> = ({
     task,
     isProgressChangeable,
     isDateChangeable,
@@ -22,8 +45,6 @@ export const BarSmall: React.FC<TaskItemProps> = ({
                 height={task.height}
                 progressX={task.progressX}
                 progressWidth={task.progressWidth}
-                barCornerRadius={task.barCornerRadius}
-                styles={task.styles}
                 isSelected={isSelected}
                 onMouseDown={(e) => {
                     isDateChangeable && onEventStart('move', task, e);

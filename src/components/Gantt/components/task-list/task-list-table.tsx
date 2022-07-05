@@ -1,19 +1,47 @@
-import React, { useMemo } from 'react';
-import { Task } from '../../types/public-types';
-import {
-    TaskListCell,
-    TaskListExpander,
-    TaskListNameWrapper,
-    TaskListTableRow,
-    TaskListWrapper,
-} from './task-list-table.style';
+import { StateContext } from 'components/Gantt/GanttStore';
+import React, { useContext, useMemo } from 'react';
+import styled from 'styled-components';
+import { LOCALE, Task } from '../../types/public-types';
+
+export const TaskListWrapper = styled.div`
+    display: table;
+    border-bottom: #e6e4e4 1px solid;
+    border-left: #e6e4e4 1px solid;
+`;
+
+export const TaskListTableRow = styled.div`
+    display: table-row;
+    text-overflow: ellipsis;
+    &:nth-of-type(even) {
+        background-color: #f5f5f5;
+    }
+`;
+export const TaskListCell = styled.div`
+    display: table-cell;
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+`;
+export const TaskListNameWrapper = styled.div`
+    display: flex;
+`;
+
+export const TaskListExpander = styled.div<{ empty: boolean }>`
+    color: rgb(86 86 86);
+    font-size: 0.6rem;
+    padding-left: ${(props: { empty: any }) => (props.empty ? '1rem' : 'unset')};
+    padding: ${(props: { empty: any }) => (props.empty ? 'unset' : '0.15rem 0.2rem 0rem 0.2rem')};
+    user-select: none;
+    cursor: pointer;
+`;
 
 const localeDateStringCache = {};
-const toLocaleDateStringFactory = (locale: string) => (date: Date, dateTimeOptions: Intl.DateTimeFormatOptions) => {
+const toLocaleDateStringFactory = () => (date: Date, dateTimeOptions: Intl.DateTimeFormatOptions) => {
     const key = date.toString();
     let lds = localeDateStringCache[key];
     if (!lds) {
-        lds = date.toLocaleDateString(locale, dateTimeOptions);
+        lds = date.toLocaleDateString(LOCALE, dateTimeOptions);
         localeDateStringCache[key] = lds;
     }
     return lds;
@@ -28,24 +56,16 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
 export const TaskListTableDefault: React.FC<{
     rowHeight: number;
     rowWidth: string;
-    fontFamily: string;
-    fontSize: string;
-    locale: string;
-    tasks: Task[];
     selectedTaskId: string;
     setSelectedTask: (taskId: string) => void;
     onExpanderClick: (task: Task) => void;
-}> = ({ rowHeight, rowWidth, tasks, fontFamily, fontSize, locale, onExpanderClick }) => {
-    const toLocaleDateString = useMemo(() => toLocaleDateStringFactory(locale), [locale]);
+}> = ({ rowHeight, rowWidth, onExpanderClick }) => {
+    const toLocaleDateString = useMemo(() => toLocaleDateStringFactory(), [LOCALE]);
+    const state: any = useContext(StateContext);
 
     return (
-        <TaskListWrapper
-            style={{
-                fontFamily: fontFamily,
-                fontSize: fontSize,
-            }}
-        >
-            {tasks.map((t) => {
+        <TaskListWrapper>
+            {state.ganttReducer.tasks.map((t: Task) => {
                 let expanderSymbol = '';
                 if (t.hideChildren === false) {
                     expanderSymbol = '▼';
@@ -75,7 +95,7 @@ export const TaskListTableDefault: React.FC<{
                                 maxWidth: rowWidth,
                             }}
                         >
-                            &nbsp;{toLocaleDateString(t.dates[0], dateTimeOptions)}
+                            &nbsp;{toLocaleDateString(t.start, dateTimeOptions)}
                         </TaskListCell>
                         <TaskListCell
                             style={{
@@ -83,7 +103,7 @@ export const TaskListTableDefault: React.FC<{
                                 maxWidth: rowWidth,
                             }}
                         >
-                            &nbsp;{toLocaleDateString(t.dates[t.dates.length - 1], dateTimeOptions)}
+                            &nbsp;{toLocaleDateString(t.end, dateTimeOptions)}
                         </TaskListCell>
                     </TaskListTableRow>
                 );

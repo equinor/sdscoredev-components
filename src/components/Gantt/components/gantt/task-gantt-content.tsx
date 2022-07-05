@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { EventOption } from '../../types/public-types';
+import React, { useContext, useEffect, useState } from 'react';
+import { EventOption, Task } from '../../types/public-types';
 import { BarTask } from '../../types/bar-task';
 import { Arrow } from '../other/arrow';
 import { handleTaskBySVGMouseEvent } from '../../helpers/bar-helper';
 import { isKeyboardEvent } from '../../helpers/other-helper';
-import { TaskItem } from '../task-item/task-item';
+import { ItemWrapper } from '../../internal/ItemWrapper';
 import { BarMoveAction, GanttContentMoveAction, GanttEvent } from '../../types/gantt-task-actions';
+import { StateContext } from 'components/Gantt/GanttStore';
 
 export type TaskGanttContentProps = {
-    tasks: BarTask[];
-    dates: Date[];
     ganttEvent: GanttEvent;
     selectedTask: BarTask | undefined;
     rowHeight: number;
@@ -20,16 +19,12 @@ export type TaskGanttContentProps = {
     taskHeight: number;
     arrowColor: string;
     arrowIndent: number;
-    fontSize: string;
-    fontFamily: string;
     setGanttEvent: (value: GanttEvent) => void;
     setFailedTask: (value: BarTask | null) => void;
     setSelectedTask: (taskId: string) => void;
 } & EventOption;
 
 export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
-    tasks,
-    dates,
     ganttEvent,
     selectedTask,
     rowHeight,
@@ -39,8 +34,6 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
     taskHeight,
     arrowColor,
     arrowIndent,
-    fontFamily,
-    fontSize,
     setGanttEvent,
     setFailedTask,
     setSelectedTask,
@@ -54,17 +47,18 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
     const [xStep, setXStep] = useState(0);
     const [initEventX1Delta, setInitEventX1Delta] = useState(0);
     const [isMoving, setIsMoving] = useState(false);
+    const state: any = useContext(StateContext);
 
     // create xStep
     useEffect(() => {
         const dateDelta =
-            dates[1].getTime() -
-            dates[0].getTime() -
-            dates[1].getTimezoneOffset() * 60 * 1000 +
-            dates[0].getTimezoneOffset() * 60 * 1000;
+            state.ganttReducer.dates[1].getTime() -
+            state.ganttReducer.dates[0].getTime() -
+            state.ganttReducer.dates[1].getTimezoneOffset() * 60 * 1000 +
+            state.ganttReducer.dates[0].getTimezoneOffset() * 60 * 1000;
         const newXStep = (timeStep * columnWidth) / dateDelta;
         setXStep(newXStep);
-    }, [columnWidth, dates, timeStep]);
+    }, [columnWidth, state.ganttReducer?.dates, timeStep]);
 
     useEffect(() => {
         const handleMouseMove = async (event: MouseEvent) => {
@@ -237,13 +231,13 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
     return (
         <g className="content">
             <g className="arrows" fill={arrowColor} stroke={arrowColor}>
-                {tasks.map((task) => {
-                    return task.barChildren.map((child) => {
+                {state.ganttReducer.tasks.map((task: BarTask) => {
+                    return task.barChildren.map((child: BarTask) => {
                         return (
                             <Arrow
-                                key={`Arrow from ${task.id} to ${tasks[child.index].id}`}
+                                key={`Arrow from ${task.id} to ${state.ganttReducer.tasks[child.index].id}`}
                                 taskFrom={task}
-                                taskTo={tasks[child.index]}
+                                taskTo={state.ganttReducer.tasks[child.index]}
                                 rowHeight={rowHeight}
                                 taskHeight={taskHeight}
                                 arrowIndent={arrowIndent}
@@ -252,10 +246,10 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
                     });
                 })}
             </g>
-            <g className="bar" fontFamily={fontFamily} fontSize={fontSize}>
-                {tasks.map((task) => {
+            <g className="bar">
+                {state.ganttReducer.tasks.map((task: BarTask) => {
                     return (
-                        <TaskItem
+                        <ItemWrapper
                             task={task}
                             arrowIndent={arrowIndent}
                             taskHeight={taskHeight}
