@@ -1,23 +1,44 @@
+import { CompactDialog, CompactDialogRef } from 'components/CompactDialog';
+import { Dialog, DialogRef } from 'components/Dialog';
 import React, { forwardRef, useContext, useImperativeHandle, useRef } from 'react';
 import styled from 'styled-components';
 
 import { Button, Checkbox, EdsProvider, Tooltip, Typography } from '@equinor/eds-core-react';
 
-import { Dialog, DialogRef } from '../../../Dialog';
 import { DispatchContext, StateContext } from '../../DataTableStore';
 import { ColumnSelectorProps, ColumnSelectorRef } from './';
 
+const GroupsWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+`;
 interface OptionsWrapperProps {
     columnsNumber?: number;
     rowsNumber?: number;
 }
-const OptionsWrapper = styled.div<OptionsWrapperProps>`
+const OptionsGroupWrapper = styled.div<OptionsWrapperProps>`
     display: grid;
     grid-template-columns: ${({ columnsNumber }) =>
         columnsNumber ? `repeat(${columnsNumber}, auto)` : 'repeat(2, auto)'};
     grid-template-rows: ${({ rowsNumber }) => (rowsNumber ? `repeat(${rowsNumber}, auto)` : 'repeat(5, auto)')};
     grid-auto-flow: row;
-    margin-top: 8px;
+    margin-top: 0.3rem;
+`;
+
+const CheckBoxWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+`;
+
+const CheckBoxLabel = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.2em;
+    pointer-events: none;
+    cursor: default;
 `;
 
 export type InternalColumnSelectorProps = {
@@ -28,11 +49,15 @@ export type InternalColumnSelectorProps = {
 
 export const ColumnSelector = forwardRef<ColumnSelectorRef, InternalColumnSelectorProps>(
     (props: InternalColumnSelectorProps, ref) => {
-        const { title, icon, onChange, optionsStyle } = props;
-        const { columnsNumber, rowsNumber, density } = optionsStyle || {};
+        const { title, icon, onChange, dialogStyle } = props;
+        const { columnsNumber, rowsNumber, density } = dialogStyle || {};
         const state: any = useContext(StateContext);
         const dispatch: any = useContext(DispatchContext);
+
+        //? different refs for the dialogs
         const dialogRef = useRef<DialogRef>(null);
+        const compactDialogRef = useRef<CompactDialogRef>(null);
+
         const init = useRef<boolean>(false);
 
         /**
@@ -120,52 +145,122 @@ export const ColumnSelector = forwardRef<ColumnSelectorRef, InternalColumnSelect
         return (
             <>
                 <Tooltip title="Manage columns" placement="top">
-                    <Button variant="ghost" onClick={() => dialogRef?.current?.open()}>
+                    <Button
+                        variant="ghost"
+                        onClick={() => {
+                            if (density === 'compact') compactDialogRef?.current?.open();
+                            else dialogRef?.current?.open();
+                        }}
+                    >
                         {title}
                         {icon}
                     </Button>
                 </Tooltip>
 
-                <Dialog
-                    title={title}
-                    width={800}
-                    primaryButton="Apply"
-                    cancelButton="Reset"
-                    headerCloseButton={true}
-                    noLoading={true}
-                    onPrimary={() => dialogRef.current?.close()}
-                    onCancel={handleResetColumns}
-                    ref={dialogRef}
-                >
-                    <Typography variant="h6">Default columns</Typography>
-                    <EdsProvider density={density}>
-                        <OptionsWrapper columnsNumber={columnsNumber} rowsNumber={rowsNumber}>
+                {density === 'compact' ? (
+                    <>
+                        <CompactDialog
+                            ref={compactDialogRef}
+                            title={title}
+                            onDialogClose={() => compactDialogRef.current?.close()}
+                        >
+                            <GroupsWrapper>
+                                <EdsProvider density={density}>
+                                    <span>
+                                        <Typography variant="h6">Default columns</Typography>
+                                        <OptionsGroupWrapper columnsNumber={columnsNumber} rowsNumber={rowsNumber}>
+                                            {state.dataTableReducer.columns
+                                                .filter((x: any) => !x.props.optional && !x.props.id.startsWith('__'))
+                                                .map((column: any) => (
+                                                    <CheckBoxWrapper>
+                                                        <Checkbox
+                                                            key={column.props.id}
+                                                            checked={state.columnSelectorReducer.visibleColumns?.includes(
+                                                                column.props.id,
+                                                            )}
+                                                            onChange={() => handleChange(column)}
+                                                        />
+                                                        <CheckBoxLabel>{column.props.children}</CheckBoxLabel>
+                                                    </CheckBoxWrapper>
+                                                ))}
+                                        </OptionsGroupWrapper>
+                                    </span>
+                                    <span>
+                                        <Typography variant="h6">Optional columns</Typography>
+                                        <OptionsGroupWrapper columnsNumber={columnsNumber} rowsNumber={rowsNumber}>
+                                            {state.dataTableReducer.columns
+                                                .filter((x: any) => x.props.optional && !x.props.id.startsWith('__'))
+                                                .map((column: any) => (
+                                                    <CheckBoxWrapper>
+                                                        <Checkbox
+                                                            key={column.props.id}
+                                                            checked={state.columnSelectorReducer.visibleColumns?.includes(
+                                                                column.props.id,
+                                                            )}
+                                                            onChange={() => handleChange(column)}
+                                                        />
+                                                        <CheckBoxLabel>{column.props.children}</CheckBoxLabel>
+                                                    </CheckBoxWrapper>
+                                                ))}
+                                        </OptionsGroupWrapper>
+                                    </span>
+                                </EdsProvider>
+                            </GroupsWrapper>
+                            <CompactDialog.Actions>
+                                <Button onClick={handleResetColumns} variant="ghost">
+                                    Reset
+                                </Button>
+                            </CompactDialog.Actions>
+                        </CompactDialog>
+                    </>
+                ) : (
+                    <Dialog
+                        ref={dialogRef}
+                        title={title}
+                        width={800}
+                        primaryButton="Apply"
+                        cancelButton="Reset"
+                        headerCloseButton={true}
+                        noLoading={true}
+                        onPrimary={() => dialogRef.current?.close()}
+                        onCancel={handleResetColumns}
+                    >
+                        <Typography variant="h6">Default columns</Typography>
+                        <OptionsGroupWrapper columnsNumber={columnsNumber} rowsNumber={rowsNumber}>
                             {state.dataTableReducer.columns
                                 .filter((x: any) => !x.props.optional && !x.props.id.startsWith('__'))
                                 .map((column: any) => (
-                                    <Checkbox
-                                        key={column.props.id}
-                                        label={column.props.children}
-                                        checked={state.columnSelectorReducer.visibleColumns?.includes(column.props.id)}
-                                        onChange={() => handleChange(column)}
-                                    />
+                                    <CheckBoxWrapper>
+                                        <Checkbox
+                                            key={column.props.id}
+                                            checked={state.columnSelectorReducer.visibleColumns?.includes(
+                                                column.props.id,
+                                            )}
+                                            onChange={() => handleChange(column)}
+                                        />
+                                        <CheckBoxLabel>{column.props.children}</CheckBoxLabel>
+                                    </CheckBoxWrapper>
                                 ))}
-                        </OptionsWrapper>
+                        </OptionsGroupWrapper>
                         <Typography variant="h6">Optional columns</Typography>
-                        <OptionsWrapper columnsNumber={columnsNumber} rowsNumber={rowsNumber}>
+                        <OptionsGroupWrapper columnsNumber={columnsNumber} rowsNumber={rowsNumber}>
                             {state.dataTableReducer.columns
                                 .filter((x: any) => x.props.optional && !x.props.id.startsWith('__'))
                                 .map((column: any) => (
-                                    <Checkbox
-                                        key={column.props.id}
-                                        label={column.props.children}
-                                        checked={state.columnSelectorReducer.visibleColumns?.includes(column.props.id)}
-                                        onChange={() => handleChange(column)}
-                                    />
+                                    <CheckBoxWrapper>
+                                        <Checkbox
+                                            key={column.props.id}
+                                            checked={state.columnSelectorReducer.visibleColumns?.includes(
+                                                column.props.id,
+                                            )}
+                                            onChange={() => handleChange(column)}
+                                        />
+                                        <CheckBoxLabel>{column.props.children}</CheckBoxLabel>
+                                    </CheckBoxWrapper>
                                 ))}
-                        </OptionsWrapper>
-                    </EdsProvider>
-                </Dialog>
+                        </OptionsGroupWrapper>
+                    </Dialog>
+                )}
             </>
         );
     },

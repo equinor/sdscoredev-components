@@ -69,7 +69,7 @@ import {
     warning_outlined,
 } from '@equinor/eds-icons';
 
-const icons = {
+export const icons = {
     accessible,
     account_circle,
     add,
@@ -136,8 +136,8 @@ const icons = {
     visibility,
     visibility_off,
     warning_outlined,
-}
+};
 
 export const addIcons = () => {
     Icon.add(icons);
-}
+};

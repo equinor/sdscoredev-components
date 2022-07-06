@@ -2,7 +2,7 @@ import React, { Ref } from 'react';
 
 import { Density } from '@equinor/eds-core-react';
 
-import { FC, ReducerProp } from '../../types';
+import { ReducerProp } from '../../types';
 import { columnSelectorReducer } from './columnSelectorReducer';
 
 export type ColumnSelectorRef = {
@@ -57,9 +57,13 @@ export type ColumnSelectorProps = {
      */
     storage?: Storage;
     /**
+     * If set, it will show an Apply button
+     */
+    showApplyButton?: boolean;
+    /**
      * Utilized to change the style of the columns options
      */
-    optionsStyle?: DialogStyle;
+    dialogStyle?: DialogStyle;
 };
 
 const ColumnSelector: React.FC<ColumnSelectorProps> & ReducerProp = (props) => {
