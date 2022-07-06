@@ -36,10 +36,10 @@ interface Props {
     titleLeftIcon?: ReactNode;
     onClose: () => void;
     disableOnClose?: boolean;
-    hideOnClose?: boolean;
+    hideCloseButton?: boolean;
 }
 
-const CompactDialogCard: FC<Props> = ({ title, titleLeftIcon, onClose, disableOnClose, hideOnClose, children }) => (
+const CompactDialogCard: FC<Props> = ({ title, titleLeftIcon, onClose, disableOnClose, hideCloseButton, children }) => (
     <ScrimOuterWrapper>
         <EdsProvider density="compact">
             <ScrimTitleWrapper>
@@ -49,7 +49,9 @@ const CompactDialogCard: FC<Props> = ({ title, titleLeftIcon, onClose, disableOn
                         <Typography variant="h6">{title}</Typography>
                     </ScrimTitleLeftWrapper>
                 )}
-                {!hideOnClose && (
+                {hideCloseButton ? (
+                    <></>
+                ) : (
                     <Button variant="ghost_icon" onClick={onClose} disabled={disableOnClose}>
                         <Icon data={icons.close} />
                     </Button>

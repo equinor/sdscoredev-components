@@ -15,7 +15,7 @@ export interface CompactDialogProps {
     /**
      * If set to true, the close-button will not be visible
      */
-    hideOnClose?: boolean;
+    hideCloseButton?: boolean;
 }
 
 export type CompactDialogRef = {
@@ -38,7 +38,7 @@ export type CompactDialogRef = {
 } | null;
 
 export const CompactDialog = forwardRef<CompactDialogRef, CompactDialogProps>((props, ref) => {
-    const { title, titleLeftIcon, hideOnClose, children } = props;
+    const { title, titleLeftIcon, hideCloseButton, children } = props;
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [isCloseDisabled, setIsCloseDisabled] = useState<boolean>(false);
@@ -65,7 +65,7 @@ export const CompactDialog = forwardRef<CompactDialogRef, CompactDialogProps>((p
                 titleLeftIcon={titleLeftIcon}
                 onClose={() => setIsOpen(false)}
                 disableOnClose={isCloseDisabled}
-                hideOnClose={hideOnClose}
+                hideCloseButton={hideCloseButton}
             >
                 {children}
             </CompactDialogCard>
