@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ItemWrapperProps } from '../internal/ItemWrapper';
+import { ItemWrapperProps } from '../../internal/ItemWrapper';
 
 export const MilestoneWrapper = styled.g`
     cursor: pointer;
     outline: none;
 `;
 
-export const Milestone: React.FC<ItemWrapperProps> = ({ task, isDateChangeable, onEventStart, isSelected }) => {
+export const MilestoneBar: React.FC<ItemWrapperProps> = ({ task, isDateChangeable, onEventStart, isSelected }) => {
     const transform = `rotate(45 ${task.x1 + task.height * 0.356} 
     ${task.y + task.height * 0.85})`;
     const getBarColor = () => {

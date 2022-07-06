@@ -20,8 +20,6 @@ export type CalendarProps = {
 export const Calendar: React.FC<CalendarProps> = ({ viewMode, headerHeight, columnWidth }) => {
     const state: any = useContext(StateContext);
 
-    console.log(viewMode);
-
     const getCalendarValuesForMonth = () => {
         const topValues: ReactChild[] = [];
         const bottomValues: ReactChild[] = [];

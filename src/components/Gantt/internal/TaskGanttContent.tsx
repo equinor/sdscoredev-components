@@ -1,14 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { EventOption, Task } from '../../types/public-types';
-import { BarTask } from '../../types/bar-task';
-import { Arrow } from '../other/arrow';
-import { handleTaskBySVGMouseEvent } from '../../helpers/bar-helper';
-import { isKeyboardEvent } from '../../helpers/other-helper';
-import { ItemWrapper } from '../../internal/ItemWrapper';
-import { BarMoveAction, GanttContentMoveAction, GanttEvent } from '../../types/gantt-task-actions';
-import { StateContext } from 'components/Gantt/GanttStore';
+import { EventOption, Task } from '../types/public-types';
+import { BarTask } from '../types/bar-task';
+import { Arrow } from '../components/other/arrow';
+import { handleTaskBySVGMouseEvent } from '../helpers/bar-helper';
+import { isKeyboardEvent } from '../helpers/other-helper';
+import { ItemWrapper } from './ItemWrapper';
+import { BarMoveAction, GanttContentMoveAction, GanttEvent } from '../types/gantt-task-actions';
+import { DispatchContext, StateContext } from 'components/Gantt/GanttStore';
 
 export type TaskGanttContentProps = {
+    tasks: BarTask[];
     ganttEvent: GanttEvent;
     selectedTask: BarTask | undefined;
     rowHeight: number;
@@ -22,9 +23,11 @@ export type TaskGanttContentProps = {
     setGanttEvent: (value: GanttEvent) => void;
     setFailedTask: (value: BarTask | null) => void;
     setSelectedTask: (taskId: string) => void;
+    setTasks: (tasks: BarTask[]) => void;
 } & EventOption;
 
 export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
+    tasks,
     ganttEvent,
     selectedTask,
     rowHeight,
@@ -37,6 +40,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
     setGanttEvent,
     setFailedTask,
     setSelectedTask,
+    setTasks,
     onDateChange,
     onProgressChange,
     onDoubleClick,
@@ -48,6 +52,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
     const [initEventX1Delta, setInitEventX1Delta] = useState(0);
     const [isMoving, setIsMoving] = useState(false);
     const state: any = useContext(StateContext);
+    const dispatch: any = useContext(DispatchContext);
 
     // create xStep
     useEffect(() => {
@@ -59,6 +64,34 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
         const newXStep = (timeStep * columnWidth) / dateDelta;
         setXStep(newXStep);
     }, [columnWidth, state.ganttReducer?.dates, timeStep]);
+
+    /**
+     * Internal dateChange event handler
+     *
+     * @param task
+     * @param children
+     * @returns
+     */
+    const handleDateChange = async (task: BarTask, children: BarTask[]) => {
+        let operationSuccess = true;
+        if (onDateChange) {
+            try {
+                const result = await onDateChange(task, children);
+                if (result !== undefined) {
+                    operationSuccess = result;
+                }
+            } catch (error) {
+                operationSuccess = false;
+            }
+        }
+
+        if (operationSuccess) {
+            const payload = tasks.map((t: any) => (t.id === task.id ? task : t));
+            setTasks(payload);
+        }
+
+        return operationSuccess;
+    };
 
     useEffect(() => {
         const handleMouseMove = async (event: MouseEvent) => {
@@ -110,15 +143,8 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
 
             // custom operation start
             let operationSuccess = true;
-            if ((action === 'move' || action === 'end' || action === 'start') && onDateChange && isNotLikeOriginal) {
-                try {
-                    const result = await onDateChange(newChangedTask, newChangedTask.barChildren);
-                    if (result !== undefined) {
-                        operationSuccess = result;
-                    }
-                } catch (error) {
-                    operationSuccess = false;
-                }
+            if ((action === 'move' || action === 'end' || action === 'start') && isNotLikeOriginal) {
+                operationSuccess = await handleDateChange(newChangedTask, newChangedTask.barChildren);
             } else if (onProgressChange && isNotLikeOriginal) {
                 try {
                     const result = await onProgressChange(newChangedTask, newChangedTask.barChildren);
@@ -231,13 +257,13 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
     return (
         <g className="content">
             <g className="arrows" fill={arrowColor} stroke={arrowColor}>
-                {state.ganttReducer.tasks.map((task: BarTask) => {
+                {tasks.map((task: BarTask) => {
                     return task.barChildren.map((child: BarTask) => {
                         return (
                             <Arrow
-                                key={`Arrow from ${task.id} to ${state.ganttReducer.tasks[child.index].id}`}
+                                key={`Arrow from ${task.id} to ${tasks[child.index].id}`}
                                 taskFrom={task}
-                                taskTo={state.ganttReducer.tasks[child.index]}
+                                taskTo={tasks[child.index]}
                                 rowHeight={rowHeight}
                                 taskHeight={taskHeight}
                                 arrowIndent={arrowIndent}
@@ -247,14 +273,14 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
                 })}
             </g>
             <g className="bar">
-                {state.ganttReducer.tasks.map((task: BarTask) => {
+                {tasks.map((task: BarTask) => {
                     return (
                         <ItemWrapper
                             task={task}
                             arrowIndent={arrowIndent}
                             taskHeight={taskHeight}
                             isProgressChangeable={!!onProgressChange && !task.isDisabled}
-                            isDateChangeable={!!onDateChange && !task.isDisabled}
+                            isDateChangeable={!task.isDisabled}
                             isDelete={!task.isDisabled}
                             onEventStart={handleBarEventStart}
                             key={task.id}

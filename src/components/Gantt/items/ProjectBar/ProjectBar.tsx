@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ItemWrapperProps } from '../internal/ItemWrapper';
+import { ItemWrapperProps } from '../../internal/ItemWrapper';
 
 export const ProjectWrapper = styled.g`
     cursor: pointer;
@@ -16,7 +16,7 @@ export const ProjectTop = styled.rect`
     user-select: none;
 `;
 
-export const Project: React.FC<ItemWrapperProps> = ({ task, isSelected }) => {
+export const ProjectBar: React.FC<ItemWrapperProps> = ({ task, isSelected }) => {
     const barColor = isSelected ? '#f7bb53' : '#fac465';
     const processColor = isSelected ? '#59a985' : '#7db59a';
     const projectWith = task.x2 - task.x1;

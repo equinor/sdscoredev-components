@@ -1,4 +1,3 @@
-import { Bar, BarSmall, Milestone, Project } from 'components/Gantt/items';
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { BarTask } from '../types/bar-task';
@@ -52,20 +51,7 @@ export const ItemWrapper: React.FC<ItemWrapperProps> = (props) => {
     const [isTextInside, setIsTextInside] = useState(true);
 
     useEffect(() => {
-        switch (task.typeInternal) {
-            case 'milestone':
-                setTaskItem(<Milestone {...props} />);
-                break;
-            case 'project':
-                setTaskItem(<Project {...props} />);
-                break;
-            case 'smalltask':
-                setTaskItem(<BarSmall {...props} />);
-                break;
-            default:
-                setTaskItem(<Bar {...props} />);
-                break;
-        }
+        setTaskItem(task.type({ ...props }));
     }, [task, isSelected]);
 
     useEffect(() => {

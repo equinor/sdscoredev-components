@@ -4,9 +4,8 @@ import React, { useState, SyntheticEvent, useRef, useEffect, useMemo } from 'rea
 import { removeHiddenTasks, sortTasks } from './helpers/other-helper';
 import { ganttDateRange, ganttDateRangeMulti, seedDates } from './helpers/date-helper';
 import { convertToBarTasks } from './helpers/bar-helper';
-import { GridProps } from './components/grid/grid';
 import { CalendarProps } from './components/calendar/calendar';
-import { TaskGanttContentProps } from './components/gantt/task-gantt-content';
+import { TaskGanttContentProps } from './internal/TaskGanttContent';
 // import { TaskList, TaskListProps } from './components/task-list/task-list';
 import { Container } from './internal/Container';
 import { StandardTooltipContent, Tooltip } from './components/other/tooltip';
@@ -19,14 +18,17 @@ import { TaskListTableDefault } from './components/task-list/task-list-table';
 import { DispatchContext, GanttStore, StateContext } from './GanttStore';
 import { ganttReducer } from './reducers/ganttReducer';
 import { TaskList, TaskListProps } from './components/task-list/task-list';
+import { GridProps } from './plugins/Grid';
+import { InternalGridProps } from './plugins/Grid/Grid';
 
 export interface GanttDataProps extends EventOption, DisplayOption, StylingOption {
     tasks: Task[];
+    grid?: GridProps;
 }
 
 export const GanttData = (props: GanttDataProps) => {
     const {
-        tasks,
+        grid,
         headerHeight = 50,
         columnWidth = 60,
         listCellWidth = '155px',
@@ -49,6 +51,7 @@ export const GanttData = (props: GanttDataProps) => {
         onClick,
         onDelete,
         onSelect,
+        onSetTasks,
         onExpanderClick,
     } = props;
 
@@ -74,36 +77,45 @@ export const GanttData = (props: GanttDataProps) => {
     const [selectedTask, setSelectedTask] = useState<BarTask>();
     const [failedTask, setFailedTask] = useState<BarTask | null>(null);
 
-    const svgWidth = state.ganttReducer.dates.length * columnWidth;
-    const ganttFullHeight = state.ganttReducer.tasks.length * rowHeight;
+    const [tasks, setTasks] = useState<BarTask[]>([]);
+
+    const ganttFullHeight = tasks.length * rowHeight;
 
     const [scrollY, setScrollY] = useState(0);
     const [scrollX, setScrollX] = useState(-1);
     const [ignoreScrollEvent, setIgnoreScrollEvent] = useState(false);
 
+    /**
+     * Set SVG width when dates or columnWidth updates
+     */
     useEffect(() => {
-        let filteredTasks: Task[];
-        if (onExpanderClick) {
-            filteredTasks = removeHiddenTasks(tasks);
-        } else {
-            filteredTasks = tasks;
+        dispatch({ type: 'SET_MEASURES', payload: { svgWidth: state.ganttReducer.dates.length * columnWidth } });
+    }, [state.ganttReducer.dates, columnWidth]);
+
+    /**
+     * Generate tasks and dates and update state
+     */
+    useEffect(() => {
+        if (props.tasks.length) {
+            let filteredTasks = onExpanderClick ? removeHiddenTasks(props.tasks) : props.tasks;
+            filteredTasks = filteredTasks.sort(sortTasks);
+
+            const [startDate, endDate] = ganttDateRange(filteredTasks, viewMode);
+
+            const dates_payload = seedDates(startDate, endDate, viewMode);
+            const tasks_payload = convertToBarTasks(
+                filteredTasks,
+                dates_payload,
+                columnWidth,
+                rowHeight,
+                taskHeight,
+                handleWidth,
+            );
+
+            dispatch({ type: 'SET_DATES', payload: dates_payload });
+            setTasks(tasks_payload);
         }
-        filteredTasks = filteredTasks.sort(sortTasks);
-        const [startDate, endDate] = ganttDateRange(filteredTasks, viewMode);
-
-        const dates_payload = seedDates(startDate, endDate, viewMode);
-        const tasks_payload = convertToBarTasks(
-            filteredTasks,
-            dates_payload,
-            columnWidth,
-            rowHeight,
-            taskHeight,
-            handleWidth,
-        );
-
-        dispatch({ type: 'SET_TASKS', payload: tasks_payload });
-        dispatch({ type: 'SET_DATES', payload: dates_payload });
-    }, [tasks, viewMode, rowHeight, columnWidth, taskHeight, handleWidth, scrollX, onExpanderClick]);
+    }, [props.tasks, viewMode, rowHeight, columnWidth, taskHeight, handleWidth, scrollX, onExpanderClick]);
 
     useEffect(() => {
         if (
@@ -131,10 +143,10 @@ export const GanttData = (props: GanttDataProps) => {
             if (action === 'delete') {
                 setGanttEvent({ action: '' });
 
-                const payload = state.ganttReducer.tasks.filter((t: any) => t.id !== changedTask.id);
-                dispatch({ type: 'SET_TASKS', payload });
+                const payload = tasks.filter((t: any) => t.id !== changedTask.id);
+                setTasks(payload);
             } else if (action === 'move' || action === 'end' || action === 'start' || action === 'progress') {
-                const prevStateTask = state.ganttReducer.tasks.find((t: any) => t.id === changedTask.id);
+                const prevStateTask = tasks.find((t: any) => t.id === changedTask.id);
                 if (
                     prevStateTask &&
                     (prevStateTask.start.getTime() !== changedTask.start.getTime() ||
@@ -142,23 +154,21 @@ export const GanttData = (props: GanttDataProps) => {
                         prevStateTask.progress !== changedTask.progress)
                 ) {
                     // actions for change
-                    const payload = state.ganttReducer.tasks.map((t: any) =>
-                        t.id === changedTask.id ? changedTask : t,
-                    );
-                    dispatch({ type: 'SET_TASKS', payload });
+                    const payload = tasks.map((t: any) => (t.id === changedTask.id ? changedTask : t));
+                    setTasks(payload);
                 }
             }
         }
-    }, [ganttEvent, state.ganttReducer.tasks]);
+    }, [ganttEvent, tasks]);
 
     useEffect(() => {
         if (failedTask) {
-            const payload = state.ganttReducer.tasks.map((t: any) => (t.id !== failedTask.id ? t : failedTask));
-            dispatch({ type: 'SET_TASKS', payload });
+            const payload = tasks.map((t: any) => (t.id !== failedTask.id ? t : failedTask));
+            setTasks(payload);
 
             setFailedTask(null);
         }
-    }, [failedTask, state.ganttReducer.tasks]);
+    }, [failedTask, tasks]);
 
     useEffect(() => {
         if (!listCellWidth) {
@@ -191,8 +201,8 @@ export const GanttData = (props: GanttDataProps) => {
                 let newScrollX = scrollX + scrollMove;
                 if (newScrollX < 0) {
                     newScrollX = 0;
-                } else if (newScrollX > svgWidth) {
-                    newScrollX = svgWidth;
+                } else if (newScrollX > state.gridReducer.svgWidth) {
+                    newScrollX = state.gridReducer.svgWidth;
                 }
                 setScrollX(newScrollX);
                 event.preventDefault();
@@ -219,7 +229,7 @@ export const GanttData = (props: GanttDataProps) => {
         return () => {
             wrapperRef.current?.removeEventListener('wheel', handleWheel);
         };
-    }, [wrapperRef, scrollY, scrollX, ganttHeight, svgWidth, ganttFullHeight]);
+    }, [wrapperRef, scrollY, scrollX, ganttHeight, state.gridReducer.svgWidth, ganttFullHeight]);
 
     const handleScrollY = (event: SyntheticEvent<HTMLDivElement>) => {
         if (scrollY !== event.currentTarget.scrollTop && !ignoreScrollEvent) {
@@ -270,8 +280,8 @@ export const GanttData = (props: GanttDataProps) => {
         if (isX) {
             if (newScrollX < 0) {
                 newScrollX = 0;
-            } else if (newScrollX > svgWidth) {
-                newScrollX = svgWidth;
+            } else if (newScrollX > state.gridReducer.svgWidth) {
+                newScrollX = state.gridReducer.svgWidth;
             }
             setScrollX(newScrollX);
         } else {
@@ -289,8 +299,8 @@ export const GanttData = (props: GanttDataProps) => {
      * Task select event
      */
     const handleSelectedTask = (taskId: string) => {
-        const newSelectedTask = state.ganttReducer.tasks.find((t: any) => t.id === taskId);
-        const oldSelectedTask = state.ganttReducer.tasks.find((t: any) => !!selectedTask && t.id === selectedTask.id);
+        const newSelectedTask = tasks.find((t: any) => t.id === taskId);
+        const oldSelectedTask = tasks.find((t: any) => !!selectedTask && t.id === selectedTask.id);
         if (onSelect) {
             if (oldSelectedTask) {
                 onSelect(oldSelectedTask, false);
@@ -299,25 +309,28 @@ export const GanttData = (props: GanttDataProps) => {
                 onSelect(newSelectedTask, true);
             }
         }
-        setSelectedTask(newSelectedTask);
+        if (newSelectedTask) setSelectedTask(newSelectedTask);
     };
+
+    const handleTasks = (tasks: BarTask[]) => {
+        if (onSetTasks) {
+            onSetTasks(tasks);
+        }
+    };
+
     const handleExpanderClick = (task: Task) => {
         if (onExpanderClick && task.hideChildren !== undefined) {
             onExpanderClick({ ...task, hideChildren: !task.hideChildren });
         }
     };
-    const gridProps: GridProps = {
-        columnWidth,
-        svgWidth,
-        rowHeight,
-        todayColor,
-    };
+
     const calendarProps: CalendarProps = {
         viewMode,
         headerHeight,
         columnWidth,
     };
     const barProps: TaskGanttContentProps = {
+        tasks,
         ganttEvent,
         selectedTask,
         rowHeight,
@@ -326,9 +339,10 @@ export const GanttData = (props: GanttDataProps) => {
         arrowColor,
         timeStep,
         arrowIndent,
-        svgWidth,
+        svgWidth: state.gridReducer.svgWidth,
         setGanttEvent,
         setFailedTask,
+        setTasks: handleTasks,
         setSelectedTask: handleSelectedTask,
         onDateChange,
         onProgressChange,
@@ -338,6 +352,7 @@ export const GanttData = (props: GanttDataProps) => {
     };
 
     const tableProps: TaskListProps = {
+        tasks,
         rowHeight,
         rowWidth: listCellWidth,
         headerHeight,
@@ -353,7 +368,7 @@ export const GanttData = (props: GanttDataProps) => {
 
     useEffect(() => {}, [state.ganttReducer]);
 
-    if (!state.ganttReducer.tasks.length || !state.ganttReducer.dates.length) return <></>;
+    if (!tasks.length || !state.ganttReducer.dates.length) return <></>;
     return (
         <>
             <div
@@ -371,7 +386,7 @@ export const GanttData = (props: GanttDataProps) => {
             >
                 {listCellWidth && <TaskList {...tableProps} />}
                 <Container
-                    gridProps={gridProps}
+                    tasks={tasks}
                     calendarProps={calendarProps}
                     barProps={barProps}
                     ganttHeight={ganttHeight}

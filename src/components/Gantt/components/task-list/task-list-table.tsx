@@ -1,4 +1,5 @@
 import { StateContext } from 'components/Gantt/GanttStore';
+import { BarTask } from 'components/Gantt/types/bar-task';
 import React, { useContext, useMemo } from 'react';
 import styled from 'styled-components';
 import { LOCALE, Task } from '../../types/public-types';
@@ -54,18 +55,19 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
 };
 
 export const TaskListTableDefault: React.FC<{
+    tasks: Task[];
     rowHeight: number;
     rowWidth: string;
     selectedTaskId: string;
     setSelectedTask: (taskId: string) => void;
     onExpanderClick: (task: Task) => void;
-}> = ({ rowHeight, rowWidth, onExpanderClick }) => {
+}> = ({ tasks, rowHeight, rowWidth, onExpanderClick }) => {
     const toLocaleDateString = useMemo(() => toLocaleDateStringFactory(), [LOCALE]);
     const state: any = useContext(StateContext);
 
     return (
         <TaskListWrapper>
-            {state.ganttReducer.tasks.map((t: Task) => {
+            {tasks.map((t: Task) => {
                 let expanderSymbol = '';
                 if (t.hideChildren === false) {
                     expanderSymbol = '▼';

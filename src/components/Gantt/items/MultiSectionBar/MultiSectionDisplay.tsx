@@ -1,6 +1,6 @@
 import React from 'react';
 
-type ActionDisplayProps = {
+type MultiSectionDisplayProps = {
     x: number;
     y: number;
     width: number;
@@ -10,7 +10,7 @@ type ActionDisplayProps = {
 
     onMouseDown: (event: React.MouseEvent<SVGPolygonElement, MouseEvent>) => void;
 };
-export const ActionDisplay: React.FC<ActionDisplayProps> = ({
+export const MultiSectionDisplay: React.FC<MultiSectionDisplayProps> = ({
     x,
     y,
     width,
@@ -41,7 +41,7 @@ export const ActionDisplay: React.FC<ActionDisplayProps> = ({
                     ry={2}
                     rx={2}
                     fill={isSelected ? '#6565f6' : '#9292fc'}
-                    fill-opacity={0.3}
+                    fillOpacity={0.3}
                 />
             ))}
         </g>

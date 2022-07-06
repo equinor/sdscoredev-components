@@ -1,9 +1,10 @@
 import React from 'react';
-import { getProgressPoint } from '../helpers/bar-helper';
-import { BarDateHandle } from './BarDateHandle';
+import { getProgressPoint } from '../../helpers/bar-helper';
+import { BarDateHandle } from '../DateHandle';
 import styled from 'styled-components';
-import { BarDisplay, BarProgressHandle } from '.';
-import { ItemWrapperProps } from '../internal/ItemWrapper';
+import { ItemWrapperProps } from '../../internal/ItemWrapper';
+import { BarDisplay } from './DefaultDisplay';
+import { BarProgressHandle } from '../ProgressHandle';
 
 export const BarWrapper = styled.g`
     cursor: pointer;
@@ -29,7 +30,7 @@ export const ProgressHandle = styled.polygon`
     visibility: hidden;
 `;
 
-export const Bar: React.FC<ItemWrapperProps> = ({
+export const DefaultBar: React.FC<ItemWrapperProps> = ({
     task,
     isProgressChangeable,
     isDateChangeable,
@@ -38,8 +39,6 @@ export const Bar: React.FC<ItemWrapperProps> = ({
 }) => {
     const progressPoint = getProgressPoint(task.progressWidth + task.progressX, task.y, task.height);
     const handleHeight = task.height - 2;
-
-    console.log(1);
 
     return (
         <BarWrapper tabIndex={0}>

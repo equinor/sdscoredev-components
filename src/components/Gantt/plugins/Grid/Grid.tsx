@@ -1,22 +1,48 @@
+import { BarTask } from 'components/Gantt/types/bar-task';
+import { Task } from 'components/Gantt/types/public-types';
 import React, { ReactChild, useContext } from 'react';
-import { Task } from '../../types/public-types';
+import styled from 'styled-components';
+import { GridProps } from '.';
+import { StateContext } from '../../GanttStore';
 import { addToDate } from '../../helpers/date-helper';
-import { GridRow, GridRowLine, GridTick } from './grid-body.style';
-import { StateContext } from 'components/Gantt/GanttStore';
 
-export type GridBodyProps = {
+export const GridRowLine = styled.line`
+    stroke: #ebeff2;
+`;
+
+export const GridRow = styled.rect`
+    fill: #fff;
+
+    &:nth-child(even) {
+        fill: #f5f5f5;
+    }
+`;
+
+export const GridTick = styled.line`
+    stroke: #ebeff2;
+`;
+
+export type InternalGridProps = {
+    tasks: Task[];
+    /**
+     * Width of the generated svg
+     */
     svgWidth: number;
+    /**
+     * Row height
+     */
     rowHeight: number;
-    columnWidth: number;
-    todayColor: string;
-};
-export const GridBody: React.FC<GridBodyProps> = ({ rowHeight, svgWidth, columnWidth, todayColor }) => {
+} & GridProps;
+
+export const Grid: React.FC<InternalGridProps> = (props: InternalGridProps) => {
+    const { tasks, svgWidth, rowHeight, columnWidth, todayColor } = props;
+
     const state: any = useContext(StateContext);
 
     let y = 0;
     const gridRows: ReactChild[] = [];
     const rowLines: ReactChild[] = [<GridRowLine key="RowLineFirst" x="0" y1={0} x2={svgWidth} y2={0} />];
-    for (const task of state.ganttReducer.tasks) {
+    for (const task of tasks) {
         gridRows.push(<GridRow key={'Row' + task.id} x="0" y={y} width={svgWidth} height={rowHeight} />);
         rowLines.push(
             <GridRowLine key={'RowLine' + task.id} x="0" y1={y + rowHeight} x2={svgWidth} y2={y + rowHeight} />,
@@ -48,7 +74,7 @@ export const GridBody: React.FC<GridBodyProps> = ({ rowHeight, svgWidth, columnW
         tickX += columnWidth;
     }
     return (
-        <g className="gridBody">
+        <g className="grid">
             <g className="rows">{gridRows}</g>
             <g className="rowLines">{rowLines}</g>
             <g className="ticks">{ticks}</g>

@@ -1,4 +1,4 @@
-import { Children } from 'react';
+import { Children, useState } from 'react';
 import { DisplayOption, EventOption, StylingOption, Task } from './types/public-types';
 import React from 'react';
 import { GanttStore } from './GanttStore';
@@ -21,12 +21,14 @@ export interface GanttProps extends EventOption, DisplayOption, StylingOption {
 
 export const Gantt = (props: GanttProps) => {
     const { children, reducers = [] } = props;
+    const [tasks, setTasks] = useState<Task[]>(props.tasks);
 
     const components = Children.toArray(children);
+    const grid: any = components.find((x: JSX.Element) => x.type.displayName === 'Gantt.Grid');
 
     return (
         <GanttStore components={components} reducers={{ ganttReducer, ...reducers }}>
-            <GanttData {...props} />
+            <GanttData {...props} tasks={tasks} onSetTasks={setTasks} grid={grid} />
         </GanttStore>
     );
 };

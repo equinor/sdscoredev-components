@@ -1,5 +1,5 @@
 import React from 'react';
-import { BarDateHandle } from '../items';
+import { BarDateHandle } from '../items/DateHandle';
 import { BarTask } from '../types/bar-task';
 import { GanttContentMoveAction } from '../types/gantt-task-actions';
 

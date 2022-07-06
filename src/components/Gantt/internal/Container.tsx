@@ -1,15 +1,17 @@
 import React, { useRef, useEffect, useContext } from 'react';
-import { GridProps, Grid } from '../components/grid/grid';
 import { CalendarProps, Calendar } from '../components/calendar/calendar';
-import { TaskGanttContentProps, TaskGanttContent } from '../components/gantt/task-gantt-content';
+import { TaskGanttContentProps, TaskGanttContent } from './TaskGanttContent';
 import { StateContext } from 'components/Gantt/GanttStore';
 import styled from 'styled-components';
+import { Grid } from '../plugins/Grid/Grid';
+import { BarTask } from '../types/bar-task';
 
 export const VerticalContainer = styled.div`
     overflow: hidden;
     font-size: 0;
     margin: 0;
     padding: 0;
+    display: grid;
 `;
 
 export const HorizontalContainer = styled.div`
@@ -19,7 +21,7 @@ export const HorizontalContainer = styled.div`
 `;
 
 export type TaskGanttProps = {
-    gridProps: GridProps;
+    tasks: BarTask[];
     calendarProps: CalendarProps;
     barProps: TaskGanttContentProps;
     ganttHeight: number;
@@ -27,7 +29,7 @@ export type TaskGanttProps = {
     scrollX: number;
 };
 export const Container: React.FC<TaskGanttProps> = ({
-    gridProps,
+    tasks,
     calendarProps,
     barProps,
     ganttHeight,
@@ -53,10 +55,10 @@ export const Container: React.FC<TaskGanttProps> = ({
     }, [scrollX]);
 
     return (
-        <VerticalContainer ref={verticalGanttContainerRef} dir="ltr">
+        <VerticalContainer ref={verticalGanttContainerRef}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width={gridProps.svgWidth}
+                width={state.gridReducer.svgWidth}
                 height={calendarProps.headerHeight}
                 style={{
                     fontFamily: 'Equinor',
@@ -67,19 +69,23 @@ export const Container: React.FC<TaskGanttProps> = ({
             </svg>
             <HorizontalContainer
                 ref={horizontalContainerRef}
-                style={ganttHeight ? { height: ganttHeight, width: gridProps.svgWidth } : { width: gridProps.svgWidth }}
+                style={
+                    ganttHeight
+                        ? { height: ganttHeight, width: state.gridReducer.svgWidth }
+                        : { width: state.gridReducer.svgWidth }
+                }
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width={gridProps.svgWidth}
-                    height={barProps.rowHeight * state.ganttReducer.tasks.length}
+                    width={state.gridReducer.svgWidth}
+                    height={barProps.rowHeight * tasks.length}
                     ref={ganttSVGRef}
                     style={{
                         fontFamily: 'Equinor',
                         fontSize: '12px',
                     }}
                 >
-                    <Grid {...gridProps} />
+                    <Grid {...state.gridReducer} tasks={tasks} />
                     <TaskGanttContent {...newBarProps} />
                 </svg>
             </HorizontalContainer>

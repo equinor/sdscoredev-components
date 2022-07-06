@@ -12,7 +12,7 @@ export enum ViewMode {
 export type TaskType = 'task' | 'milestone' | 'project' | 'action';
 export interface Task {
     id: string;
-    type: TaskType;
+    type: any;
     name: string;
     start: Date;
     end: Date;
@@ -67,6 +67,8 @@ export interface EventOption {
      * Invokes on expander on task list
      */
     onExpanderClick?: (task: Task) => void;
+
+    onSetTasks?: (tasks: Task[]) => void;
 }
 
 export interface DisplayOption {

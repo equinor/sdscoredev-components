@@ -3,6 +3,7 @@ import { BarTask } from '../../types/bar-task';
 import { Task } from '../../types/public-types';
 
 export type TaskListProps = {
+    tasks: BarTask[];
     headerHeight: number;
     rowWidth: string;
     rowHeight: number;
@@ -27,6 +28,7 @@ export type TaskListProps = {
 };
 
 export const TaskList: React.FC<TaskListProps> = ({
+    tasks,
     headerHeight,
     rowWidth,
     rowHeight,
@@ -53,6 +55,7 @@ export const TaskList: React.FC<TaskListProps> = ({
     };
     const selectedTaskId = selectedTask ? selectedTask.id : '';
     const tableProps = {
+        tasks,
         rowHeight,
         rowWidth,
         selectedTaskId: selectedTaskId,
