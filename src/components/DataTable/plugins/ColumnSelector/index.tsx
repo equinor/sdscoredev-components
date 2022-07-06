@@ -61,7 +61,7 @@ export type ColumnSelectorProps = {
      */
     showApplyButton?: boolean;
     /**
-     * Utilized to change the style of the columns options
+     * Utilized to change the style of the Dialog
      */
     dialogStyle?: DialogStyle;
 };
