@@ -57,11 +57,11 @@ export type ColumnSelectorProps = {
      */
     storage?: Storage;
     /**
-     * If set, it will show an Apply button
+     * If set, it will show an Apply button; defaults to "false"
      */
     showApplyButton?: boolean;
     /**
-     * Utilized to change the style of the Dialog
+     * Utilized to change the style of the `Dialog`
      */
     dialogStyle?: DialogStyle;
 };

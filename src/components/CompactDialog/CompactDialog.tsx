@@ -1,5 +1,5 @@
 import { Scrim } from '@equinor/eds-core-react';
-import React, { forwardRef, ReactNode, useCallback, useImperativeHandle, useState } from 'react';
+import React, { forwardRef, ReactNode, useImperativeHandle, useState } from 'react';
 import CompactDialogCard from './CompactDialogCard';
 
 export interface CompactDialogProps {
@@ -12,10 +12,6 @@ export interface CompactDialogProps {
      * Sets the dialog title icon
      */
     titleLeftIcon?: ReactNode;
-    /**
-     * Utilized to run extra callbacks on dialog-close
-     */
-    onDialogClose?: any;
     /**
      * If set to true, the close-button will not be visible
      */
@@ -42,7 +38,7 @@ export type CompactDialogRef = {
 } | null;
 
 export const CompactDialog = forwardRef<CompactDialogRef, CompactDialogProps>((props, ref) => {
-    const { title, titleLeftIcon, onDialogClose, hideOnClose, children } = props;
+    const { title, titleLeftIcon, hideOnClose, children } = props;
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [isCloseDisabled, setIsCloseDisabled] = useState<boolean>(false);
@@ -53,7 +49,6 @@ export const CompactDialog = forwardRef<CompactDialogRef, CompactDialogProps>((p
         },
         close: () => {
             setIsOpen(false);
-            if (onDialogClose) onDialogClose();
         },
         activateOnClose: () => {
             setIsCloseDisabled(true);
@@ -63,17 +58,12 @@ export const CompactDialog = forwardRef<CompactDialogRef, CompactDialogProps>((p
         },
     }));
 
-    const onClose = useCallback(() => {
-        setIsOpen(false);
-        if (onDialogClose) onDialogClose();
-    }, [onDialogClose]);
-
     return (
-        <Scrim open={isOpen} onClose={() => setIsOpen(false)}>
+        <Scrim open={isOpen}>
             <CompactDialogCard
                 title={title}
                 titleLeftIcon={titleLeftIcon}
-                onClose={onClose}
+                onClose={() => setIsOpen(false)}
                 disableOnClose={isCloseDisabled}
                 hideOnClose={hideOnClose}
             >
