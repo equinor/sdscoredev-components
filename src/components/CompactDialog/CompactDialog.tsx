@@ -3,7 +3,7 @@ import React, { forwardRef, ReactNode, useImperativeHandle, useState } from 'rea
 import CompactDialogCard from './CompactDialogCard';
 
 export interface CompactDialogProps {
-    children?: React.ReactNode | null;
+    children?: React.ReactNode;
     /**
      * Sets the dialog title
      */
