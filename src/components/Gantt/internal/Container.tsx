@@ -1,10 +1,10 @@
 import React, { useRef, useEffect, useContext } from 'react';
-import { CalendarProps, Calendar } from '../components/calendar/calendar';
 import { TaskGanttContentProps, TaskGanttContent } from './TaskGanttContent';
 import { StateContext } from 'components/Gantt/GanttStore';
 import styled from 'styled-components';
 import { Grid } from '../plugins/Grid/Grid';
-import { BarTask } from '../types/bar-task';
+import { TaskBar } from '../bars/types';
+import { Calendar, CalendarProps } from '../plugins/Calendar/Calendar';
 
 export const VerticalContainer = styled.div`
     overflow: hidden;
@@ -21,7 +21,7 @@ export const HorizontalContainer = styled.div`
 `;
 
 export type TaskGanttProps = {
-    tasks: BarTask[];
+    bars: TaskBar[];
     calendarProps: CalendarProps;
     barProps: TaskGanttContentProps;
     ganttHeight: number;
@@ -29,7 +29,7 @@ export type TaskGanttProps = {
     scrollX: number;
 };
 export const Container: React.FC<TaskGanttProps> = ({
-    tasks,
+    bars,
     calendarProps,
     barProps,
     ganttHeight,
@@ -78,14 +78,14 @@ export const Container: React.FC<TaskGanttProps> = ({
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width={state.gridReducer.svgWidth}
-                    height={barProps.rowHeight * tasks.length}
+                    height={barProps.rowHeight * bars.length}
                     ref={ganttSVGRef}
                     style={{
                         fontFamily: 'Equinor',
                         fontSize: '12px',
                     }}
                 >
-                    <Grid {...state.gridReducer} tasks={tasks} />
+                    <Grid {...state.gridReducer} bars={bars} />
                     <TaskGanttContent {...newBarProps} />
                 </svg>
             </HorizontalContainer>

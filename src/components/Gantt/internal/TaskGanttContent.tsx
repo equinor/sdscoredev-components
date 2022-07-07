@@ -1,17 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { EventOption, Task } from '../types/public-types';
-import { BarTask } from '../types/bar-task';
-import { Arrow } from '../components/other/arrow';
+import { EventOption } from '../types/public-types';
+import { Arrow } from './Arrow';
 import { handleTaskBySVGMouseEvent } from '../helpers/bar-helper';
 import { isKeyboardEvent } from '../helpers/other-helper';
-import { ItemWrapper } from './ItemWrapper';
+import { InternalBar } from './Bar';
 import { BarMoveAction, GanttContentMoveAction, GanttEvent } from '../types/gantt-task-actions';
 import { DispatchContext, StateContext } from 'components/Gantt/GanttStore';
+import { TaskBar } from '../bars/types';
 
 export type TaskGanttContentProps = {
-    tasks: BarTask[];
+    bars: TaskBar[];
     ganttEvent: GanttEvent;
-    selectedTask: BarTask | undefined;
+    selectedTask: TaskBar | undefined;
     rowHeight: number;
     columnWidth: number;
     timeStep: number;
@@ -21,13 +21,13 @@ export type TaskGanttContentProps = {
     arrowColor: string;
     arrowIndent: number;
     setGanttEvent: (value: GanttEvent) => void;
-    setFailedTask: (value: BarTask | null) => void;
+    setFailedTask: (value: TaskBar | null) => void;
     setSelectedTask: (taskId: string) => void;
-    setTasks: (tasks: BarTask[]) => void;
+    setBars: (tasks: TaskBar[]) => void;
 } & EventOption;
 
 export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
-    tasks,
+    bars,
     ganttEvent,
     selectedTask,
     rowHeight,
@@ -40,7 +40,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
     setGanttEvent,
     setFailedTask,
     setSelectedTask,
-    setTasks,
+    setBars,
     onDateChange,
     onProgressChange,
     onDoubleClick,
@@ -72,7 +72,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
      * @param children
      * @returns
      */
-    const handleDateChange = async (task: BarTask, children: BarTask[]) => {
+    const handleDateChange = async (task: TaskBar, children: TaskBar[]) => {
         let operationSuccess = true;
         if (onDateChange) {
             try {
@@ -86,8 +86,8 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
         }
 
         if (operationSuccess) {
-            const payload = tasks.map((t: any) => (t.id === task.id ? task : t));
-            setTasks(payload);
+            const payload = bars.map((t: any) => (t.id === task.id ? task : t));
+            setBars(payload);
         }
 
         return operationSuccess;
@@ -131,9 +131,8 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
             );
 
             const isNotLikeOriginal =
-                originalSelectedTask.start !== newChangedTask.start ||
-                originalSelectedTask.end !== newChangedTask.end ||
-                originalSelectedTask.progress !== newChangedTask.progress;
+                originalSelectedTask.start !== newChangedTask.start || originalSelectedTask.end !== newChangedTask.end;
+            // originalSelectedTask.progress !== newChangedTask.progress;
 
             // remove listeners
             svg.current.removeEventListener('mousemove', handleMouseMove);
@@ -193,7 +192,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
      */
     const handleBarEventStart = async (
         action: GanttContentMoveAction,
-        task: BarTask,
+        task: TaskBar,
         event?: React.MouseEvent | React.KeyboardEvent,
     ) => {
         if (!event) {
@@ -257,13 +256,13 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
     return (
         <g className="content">
             <g className="arrows" fill={arrowColor} stroke={arrowColor}>
-                {tasks.map((task: BarTask) => {
-                    return task.barChildren.map((child: BarTask) => {
+                {bars.map((task: TaskBar) => {
+                    return task.barChildren.map((child: TaskBar) => {
                         return (
                             <Arrow
-                                key={`Arrow from ${task.id} to ${tasks[child.index].id}`}
+                                key={`Arrow from ${task.id} to ${bars[child.index].id}`}
                                 taskFrom={task}
-                                taskTo={tasks[child.index]}
+                                taskTo={bars[child.index]}
                                 rowHeight={rowHeight}
                                 taskHeight={taskHeight}
                                 arrowIndent={arrowIndent}
@@ -273,10 +272,10 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
                 })}
             </g>
             <g className="bar">
-                {tasks.map((task: BarTask) => {
+                {bars.map((task: TaskBar) => {
                     return (
-                        <ItemWrapper
-                            task={task}
+                        <InternalBar
+                            taskBar={task}
                             arrowIndent={arrowIndent}
                             taskHeight={taskHeight}
                             isProgressChangeable={!!onProgressChange && !task.isDisabled}

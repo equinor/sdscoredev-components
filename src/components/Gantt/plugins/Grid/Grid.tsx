@@ -1,5 +1,4 @@
-import { BarTask } from 'components/Gantt/types/bar-task';
-import { Task } from 'components/Gantt/types/public-types';
+import { TaskBar } from 'components/Gantt/bars/types';
 import React, { ReactChild, useContext } from 'react';
 import styled from 'styled-components';
 import { GridProps } from '.';
@@ -23,7 +22,7 @@ export const GridTick = styled.line`
 `;
 
 export type InternalGridProps = {
-    tasks: Task[];
+    bars: TaskBar[];
     /**
      * Width of the generated svg
      */
@@ -35,17 +34,17 @@ export type InternalGridProps = {
 } & GridProps;
 
 export const Grid: React.FC<InternalGridProps> = (props: InternalGridProps) => {
-    const { tasks, svgWidth, rowHeight, columnWidth, todayColor } = props;
+    const { bars, svgWidth, rowHeight, columnWidth, todayColor } = props;
 
     const state: any = useContext(StateContext);
 
     let y = 0;
     const gridRows: ReactChild[] = [];
     const rowLines: ReactChild[] = [<GridRowLine key="RowLineFirst" x="0" y1={0} x2={svgWidth} y2={0} />];
-    for (const task of tasks) {
-        gridRows.push(<GridRow key={'Row' + task.id} x="0" y={y} width={svgWidth} height={rowHeight} />);
+    for (const bar of bars) {
+        gridRows.push(<GridRow key={'Row' + bar.id} x="0" y={y} width={svgWidth} height={rowHeight} />);
         rowLines.push(
-            <GridRowLine key={'RowLine' + task.id} x="0" y1={y + rowHeight} x2={svgWidth} y2={y + rowHeight} />,
+            <GridRowLine key={'RowLine' + bar.id} x="0" y1={y + rowHeight} x2={svgWidth} y2={y + rowHeight} />,
         );
         y += rowHeight;
     }

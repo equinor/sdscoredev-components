@@ -1,30 +1,28 @@
-import { Children, useContext } from 'react';
-import { DisplayOption, EventOption, StylingOption, Task, ViewMode } from './types/public-types';
+import { useContext } from 'react';
+import { DisplayOption, EventOption, StylingOption, ViewMode } from './types/public-types';
 import React, { useState, SyntheticEvent, useRef, useEffect, useMemo } from 'react';
 import { removeHiddenTasks, sortTasks } from './helpers/other-helper';
-import { ganttDateRange, ganttDateRangeMulti, seedDates } from './helpers/date-helper';
-import { convertToBarTasks } from './helpers/bar-helper';
-import { CalendarProps } from './components/calendar/calendar';
+import { ganttDateRange, seedDates } from './helpers/date-helper';
+import { convertToBars } from './helpers/bar-helper';
 import { TaskGanttContentProps } from './internal/TaskGanttContent';
 // import { TaskList, TaskListProps } from './components/task-list/task-list';
 import { Container } from './internal/Container';
-import { StandardTooltipContent, Tooltip } from './components/other/tooltip';
-import { VerticalScroll } from './components/other/vertical-scroll';
-import { HorizontalScroll } from './components/other/horizontal-scroll';
-import { BarTask } from './types/bar-task';
 import { GanttEvent } from './types/gantt-task-actions';
-import { TaskListHeaderDefault } from './components/task-list/task-list-header';
-import { TaskListTableDefault } from './components/task-list/task-list-table';
-import { DispatchContext, GanttStore, StateContext } from './GanttStore';
-import { ganttReducer } from './reducers/ganttReducer';
-import { TaskList, TaskListProps } from './components/task-list/task-list';
+import { TaskListHeaderDefault } from './plugins/task-list/task-list-header';
+import { TaskListTableDefault } from './plugins/task-list/task-list-table';
+import { DispatchContext, StateContext } from './GanttStore';
+import { TaskList, TaskListProps } from './plugins/task-list/task-list';
 import { GridProps } from './plugins/Grid';
-import { InternalGridProps } from './plugins/Grid/Grid';
+import { Task, TaskBar } from './bars/types';
+import { CalendarProps } from './plugins/Calendar/Calendar';
+import { StandardTooltipContent } from './internal/Tooltip';
 
-export interface GanttDataProps extends EventOption, DisplayOption, StylingOption {
+export type GanttDataProps = {
     tasks: Task[];
     grid?: GridProps;
-}
+} & EventOption &
+    DisplayOption &
+    StylingOption;
 
 export const GanttData = (props: GanttDataProps) => {
     const {
@@ -74,12 +72,12 @@ export const GanttData = (props: GanttDataProps) => {
     });
     const taskHeight = useMemo(() => (rowHeight * barFill) / 100, [rowHeight, barFill]);
 
-    const [selectedTask, setSelectedTask] = useState<BarTask>();
-    const [failedTask, setFailedTask] = useState<BarTask | null>(null);
+    const [selectedTask, setSelectedTask] = useState<TaskBar>();
+    const [failedTask, setFailedTask] = useState<TaskBar | null>(null);
 
-    const [tasks, setTasks] = useState<BarTask[]>([]);
+    const [bars, setBars] = useState<TaskBar[]>([]);
 
-    const ganttFullHeight = tasks.length * rowHeight;
+    const ganttFullHeight = bars.length * rowHeight;
 
     const [scrollY, setScrollY] = useState(0);
     const [scrollX, setScrollX] = useState(-1);
@@ -93,7 +91,7 @@ export const GanttData = (props: GanttDataProps) => {
     }, [state.ganttReducer.dates, columnWidth]);
 
     /**
-     * Generate tasks and dates and update state
+     * Generate bars and dates and update state
      */
     useEffect(() => {
         if (props.tasks.length) {
@@ -102,18 +100,11 @@ export const GanttData = (props: GanttDataProps) => {
 
             const [startDate, endDate] = ganttDateRange(filteredTasks, viewMode);
 
-            const dates_payload = seedDates(startDate, endDate, viewMode);
-            const tasks_payload = convertToBarTasks(
-                filteredTasks,
-                dates_payload,
-                columnWidth,
-                rowHeight,
-                taskHeight,
-                handleWidth,
-            );
+            const dates = seedDates(startDate, endDate, viewMode);
+            const bars = convertToBars(filteredTasks, dates, columnWidth, rowHeight, taskHeight, handleWidth);
 
-            dispatch({ type: 'SET_DATES', payload: dates_payload });
-            setTasks(tasks_payload);
+            dispatch({ type: 'SET_DATES', payload: dates });
+            setBars(bars);
         }
     }, [props.tasks, viewMode, rowHeight, columnWidth, taskHeight, handleWidth, scrollX, onExpanderClick]);
 
@@ -143,32 +134,32 @@ export const GanttData = (props: GanttDataProps) => {
             if (action === 'delete') {
                 setGanttEvent({ action: '' });
 
-                const payload = tasks.filter((t: any) => t.id !== changedTask.id);
-                setTasks(payload);
+                const payload = bars.filter((t: any) => t.id !== changedTask.id);
+                setBars(payload);
             } else if (action === 'move' || action === 'end' || action === 'start' || action === 'progress') {
-                const prevStateTask = tasks.find((t: any) => t.id === changedTask.id);
+                const prevStateTask = bars.find((t: any) => t.id === changedTask.id);
                 if (
                     prevStateTask &&
                     (prevStateTask.start.getTime() !== changedTask.start.getTime() ||
-                        prevStateTask.end.getTime() !== changedTask.end.getTime() ||
-                        prevStateTask.progress !== changedTask.progress)
+                        prevStateTask.end.getTime() !== changedTask.end.getTime())
+                    // prevStateTask.progress !== changedTask.progress)
                 ) {
                     // actions for change
-                    const payload = tasks.map((t: any) => (t.id === changedTask.id ? changedTask : t));
-                    setTasks(payload);
+                    const payload = bars.map((t: any) => (t.id === changedTask.id ? changedTask : t));
+                    setBars(payload);
                 }
             }
         }
-    }, [ganttEvent, tasks]);
+    }, [ganttEvent, bars]);
 
     useEffect(() => {
         if (failedTask) {
-            const payload = tasks.map((t: any) => (t.id !== failedTask.id ? t : failedTask));
-            setTasks(payload);
+            const payload = bars.map((t: any) => (t.id !== failedTask.id ? t : failedTask));
+            setBars(payload);
 
             setFailedTask(null);
         }
-    }, [failedTask, tasks]);
+    }, [failedTask, bars]);
 
     useEffect(() => {
         if (!listCellWidth) {
@@ -189,9 +180,9 @@ export const GanttData = (props: GanttDataProps) => {
         if (ganttHeight) {
             setSvgContainerHeight(ganttHeight + headerHeight);
         } else {
-            setSvgContainerHeight(tasks.length * rowHeight + headerHeight);
+            setSvgContainerHeight(bars.length * rowHeight + headerHeight);
         }
-    }, [ganttHeight, tasks, headerHeight, rowHeight]);
+    }, [ganttHeight, bars, headerHeight, rowHeight]);
 
     // scroll events
     useEffect(() => {
@@ -299,8 +290,8 @@ export const GanttData = (props: GanttDataProps) => {
      * Task select event
      */
     const handleSelectedTask = (taskId: string) => {
-        const newSelectedTask = tasks.find((t: any) => t.id === taskId);
-        const oldSelectedTask = tasks.find((t: any) => !!selectedTask && t.id === selectedTask.id);
+        const newSelectedTask = bars.find((t: any) => t.id === taskId);
+        const oldSelectedTask = bars.find((t: any) => !!selectedTask && t.id === selectedTask.id);
         if (onSelect) {
             if (oldSelectedTask) {
                 onSelect(oldSelectedTask, false);
@@ -312,7 +303,7 @@ export const GanttData = (props: GanttDataProps) => {
         if (newSelectedTask) setSelectedTask(newSelectedTask);
     };
 
-    const handleTasks = (tasks: BarTask[]) => {
+    const handleTasks = (tasks: TaskBar[]) => {
         if (onSetTasks) {
             onSetTasks(tasks);
         }
@@ -330,7 +321,7 @@ export const GanttData = (props: GanttDataProps) => {
         columnWidth,
     };
     const barProps: TaskGanttContentProps = {
-        tasks,
+        bars,
         ganttEvent,
         selectedTask,
         rowHeight,
@@ -342,7 +333,7 @@ export const GanttData = (props: GanttDataProps) => {
         svgWidth: state.gridReducer.svgWidth,
         setGanttEvent,
         setFailedTask,
-        setTasks: handleTasks,
+        setBars: handleTasks,
         setSelectedTask: handleSelectedTask,
         onDateChange,
         onProgressChange,
@@ -352,7 +343,7 @@ export const GanttData = (props: GanttDataProps) => {
     };
 
     const tableProps: TaskListProps = {
-        tasks,
+        bars,
         rowHeight,
         rowWidth: listCellWidth,
         headerHeight,
@@ -368,7 +359,7 @@ export const GanttData = (props: GanttDataProps) => {
 
     useEffect(() => {}, [state.ganttReducer]);
 
-    if (!tasks.length || !state.ganttReducer.dates.length) return <></>;
+    if (!bars.length || !state.ganttReducer.dates.length) return <></>;
     return (
         <>
             <div
@@ -386,7 +377,7 @@ export const GanttData = (props: GanttDataProps) => {
             >
                 {listCellWidth && <TaskList {...tableProps} />}
                 <Container
-                    tasks={tasks}
+                    bars={bars}
                     calendarProps={calendarProps}
                     barProps={barProps}
                     ganttHeight={ganttHeight}

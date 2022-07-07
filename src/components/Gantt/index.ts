@@ -13,5 +13,6 @@ Gantt.Grid.displayName = 'Gantt.Grid';
 
 export { Gantt };
 export { ViewMode } from './types/public-types';
-export * from './items/index';
-export type { GanttProps, Task, StylingOption, DisplayOption, EventOption } from './types/public-types';
+export * from './bars/index';
+export type { GanttProps, StylingOption, DisplayOption, EventOption } from './types/public-types';
+export type { Bar, Task } from './bars/types';

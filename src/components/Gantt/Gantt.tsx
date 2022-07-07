@@ -1,11 +1,12 @@
 import { Children, useState } from 'react';
-import { DisplayOption, EventOption, StylingOption, Task } from './types/public-types';
+import { DisplayOption, EventOption, StylingOption } from './types/public-types';
 import React from 'react';
 import { GanttStore } from './GanttStore';
 import { ganttReducer } from './reducers/ganttReducer';
 import { GanttData } from './GanttData';
+import { Task } from './bars/types';
 
-export interface GanttProps extends EventOption, DisplayOption, StylingOption {
+export type GanttProps = {
     tasks: Task[];
     children?: any;
     /**
@@ -17,7 +18,9 @@ export interface GanttProps extends EventOption, DisplayOption, StylingOption {
      * Most common reducer to add is `paginationReducer`. It will add `pageSize` and `pageIndex` as state params.
      */
     reducers?: any;
-}
+} & EventOption &
+    DisplayOption &
+    StylingOption;
 
 export const Gantt = (props: GanttProps) => {
     const { children, reducers = [] } = props;

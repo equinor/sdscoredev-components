@@ -1,3 +1,5 @@
+import { Task } from '../bars/types';
+
 export const LOCALE = 'no-NO';
 
 export enum ViewMode {
@@ -10,31 +12,8 @@ export enum ViewMode {
     Month = 'Month',
 }
 export type TaskType = 'task' | 'milestone' | 'project' | 'action';
-export interface Task {
-    id: string;
-    type: any;
-    name: string;
-    start: Date;
-    end: Date;
-    dates: Date[];
-    /**
-     * From 0 to 100
-     */
-    progress: number;
-    styles?: {
-        backgroundColor?: string;
-        backgroundSelectedColor?: string;
-        progressColor?: string;
-        progressSelectedColor?: string;
-    };
-    isDisabled?: boolean;
-    project?: string;
-    dependencies?: string[];
-    hideChildren?: boolean;
-    displayOrder?: number;
-}
 
-export interface EventOption {
+export type EventOption = {
     /**
      * Time step value for date changes.
      */
@@ -69,18 +48,18 @@ export interface EventOption {
     onExpanderClick?: (task: Task) => void;
 
     onSetTasks?: (tasks: Task[]) => void;
-}
+};
 
-export interface DisplayOption {
+export type DisplayOption = {
     viewMode?: ViewMode;
     viewDate?: Date;
     /**
      * Specifies the month name language. Able formats: ISO 639-2, Java Locale
      */
     locale?: string;
-}
+};
 
-export interface StylingOption {
+export type StylingOption = {
     headerHeight?: number;
     columnWidth?: number;
     listCellWidth?: string;
@@ -133,8 +112,10 @@ export interface StylingOption {
         setSelectedTask: (taskId: string) => void;
         onExpanderClick: (task: Task) => void;
     }>;
-}
+};
 
-export interface GanttProps extends EventOption, DisplayOption, StylingOption {
+export type GanttProps = {
     tasks: Task[];
-}
+} & EventOption &
+    DisplayOption &
+    StylingOption;

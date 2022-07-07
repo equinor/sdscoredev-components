@@ -1,13 +1,13 @@
 import React from 'react';
-import { BarDateHandle } from '../items/DateHandle';
-import { BarTask } from '../types/bar-task';
+import { BarDateHandle } from '../bars/DateHandle';
+import { TaskBar } from '../bars/types';
 import { GanttContentMoveAction } from '../types/gantt-task-actions';
 
 export type ResizeHandleProps = {
-    task: BarTask;
+    task: TaskBar;
     onEventStart: (
         action: GanttContentMoveAction,
-        selectedTask: BarTask,
+        selectedTask: TaskBar,
         event?: React.MouseEvent | React.KeyboardEvent,
     ) => any;
 };

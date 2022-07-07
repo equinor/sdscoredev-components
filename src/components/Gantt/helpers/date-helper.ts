@@ -1,4 +1,5 @@
-import { LOCALE, Task, ViewMode } from '../types/public-types';
+import { Task } from '../bars/types';
+import { LOCALE, ViewMode } from '../types/public-types';
 import DateTimeFormatOptions = Intl.DateTimeFormatOptions;
 import DateTimeFormat = Intl.DateTimeFormat;
 
@@ -59,59 +60,6 @@ export const ganttDateRange = (tasks: Task[], viewMode: ViewMode) => {
         }
         if (task.end > newEndDate) {
             newEndDate = task.end;
-        }
-    }
-    switch (viewMode) {
-        case ViewMode.Month:
-            newStartDate = addToDate(newStartDate, -1, 'month');
-            newStartDate = startOfDate(newStartDate, 'month');
-            newEndDate = addToDate(newEndDate, 1, 'year');
-            newEndDate = startOfDate(newEndDate, 'year');
-            break;
-        case ViewMode.Week:
-            newStartDate = startOfDate(newStartDate, 'day');
-            newEndDate = startOfDate(newEndDate, 'day');
-            newStartDate = addToDate(getMonday(newStartDate), -7, 'day');
-            newEndDate = addToDate(newEndDate, 1.5, 'month');
-            break;
-        case ViewMode.Day:
-            newStartDate = startOfDate(newStartDate, 'day');
-            newEndDate = startOfDate(newEndDate, 'day');
-            newStartDate = addToDate(newStartDate, -1, 'day');
-            newEndDate = addToDate(newEndDate, 19, 'day');
-            break;
-        case ViewMode.QuarterDay:
-            newStartDate = startOfDate(newStartDate, 'day');
-            newEndDate = startOfDate(newEndDate, 'day');
-            newStartDate = addToDate(newStartDate, -1, 'day');
-            newEndDate = addToDate(newEndDate, 66, 'hour'); // 24(1 day)*3 - 6
-            break;
-        case ViewMode.HalfDay:
-            newStartDate = startOfDate(newStartDate, 'day');
-            newEndDate = startOfDate(newEndDate, 'day');
-            newStartDate = addToDate(newStartDate, -1, 'day');
-            newEndDate = addToDate(newEndDate, 108, 'hour'); // 24(1 day)*5 - 12
-            break;
-        case ViewMode.Hour:
-            newStartDate = startOfDate(newStartDate, 'hour');
-            newEndDate = startOfDate(newEndDate, 'day');
-            newStartDate = addToDate(newStartDate, -1, 'hour');
-            newEndDate = addToDate(newEndDate, 1, 'day');
-            break;
-    }
-    return [newStartDate, newEndDate];
-};
-
-export const ganttDateRangeMulti = (tasks: Task[], viewMode: ViewMode) => {
-    let newStartDate: Date = tasks[0].dates[0];
-    let newEndDate: Date = tasks[0].dates[tasks[0].dates.length - 1];
-
-    for (const task of tasks) {
-        if (task.dates[0] < newStartDate) {
-            newStartDate = task.dates[0];
-        }
-        if (task.dates[tasks[0].dates.length - 1] > newEndDate) {
-            newEndDate = task.dates[tasks[0].dates.length - 1];
         }
     }
     switch (viewMode) {

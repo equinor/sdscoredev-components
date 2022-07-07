@@ -1,8 +1,7 @@
-import { Task } from '../types/public-types';
-import { BarTask } from '../types/bar-task';
+import { Task, TaskBar } from '../bars/types';
 import { BarMoveAction } from '../types/gantt-task-actions';
 
-export const convertToBarTasks = (
+export const convertToBars = (
     tasks: Task[],
     dates: Date[],
     columnWidth: number,
@@ -11,7 +10,7 @@ export const convertToBarTasks = (
     handleWidth: number,
 ) => {
     let barTasks = tasks.map((t, i) => {
-        return convertToBarTask(t, i, dates, columnWidth, rowHeight, taskHeight, handleWidth);
+        return convertToTaskBar(t, i, dates, columnWidth, rowHeight, taskHeight, handleWidth);
     });
 
     // set dependencies
@@ -27,7 +26,7 @@ export const convertToBarTasks = (
     return barTasks;
 };
 
-const convertToBarTask = (
+const convertToTaskBar = (
     task: Task,
     index: number,
     dates: Date[],
@@ -35,9 +34,8 @@ const convertToBarTask = (
     rowHeight: number,
     taskHeight: number,
     handleWidth: number,
-): BarTask => {
-    console.log(task);
-    return task.type.convert(task, index, dates, columnWidth, rowHeight, taskHeight, handleWidth);
+): TaskBar => {
+    return task.type[0].convert(task, { index, dates, columnWidth, rowHeight, taskHeight, handleWidth });
 };
 
 export const dateToProgress = (xDate: Date, dates: Date[]) => {
@@ -67,10 +65,10 @@ export const progressWithByParams = (taskX1: number, taskX2: number, progress: n
 
     progressX = taskX1;
 
-    return [progressWidth, progressX];
+    return { progressWidth, progressX };
 };
 
-export const progressByProgressWidth = (progressWidth: number, barTask: BarTask) => {
+export const progressByProgressWidth = (progressWidth: number, barTask: TaskBar) => {
     const barWidth = barTask.x2 - barTask.x1;
     const progressPercent = Math.round((progressWidth * 100) / barWidth);
     if (progressPercent >= 100) return 100;
@@ -78,7 +76,7 @@ export const progressByProgressWidth = (progressWidth: number, barTask: BarTask)
     else return progressPercent;
 };
 
-export const progressByX = (x: number, task: BarTask) => {
+export const progressByX = (x: number, task: TaskBar) => {
     if (x >= task.x2) return 100;
     else if (x <= task.x1) return 0;
     else {
@@ -100,7 +98,7 @@ export const getProgressPoint = (progressX: number, taskY: number, taskHeight: n
     return point.join(',');
 };
 
-export const startByX = (x: number, xStep: number, task: BarTask) => {
+export const startByX = (x: number, xStep: number, task: TaskBar) => {
     if (x >= task.x2 - task.handleWidth * 2) {
         x = task.x2 - task.handleWidth * 2;
     }
@@ -110,7 +108,7 @@ export const startByX = (x: number, xStep: number, task: BarTask) => {
     return newX;
 };
 
-export const endByX = (x: number, xStep: number, task: BarTask) => {
+export const endByX = (x: number, xStep: number, task: TaskBar) => {
     if (x <= task.x1 + task.handleWidth * 2) {
         x = task.x1 + task.handleWidth * 2;
     }
@@ -120,7 +118,7 @@ export const endByX = (x: number, xStep: number, task: BarTask) => {
     return newX;
 };
 
-export const moveByX = (x: number, xStep: number, task: BarTask) => {
+export const moveByX = (x: number, xStep: number, task: TaskBar) => {
     const steps = Math.round((x - task.x1) / xStep);
     const additionalXValue = steps * xStep;
     const newX1 = task.x1 + additionalXValue;
@@ -140,10 +138,10 @@ export const dateByX = (x: number, taskX: number, taskDate: Date, xStep: number,
 export const handleTaskBySVGMouseEvent = (
     svgX: number,
     action: BarMoveAction,
-    selectedTask: BarTask,
+    selectedTask: TaskBar,
     xStep: number,
     timeStep: number,
     initEventX1Delta: number,
-): { isChanged: boolean; changedTask: BarTask } => {
-    return selectedTask.type.handleMouseEvents(svgX, action, selectedTask, xStep, timeStep, initEventX1Delta);
+): { isChanged: boolean; changedTask: TaskBar } => {
+    return selectedTask.type[0].handleMouseEvents(svgX, action, selectedTask, xStep, timeStep, initEventX1Delta);
 };

@@ -3,12 +3,12 @@ import { ReactNode } from 'react';
 // export const SET_WIDTH = "SET_WIDTH";
 export const SET_MEASURES = 'SET_MEASURES';
 
-interface GridState {
+type GridState = {
     svgWidth: number;
     rowHeight: number;
     columnWidth: number;
     todayColor: string;
-}
+};
 
 export const initialState: GridState = {
     svgWidth: 0,
