@@ -4,8 +4,8 @@ import styled from 'styled-components';
 export const DateHandle = styled.rect`
     fill: #ddd;
     cursor: ew-resize;
-    opacity: 0;
-    visibility: hidden;
+    /* opacity: 0;
+    visibility: hidden; */
 `;
 
 type BarDateHandleProps = {
