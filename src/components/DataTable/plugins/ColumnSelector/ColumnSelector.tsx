@@ -1,24 +1,12 @@
+import { CompactDialog, CompactDialogRef } from 'components/CompactDialog';
+import { Dialog, DialogRef } from 'components/Dialog';
 import React, { forwardRef, useContext, useImperativeHandle, useRef } from 'react';
-import styled from 'styled-components';
 
-import { Button, Checkbox, EdsProvider, Tooltip, Typography } from '@equinor/eds-core-react';
+import { Button, Tooltip } from '@equinor/eds-core-react';
 
-import { Dialog, DialogRef } from '../../../Dialog';
 import { DispatchContext, StateContext } from '../../DataTableStore';
 import { ColumnSelectorProps, ColumnSelectorRef } from './';
-
-interface OptionsWrapperProps {
-    columnsNumber?: number;
-    rowsNumber?: number;
-}
-const OptionsWrapper = styled.div<OptionsWrapperProps>`
-    display: grid;
-    grid-template-columns: ${({ columnsNumber }) =>
-        columnsNumber ? `repeat(${columnsNumber}, auto)` : 'repeat(2, auto)'};
-    grid-template-rows: ${({ rowsNumber }) => (rowsNumber ? `repeat(${rowsNumber}, auto)` : 'repeat(5, auto)')};
-    grid-auto-flow: row;
-    margin-top: 8px;
-`;
+import ColumnSelectorDialog from './ColumnSelectorDialog';
 
 export type InternalColumnSelectorProps = {
     columns?: any;
@@ -28,11 +16,15 @@ export type InternalColumnSelectorProps = {
 
 export const ColumnSelector = forwardRef<ColumnSelectorRef, InternalColumnSelectorProps>(
     (props: InternalColumnSelectorProps, ref) => {
-        const { title, icon, onChange, optionsStyle } = props;
-        const { columnsNumber, rowsNumber, density } = optionsStyle || {};
+        const { title, icon, onChange, dialogStyle, showApplyButton } = props;
+        const { columnsNumber, rowsNumber, density } = dialogStyle || {};
         const state: any = useContext(StateContext);
         const dispatch: any = useContext(DispatchContext);
+
+        //? different refs for the dialogs
         const dialogRef = useRef<DialogRef>(null);
+        const compactDialogRef = useRef<CompactDialogRef>(null);
+
         const init = useRef<boolean>(false);
 
         /**
@@ -120,52 +112,61 @@ export const ColumnSelector = forwardRef<ColumnSelectorRef, InternalColumnSelect
         return (
             <>
                 <Tooltip title="Manage columns" placement="top">
-                    <Button variant="ghost" onClick={() => dialogRef?.current?.open()}>
+                    <Button
+                        variant="ghost"
+                        onClick={() => {
+                            if (density === 'compact') compactDialogRef?.current?.open();
+                            else dialogRef?.current?.open();
+                        }}
+                    >
                         {title}
                         {icon}
                     </Button>
                 </Tooltip>
 
-                <Dialog
-                    title={title}
-                    width={800}
-                    primaryButton="Apply"
-                    cancelButton="Reset"
-                    headerCloseButton={true}
-                    noLoading={true}
-                    onPrimary={() => dialogRef.current?.close()}
-                    onCancel={handleResetColumns}
-                    ref={dialogRef}
-                >
-                    <Typography variant="h6">Default columns</Typography>
-                    <EdsProvider density={density}>
-                        <OptionsWrapper columnsNumber={columnsNumber} rowsNumber={rowsNumber}>
-                            {state.dataTableReducer.columns
-                                .filter((x: any) => !x.props.optional && !x.props.id.startsWith('__'))
-                                .map((column: any) => (
-                                    <Checkbox
-                                        key={column.props.id}
-                                        label={column.props.children}
-                                        checked={state.columnSelectorReducer.visibleColumns?.includes(column.props.id)}
-                                        onChange={() => handleChange(column)}
-                                    />
-                                ))}
-                        </OptionsWrapper>
-                        <Typography variant="h6">Optional columns</Typography>
-                        <OptionsWrapper columnsNumber={columnsNumber} rowsNumber={rowsNumber}>
-                            {state.dataTableReducer.columns
-                                .filter((x: any) => x.props.optional && !x.props.id.startsWith('__'))
-                                .map((column: any) => (
-                                    <Checkbox
-                                        key={column.props.id}
-                                        label={column.props.children}
-                                        checked={state.columnSelectorReducer.visibleColumns?.includes(column.props.id)}
-                                        onChange={() => handleChange(column)}
-                                    />
-                                ))}
-                        </OptionsWrapper>
-                    </EdsProvider>
-                </Dialog>
+                {density === 'compact' ? (
+                    <>
+                        <CompactDialog ref={compactDialogRef} title={title}>
+                            <ColumnSelectorDialog
+                                columns={state.dataTableReducer.columns}
+                                visibleColumns={state.columnSelectorReducer.visibleColumns}
+                                onCheck={handleChange}
+                                density={density}
+                                columnsNumber={columnsNumber}
+                                rowsNumber={rowsNumber}
+                            />
+                            <CompactDialog.Actions>
+                                {showApplyButton && (
+                                    <Button onClick={() => compactDialogRef.current?.close()}>Apply</Button>
+                                )}
+                                <Button onClick={handleResetColumns} variant="ghost">
+                                    Reset
+                                </Button>
+                            </CompactDialog.Actions>
+                        </CompactDialog>
+                    </>
+                ) : (
+                    <Dialog
+                        ref={dialogRef}
+                        title={title}
+                        width={800}
+                        headerCloseButton={true}
+                        noLoading={true}
+                        primaryButton={showApplyButton ? 'Apply' : ''}
+                        onPrimary={showApplyButton ? () => dialogRef.current?.close() : undefined}
+                        cancelButton="Reset"
+                        onCancel={handleResetColumns}
+                    >
+                        <ColumnSelectorDialog
+                            columns={state.dataTableReducer.columns}
+                            visibleColumns={state.columnSelectorReducer.visibleColumns}
+                            onCheck={handleChange}
+                            density={density}
+                            columnsNumber={columnsNumber}
+                            rowsNumber={rowsNumber}
+                        />
+                    </Dialog>
+                )}
             </>
         );
     },
