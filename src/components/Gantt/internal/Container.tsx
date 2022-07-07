@@ -7,7 +7,7 @@ import { TaskBar } from '../bars/types';
 import { Calendar, CalendarProps } from '../plugins/Calendar/Calendar';
 
 export const VerticalContainer = styled.div`
-    overflow: hidden;
+    overflow-x: scroll;
     font-size: 0;
     margin: 0;
     padding: 0;

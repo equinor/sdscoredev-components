@@ -16,7 +16,18 @@ import { GridProps } from './plugins/Grid';
 import { Task, TaskBar } from './bars/types';
 import { CalendarProps } from './plugins/Calendar/Calendar';
 import { StandardTooltipContent } from './internal/Tooltip';
+import styled from 'styled-components';
 
+const Wrapper = styled.div`
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+    outline: none;
+    position: relative;
+`;
 export type GanttDataProps = {
     tasks: Task[];
     grid?: GridProps;
@@ -362,19 +373,7 @@ export const GanttData = (props: GanttDataProps) => {
     if (!bars.length || !state.ganttReducer.dates.length) return <></>;
     return (
         <>
-            <div
-                style={{
-                    display: 'flex',
-                    padding: 0,
-                    margin: 0,
-                    listStyle: 'none',
-                    outline: 'none',
-                    position: 'relative',
-                }}
-                onKeyDown={handleKeyDown}
-                tabIndex={0}
-                ref={wrapperRef}
-            >
+            <Wrapper onKeyDown={handleKeyDown} tabIndex={0} ref={wrapperRef}>
                 {listCellWidth && <TaskList {...tableProps} />}
                 <Container
                     bars={bars}
@@ -406,7 +405,7 @@ export const GanttData = (props: GanttDataProps) => {
                         scroll={scrollY}
                         onScroll={handleScrollY}
                     /> */}
-            </div>
+            </Wrapper>
             {/* <HorizontalScroll
                     svgWidth={svgWidth}
                     taskListWidth={taskListWidth}
