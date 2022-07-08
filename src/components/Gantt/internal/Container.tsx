@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useContext } from 'react';
 import { TaskGanttContentProps, TaskGanttContent } from './TaskGanttContent';
-import { StateContext } from 'components/Gantt/GanttStore';
+import { DispatchContext, StateContext } from 'components/Gantt/GanttStore';
 import styled from 'styled-components';
 import { Grid } from '../plugins/Grid/Grid';
 import { TaskBar } from '../bars/types';
@@ -27,6 +27,7 @@ export type TaskGanttProps = {
     ganttHeight: number;
     scrollY: number;
     scrollX: number;
+    columnWidth: number;
 };
 export const Container: React.FC<TaskGanttProps> = ({
     bars,
@@ -35,12 +36,25 @@ export const Container: React.FC<TaskGanttProps> = ({
     ganttHeight,
     scrollY,
     scrollX,
+    columnWidth,
 }) => {
     const ganttSVGRef = useRef<SVGSVGElement>(null);
     const horizontalContainerRef = useRef<HTMLDivElement>(null);
     const verticalGanttContainerRef = useRef<HTMLDivElement>(null);
     const newBarProps = { ...barProps, svg: ganttSVGRef };
+
     const state: any = useContext(StateContext);
+    const dispatch: any = useContext(DispatchContext);
+
+    /**
+     * Set SVG width when dates or columnWidth updates
+     */
+    useEffect(() => {
+        dispatch({
+            type: 'SET_MEASURES',
+            payload: { svgWidth: state.ganttReducer.dates.length * columnWidth, columnWidth },
+        });
+    }, [state.ganttReducer.dates, columnWidth]);
 
     useEffect(() => {
         if (horizontalContainerRef.current) {
@@ -55,8 +69,9 @@ export const Container: React.FC<TaskGanttProps> = ({
     }, [scrollX]);
 
     return (
-        <VerticalContainer ref={verticalGanttContainerRef}>
+        <VerticalContainer id="gantt-vertical-container" ref={verticalGanttContainerRef}>
             <svg
+                id="gantt-calendar"
                 xmlns="http://www.w3.org/2000/svg"
                 width={state.gridReducer.svgWidth}
                 height={calendarProps.headerHeight}
@@ -68,6 +83,7 @@ export const Container: React.FC<TaskGanttProps> = ({
                 <Calendar {...calendarProps} />
             </svg>
             <HorizontalContainer
+                id="gantt-horizontal-container"
                 ref={horizontalContainerRef}
                 style={
                     ganttHeight

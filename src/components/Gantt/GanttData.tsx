@@ -15,7 +15,7 @@ import { TaskList, TaskListProps } from './plugins/task-list/task-list';
 import { GridProps } from './plugins/Grid';
 import { Task, TaskBar } from './bars/types';
 import { CalendarProps } from './plugins/Calendar/Calendar';
-import { StandardTooltipContent } from './internal/Tooltip';
+import { StandardTooltipContent, Tooltip } from './internal/Tooltip';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -39,7 +39,7 @@ export const GanttData = (props: GanttDataProps) => {
     const {
         grid,
         headerHeight = 50,
-        columnWidth = 60,
+        columnWidth = 60, // Will be set from outside when picking view mode
         listCellWidth = '155px',
         rowHeight = 50,
         ganttHeight = 0,
@@ -93,13 +93,6 @@ export const GanttData = (props: GanttDataProps) => {
     const [scrollY, setScrollY] = useState(0);
     const [scrollX, setScrollX] = useState(-1);
     const [ignoreScrollEvent, setIgnoreScrollEvent] = useState(false);
-
-    /**
-     * Set SVG width when dates or columnWidth updates
-     */
-    useEffect(() => {
-        dispatch({ type: 'SET_MEASURES', payload: { svgWidth: state.ganttReducer.dates.length * columnWidth } });
-    }, [state.ganttReducer.dates, columnWidth]);
 
     /**
      * Generate bars and dates and update state
@@ -341,7 +334,6 @@ export const GanttData = (props: GanttDataProps) => {
         arrowColor,
         timeStep,
         arrowIndent,
-        svgWidth: state.gridReducer.svgWidth,
         setGanttEvent,
         setFailedTask,
         setBars: handleTasks,
@@ -373,7 +365,7 @@ export const GanttData = (props: GanttDataProps) => {
     if (!bars.length || !state.ganttReducer.dates.length) return <></>;
     return (
         <>
-            <Wrapper onKeyDown={handleKeyDown} tabIndex={0} ref={wrapperRef}>
+            <Wrapper id="gantt-wrapper" onKeyDown={handleKeyDown} tabIndex={0} ref={wrapperRef}>
                 {listCellWidth && <TaskList {...tableProps} />}
                 <Container
                     bars={bars}
@@ -382,22 +374,23 @@ export const GanttData = (props: GanttDataProps) => {
                     ganttHeight={ganttHeight}
                     scrollY={scrollY}
                     scrollX={scrollX}
+                    columnWidth={columnWidth}
                 />
-                {/* {ganttEvent.changedTask && (
-                        <Tooltip
-                            arrowIndent={arrowIndent}
-                            rowHeight={rowHeight}
-                            svgContainerHeight={svgContainerHeight}
-                            svgContainerWidth={svgContainerWidth}
-                            scrollX={scrollX}
-                            scrollY={scrollY}
-                            task={ganttEvent.changedTask}
-                            headerHeight={headerHeight}
-                            taskListWidth={taskListWidth}
-                            TooltipContent={TooltipContent}
-                            svgWidth={svgWidth}
-                        />
-                    )} */}
+                {ganttEvent.changedTask && (
+                    <Tooltip
+                        arrowIndent={arrowIndent}
+                        rowHeight={rowHeight}
+                        svgContainerHeight={svgContainerHeight}
+                        svgContainerWidth={svgContainerWidth}
+                        scrollX={scrollX}
+                        scrollY={scrollY}
+                        task={ganttEvent.changedTask}
+                        headerHeight={headerHeight}
+                        taskListWidth={taskListWidth}
+                        TooltipContent={TooltipContent}
+                        svgWidth={state.gridReducer.svgWidth}
+                    />
+                )}
                 {/* <VerticalScroll
                         ganttFullHeight={ganttFullHeight}
                         ganttHeight={ganttHeight}

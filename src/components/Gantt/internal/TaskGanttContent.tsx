@@ -16,7 +16,6 @@ export type TaskGanttContentProps = {
     columnWidth: number;
     timeStep: number;
     svg?: React.RefObject<SVGSVGElement>;
-    svgWidth: number;
     taskHeight: number;
     arrowColor: string;
     arrowIndent: number;
@@ -254,7 +253,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
     };
 
     return (
-        <g className="content">
+        <g className="gantt-content">
             <g className="arrows" fill={arrowColor} stroke={arrowColor}>
                 {bars.map((task: TaskBar) => {
                     return task.barChildren.map((child: TaskBar) => {

@@ -6,7 +6,6 @@ export const BarLabelInside = styled.text`
     fill: #fff;
     text-anchor: middle;
     font-weight: lighter;
-    dominant-baseline: central;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;
