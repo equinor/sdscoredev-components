@@ -28,6 +28,7 @@ export const Gantt = (props: GanttProps) => {
 
     const components = Children.toArray(children);
     const grid: any = components.find((x: JSX.Element) => x.type.displayName === 'Gantt.Grid');
+    const taskList: any = components.find((x: JSX.Element) => x.type.displayName === 'Gantt.TaskList');
 
     return (
         <GanttStore components={components} reducers={{ ganttReducer, ...reducers }}>
