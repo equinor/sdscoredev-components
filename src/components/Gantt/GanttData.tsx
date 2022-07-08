@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { forwardRef, useContext } from 'react';
 import { DisplayOption, EventOption, StylingOption, ViewMode } from './types/public-types';
 import React, { useState, SyntheticEvent, useRef, useEffect, useMemo } from 'react';
 import { removeHiddenTasks, sortTasks } from './helpers/other-helper';
@@ -8,8 +8,6 @@ import { TaskGanttContentProps } from './internal/TaskGanttContent';
 // import { TaskList, TaskListProps } from './components/task-list/task-list';
 import { Container } from './internal/Container';
 import { GanttEvent } from './types/gantt-task-actions';
-import { TaskListHeaderDefault } from './plugins/TaskList/task-list-header';
-import { TaskListTableDefault } from './plugins/TaskList/task-list-table';
 import { DispatchContext, StateContext } from './GanttStore';
 import { TaskList, TaskListProps } from './plugins/TaskList/TaskList';
 import { GridProps } from './plugins/Grid';
@@ -28,14 +26,16 @@ const Wrapper = styled.div`
     outline: none;
     position: relative;
 `;
+
 export type GanttDataProps = {
     tasks: Task[];
     grid?: GridProps;
+    taskList?: any;
 } & EventOption &
     DisplayOption &
     StylingOption;
 
-export const GanttData = (props: GanttDataProps) => {
+export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps, ref) => {
     const {
         grid,
         headerHeight = 50,
@@ -52,8 +52,6 @@ export const GanttData = (props: GanttDataProps) => {
         todayColor = 'rgba(252, 248, 227, 0.5)',
         viewDate,
         TooltipContent = StandardTooltipContent,
-        TaskListHeader = TaskListHeaderDefault,
-        TaskListTable = TaskListTableDefault,
         onDateChange,
         onProgressChange,
         onDoubleClick,
@@ -62,6 +60,7 @@ export const GanttData = (props: GanttDataProps) => {
         onSelect,
         onSetTasks,
         onExpanderClick,
+        taskList,
     } = props;
 
     const state: any = useContext(StateContext);
@@ -356,8 +355,6 @@ export const GanttData = (props: GanttDataProps) => {
         taskListRef,
         setSelectedTask: handleSelectedTask,
         onExpanderClick: handleExpanderClick,
-        TaskListHeader,
-        TaskListTable,
     };
 
     useEffect(() => {}, [state.ganttReducer]);
@@ -366,7 +363,7 @@ export const GanttData = (props: GanttDataProps) => {
     return (
         <>
             <Wrapper id="gantt-wrapper" onKeyDown={handleKeyDown} tabIndex={0} ref={wrapperRef}>
-                {listCellWidth && <TaskList {...tableProps} />}
+                {taskList && listCellWidth && <TaskList {...tableProps} {...taskList.props} />}
                 <Container
                     bars={bars}
                     calendarProps={calendarProps}
@@ -407,4 +404,4 @@ export const GanttData = (props: GanttDataProps) => {
                 /> */}
         </>
     );
-};
+});

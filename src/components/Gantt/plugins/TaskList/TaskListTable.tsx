@@ -54,41 +54,51 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
     day: 'numeric',
 };
 
-export const TaskListTableDefault: React.FC<{
+export const TaskListTable: React.FC<{
     bars: Task[];
+    render?: Function;
     rowHeight: number;
     rowWidth: string;
     selectedTaskId: string;
     setSelectedTask: (taskId: string) => void;
     onExpanderClick: (task: Task) => void;
-}> = ({ bars, rowHeight, rowWidth, onExpanderClick }) => {
+}> = (props) => {
+    const { bars, rowHeight, rowWidth, onExpanderClick, render } = props;
     const toLocaleDateString = useMemo(() => toLocaleDateStringFactory(), [LOCALE]);
     const state: any = useContext(StateContext);
 
     return (
         <TaskListWrapper>
-            {bars.map((t: Task) => {
+            {bars.map((task: Task) => {
                 let expanderSymbol = '';
-                if (t.hideChildren === false) {
+                if (task.hideChildren === false) {
                     expanderSymbol = '▼';
-                } else if (t.hideChildren === true) {
+                } else if (task.hideChildren === true) {
                     expanderSymbol = '▶';
                 }
 
+                if (render) {
+                    return (
+                        <TaskListTableRow style={{ height: rowHeight }} key={`${task.id}row`}>
+                            {render({ task })}
+                        </TaskListTableRow>
+                    );
+                }
+
                 return (
-                    <TaskListTableRow style={{ height: rowHeight }} key={`${t.id}row`}>
+                    <TaskListTableRow style={{ height: rowHeight }} key={`${task.id}row`}>
                         <TaskListCell
                             style={{
                                 minWidth: rowWidth,
                                 maxWidth: rowWidth,
                             }}
-                            title={t.name}
+                            title={task.name}
                         >
                             <TaskListNameWrapper>
-                                <TaskListExpander empty={!expanderSymbol} onClick={() => onExpanderClick(t)}>
+                                <TaskListExpander empty={!expanderSymbol} onClick={() => onExpanderClick(task)}>
                                     {expanderSymbol}
                                 </TaskListExpander>
-                                <div>{t.name}</div>
+                                <div>{task.name}</div>
                             </TaskListNameWrapper>
                         </TaskListCell>
                         <TaskListCell
@@ -97,7 +107,7 @@ export const TaskListTableDefault: React.FC<{
                                 maxWidth: rowWidth,
                             }}
                         >
-                            &nbsp;{toLocaleDateString(t.start, dateTimeOptions)}
+                            &nbsp;{toLocaleDateString(task.start, dateTimeOptions)}
                         </TaskListCell>
                         <TaskListCell
                             style={{
@@ -105,7 +115,7 @@ export const TaskListTableDefault: React.FC<{
                                 maxWidth: rowWidth,
                             }}
                         >
-                            &nbsp;{toLocaleDateString(t.end, dateTimeOptions)}
+                            &nbsp;{toLocaleDateString(task.end, dateTimeOptions)}
                         </TaskListCell>
                     </TaskListTableRow>
                 );

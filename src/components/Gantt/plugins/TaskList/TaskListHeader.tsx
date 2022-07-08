@@ -22,25 +22,19 @@ export const GanttTable_HeaderItem = styled.div`
     vertical-align: middle;
 `;
 
-export const TaskListHeaderDefault: React.FC<{
+export const TaskListHeader: React.FC<{
     headerHeight: number;
     rowWidth: string;
-    fontFamily: string;
-    fontSize: string;
-}> = ({ headerHeight, fontFamily, fontSize, rowWidth }) => {
+}> = ({ headerHeight, rowWidth }) => {
+    console.log();
     return (
-        <GanttTable
-            style={{
-                fontFamily: fontFamily,
-                fontSize: fontSize,
-            }}
-        >
+        <GanttTable>
             <GanttTable_Header
                 style={{
                     height: headerHeight - 2,
                 }}
             >
-                <GanttTable_HeaderItem
+                {/* <GanttTable_HeaderItem
                     style={{
                         minWidth: rowWidth,
                     }}
@@ -72,7 +66,7 @@ export const TaskListHeaderDefault: React.FC<{
                     }}
                 >
                     &nbsp;To
-                </GanttTable_HeaderItem>
+                </GanttTable_HeaderItem> */}
             </GanttTable_Header>
         </GanttTable>
     );

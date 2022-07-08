@@ -1,5 +1,7 @@
 import { Task, TaskBar } from 'components/Gantt/bars/types';
 import React, { useEffect, useRef } from 'react';
+import { TaskListHeader } from './TaskListHeader';
+import { TaskListTable } from './TaskListTable';
 
 export type TaskListProps = {
     bars: TaskBar[];
@@ -8,39 +10,30 @@ export type TaskListProps = {
     rowHeight: number;
     ganttHeight: number;
     scrollY: number;
+    render?: Function;
     taskListRef: React.RefObject<HTMLDivElement>;
     horizontalContainerClass?: string;
     selectedTask: TaskBar | undefined;
     setSelectedTask: (task: string) => void;
     onExpanderClick: (task: Task) => void;
-    TaskListHeader: React.FC<{
-        headerHeight: number;
-        rowWidth: string;
-    }>;
-    TaskListTable: React.FC<{
-        rowHeight: number;
-        rowWidth: string;
-        selectedTaskId: string;
-        setSelectedTask: (taskId: string) => void;
-        onExpanderClick: (task: Task) => void;
-    }>;
 };
 
-export const TaskList: React.FC<TaskListProps> = ({
-    bars,
-    headerHeight,
-    rowWidth,
-    rowHeight,
-    scrollY,
-    selectedTask,
-    setSelectedTask,
-    onExpanderClick,
-    ganttHeight,
-    taskListRef,
-    horizontalContainerClass,
-    TaskListHeader,
-    TaskListTable,
-}) => {
+export const TaskList: React.FC<TaskListProps> = (props) => {
+    const {
+        bars,
+        headerHeight,
+        rowWidth,
+        rowHeight,
+        scrollY,
+        selectedTask,
+        setSelectedTask,
+        onExpanderClick,
+        ganttHeight,
+        taskListRef,
+        horizontalContainerClass,
+        render,
+    } = props;
+    console.log(props);
     const horizontalContainerRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
         if (horizontalContainerRef.current) {
@@ -60,6 +53,7 @@ export const TaskList: React.FC<TaskListProps> = ({
         selectedTaskId: selectedTaskId,
         setSelectedTask,
         onExpanderClick,
+        render,
     };
 
     return (

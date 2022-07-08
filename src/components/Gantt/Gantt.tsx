@@ -5,6 +5,8 @@ import { GanttStore } from './GanttStore';
 import { ganttReducer } from './reducers/ganttReducer';
 import { GanttData } from './GanttData';
 import { Task } from './bars/types';
+import styled from 'styled-components';
+import { TaskList } from './plugins/TaskList/TaskList';
 
 export type GanttProps = {
     tasks: Task[];
@@ -32,7 +34,7 @@ export const Gantt = (props: GanttProps) => {
 
     return (
         <GanttStore components={components} reducers={{ ganttReducer, ...reducers }}>
-            <GanttData {...props} tasks={tasks} onSetTasks={setTasks} grid={grid} />
+            <GanttData {...props} tasks={tasks} onSetTasks={setTasks} grid={grid} taskList={taskList} />
         </GanttStore>
     );
 };
