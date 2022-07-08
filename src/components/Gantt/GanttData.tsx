@@ -233,23 +233,23 @@ export const GanttData = (props: GanttDataProps) => {
         };
     }, [wrapperRef, scrollY, scrollX, ganttHeight, state.gridReducer.svgWidth, ganttFullHeight]);
 
-    const handleScrollY = (event: SyntheticEvent<HTMLDivElement>) => {
-        if (scrollY !== event.currentTarget.scrollTop && !ignoreScrollEvent) {
-            setScrollY(event.currentTarget.scrollTop);
-            setIgnoreScrollEvent(true);
-        } else {
-            setIgnoreScrollEvent(false);
-        }
-    };
+    // const handleScrollY = (event: SyntheticEvent<HTMLDivElement>) => {
+    //     if (scrollY !== event.currentTarget.scrollTop && !ignoreScrollEvent) {
+    //         setScrollY(event.currentTarget.scrollTop);
+    //         setIgnoreScrollEvent(true);
+    //     } else {
+    //         setIgnoreScrollEvent(false);
+    //     }
+    // };
 
-    const handleScrollX = (event: SyntheticEvent<HTMLDivElement>) => {
-        if (scrollX !== event.currentTarget.scrollLeft && !ignoreScrollEvent) {
-            setScrollX(event.currentTarget.scrollLeft);
-            setIgnoreScrollEvent(true);
-        } else {
-            setIgnoreScrollEvent(false);
-        }
-    };
+    // const handleScrollX = (event: SyntheticEvent<HTMLDivElement>) => {
+    //     if (scrollX !== event.currentTarget.scrollLeft && !ignoreScrollEvent) {
+    //         setScrollX(event.currentTarget.scrollLeft);
+    //         setIgnoreScrollEvent(true);
+    //     } else {
+    //         setIgnoreScrollEvent(false);
+    //     }
+    // };
 
     /**
      * Handles arrow keys events and transform it to new scroll

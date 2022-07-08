@@ -1,5 +1,5 @@
 import { MultiSectionBar, MultiSectionBarProps } from './MultiSectionBar';
-import { taskXCoordinate, taskYCoordinate } from 'components/Gantt/helpers/bar-helper';
+import { dateToProgress, taskXCoordinate, taskYCoordinate } from 'components/Gantt/helpers/bar-helper';
 import { dateByX, endByX, moveByX, startByX } from 'components/Gantt/helpers/bar-helper';
 import { BarMoveAction } from 'components/Gantt/types/gantt-task-actions';
 import { Task, TaskBar, TaskConvertOptions } from '../types';
@@ -11,14 +11,19 @@ export type MultiSectionTaskBar = {
     sectionXPositions: number[];
 } & MultiSectionBarProps;
 
-export const convert = (task: Task<MultiSectionBarProps>, options: TaskConvertOptions): TaskBar => {
+export const convert = (
+    task: Task<MultiSectionBarProps>,
+    options: TaskConvertOptions,
+): TaskBar<MultiSectionTaskBar> => {
     const { index = 0, dates, columnWidth, rowHeight, taskHeight, handleWidth } = options;
     const { sections } = task.type[1];
 
     let x1 = taskXCoordinate(task.start, dates, columnWidth);
     let x2 = taskXCoordinate(task.end, dates, columnWidth);
-
     const y = taskYCoordinate(index, rowHeight, taskHeight);
+
+    const sectionXPositions = sections?.map((d: Date) => dateToProgress(d, [task.start, task.end])) || [];
+
     return {
         ...task,
         x1,
@@ -28,6 +33,7 @@ export const convert = (task: Task<MultiSectionBarProps>, options: TaskConvertOp
         handleWidth,
         height: taskHeight,
         barChildren: [],
+        sectionXPositions,
     };
 };
 

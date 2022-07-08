@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { ResizeHandle } from '../../internal/ResizeHandle';
 import { MultiSectionDisplay } from './MultiSectionDisplay';
 import { Bar } from '../types';
+import { MultiSectionTaskBar } from '.';
 
 const Wrapper = styled.g`
     cursor: pointer;
@@ -22,7 +23,7 @@ export type MultiSectionBarProps = {
     sections?: Date[];
 };
 
-export const MultiSectionBar: React.FC<Bar<MultiSectionBarProps>> = (props) => {
+export const MultiSectionBar: React.FC<Bar<MultiSectionTaskBar>> = (props) => {
     const { taskBar, isDateChangeable = true, onEventStart, isSelected, sections } = props;
 
     return (
@@ -32,7 +33,7 @@ export const MultiSectionBar: React.FC<Bar<MultiSectionBarProps>> = (props) => {
                 y={taskBar.y}
                 width={taskBar.x2 - taskBar.x1}
                 height={taskBar.height}
-                sectionXPositions={sections?.map((d: Date) => dateToProgress(d, [taskBar.start, taskBar.end])) || []}
+                sectionXPositions={taskBar.sectionXPositions}
                 isSelected={isSelected}
                 onMouseDown={(e: any) => {
                     isDateChangeable && onEventStart('move', taskBar, e);
