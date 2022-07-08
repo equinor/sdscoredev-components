@@ -1,6 +1,7 @@
 import { Task, TaskBar } from 'components/Gantt/bars/types';
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
+import { StateContext } from '../GanttStore';
 
 export const TooltipDefaultContainer = styled.div`
     background: #fff;
@@ -33,7 +34,6 @@ export type TooltipProps = {
     svgContainerHeight: number;
     svgContainerWidth: number;
     svgWidth: number;
-    headerHeight: number;
     taskListWidth: number;
     scrollX: number;
     scrollY: number;
@@ -50,19 +50,21 @@ export const Tooltip: React.FC<TooltipProps> = ({
     scrollX,
     scrollY,
     arrowIndent,
-    headerHeight,
     taskListWidth,
     TooltipContent,
 }) => {
     const tooltipRef = useRef<HTMLDivElement | null>(null);
     const [relatedY, setRelatedY] = useState(0);
     const [relatedX, setRelatedX] = useState(0);
+
+    const state: any = useContext(StateContext);
+
     useEffect(() => {
         if (tooltipRef.current) {
             const tooltipHeight = tooltipRef.current.offsetHeight * 1.1;
             const tooltipWidth = tooltipRef.current.offsetWidth * 1.1;
 
-            let newRelatedY = task.index * rowHeight - scrollY + headerHeight;
+            let newRelatedY = task.index * rowHeight - scrollY + state.ganttReducer.headerHeight;
             let newRelatedX: number;
 
             newRelatedX = task.x2 + arrowIndent * 1.5 + taskListWidth - scrollX;
@@ -89,7 +91,6 @@ export const Tooltip: React.FC<TooltipProps> = ({
         arrowIndent,
         scrollX,
         scrollY,
-        headerHeight,
         taskListWidth,
         rowHeight,
         svgContainerHeight,

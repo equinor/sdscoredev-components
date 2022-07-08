@@ -45,12 +45,12 @@ export const CalendarHeader = styled.rect`
 
 export type CalendarProps = {
     viewMode: ViewMode;
-    headerHeight: number;
     columnWidth: number;
 };
 
-export const Calendar: React.FC<CalendarProps> = ({ viewMode, headerHeight, columnWidth }) => {
+export const Calendar: React.FC<CalendarProps> = ({ viewMode, columnWidth }) => {
     const state: any = useContext(StateContext);
+    const { headerHeight } = state.ganttReducer;
 
     const getCalendarValuesForMonth = () => {
         const topValues: ReactChild[] = [];

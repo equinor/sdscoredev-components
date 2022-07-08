@@ -5,7 +5,6 @@ import { TaskListTable } from './TaskListTable';
 
 export type TaskListProps = {
     bars: TaskBar[];
-    headerHeight: number;
     rowWidth: string;
     rowHeight: number;
     ganttHeight: number;
@@ -21,7 +20,6 @@ export type TaskListProps = {
 export const TaskList: React.FC<TaskListProps> = (props) => {
     const {
         bars,
-        headerHeight,
         rowWidth,
         rowHeight,
         scrollY,
@@ -42,7 +40,6 @@ export const TaskList: React.FC<TaskListProps> = (props) => {
     }, [scrollY]);
 
     const headerProps = {
-        headerHeight,
         rowWidth,
     };
     const selectedTaskId = selectedTask ? selectedTask.id : '';

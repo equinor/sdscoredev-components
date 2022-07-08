@@ -74,7 +74,7 @@ export const Container: React.FC<TaskGanttProps> = ({
                 id="gantt-calendar"
                 xmlns="http://www.w3.org/2000/svg"
                 width={state.gridReducer.svgWidth}
-                height={calendarProps.headerHeight}
+                height={state.ganttReducer.headerHeight}
                 style={{
                     fontFamily: 'Equinor',
                     fontSize: '12px',

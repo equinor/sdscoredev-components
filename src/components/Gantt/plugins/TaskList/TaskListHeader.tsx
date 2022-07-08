@@ -1,4 +1,5 @@
-import React from 'react';
+import { StateContext } from 'components/Gantt/GanttStore';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 
 export const GanttTable = styled.div`
@@ -23,10 +24,11 @@ export const GanttTable_HeaderItem = styled.div`
 `;
 
 export const TaskListHeader: React.FC<{
-    headerHeight: number;
     rowWidth: string;
-}> = ({ headerHeight, rowWidth }) => {
-    console.log();
+}> = ({ rowWidth }) => {
+    const state: any = useContext(StateContext);
+    const { headerHeight } = state.ganttReducer;
+
     return (
         <GanttTable>
             <GanttTable_Header

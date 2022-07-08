@@ -2,10 +2,12 @@ export const SET_DATES = 'SET_DATES';
 
 interface GanttState {
     dates?: Array<Date>;
+    headerHeight?: number;
 }
 
 export const initialState: GanttState = {
     dates: [],
+    headerHeight: 50,
 };
 
 const reducer = (state = initialState, action: any): GanttState => {

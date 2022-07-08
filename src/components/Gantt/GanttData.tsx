@@ -38,7 +38,6 @@ export type GanttDataProps = {
 export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps, ref) => {
     const {
         grid,
-        headerHeight = 50,
         columnWidth = 60, // Will be set from outside when picking view mode
         listCellWidth = '155px',
         rowHeight = 50,
@@ -181,11 +180,11 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
 
     useEffect(() => {
         if (ganttHeight) {
-            setSvgContainerHeight(ganttHeight + headerHeight);
+            setSvgContainerHeight(ganttHeight + state.ganttReducer.headerHeight);
         } else {
-            setSvgContainerHeight(bars.length * rowHeight + headerHeight);
+            setSvgContainerHeight(bars.length * rowHeight + state.ganttReducer.headerHeight);
         }
-    }, [ganttHeight, bars, headerHeight, rowHeight]);
+    }, [ganttHeight, bars, state.ganttReducer.headerHeight, rowHeight]);
 
     // scroll events
     useEffect(() => {
@@ -320,7 +319,6 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
 
     const calendarProps: CalendarProps = {
         viewMode,
-        headerHeight,
         columnWidth,
     };
     const barProps: TaskGanttContentProps = {
@@ -348,7 +346,6 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         bars,
         rowHeight,
         rowWidth: listCellWidth,
-        headerHeight,
         scrollY,
         ganttHeight,
         selectedTask,
@@ -382,7 +379,6 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
                         scrollX={scrollX}
                         scrollY={scrollY}
                         task={ganttEvent.changedTask}
-                        headerHeight={headerHeight}
                         taskListWidth={taskListWidth}
                         TooltipContent={TooltipContent}
                         svgWidth={state.gridReducer.svgWidth}
