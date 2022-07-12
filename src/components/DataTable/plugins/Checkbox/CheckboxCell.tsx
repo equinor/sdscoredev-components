@@ -1,16 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext } from 'react';
+import styled from 'styled-components';
+
 import { Checkbox, EdsProvider, Table } from '@equinor/eds-core-react';
-import { DispatchContext, StateContext } from "../../DataTableStore";
-import styled from "styled-components";
+
+import { DispatchContext, StateContext } from '../../DataTableStore';
 
 type CheckboxCellProps = {
-   item: any;
-   getKey?: string;
-}
+    item: any;
+    getKey?: string;
+};
 
 const Wrapper = styled.div`
     cursor: pointer;
-`
+`;
 
 const Cell = styled(Table.Cell)`
     border-top: unset !important;
@@ -49,13 +51,17 @@ const CheckboxCell: React.FC<CheckboxCellProps> = ({ item, getKey }) => {
                 <Wrapper onClick={select}>
                     <Checkbox
                         name="multiple"
-                        checked={state.checkboxReducer.selected.findIndex((x: any) => x[getKey || 'id'] === item[getKey || 'id']) >= 0}
+                        checked={
+                            state.checkboxReducer.selected.findIndex(
+                                (x: any) => x[getKey || 'id'] === item[getKey || 'id'],
+                            ) >= 0
+                        }
                         readOnly
                     />
                 </Wrapper>
             </EdsProvider>
         </Cell>
     );
-}
+};
 
 export default CheckboxCell;

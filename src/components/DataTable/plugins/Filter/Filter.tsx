@@ -1,7 +1,9 @@
-import React, { useContext, useEffect } from 'react';
-import { Button, Tooltip, Icon } from '@equinor/eds-core-react';
-import { FilterProps } from '.';
 import { DispatchContext } from 'components/DataTable/DataTableStore';
+import React, { useContext } from 'react';
+
+import { Button, Icon, Tooltip } from '@equinor/eds-core-react';
+
+import { FilterProps } from './index';
 
 export const Filter: React.FC<FilterProps> = ({ title, onClick }) => {
     const dispatch: any = useContext(DispatchContext);

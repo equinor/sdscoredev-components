@@ -1,48 +1,51 @@
-import { Meta, Story, Canvas, ArgsTable, Source } from '@storybook/addon-docs';
-import { DataTable } from '../../components/DataTable';
-import { Column } from '../../components/DataTable/Column';
-import { Row } from '../../components/DataTable/Row';
-import { ColumnSelector } from '../../components/DataTable/plugins/ColumnSelector';
-import { Filter } from '../../components/DataTable/plugins/Filter';
-import { StickyHeader } from '../../components/DataTable/plugins/StickyHeader';
-import { Tree } from '../../components/DataTable/plugins/Tree';
 import { Checkbox } from '../../components/DataTable/plugins/Checkbox';
+import { Column } from '../../components/DataTable/Column';
+import { ColumnSelector } from '../../components/DataTable/plugins/ColumnSelector';
+import { DataTable } from '../../components/DataTable';
+import { Filter } from '../../components/DataTable/plugins/Filter';
+import { Meta, Story, Canvas, ArgsTable, Source } from '@storybook/addon-docs';
 import { Pagination } from '../../components/DataTable/plugins/Pagination';
+import { Row } from '../../components/DataTable/Row';
 import { Sort } from '../../components/DataTable/plugins/Sort';
+import { StickyHeader } from '../../components/DataTable/plugins/StickyHeader';
 import { Subrow } from '../../components/DataTable/plugins/Subrow';
+import { Tree } from '../../components/DataTable/plugins/Tree';
 
 <Meta title="Library/DataTable/Documentation" />
 
 # DataTable
 
-SDSCoredev Components provides an advanced datatable that offer you pagination, sorting, filter 
-integration, column settings, query handling, sticky headers and much more. It is based on Equinor 
+SDSCoredev Components provides an advanced datatable that offer you pagination, sorting, filter
+integration, column settings, query handling, sticky headers and much more. It is based on Equinor
 Design System components to comply with Equinor design standards.
 
-It is created so that developers can easily integrate it into their applications. The complexity that 
+It is created so that developers can easily integrate it into their applications. The complexity that
 a datatable generate over time is avoided by abstractions and combined reducers.
 
 The `<DataTable>` provides these props:
+
 <ArgsTable of={DataTable} />
 
 ## `<Column>`
 
-Is used as a child component of `<DataTable>` to define the columns of the table. 
+Is used as a child component of `<DataTable>` to define the columns of the table.
+
 <ArgsTable of={Column} />
 
 ## `<Row>`
 
 Can be added as a child if custom settings for the row is needed.
-<ArgsTable of={Row} />
 
+<ArgsTable of={Row} />
 
 # Plugins
 
 ## `<Checkbox>`
 
 Can be added as a child to provide a checkbox column.
+
 <ArgsTable of={Checkbox} />
-Checkbox exposes these ref functions: 
+Checkbox exposes these ref functions:{' '}
 
 ```javascript
 check: (item: any) => void;
@@ -52,8 +55,9 @@ uncheck: (item: any) => void;
 ## `<ColumnSelector>`
 
 Can be added as a child to provide option to show/hide columns.
+
 <ArgsTable of={ColumnSelector} />
-ColumnSelector exposes these ref functions: 
+ColumnSelector exposes these ref functions:{' '}
 
 ```javascript
 setColumn: (column: string, visible: boolean) => void;
@@ -63,44 +67,44 @@ setColumns: (column: Array<string>, visible: boolean) => void;
 ## `<Filter>`
 
 Can be added as a child to provide a trigger button for opening or showing filters.
+
 <ArgsTable of={Filter} />
 
 ## `<Pagination>`
 
-Can be added as a child to provide pagination. 
+Can be added as a child to provide pagination.
 
 <i>Only works with backend data.</i>
 <ArgsTable of={Pagination} />
 
 ## `<Sort>`
 
-Can be added as a child to provide sorting and sorting configuration. If `<DataTable>` does not have `onFetch` prop set, 
+Can be added as a child to provide sorting and sorting configuration. If `<DataTable>` does not have `onFetch` prop set,
 sorting will by default sort locally. You need to set `sort` prop on the `<Column` you want to apply sorting to.
+
 <ArgsTable of={Sort} />
 
 ## `<StickyHeader>`
 
-Can be added as a child to provide sticky header. It will create a dublicate of the `<header>` 
-and recalculate all cell widths if window resizes. 
+Can be added as a child to provide sticky header. It will create a dublicate of the `<header>`
+and recalculate all cell widths if window resizes.
 
 This component require the `<DataTable>` to have `onScroll={() => stickyHeaderRef.current.handleScroll()}` set and a handler for window resize event.
 
 This component need the `ref` prop to be set.
+
 <ArgsTable of={StickyHeader} />
-StickyHeader exposes these ref functions: 
-```
-handleScroll: () => void;
-handleResize: () => void;
-```
+StickyHeader exposes these ref functions: ``` handleScroll: () => void; handleResize: () => void; ```
 
 ## `<Subrow>`
 
-Can be added as a child to provide sub row functionality. 
+Can be added as a child to provide sub row functionality.
+
 <ArgsTable of={Subrow} />
 
 ## `<Tree>`
 
-Can be added as a child to render the table as a tree structure. It will dynamically set a render prop on a defined column. That column will then be 
+Can be added as a child to render the table as a tree structure. It will dynamically set a render prop on a defined column. That column will then be
 providing the tree functionality.
-<ArgsTable of={Tree} />
 
+<ArgsTable of={Tree} />

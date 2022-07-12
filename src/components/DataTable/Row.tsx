@@ -12,9 +12,9 @@ export type RowProps = {
     /**
      * Callback to get style for the row
      */
-    getStyle?: (row: any) => { [key: string]: any }
-}
+    getStyle?: (row: any) => { [key: string]: any };
+};
 
 export const Row: React.FC<RowProps> = (props) => {
-    return (<React.Fragment {...props}></React.Fragment>)
-}
+    return <React.Fragment {...props} />;
+};

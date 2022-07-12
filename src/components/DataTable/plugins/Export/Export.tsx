@@ -1,7 +1,9 @@
 import React, { useRef } from 'react';
+
 import { Button, Tooltip, Typography } from '@equinor/eds-core-react';
+
 import { Dialog, DialogRef } from '../../../Dialog';
-import { ExportProps } from '.';
+import { ExportProps } from './index';
 
 export const Export: React.FC<ExportProps> = ({ title, icon }) => {
     const dialogRef = useRef<DialogRef>(null);
@@ -10,21 +12,21 @@ export const Export: React.FC<ExportProps> = ({ title, icon }) => {
         <>
             <Tooltip title="Export data" placement="top">
                 <Button variant="ghost" onClick={() => dialogRef?.current?.open()}>
-                    {title}{icon}
+                    {title}
+                    {icon}
                 </Button>
             </Tooltip>
-            
-            <Dialog 
+            <Dialog
                 title={title}
                 width={800}
                 primaryButton="Export"
                 cancelButton="Close"
-                noLoading={true}
+                noLoading
                 onPrimary={() => {}}
                 ref={dialogRef}
             >
-                <Typography variant="h6">NOT IMPLEMENTED YET</Typography>   
+                <Typography variant="h6">NOT IMPLEMENTED YET</Typography>
             </Dialog>
         </>
-    )
-}
+    );
+};

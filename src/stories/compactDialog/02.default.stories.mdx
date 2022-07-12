@@ -1,28 +1,28 @@
 import { Meta, Story, Canvas, ArgsTable, Source } from '@storybook/addon-docs';
 import { useRef } from 'react';
-import { Dialog, DialogRef } from '../../components/Dialog';
+import { CompactDialog } from '../../components/CompactDialog';
 import { Tooltip } from '../../components/Tooltip';
 import { Button } from '@equinor/eds-core-react';
 
-<Meta title="Library/Dialog" component={Dialog} />
+<Meta title="Library/CompactDialog" component={CompactDialog} />
 
-# Default dialog
+# Default compact-dialog
 
-This is an example of a default dialog.
+This is an example of a default compact-dialog. This is a more compac and less feature-rich version of Dialog.
 
 <Canvas>
     <Story name="Default example">
         {() => {
-            const dialogRef = useRef(null);
+            const compactDialogRef = useRef(null);
             return (
                 <>
-                    <Tooltip title="Manage columns" placement="top">
-                        <Button variant="ghost" onClick={() => dialogRef?.current?.open()}>
+                    <Tooltip title="Open custom compact-dialog" placement="top">
+                        <Button variant="ghost" onClick={() => compactDialogRef?.current?.open()}>
                             Open dialog
                         </Button>
                     </Tooltip>
-                    <Dialog title="Dialog title" cancelButton="Cancel" primaryButton="Submit" ref={dialogRef}>
-                        <div style={{ width: '30em' }}>
+                    <CompactDialog ref={compactDialogRef} title="Custom title">
+                        <div style={{ width: '30em', marginBottom: '2em' }}>
                             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
                             been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
                             galley of type and scrambled it to make a type specimen book. It has survived not only five
@@ -31,7 +31,10 @@ This is an example of a default dialog.
                             passages, and more recently with desktop publishing software like Aldus PageMaker including
                             versions of Lorem Ipsum.
                         </div>
-                    </Dialog>
+                        <CompactDialog.Actions>
+                            <Button>Example-Custom button</Button>
+                        </CompactDialog.Actions>
+                    </CompactDialog>
                 </>
             );
         }}

@@ -1,5 +1,6 @@
-import { FC } from '../../types';
 import React from 'react';
+
+import { FC } from '../../types';
 
 export type ExportProps = {
     /**
@@ -13,7 +14,7 @@ export type ExportProps = {
 };
 
 const Export: FC<ExportProps> = (props) => {
-    return (<React.Fragment {...props}>Export</React.Fragment>)
-}
+    return <React.Fragment {...props}>Export</React.Fragment>;
+};
 
 export { Export };

@@ -1,5 +1,6 @@
-import { FC, ReducerProp } from '../../types';
-import React, { Ref } from 'react';
+import React, { Ref, FC } from 'react';
+
+import { ReducerProp } from '../../types';
 import { stickyHeaderReducer } from './stickyHeaderReducer';
 
 export type StickyHeaderRef = {
@@ -17,17 +18,17 @@ export type StickyHeaderProps = {
     /**
      * The scroll position where the ehader should stick at
      */
-     threshold?: number;
-     /**
-      * A ref to this element
-      */
-     ref: Ref<StickyHeaderRef>;
+    threshold?: number;
+    /**
+     * A ref to this element
+     */
+    ref: Ref<StickyHeaderRef>;
 };
 
-const StickyHeader: React.FC<StickyHeaderProps> & ReducerProp = (props) => {
-    return (<React.Fragment {...props}>StickyHeader</React.Fragment>)
-}
+const StickyHeader: FC<StickyHeaderProps> & ReducerProp = (props) => {
+    return <React.Fragment {...props}>StickyHeader</React.Fragment>;
+};
 
-StickyHeader.reducer = { stickyHeaderReducer }
+StickyHeader.reducer = { stickyHeaderReducer };
 
-export { StickyHeader }
+export { StickyHeader };
