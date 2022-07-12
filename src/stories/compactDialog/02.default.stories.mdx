@@ -1,0 +1,42 @@
+import { Meta, Story, Canvas, ArgsTable, Source } from '@storybook/addon-docs';
+import { useRef } from 'react';
+import { CompactDialog } from '../../components/CompactDialog';
+import { Tooltip } from '../../components/Tooltip';
+import { Button } from '@equinor/eds-core-react';
+
+<Meta title="Library/CompactDialog" component={CompactDialog} />
+
+# Default compact-dialog
+
+This is an example of a default compact-dialog. This is a more compac and less feature-rich version of Dialog.
+
+<Canvas>
+    <Story name="Default example">
+        {() => {
+            const compactDialogRef = useRef(null);
+            return (
+                <>
+                    <Tooltip title="Open custom compact-dialog" placement="top">
+                        <Button variant="ghost" onClick={() => compactDialogRef?.current?.open()}>
+                            Open dialog
+                        </Button>
+                    </Tooltip>
+                    <CompactDialog ref={compactDialogRef} title="Custom title">
+                        <div style={{ width: '30em', marginBottom: '2em' }}>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                            galley of type and scrambled it to make a type specimen book. It has survived not only five
+                            centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                            passages, and more recently with desktop publishing software like Aldus PageMaker including
+                            versions of Lorem Ipsum.
+                        </div>
+                        <CompactDialog.Actions>
+                            <Button>Example-Custom button</Button>
+                        </CompactDialog.Actions>
+                    </CompactDialog>
+                </>
+            );
+        }}
+    </Story>
+</Canvas>
