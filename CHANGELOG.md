@@ -1,3 +1,10 @@
+# [2.16.0](https://github.com/equinor/sdscoredev-components/compare/2.15.0...2.16.0) (2022-07-07)
+
+
+### Features
+
+* add CompactDialog component ([#17](https://github.com/equinor/sdscoredev-components/issues/17)) ([fb6c793](https://github.com/equinor/sdscoredev-components/commit/fb6c793da9857897481518449a92446611163ec9))
+
 # [2.15.0](https://github.com/equinor/sdscoredev-components/compare/2.14.6...2.15.0) (2022-07-04)
 
 
