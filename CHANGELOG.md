@@ -1,3 +1,10 @@
+# [2.20.0](https://github.com/equinor/sdscoredev-components/compare/2.19.0...2.20.0) (2022-07-12)
+
+
+### Features
+
+* force release (test) ([93d2000](https://github.com/equinor/sdscoredev-components/commit/93d2000975ec24f7d7e5168c88f3a3a3571ced01))
+
 # [2.19.0](https://github.com/equinor/sdscoredev-components/compare/2.18.0...2.19.0) (2022-07-12)
 
 ### Features
