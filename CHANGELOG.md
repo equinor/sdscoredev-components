@@ -1,3 +1,10 @@
+# [2.17.0](https://github.com/equinor/sdscoredev-components/compare/2.16.0...2.17.0) (2022-07-12)
+
+
+### Features
+
+* fix storybook ([#18](https://github.com/equinor/sdscoredev-components/issues/18)) ([fbb545b](https://github.com/equinor/sdscoredev-components/commit/fbb545bbad5bbb6e5763628d584088a92257fbf0))
+
 # [2.16.0](https://github.com/equinor/sdscoredev-components/compare/2.15.0...2.16.0) (2022-07-07)
 
 
