@@ -13,19 +13,27 @@ This is an example of a default dialog.
 <Canvas>
     <Story name="Default example">
         {() => {
-        const dialogRef = useRef(null);
-        return (
-            <>
-                <Tooltip title="Manage columns" placement="top">
-                    <Button variant="ghost" onClick={() => dialogRef?.current?.open()}>
-                        Open dialog
-                    </Button>
-                </Tooltip>
-                <Dialog title="Dialog title" cancelButton="Cancel" primaryButton="Submit" ref={dialogRef}>
-                    This is a dialog 
-                </Dialog>
-            </>
-        )
-      }}
+            const dialogRef = useRef(null);
+            return (
+                <>
+                    <Tooltip title="Manage columns" placement="top">
+                        <Button variant="ghost" onClick={() => dialogRef?.current?.open()}>
+                            Open dialog
+                        </Button>
+                    </Tooltip>
+                    <Dialog title="Dialog title" cancelButton="Cancel" primaryButton="Submit" ref={dialogRef}>
+                        <div style={{ width: '30em' }}>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                            galley of type and scrambled it to make a type specimen book. It has survived not only five
+                            centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                            passages, and more recently with desktop publishing software like Aldus PageMaker including
+                            versions of Lorem Ipsum.
+                        </div>
+                    </Dialog>
+                </>
+            );
+        }}
     </Story>
 </Canvas>

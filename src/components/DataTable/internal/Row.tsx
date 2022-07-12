@@ -1,11 +1,11 @@
-import React, { forwardRef, RefAttributes, useContext } from "react";
-import styled from 'styled-components';
 import { Table } from '@equinor/eds-core-react';
+import React, { forwardRef, RefAttributes, useContext } from 'react';
+import styled from 'styled-components';
+import { StateContext } from '../DataTableStore';
+import CheckboxCell from '../plugins/Checkbox/CheckboxCell';
+import SubrowCell from '../plugins/Subrow/SubrowCell';
 import { RowProps } from '../Row';
-import { StateContext } from "../DataTableStore";
-import CheckboxCell from "../plugins/Checkbox/CheckboxCell";
-import Cell from "./Cell";
-import SubrowCell from "../plugins/Subrow/SubrowCell";
+import Cell from './Cell';
 
 const DefaultRow = styled(Table.Row)`
     display: table-row;
@@ -19,20 +19,20 @@ const DefaultRow = styled(Table.Row)`
 
     &:hover {
         cursor: pointer;
-        background: rgba(247,247,247,1);
+        background: rgba(247, 247, 247, 1);
     }
     & > td {
         border: none;
         border-bottom: 1px solid rgba(220, 220, 220, 1);
         border-top: 1px solid rgba(220, 220, 220, 1);
     }
-`
+`;
 
 type TableRowProps = {
     data?: any;
     depth?: number;
     plugins?: any;
-}
+};
 
 const Row: React.FC<TableRowProps & RowProps & RefAttributes<HTMLTableRowElement>> = forwardRef((props, ref) => {
     const { data, onClick, getLink, getStyle, plugins } = props;
@@ -42,47 +42,56 @@ const Row: React.FC<TableRowProps & RowProps & RefAttributes<HTMLTableRowElement
         e.preventDefault();
 
         if (getLink) {
-            onClick && onClick(getLink(data))
+            if (onClick) onClick(getLink(data));
         }
-       
-        onClick && onClick(data)
-    }
 
-    if (!data || !state.dataTableReducer.columns) return <></>
+        if (onClick) onClick(data);
+    };
+
+    if (!data || !state.dataTableReducer.columns) return <></>;
 
     return (
         <DefaultRow role="row" ref={ref} style={getStyle && getStyle(data)}>
-
             {/* ---- Checkbox plugin implementation start --------------------------------------- */}
-            {state.checkboxReducer && <CheckboxCell key={`checkbox-header-${data.id}`} item={data} getKey={plugins.checkbox.props.getKey} />}
+            {state.checkboxReducer && (
+                <CheckboxCell key={`checkbox-header-${data.id}`} item={data} getKey={plugins.checkbox.props.getKey} />
+            )}
             {/* ---- Checkbox plugin implementation end ----------------------------------------- */}
 
             {state.dataTableReducer.columns.map((column: any) => (
-                <React.Fragment key={`${column.props.id}-${data.id}`} >
-                {state.columnSelectorReducer && state.columnSelectorReducer.visibleColumns?.includes(column.props.id) ? (
-                        <Cell 
+                <React.Fragment key={`${column.props.id}-${data.id}`}>
+                    {state.columnSelectorReducer &&
+                    state.columnSelectorReducer.visibleColumns?.includes(column.props.id) ? (
+                        <Cell
                             {...props}
                             column={column}
                             onClick={handleClick}
                             item={data}
-                            href={getLink ? getLink(data) : undefined} />
-                    ) : <></>}
+                            href={getLink ? getLink(data) : undefined}
+                        />
+                    ) : (
+                        <></>
+                    )}
 
-                {!state.columnSelectorReducer && !column.props.optional ? (
-                        <Cell 
+                    {!state.columnSelectorReducer && !column.props.optional ? (
+                        <Cell
                             {...props}
                             column={column}
                             onClick={handleClick}
                             item={data}
-                            href={getLink ? getLink(data) : undefined} />
-                    ) : <></>}
+                            href={getLink ? getLink(data) : undefined}
+                        />
+                    ) : (
+                        <></>
+                    )}
                 </React.Fragment>
             ))}
 
             {/* ---- Subrow plugin implementation start ---- */}
-            {plugins.subrow && state.subrowReducer && <SubrowCell item={data} render={plugins.subrow.props.columnRender} />}
+            {plugins.subrow && state.subrowReducer && (
+                <SubrowCell item={data} render={plugins.subrow.props.columnRender} />
+            )}
             {/* ---- Subrow plugin implementation end ------ */}
-
         </DefaultRow>
     );
 });

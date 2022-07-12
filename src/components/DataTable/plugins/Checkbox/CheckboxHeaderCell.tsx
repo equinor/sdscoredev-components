@@ -1,15 +1,15 @@
-import React, { useContext } from "react";
-import { Checkbox, EdsProvider, Table } from '@equinor/eds-core-react';
-import { DispatchContext, StateContext } from "../../DataTableStore";
-import styled from "styled-components";
+import React, { useContext } from 'react';
+import styled from 'styled-components';
 
-type CheckboxCellProps = {
-   
-}
+import { Checkbox, EdsProvider, Table } from '@equinor/eds-core-react';
+
+import { DispatchContext, StateContext } from '../../DataTableStore';
+
+type CheckboxCellProps = {};
 
 const Wrapper = styled.div`
     cursor: pointer;
-`
+`;
 
 const Cell = styled(Table.Cell)`
     border-top: unset !important;
@@ -37,20 +37,19 @@ const CheckboxHeaderCell: React.FC<CheckboxCellProps> = () => {
             dispatch({ type: 'SET_SELECTED', payload: state.dataTableReducer.data });
         }
     };
-    
+
     return (
         <Cell id="__checkbox">
             <EdsProvider density="compact">
                 <Wrapper onClick={selectAll}>
                     <Checkbox
                         name="multiple"
-                        
                         indeterminate={
-                            state.checkboxReducer.selected.length > 0 && 
+                            state.checkboxReducer.selected.length > 0 &&
                             state.checkboxReducer.selected.length < state.dataTableReducer.data.length
                         }
                         checked={
-                            state.checkboxReducer.selected.length > 0 && 
+                            state.checkboxReducer.selected.length > 0 &&
                             state.checkboxReducer.selected.length === state.dataTableReducer.data.length
                         }
                         readOnly
@@ -60,6 +59,6 @@ const CheckboxHeaderCell: React.FC<CheckboxCellProps> = () => {
             </EdsProvider>
         </Cell>
     );
-}
+};
 
 export default CheckboxHeaderCell;

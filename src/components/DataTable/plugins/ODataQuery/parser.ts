@@ -5,10 +5,9 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-param-reassign */
+import { mergeAdvanced } from 'object-merge-advanced';
 /* eslint-disable no-restricted-globals */
 import buildQuery, { ITEM_ROOT } from 'odata-query';
-import f from 'odata-filter-builder';
-import { mergeAdvanced } from 'object-merge-advanced';
 
 interface Filter {
     [index: string]: any;
@@ -283,7 +282,7 @@ class FilterParser {
      */
     private getContainsFilter(value: any, key: string) {
         value = value.substring(1, value.length - 1);
-        let result: Filter = [
+        const result: Filter = [
             ...new Set(key.split('|').map((x: any) => ({ [`tolower(${x})`]: { contains: value.toLowerCase() } }))),
         ];
         return this.appendKeys(ITEM_ROOT, { or: result });

@@ -1,13 +1,14 @@
-import { FC, ReducerProp } from '../../types';
-import React from 'react';
+import React, { FC } from 'react';
+
+import { ReducerProp } from '../../types';
 import { sortReducer } from './sortReducer';
 
 export type SortProps = {};
 
-const Sort: React.FC<SortProps> & ReducerProp = (props) => {
-    return (<React.Fragment {...props}></React.Fragment>)
-}
+const Sort: FC<SortProps> & ReducerProp = (props) => {
+    return <React.Fragment {...props} />;
+};
 
-Sort.reducer = { sortReducer }
+Sort.reducer = { sortReducer };
 
 export { Sort };

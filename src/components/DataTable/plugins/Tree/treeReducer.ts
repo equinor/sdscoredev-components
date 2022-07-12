@@ -1,5 +1,5 @@
-export const TREE_TOGGLE = "TREE_TOGGLE";
-export const SET_CHILDREN_PROP = "SET_CHILDREN_PROP";
+export const TREE_TOGGLE = 'TREE_TOGGLE';
+export const SET_CHILDREN_PROP = 'SET_CHILDREN_PROP';
 
 interface TreeState {
     open: Array<number>;
@@ -12,7 +12,6 @@ export const initialState: TreeState = {
 };
 
 const reducer = (state = initialState, action: any): TreeState => {
-
     let tmp;
 
     switch (action.type) {
@@ -21,7 +20,7 @@ const reducer = (state = initialState, action: any): TreeState => {
             if (tmp.indexOf(action.payload) !== -1) {
                 tmp.splice(tmp.indexOf(action.payload), 1);
             } else {
-                tmp.push (action.payload)
+                tmp.push(action.payload);
             }
 
             return {
@@ -38,4 +37,4 @@ const reducer = (state = initialState, action: any): TreeState => {
     }
 };
 
-export const treeReducer = {reducer, initialState}
+export const treeReducer = { reducer, initialState };

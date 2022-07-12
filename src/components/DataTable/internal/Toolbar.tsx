@@ -1,4 +1,4 @@
-import React, { ReactChild, ReactFragment, ReactPortal } from "react";
+import React, { ReactChild, ReactFragment, ReactPortal } from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -30,29 +30,30 @@ const RightInner = styled.div`
 
 export type ToolbarProps = {
     components?: (ReactChild | ReactFragment | ReactPortal)[];
-}
+};
 
 const Toolbar: React.FC<ToolbarProps> = ({ children, components }) => {
-
     if (!components?.length && !children) return <></>;
-    
+
     return (
         <Wrapper>
             <Left>
-                {components?.filter((x: any) => x.props.placement.endsWith('left') || !x.props.placement).map((component: any, index: number) => (
-                    <React.Fragment key={`lt-${index}`}>
-                        {component.props.children}
-                    </React.Fragment>
-                ))}
+                {components
+                    ?.filter((x: any) => x.props.placement.endsWith('left') || !x.props.placement)
+                    .map((component: any, index: number) => {
+                        const key = `lt-Index: ${index}`;
+                        return <React.Fragment key={key}>{component.props.children}</React.Fragment>;
+                    })}
             </Left>
             <Right>
                 {children}
-            
-                {components?.filter((x: any) => x.props.placement.endsWith('right')).map((component: any, index: number) => (
-                    <RightInner key={`rt-${index}`}>
-                        {component.props.children}
-                    </RightInner>
-                ))}
+
+                {components
+                    ?.filter((x: any) => x.props.placement.endsWith('right'))
+                    .map((component: any, index: number) => {
+                        const key = `rt-Index: ${index}`;
+                        return <RightInner key={key}>{component.props.children}</RightInner>;
+                    })}
             </Right>
         </Wrapper>
     );

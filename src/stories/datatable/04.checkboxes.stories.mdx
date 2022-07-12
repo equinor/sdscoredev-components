@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { Meta, Story, Canvas, ArgsTable, Source } from '@storybook/addon-docs';
 import { DataTable, checkboxReducer } from '../../components/DataTable';
-import { users } from '../data';
+import { getUsers } from '../data';
 
 <Meta title="Library/DataTable" component={DataTable} />
 
@@ -10,23 +10,22 @@ import { users } from '../data';
 This is an example of a table with checkboxes.
 
 <Canvas>
-  <Story name="Checkboxes example">
-      {() => {
-      const { Column, Checkbox } = DataTable;
-      const [selected, setSelected] = useState(null);
-      const userList = useRef(users(10)); // Use ref to prevent users repopulate and rerender the table
-      console.table(selected) // Log selected items to console
-      return (
-          <DataTable data={userList.current}>
-            <Column id="id">Uuid</Column>
-            <Column id="firstname">First name</Column>
-            <Column id="lastname">Last name</Column>
-            <Column id="email">Email</Column>
-            <Column id="title">Title</Column>
-            <Column id="country">Country</Column>
-            <Checkbox onChange={setSelected}/>
-          </DataTable>
-      )
-    }}
-  </Story>
+    <Story name="Checkboxes example">
+        {() => {
+            const { Column, Checkbox } = DataTable;
+            const [selected, setSelected] = useState(null);
+            const userList = useRef(getUsers(10)); // Use ref to prevent users repopulate and rerender the table
+            return (
+                <DataTable data={userList.current}>
+                    <Column id="id">Uuid</Column>
+                    <Column id="firstName">First name</Column>
+                    <Column id="lastName">Last name</Column>
+                    <Column id="email">Email</Column>
+                    <Column id="title">Title</Column>
+                    <Column id="country">Country</Column>
+                    <Checkbox onChange={setSelected} />
+                </DataTable>
+            );
+        }}
+    </Story>
 </Canvas>
