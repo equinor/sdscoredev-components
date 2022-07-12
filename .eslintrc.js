@@ -20,7 +20,7 @@ module.exports = {
     plugins: ['react', 'prettier'],
     rules: {
         'prettier/prettier': 'warn',
-        'linebreak-style': ['error', process.env.NODE_ENV === 'prod' ? 'unix' : 'windows'],
+        'linebreak-style': ['error', process.platform === 'win32' ? 'windows' : 'unix'],
         'react/jsx-filename-extension': [0],
         'eslint/indent:': 0,
         indent: ['off', 4],

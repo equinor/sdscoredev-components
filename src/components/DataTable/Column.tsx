@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import { Table } from '@equinor/eds-core-react';
 
 export type ColumnProps = {
@@ -28,7 +28,7 @@ export type ColumnProps = {
      */
     render?: JSX.Element | Function | [Function, { [key: string]: any }];
     /**
-     * If set as true, it will add option to sort the column by the `<Column>` id prop. 
+     * If set as true, it will add option to sort the column by the `<Column>` id prop.
      * If set as a string, it will sort by the string and not the id prop.
      */
     sort?: string | boolean;
@@ -37,7 +37,7 @@ export type ColumnProps = {
      */
     slim?: boolean;
     /**
-     * If set, the cell will take up the smallest space possible, but text in header will not wrap. 
+     * If set, the cell will take up the smallest space possible, but text in header will not wrap.
      * Width will be set to 1% and header will have `white-space: nowrap`
      */
     fit?: boolean;
@@ -45,14 +45,10 @@ export type ColumnProps = {
      * If set, the cell will truncate the text if exceding the value in pixels
      */
     truncate?: number;
-    
+
     children: any;
-}
+};
 
 export const Column: React.FC<ColumnProps> = ({ children }) => {
-    return (
-        <Table.Cell>
-            {children}
-        </Table.Cell>
-    );
-}
+    return <Table.Cell>{children}</Table.Cell>;
+};
