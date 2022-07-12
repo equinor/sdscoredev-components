@@ -5,8 +5,8 @@ import React, { forwardRef, useContext, useImperativeHandle, useRef } from 'reac
 import { Button, Tooltip } from '@equinor/eds-core-react';
 
 import { DispatchContext, StateContext } from '../../DataTableStore';
-import { ColumnSelectorProps, ColumnSelectorRef } from './';
 import ColumnSelectorDialog from './ColumnSelectorDialog';
+import { ColumnSelectorProps, ColumnSelectorRef } from './index';
 
 export type InternalColumnSelectorProps = {
     columns?: any;
@@ -21,7 +21,7 @@ export const ColumnSelector = forwardRef<ColumnSelectorRef, InternalColumnSelect
         const state: any = useContext(StateContext);
         const dispatch: any = useContext(DispatchContext);
 
-        //? different refs for the dialogs
+        // ? different refs for the dialogs
         const dialogRef = useRef<DialogRef>(null);
         const compactDialogRef = useRef<CompactDialogRef>(null);
 
@@ -49,7 +49,7 @@ export const ColumnSelector = forwardRef<ColumnSelectorRef, InternalColumnSelect
                 });
             }
 
-            onChange && onChange();
+            if (onChange) onChange();
         };
 
         /**
@@ -150,8 +150,8 @@ export const ColumnSelector = forwardRef<ColumnSelectorRef, InternalColumnSelect
                         ref={dialogRef}
                         title={title}
                         width={800}
-                        headerCloseButton={true}
-                        noLoading={true}
+                        headerCloseButton
+                        noLoading
                         primaryButton={showApplyButton ? 'Apply' : ''}
                         onPrimary={showApplyButton ? () => dialogRef.current?.close() : undefined}
                         cancelButton="Reset"

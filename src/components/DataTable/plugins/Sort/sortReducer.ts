@@ -1,15 +1,15 @@
-export const SET_ORDER_BY = "SET_ORDER_BY";
-export const SET_DIRECTION = "SET_DIRECTION";
-export const SORT = "SORT";
+export const SET_ORDER_BY = 'SET_ORDER_BY';
+export const SET_DIRECTION = 'SET_DIRECTION';
+export const SORT = 'SORT';
 
 interface SortState {
-    orderBy?: string,
-    ascending?: boolean,
+    orderBy?: string;
+    ascending?: boolean;
 }
 
 export const initialState: SortState = {
     orderBy: undefined,
-    ascending: undefined
+    ascending: undefined,
 };
 
 const reducer = (state = initialState, action: any): SortState => {
@@ -17,22 +17,22 @@ const reducer = (state = initialState, action: any): SortState => {
         case SET_ORDER_BY:
             return {
                 ...state,
-                orderBy: action.payload
+                orderBy: action.payload,
             };
         case SET_DIRECTION:
             return {
                 ...state,
-                ascending: action.payload
+                ascending: action.payload,
             };
         case SORT:
             return {
                 ...state,
                 orderBy: action.payload,
-                ascending: state.ascending ? false : true
+                ascending: !state.ascending,
             };
         default:
             return state;
     }
 };
 
-export const sortReducer = {reducer, initialState}
+export const sortReducer = { reducer, initialState };

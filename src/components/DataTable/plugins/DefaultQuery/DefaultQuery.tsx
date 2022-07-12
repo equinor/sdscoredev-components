@@ -1,8 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { DispatchContext, StateContext } from 'components/DataTable/DataTableStore';
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { DefaultQueryProps } from '.';
+
+import { DefaultQueryProps } from './index';
 
 export const DefaultQuery: React.FC<DefaultQueryProps> = ({ state, dispatch }) => {
     const navigate = useNavigate();
@@ -12,15 +11,15 @@ export const DefaultQuery: React.FC<DefaultQueryProps> = ({ state, dispatch }) =
 
     const setInitialPagination = (params: URLSearchParams) => {
         if (!paginationInitialized.current) {
-            params.get('pageIndex') && dispatch({ type: 'SET_PAGE_INDEX', payload: params.get('pageIndex') });
-            params.get('pageSize') && dispatch({ type: 'SET_PAGE_SIZE', payload: params.get('pageSize') });
+            if (params.get('pageIndex')) dispatch({ type: 'SET_PAGE_INDEX', payload: params.get('pageIndex') });
+            if (params.get('pageSize')) dispatch({ type: 'SET_PAGE_SIZE', payload: params.get('pageSize') });
         }
     };
 
     const setInitialSorting = (params: URLSearchParams) => {
         if (!sortingInitialized.current) {
-            params.get('orderBy') && dispatch({ type: 'SET_ORDER_BY', payload: params.get('orderBy') });
-            params.get('desc') && dispatch({ type: 'SET_DIRECTION', payload: params.get('desc') });
+            if (params.get('orderBy')) dispatch({ type: 'SET_ORDER_BY', payload: params.get('orderBy') });
+            if (params.get('desc')) dispatch({ type: 'SET_DIRECTION', payload: params.get('desc') });
         }
     };
 

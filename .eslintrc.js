@@ -8,6 +8,7 @@ module.exports = {
     globals: {
         Atomics: 'readonly',
         SharedArrayBuffer: 'readonly',
+        JSX: true,
     },
     parserOptions: {
         ecmaFeatures: {
@@ -19,7 +20,7 @@ module.exports = {
     plugins: ['react', 'prettier'],
     rules: {
         'prettier/prettier': 'warn',
-        'linebreak-style': ['error', process.env.NODE_ENV === 'prod' ? 'unix' : 'windows'],
+        'linebreak-style': ['error', process.platform === 'win32' ? 'windows' : 'unix'],
         'react/jsx-filename-extension': [0],
         'eslint/indent:': 0,
         indent: ['off', 4],
@@ -46,9 +47,8 @@ module.exports = {
         'react/function-component-definition': 0,
         'react/no-unused-prop-types': 'off',
         'arrow-body-style': 'off',
-        'react/function-component-definition': 'off',
         'react/jsx-no-useless-fragment': 'off',
         'default-param-last': 'off',
-        'no-unsafe-optional-chaining' : 'off'
+        'no-unsafe-optional-chaining': 'off',
     },
 };

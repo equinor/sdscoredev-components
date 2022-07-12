@@ -1,5 +1,6 @@
-import { FC, ReducerProp } from '../../types';
 import React, { MouseEventHandler } from 'react';
+
+import { ReducerProp } from '../../types';
 import { filterReducer } from './filterReducer';
 
 export type FilterProps = {
@@ -22,7 +23,7 @@ export type FilterProps = {
 };
 
 const Filter: React.FC<FilterProps> & ReducerProp = (props) => {
-    return <React.Fragment {...props}></React.Fragment>;
+    return <React.Fragment {...props} />;
 };
 
 Filter.reducer = { filterReducer };

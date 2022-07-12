@@ -9,12 +9,12 @@ export const Tree: React.FC<InternalTreeProps & TreeProps> = ({ id, childrenProp
     const dispatch: any = useContext(DispatchContext);
 
     useEffect(() => {
-        dispatch({ type: 'SET_PLUGIN_COLUMN_PROPS', payload: { [id]: { render: TreeCellRender }} });
+        dispatch({ type: 'SET_PLUGIN_COLUMN_PROPS', payload: { [id]: { render: TreeCellRender } } });
 
-        if(childrenProp) {
+        if (childrenProp) {
             dispatch({ type: 'SET_CHILDREN_PROP', payload: childrenProp });
         }
-    }, [])
+    }, []);
 
-    return <></>
-}
+    return <></>;
+};

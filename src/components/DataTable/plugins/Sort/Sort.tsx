@@ -1,13 +1,13 @@
-import React, { useContext, useEffect } from 'react';
-import { SortProps } from '.';
-import { DispatchContext, StateContext } from '../../DataTableStore';
 import { sort } from 'fast-sort';
+import React, { useContext, useEffect } from 'react';
+
+import { DispatchContext, StateContext } from '../../DataTableStore';
+import { SortProps } from './index';
 
 /**
  * TODO: Implement multiple column sort
  */
 export const Sort = (props: SortProps) => {
-    const {} = props;
     const state: any = useContext(StateContext);
     const dispatch: any = useContext(DispatchContext);
 
@@ -30,7 +30,7 @@ export const Sort = (props: SortProps) => {
 
     useEffect(() => {
         const { orderBy, ascending } = state.sortReducer;
-        if (orderBy && typeof ascending !== undefined && state.dataTableReducer.data) {
+        if (orderBy && typeof ascending !== 'undefined' && state.dataTableReducer.data) {
             sortTable(orderBy, ascending);
         }
     }, [state.sortReducer]);

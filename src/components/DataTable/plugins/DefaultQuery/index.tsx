@@ -1,16 +1,16 @@
-import { FC } from '../../types';
 import React from 'react';
-import { defaultQueryReducer } from './defaultQueryReducer';
+
+import { FC } from '../../types';
 
 export type DefaultQueryProps = {
     state: any;
     dispatch: any;
-}
+};
 
 const DefaultQuery: FC = () => {
-    return (<React.Fragment>DefaultQuery</React.Fragment>)
-}
+    return <>DefaultQuery</>;
+};
 
 // DefaultQuery.reducer = { defaultQueryReducer }
 
-export { DefaultQuery }
+export { DefaultQuery };
