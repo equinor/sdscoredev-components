@@ -6,7 +6,7 @@ Composite react components that extend Equinor Design Systems (EDS)
 
 ---
 
-## Components
+## Main Components
 
 ### `<DataTable>`
 

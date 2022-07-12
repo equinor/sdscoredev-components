@@ -16,7 +16,7 @@ jobs:
             - uses: devmasx/merge-branch@v1.3.1
               with:
                   type: now
-                  from_branch: feat/fix_storybook
+                  from_branch: main
                   target_branch: docs
                   github_token: ${{ github.token }}
 
