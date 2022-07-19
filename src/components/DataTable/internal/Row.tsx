@@ -53,7 +53,7 @@ const Row: React.FC<TableRowProps & RowProps & RefAttributes<HTMLTableRowElement
     return (
         <DefaultRow role="row" ref={ref} style={getStyle && getStyle(data)}>
             {/* ---- Checkbox plugin implementation start --------------------------------------- */}
-            {state.checkboxReducer && (
+            {state.checkboxReducer?.visible && (
                 <CheckboxCell key={`checkbox-header-${data.id}`} item={data} getKey={plugins.checkbox.props.getKey} />
             )}
             {/* ---- Checkbox plugin implementation end ----------------------------------------- */}

@@ -68,9 +68,8 @@ DataTable.Subrow.displayName = 'DataTable.Subrow'
 DataTable.Toolbar.displayName = 'DataTable.Toolbar'
 DataTable.Tree.displayName = 'DataTable.Tree'
 
-export { 
+export {
     DataTable,
-    
     checkboxReducer,
     columnSelectorReducer,
     defaultQueryReducer,
