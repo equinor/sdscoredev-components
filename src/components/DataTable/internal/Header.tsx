@@ -54,7 +54,7 @@ const Header: React.FC<HeaderProps> = ({ children, id, plugins }) => {
         <Head>
             <Table.Row id={`dataTable.headerRow.${id}`}>
                 {/* ---- Checkbox plugin implementation start --------------------- */}
-                {state.checkboxReducer && <CheckboxHeaderCell key="checkbox-header" />}
+                {state.checkboxReducer?.visible && <CheckboxHeaderCell key="checkbox-header" />}
                 {/* ---- Checkbox plugin implementation end ----------------------- */}
 
                 {state.columnSelectorReducer &&

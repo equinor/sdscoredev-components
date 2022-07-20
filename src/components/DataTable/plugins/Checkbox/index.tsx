@@ -25,6 +25,10 @@ export type CheckboxProps = {
      * A ref to this element
      */
     ref?: Ref<CheckboxRef>;
+    /**
+     * Optional prop to show or hide the checkbox column
+     */
+    visible?: boolean;
 };
 
 const Checkbox: React.FC<CheckboxProps> & ReducerProp = (props) => {
