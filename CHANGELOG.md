@@ -1,3 +1,11 @@
+# [2.21.0](https://github.com/equinor/sdscoredev-components/compare/2.20.0...2.21.0) (2022-07-20)
+
+
+### Features
+
+* **checkbox:** optional prop to conceal checkbox column ([7d1e0a3](https://github.com/equinor/sdscoredev-components/commit/7d1e0a32ffed6334c42a4986fdda65591ae14512))
+* **checkbox:** optional prop to conceal checkbox column ([3b7f151](https://github.com/equinor/sdscoredev-components/commit/3b7f151f9dd25fbb90a4df5bcee1dd73c96a1a68))
+
 # [2.20.0](https://github.com/equinor/sdscoredev-components/compare/2.19.0...2.20.0) (2022-07-12)
 
 
