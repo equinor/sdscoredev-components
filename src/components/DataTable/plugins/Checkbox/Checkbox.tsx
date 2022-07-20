@@ -4,7 +4,7 @@ import { DispatchContext, StateContext } from '../../DataTableStore';
 import { CheckboxProps, CheckboxRef } from './index';
 
 export const Checkbox = forwardRef<CheckboxRef, CheckboxProps>((props: CheckboxProps, ref) => {
-    const { onChange, getKey } = props;
+    const { onChange, getKey, visible } = props;
     const state: any = useContext(StateContext);
     // const init = useRef(0);
     const dispatch: any = useContext(DispatchContext);
@@ -15,6 +15,13 @@ export const Checkbox = forwardRef<CheckboxRef, CheckboxProps>((props: CheckboxP
     useEffect(() => {
         if (typeof onChange === 'function') onChange(state.checkboxReducer.selected);
     }, [state.checkboxReducer.selected]);
+
+    /**
+     * Optional prop 'visible' to show or hide the checkbox column
+     */
+    useEffect(() => {
+        dispatch({ type: 'SET_VISIBLE', payload: visible });
+    }, [visible]);
 
     /**
      * Exposes a way to check a checkbox by reference
