@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
-import { SubrowProps } from './index';
-import { DispatchContext } from '../../DataTableStore';
 import styled from 'styled-components';
+
 import { Table } from '@equinor/eds-core-react';
+
+import { DispatchContext } from '../../DataTableStore';
+import { SubrowProps } from './index';
 
 export type InternalSubrowProps = {
     data?: any;
@@ -21,10 +23,10 @@ const DefaultRow = styled(Table.Row)`
             border-right: 1px solid rgba(220, 220, 220, 1);
         }
     }
-`
+`;
 
 const StyledCell = styled(Table.Cell)`
-    background: rgba(247,247,247,1);
+    background: rgba(247, 247, 247, 1);
     padding-bottom: 16px;
 
     & div {
@@ -37,13 +39,13 @@ export const Subrow: React.FC<InternalSubrowProps & SubrowProps> = (props) => {
     const dispatch: any = useContext(DispatchContext);
 
     const getCellCount = () => {
-        const elements = document.getElementsByClassName('dataTableTh')
-        return elements.length
-    }
+        const elements = document.getElementsByClassName('dataTableTh');
+        return elements.length;
+    };
 
     return (
         <DefaultRow role="row">
             <StyledCell colSpan={getCellCount()}>{render({ data })}</StyledCell>
         </DefaultRow>
-    )
-}
+    );
+};

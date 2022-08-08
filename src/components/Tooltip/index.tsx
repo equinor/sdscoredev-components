@@ -1,9 +1,7 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
-import { Tooltip as EdsTooltip, Icon } from '@equinor/eds-core-react';
-import { help_outline } from '@equinor/eds-icons';
 
-Icon.add({ help_outline });
+import { Icon, Tooltip as EdsTooltip } from '@equinor/eds-core-react';
 
 const StyledEdsTooltip = styled(EdsTooltip)<any>`
     &:hover {
@@ -34,7 +32,7 @@ export type TooltipProps = {
     placement: string;
     optional?: boolean;
     maxWidth?: number;
-}
+};
 
 export const Tooltip = (props: TooltipProps) => {
     const { className, title, open, children, disabled, placement, maxWidth } = props;
@@ -49,13 +47,7 @@ export const Tooltip = (props: TooltipProps) => {
                     placement={placement}
                     maxWidth={maxWidth}
                 >
-                    {children || (
-                        <StyledIcon
-                            name="help_outline"
-                            size={16}
-                            color="#007079"
-                        />
-                    )}
+                    {children || <StyledIcon name="help_outline" size={16} color="#007079" />}
                 </StyledEdsTooltip>
             ) : (
                 <>{children}</>

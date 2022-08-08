@@ -6,7 +6,7 @@ Composite react components that extend Equinor Design Systems (EDS)
 
 ---
 
-## Components
+## Main Components
 
 ### `<DataTable>`
 
@@ -36,20 +36,20 @@ A hoc component to wrap your input fields with that handles validation, labeling
 npm install
 ```
 
-3. Because sdscoredev-components and your project might be running two
-   separate react libraries you need to link them. Do this for `react` and `react-dom` and you should be good to go. From sdscoredev-components directory, run:
+3. Because sdscoredev-components and your project might be running two separate react libraries you need to link them.
+   Do this for `react` and `react-dom` and you should be good to go (NB: you might also have to do this for `react-router-dom`). From sdscoredev-components directory, run:
 
 ```
-npm link ../[local project]/node_modules/react
+npm link ../[local project]/node_modules/react ../[local project]/node_modules/react-dom
 ```
 
-4. To install the local library in your local project run:
+1. In your local project run
 
 ```
 npm install ../sdscoredev-components
 ```
 
-5. In sdscoredev-components folder run
+to install the local library. 5. In sdscoredev-components folder run
 
 ```
 npm run watch
@@ -65,7 +65,7 @@ When you refactor or add imports/exports in sdscoredev-components you need to ru
 
 ## Contributing
 
-Go ahead and contribute.
+It is appreciated that you would like to contribute.
 
 1. Fork it
 2. Create a branch: `git checkout -b your-branch`

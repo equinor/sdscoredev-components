@@ -1,5 +1,6 @@
 import React, { Ref } from 'react';
-import { ReducerProp } from 'types';
+
+import { ReducerProp } from '../../types';
 import { checkboxReducer } from './checkboxReducer';
 
 export type CheckboxRef = {
@@ -24,6 +25,10 @@ export type CheckboxProps = {
      * A ref to this element
      */
     ref?: Ref<CheckboxRef>;
+    /**
+     * Optional prop to show or hide the checkbox column
+     */
+    visible?: boolean;
 };
 
 const Checkbox: React.FC<CheckboxProps> & ReducerProp = (props) => {

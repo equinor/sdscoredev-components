@@ -1,11 +1,10 @@
-import { Button as EdsButton, EdsProvider, Icon } from "@equinor/eds-core-react";
-import { DispatchContext, StateContext } from "../../DataTableStore";
-import { CustomRenderProps } from "index";
-import React, { useContext } from "react";
-import { chevron_down, chevron_right } from '@equinor/eds-icons';
-import styled from "styled-components";
+import { CustomRenderProps } from 'index';
+import React, { useContext } from 'react';
+import styled from 'styled-components';
 
-Icon.add({chevron_down, chevron_right});
+import { Button as EdsButton, EdsProvider, Icon } from '@equinor/eds-core-react';
+
+import { DispatchContext, StateContext } from '../../DataTableStore';
 
 const Wrapper = styled.span<{ depth: number }>`
     display: grid;
@@ -17,7 +16,7 @@ const Wrapper = styled.span<{ depth: number }>`
 
 const Button = styled(EdsButton)`
     z-index: 999;
-`
+`;
 
 export const TreeCellRender = (props: CustomRenderProps) => {
     const { item, content, depth } = props;
@@ -27,10 +26,10 @@ export const TreeCellRender = (props: CustomRenderProps) => {
     const handleClick = (e: any) => {
         e.stopPropagation();
         e.preventDefault();
-        dispatch({ type: "TREE_TOGGLE", payload: item?.id })
-    }
+        dispatch({ type: 'TREE_TOGGLE', payload: item?.id });
+    };
 
-    const isOpen = () => state.treeReducer.open.includes(item?.id)
+    const isOpen = () => state.treeReducer.open.includes(item?.id);
 
     return (
         <EdsProvider density="compact">
@@ -39,11 +38,17 @@ export const TreeCellRender = (props: CustomRenderProps) => {
 
                 {item && item[state.treeReducer.childrenProp] ? (
                     <Button variant="ghost_icon" onClick={handleClick}>
-                        <Icon name={isOpen() ? 'chevron_down' : 'chevron_right'} size={24} style={{ color: "#007079" }} />
+                        <Icon
+                            name={isOpen() ? 'chevron_down' : 'chevron_right'}
+                            size={24}
+                            style={{ color: '#007079' }}
+                        />
                     </Button>
-                ) : <div />} 
+                ) : (
+                    <div />
+                )}
                 <span style={{ display: 'inline-block', alignSelf: 'center', paddingLeft: '4px' }}>{content}</span>
             </Wrapper>
         </EdsProvider>
-    )
-}
+    );
+};

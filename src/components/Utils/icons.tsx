@@ -69,7 +69,7 @@ import {
     warning_outlined,
 } from '@equinor/eds-icons';
 
-const icons = {
+export const icons = {
     accessible,
     account_circle,
     add,

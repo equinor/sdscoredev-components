@@ -1,5 +1,6 @@
 import React from 'react';
-import { FC } from 'types';
+
+import { FC } from '../../types';
 
 export type DefaultQueryProps = {
     state: any;
@@ -7,7 +8,7 @@ export type DefaultQueryProps = {
 };
 
 const DefaultQuery: FC = () => {
-    return <React.Fragment>DefaultQuery</React.Fragment>;
+    return <>DefaultQuery</>;
 };
 
 // DefaultQuery.reducer = { defaultQueryReducer }

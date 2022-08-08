@@ -1,5 +1,42 @@
-## [2.14.6](https://github.com/equinor/sdscoredev-components/compare/2.14.5...2.14.6) (2022-06-30)
+# [2.21.0](https://github.com/equinor/sdscoredev-components/compare/2.20.0...2.21.0) (2022-07-20)
 
+
+### Features
+
+* **checkbox:** optional prop to conceal checkbox column ([7d1e0a3](https://github.com/equinor/sdscoredev-components/commit/7d1e0a32ffed6334c42a4986fdda65591ae14512))
+* **checkbox:** optional prop to conceal checkbox column ([3b7f151](https://github.com/equinor/sdscoredev-components/commit/3b7f151f9dd25fbb90a4df5bcee1dd73c96a1a68))
+
+# [2.20.0](https://github.com/equinor/sdscoredev-components/compare/2.19.0...2.20.0) (2022-07-12)
+
+
+### Features
+
+* force release (test) ([93d2000](https://github.com/equinor/sdscoredev-components/commit/93d2000975ec24f7d7e5168c88f3a3a3571ced01))
+
+# [2.19.0](https://github.com/equinor/sdscoredev-components/compare/2.18.0...2.19.0) (2022-07-12)
+
+### Features
+
+* add CompactDialog as an export
+
+### Non-Functional Features
+
+* fix storybook (trigger new release) ([#20](https://github.com/equinor/sdscoredev-components/issues/20)) ([7d9a83b](https://github.com/equinor/sdscoredev-components/commit/7d9a83b5ae2463dd29f7370e8a1b54ede5e3d5d3))
+
+
+# [2.16.0](https://github.com/equinor/sdscoredev-components/compare/2.15.0...2.16.0) (2022-07-07)
+
+### Features
+
+* add CompactDialog component ([#17](https://github.com/equinor/sdscoredev-components/issues/17)) ([fb6c793](https://github.com/equinor/sdscoredev-components/commit/fb6c793da9857897481518449a92446611163ec9))
+
+# [2.15.0](https://github.com/equinor/sdscoredev-components/compare/2.14.6...2.15.0) (2022-07-04)
+
+### Features
+
+* add optionsStyle props to ColumnSelector plugin ([#16](https://github.com/equinor/sdscoredev-components/issues/16)) ([212c873](https://github.com/equinor/sdscoredev-components/commit/212c873a141090ef069276382e2f711a6167416f))
+
+## [2.14.6](https://github.com/equinor/sdscoredev-components/compare/2.14.5...2.14.6) (2022-06-30)
 
 ### Bug Fixes
 
@@ -7,13 +44,11 @@
 
 ## [2.14.5](https://github.com/equinor/sdscoredev-components/compare/2.14.4...2.14.5) (2022-06-29)
 
-
 ### Bug Fixes
 
 * dialog styling ([35afca2](https://github.com/equinor/sdscoredev-components/commit/35afca2174f64c5cc038b6df081a2d53cabf291f))
 
 ## [2.14.4](https://github.com/equinor/sdscoredev-components/compare/2.14.3...2.14.4) (2022-06-29)
-
 
 ### Bug Fixes
 
@@ -21,20 +56,17 @@
 
 ## [2.14.3](https://github.com/equinor/sdscoredev-components/compare/2.14.2...2.14.3) (2022-06-29)
 
-
 ### Bug Fixes
 
 * some filter issue ([1e27d5e](https://github.com/equinor/sdscoredev-components/commit/1e27d5e718421ceb1a765dde3574724f83da023b))
 
 ## [2.14.2](https://github.com/equinor/sdscoredev-components/compare/2.14.1...2.14.2) (2022-06-28)
 
-
 ### Bug Fixes
 
 * missing regex for sort ([04cff04](https://github.com/equinor/sdscoredev-components/commit/04cff04e8eb2a81502e2701cd0ea4df9c1d873f4))
 
 ## [2.14.1](https://github.com/equinor/sdscoredev-components/compare/2.14.0...2.14.1) (2022-06-28)
-
 
 ### Bug Fixes
 
@@ -43,13 +75,11 @@
 
 # [2.14.0](https://github.com/equinor/sdscoredev-components/compare/2.13.1...2.14.0) (2022-06-28)
 
-
 ### Features
 
 * add cach storage of filter ([4956cbb](https://github.com/equinor/sdscoredev-components/commit/4956cbb12990802047de5a35e7e4ee6c6c4417b3))
 
 ## [2.13.1](https://github.com/equinor/sdscoredev-components/compare/2.13.0...2.13.1) (2022-06-24)
-
 
 ### Bug Fixes
 
@@ -57,13 +87,11 @@
 
 # [2.13.0](https://github.com/equinor/sdscoredev-components/compare/2.12.5...2.13.0) (2022-06-24)
 
-
 ### Features
 
 * add support for page pagination support ([2a511b4](https://github.com/equinor/sdscoredev-components/commit/2a511b4da6080e77008b2e6aac3b40d4edb38172))
 
 ## [2.12.5](https://github.com/equinor/sdscoredev-components/compare/2.12.4...2.12.5) (2022-06-17)
-
 
 ### Bug Fixes
 
@@ -71,13 +99,11 @@
 
 ## [2.12.4](https://github.com/equinor/sdscoredev-components/compare/2.12.3...2.12.4) (2022-06-17)
 
-
 ### Bug Fixes
 
 * forgot ([8ea3eb2](https://github.com/equinor/sdscoredev-components/commit/8ea3eb208bd3019bd68af706af5374b2dac04ab4))
 
 ## [2.12.3](https://github.com/equinor/sdscoredev-components/compare/2.12.2...2.12.3) (2022-06-17)
-
 
 ### Bug Fixes
 
@@ -87,13 +113,11 @@
 
 ## [2.12.2](https://github.com/equinor/sdscoredev-components/compare/2.12.1...2.12.2) (2022-06-16)
 
-
 ### Bug Fixes
 
 * cleanup ([5b628e6](https://github.com/equinor/sdscoredev-components/commit/5b628e67d8ca64bed79ca555b3239204a2dba6c3))
 
 ## [2.12.1](https://github.com/equinor/sdscoredev-components/compare/2.12.0...2.12.1) (2022-06-16)
-
 
 ### Bug Fixes
 
@@ -101,18 +125,15 @@
 
 # [2.12.0](https://github.com/equinor/sdscoredev-components/compare/2.11.0...2.12.0) (2022-06-16)
 
-
 ### Features
 
 * make onRender able to manipulate data ([17b2ef3](https://github.com/equinor/sdscoredev-components/commit/17b2ef3802aadf16ce67346acbcc541a97821faf))
 
 # [2.11.0](https://github.com/equinor/sdscoredev-components/compare/2.10.9...2.11.0) (2022-06-15)
 
-
 ### Bug Fixes
 
 * type error ([f59610b](https://github.com/equinor/sdscoredev-components/commit/f59610b3deaa1365809b1363c3669ff9dc78aee2))
-
 
 ### Features
 
@@ -120,13 +141,11 @@
 
 ## [2.10.9](https://github.com/equinor/sdscoredev-components/compare/2.10.8...2.10.9) (2022-06-14)
 
-
 ### Bug Fixes
 
 * column props not exposed ([b0a8671](https://github.com/equinor/sdscoredev-components/commit/b0a867179f9ecbd045bc55397495f851d80a0d78))
 
 ## [2.10.8](https://github.com/equinor/sdscoredev-components/compare/2.10.7...2.10.8) (2022-06-13)
-
 
 ### Bug Fixes
 
@@ -134,13 +153,11 @@
 
 ## [2.10.7](https://github.com/equinor/sdscoredev-components/compare/2.10.6...2.10.7) (2022-06-08)
 
-
 ### Bug Fixes
 
 * could not handle checkbox ([d304a8d](https://github.com/equinor/sdscoredev-components/commit/d304a8ddd683e58a21c87ab15c224a8862e03cb4))
 
 ## [2.10.6](https://github.com/equinor/sdscoredev-components/compare/2.10.5...2.10.6) (2022-06-07)
-
 
 ### Bug Fixes
 
@@ -148,13 +165,11 @@
 
 ## [2.10.5](https://github.com/equinor/sdscoredev-components/compare/2.10.4...2.10.5) (2022-06-07)
 
-
 ### Bug Fixes
 
 * add back plugins ([60c7fbf](https://github.com/equinor/sdscoredev-components/commit/60c7fbf7ea1bd1f3da5a3226512790bfb7ff451d))
 
 ## [2.10.2](https://github.com/equinor/sdscoredev-components/compare/2.10.1...2.10.2) (2022-06-07)
-
 
 ### Bug Fixes
 
@@ -164,13 +179,11 @@
 
 ## [2.10.1](https://github.com/equinor/sdscoredev-components/compare/2.10.0...2.10.1) (2022-06-01)
 
-
 ### Bug Fixes
 
 * remove text ([8b6cfb5](https://github.com/equinor/sdscoredev-components/commit/8b6cfb584ce6961da7fb4878684f3289a5d64f97))
 
 # [2.10.0](https://github.com/equinor/sdscoredev-components/compare/2.9.1...2.10.0) (2022-05-31)
-
 
 ### Features
 
@@ -178,13 +191,11 @@
 
 ## [2.9.1](https://github.com/equinor/sdscoredev-components/compare/2.9.0...2.9.1) (2022-05-31)
 
-
 ### Bug Fixes
 
 * old version ([cd4bc60](https://github.com/equinor/sdscoredev-components/commit/cd4bc60969f60f4d0ca0b3dcb8b462e099cc69a7))
 
 # [2.9.0](https://github.com/equinor/sdscoredev-components/compare/2.8.10...2.9.0) (2022-05-31)
-
 
 ### Features
 
@@ -192,13 +203,11 @@
 
 ## [2.8.10](https://github.com/equinor/sdscoredev-components/compare/2.8.9...2.8.10) (2022-05-19)
 
-
 ### Bug Fixes
 
 * add exit button to header i dialog and change some styling ([3c4e587](https://github.com/equinor/sdscoredev-components/commit/3c4e5870a60f6a76a066c97fb4b10b0a9b636537))
 
 ## [2.8.9](https://github.com/equinor/sdscoredev-components/compare/2.8.8...2.8.9) (2022-05-13)
-
 
 ### Bug Fixes
 
@@ -206,13 +215,11 @@
 
 ## [2.8.8](https://github.com/equinor/sdscoredev-components/compare/2.8.7...2.8.8) (2022-05-10)
 
-
 ### Bug Fixes
 
 * clean console log ([c85deff](https://github.com/equinor/sdscoredev-components/commit/c85deff397f7db26bca8ba37d205e58d256557fe))
 
 ## [2.8.7](https://github.com/equinor/sdscoredev-components/compare/2.8.6...2.8.7) (2022-05-10)
-
 
 ### Bug Fixes
 
@@ -220,13 +227,11 @@
 
 ## [2.8.6](https://github.com/equinor/sdscoredev-components/compare/2.8.5...2.8.6) (2022-05-04)
 
-
 ### Bug Fixes
 
 * checkbox cell not working ([c87e4c0](https://github.com/equinor/sdscoredev-components/commit/c87e4c0c0730077b9e0606e61d34ed343e1b2844))
 
 ## [2.8.5](https://github.com/equinor/sdscoredev-components/compare/2.8.4...2.8.5) (2022-05-04)
-
 
 ### Bug Fixes
 
@@ -234,13 +239,11 @@
 
 ## [2.8.4](https://github.com/equinor/sdscoredev-components/compare/2.8.3...2.8.4) (2022-05-03)
 
-
 ### Bug Fixes
 
 * required label wrong margins ([57446c9](https://github.com/equinor/sdscoredev-components/commit/57446c9791b85816ae3b0c1982da8590ed585ff0))
 
 ## [2.8.3](https://github.com/equinor/sdscoredev-components/compare/2.8.2...2.8.3) (2022-05-03)
-
 
 ### Bug Fixes
 
@@ -248,13 +251,11 @@
 
 ## [2.8.2](https://github.com/equinor/sdscoredev-components/compare/2.8.1...2.8.2) (2022-05-02)
 
-
 ### Bug Fixes
 
 * box shadow not resetting ([7ab06fb](https://github.com/equinor/sdscoredev-components/commit/7ab06fb597d5fb0c6a705d06bfa40149e62c5dd6))
 
 ## [2.8.1](https://github.com/equinor/sdscoredev-components/compare/2.8.0...2.8.1) (2022-04-29)
-
 
 ### Bug Fixes
 
@@ -262,11 +263,9 @@
 
 # [2.8.0](https://github.com/equinor/sdscoredev-components/compare/2.7.6...2.8.0) (2022-04-28)
 
-
 ### Bug Fixes
 
 * history was overwritten ([b5a8e48](https://github.com/equinor/sdscoredev-components/commit/b5a8e48b8d039ea8448bc66cb8d84e2f33b3fc1b))
-
 
 ### Features
 
@@ -274,13 +273,11 @@
 
 ## [2.7.6](https://github.com/equinor/sdscoredev-components/compare/2.7.5...2.7.6) (2022-04-27)
 
-
 ### Bug Fixes
 
 * some more errors ([a1498fa](https://github.com/equinor/sdscoredev-components/commit/a1498faaaae3a55882ac086dc229f3529f6731fc))
 
 ## [2.7.5](https://github.com/equinor/sdscoredev-components/compare/2.7.4...2.7.5) (2022-04-27)
-
 
 ### Bug Fixes
 
@@ -288,13 +285,11 @@
 
 ## [2.7.4](https://github.com/equinor/sdscoredev-components/compare/2.7.3...2.7.4) (2022-04-26)
 
-
 ### Bug Fixes
 
 * add variant to readonly field ([eae8a2a](https://github.com/equinor/sdscoredev-components/commit/eae8a2ac46423066bbe1d0f94214fc85199a417e))
 
 ## [2.7.3](https://github.com/equinor/sdscoredev-components/compare/2.7.2...2.7.3) (2022-04-26)
-
 
 ### Bug Fixes
 
@@ -302,13 +297,11 @@
 
 ## [2.7.2](https://github.com/equinor/sdscoredev-components/compare/2.7.1...2.7.2) (2022-04-26)
 
-
 ### Bug Fixes
 
 * error with form ([558058f](https://github.com/equinor/sdscoredev-components/commit/558058f0ced957da5ae8a24f69ad44e79db95971))
 
 ## [2.7.1](https://github.com/equinor/sdscoredev-components/compare/2.7.0...2.7.1) (2022-04-25)
-
 
 ### Bug Fixes
 
@@ -316,13 +309,11 @@
 
 # [2.7.0](https://github.com/equinor/sdscoredev-components/compare/2.6.9...2.7.0) (2022-04-22)
 
-
 ### Features
 
 * add hasChanged to useForm ([d90a06f](https://github.com/equinor/sdscoredev-components/commit/d90a06f0ac946d6f9f06614292d24aaf9b54b62f))
 
 ## [2.6.9](https://github.com/equinor/sdscoredev-components/compare/2.6.8...2.6.9) (2022-04-21)
-
 
 ### Bug Fixes
 
@@ -331,13 +322,11 @@
 
 ## [2.6.8](https://github.com/equinor/sdscoredev-components/compare/2.6.7...2.6.8) (2022-04-20)
 
-
 ### Bug Fixes
 
 * add type, fix console error ([85c8828](https://github.com/equinor/sdscoredev-components/commit/85c8828b5ffe176c1482f456ad4f1df4591ede73))
 
 ## [2.6.7](https://github.com/equinor/sdscoredev-components/compare/2.6.6...2.6.7) (2022-04-20)
-
 
 ### Bug Fixes
 
@@ -345,13 +334,11 @@
 
 ## [2.6.6](https://github.com/equinor/sdscoredev-components/compare/2.6.5...2.6.6) (2022-04-20)
 
-
 ### Bug Fixes
 
 * rerenders forever when useForm prop has empty object ([5d35e36](https://github.com/equinor/sdscoredev-components/commit/5d35e36f27590b9371755669e8df4d84fb389668))
 
 ## [2.6.5](https://github.com/equinor/sdscoredev-components/compare/2.6.4...2.6.5) (2022-04-19)
-
 
 ### Bug Fixes
 
@@ -359,20 +346,17 @@
 
 ## [2.6.4](https://github.com/equinor/sdscoredev-components/compare/2.6.3...2.6.4) (2022-04-19)
 
-
 ### Bug Fixes
 
 * add typing for onBlur in inputProps ([3a6edb8](https://github.com/equinor/sdscoredev-components/commit/3a6edb8eea302e806ef1787f952d1244fb775678))
 
 ## [2.6.3](https://github.com/equinor/sdscoredev-components/compare/2.6.2...2.6.3) (2022-04-19)
 
-
 ### Bug Fixes
 
 * add onBlur to prevent excessive reloads ([c3648a1](https://github.com/equinor/sdscoredev-components/commit/c3648a11938136406c172b18646108fef8baf44e))
 
 ## [2.6.2](https://github.com/equinor/sdscoredev-components/compare/2.6.1...2.6.2) (2022-04-12)
-
 
 ### Bug Fixes
 
@@ -381,19 +365,16 @@
 
 ## [2.6.1](https://github.com/equinor/sdscoredev-components/compare/2.6.0...2.6.1) (2022-04-12)
 
-
 ### Bug Fixes
 
 * improve readonly and form ([bd5118b](https://github.com/equinor/sdscoredev-components/commit/bd5118bd3158a0b3dcaad9a962a187b7095e0d9b))
 
 # [2.6.0](https://github.com/equinor/sdscoredev-components/compare/2.5.3...2.6.0) (2022-04-08)
 
-
 ### Bug Fixes
 
 * 0 was shown when bottom toolbar was empty ([15906eb](https://github.com/equinor/sdscoredev-components/commit/15906eb668d40a82f4de34d978c1120a8d5fe7ae))
 * padding and wrapping fixes ([e9b401a](https://github.com/equinor/sdscoredev-components/commit/e9b401a6b556eaa7870436d68dc823d6f9d5a2c7))
-
 
 ### Features
 
@@ -402,13 +383,11 @@
 
 ## [2.5.3](https://github.com/equinor/sdscoredev-components/compare/2.5.2...2.5.3) (2022-04-07)
 
-
 ### Bug Fixes
 
 * cell items not able to receive mouse events ([bb4bb03](https://github.com/equinor/sdscoredev-components/commit/bb4bb03bd0fdb01f3815a821210e7d9d51fcdb7f))
 
 ## [2.5.2](https://github.com/equinor/sdscoredev-components/compare/2.5.1...2.5.2) (2022-04-07)
-
 
 ### Bug Fixes
 
@@ -416,18 +395,15 @@
 
 ## [2.5.1](https://github.com/equinor/sdscoredev-components/compare/2.5.0...2.5.1) (2022-04-06)
 
-
 ### Bug Fixes
 
 * validation error height was gone ([a96d087](https://github.com/equinor/sdscoredev-components/commit/a96d08793d60bdb7fbb012cb0cddff86db208c87))
 
 # [2.5.0](https://github.com/equinor/sdscoredev-components/compare/2.4.0...2.5.0) (2022-04-06)
 
-
 ### Bug Fixes
 
 * some tree errors ([50bd38b](https://github.com/equinor/sdscoredev-components/commit/50bd38b15a8601619526497f74519f6e89087e4d))
-
 
 ### Features
 
@@ -436,12 +412,10 @@
 
 # [2.4.0](https://github.com/equinor/sdscoredev-components/compare/2.3.7...2.4.0) (2022-04-01)
 
-
 ### Bug Fixes
 
 * background color for truncate cell wrong ([d22f4f4](https://github.com/equinor/sdscoredev-components/commit/d22f4f46c03a2854384f35555952f9fa5d2e95a3))
 * dependency failure ([91948a3](https://github.com/equinor/sdscoredev-components/commit/91948a3d0cf7a26cf6444a8dc056bf7c9db59bea))
-
 
 ### Features
 
@@ -449,20 +423,17 @@
 
 ## [2.3.7](https://github.com/equinor/sdscoredev-components/compare/2.3.6...2.3.7) (2022-03-30)
 
-
 ### Bug Fixes
 
 * revert storybook commit ([8754dce](https://github.com/equinor/sdscoredev-components/commit/8754dce2131ff89fdf9510463487054295fd1c93))
 
 ## [2.3.6](https://github.com/equinor/sdscoredev-components/compare/2.3.5...2.3.6) (2022-03-30)
 
-
 ### Bug Fixes
 
 * cleanup changelog ([e2f9c29](https://github.com/equinor/sdscoredev-components/commit/e2f9c2900f2c134587e6fa53bcf1fbd40258074a))
 
 ## [2.3.4](https://github.com/equinor/sdscoredev-components/compare/2.3.3...2.3.4) (2022-03-30)
-
 
 ### Bug Fixes
 
@@ -471,13 +442,11 @@
 
 ## [2.3.2](https://github.com/equinor/sdscoredev-components/compare/2.3.1...2.3.2) (2022-03-25)
 
-
 ### Bug Fixes
 
 * add checkbox event and refactor ([12e3e8b](https://github.com/equinor/sdscoredev-components/commit/12e3e8b8a98346ee8a718e9e794a62d882012411))
 
 ## [2.3.1](https://github.com/equinor/sdscoredev-components/compare/2.3.0...2.3.1) (2022-03-24)
-
 
 ### Bug Fixes
 
@@ -486,13 +455,11 @@
 
 # [2.3.0](https://github.com/equinor/sdscoredev-components/compare/2.2.3...2.3.0) (2022-03-23)
 
-
 ### Features
 
 * Add tree structure plugin ([11d1f9e](https://github.com/equinor/sdscoredev-components/commit/11d1f9e2f4d8db51e386b4d2770929e02ee47524))
 
 ## [2.2.3](https://github.com/equinor/sdscoredev-components/compare/2.2.2...2.2.3) (2022-03-23)
-
 
 ### Bug Fixes
 
@@ -500,13 +467,11 @@
 
 ## [2.2.2](https://github.com/equinor/sdscoredev-components/compare/2.2.1...2.2.2) (2022-03-21)
 
-
 ### Bug Fixes
 
 * add compability key to ColumnProps ([ccf99a6](https://github.com/equinor/sdscoredev-components/commit/ccf99a6d003342a53028748f8d2ebb1f56a26588))
 
 ## [2.2.1](https://github.com/equinor/sdscoredev-components/compare/2.2.0...2.2.1) (2022-03-18)
-
 
 ### Bug Fixes
 
@@ -515,13 +480,11 @@
 
 # [2.2.0](https://github.com/equinor/sdscoredev-components/compare/2.1.0...2.2.0) (2022-03-14)
 
-
 ### Features
 
 * add session cache for column selector ([f1b921b](https://github.com/equinor/sdscoredev-components/commit/f1b921b04e37da7370d3e32c481eae3844d60959))
 
 # [2.1.0](https://github.com/equinor/sdscoredev-components/compare/2.0.1...2.1.0) (2022-03-11)
-
 
 ### Features
 
@@ -529,18 +492,15 @@
 
 ## [2.0.1](https://github.com/equinor/sdscoredev-components/compare/2.0.0...2.0.1) (2022-03-10)
 
-
 ### Bug Fixes
 
 * missing unique key ([22894ca](https://github.com/equinor/sdscoredev-components/commit/22894ca7e3e86ec840f4a44f503cb4234cf65846))
 
 # [2.0.0](https://github.com/equinor/sdscoredev-components/compare/1.3.1...2.0.0) (2022-03-10)
 
-
 ### Features
 
 * bump major ([6c057bf](https://github.com/equinor/sdscoredev-components/commit/6c057bf4397a975cc3ec596ade88e1cb3eb9c736))
-
 
 ### BREAKING CHANGES
 
@@ -548,13 +508,11 @@
 
 ## [1.3.1](https://github.com/equinor/sdscoredev-components/compare/1.3.0...1.3.1) (2022-03-10)
 
-
 ### Bug Fixes
 
 * remove cach ([f482df2](https://github.com/equinor/sdscoredev-components/commit/f482df2d12b4c692271a76f5b2e5f38eaede496c))
 
 # [1.3.0](https://github.com/equinor/sdscoredev-components/compare/1.2.0...1.3.0) (2022-03-10)
-
 
 ### Features
 
@@ -562,37 +520,31 @@
 
 # [1.2.0](https://github.com/equinor/sdscoredev-components/compare/1.1.0...1.2.0) (2022-03-08)
 
+### Bug Fixes
+
+* ref should be optional ([f4797f6](https://github.com/equinor/sdscoredev-components/commit/f4797f69249d1f45a28d309381bbed17515a808f))
+
+### Features
+
+* new minor datatable functionality ([bdf3ea6](https://github.com/equinor/sdscoredev-components/commit/bdf3ea6ca13401e82a2ac79b2063b01f2f56923e))
+
+# [1.2.0](https://github.com/equinor/sdscoredev-components/compare/1.1.0...1.2.0) (2022-03-08)
 
 ### Bug Fixes
 
 * ref should be optional ([f4797f6](https://github.com/equinor/sdscoredev-components/commit/f4797f69249d1f45a28d309381bbed17515a808f))
 
-
 ### Features
 
 * new minor datatable functionality ([bdf3ea6](https://github.com/equinor/sdscoredev-components/commit/bdf3ea6ca13401e82a2ac79b2063b01f2f56923e))
 
 # [1.2.0](https://github.com/equinor/sdscoredev-components/compare/1.1.0...1.2.0) (2022-03-08)
 
-
-### Bug Fixes
-
-* ref should be optional ([f4797f6](https://github.com/equinor/sdscoredev-components/commit/f4797f69249d1f45a28d309381bbed17515a808f))
-
-
 ### Features
 
 * new minor datatable functionality ([bdf3ea6](https://github.com/equinor/sdscoredev-components/commit/bdf3ea6ca13401e82a2ac79b2063b01f2f56923e))
 
 # [1.2.0](https://github.com/equinor/sdscoredev-components/compare/1.1.0...1.2.0) (2022-03-08)
-
-
-### Features
-
-* new minor datatable functionality ([bdf3ea6](https://github.com/equinor/sdscoredev-components/commit/bdf3ea6ca13401e82a2ac79b2063b01f2f56923e))
-
-# [1.2.0](https://github.com/equinor/sdscoredev-components/compare/1.1.0...1.2.0) (2022-03-08)
-
 
 ### Features
 
@@ -600,13 +552,11 @@
 
 # [1.1.0](https://github.com/equinor/sdscoredev-components/compare/1.0.0...1.1.0) (2022-03-08)
 
-
 ### Features
 
 * add defaultQuery ([06024c4](https://github.com/equinor/sdscoredev-components/commit/06024c49427646c473870a7539d00d0ce245d4c7))
 
 # 1.0.0 (2022-03-07)
-
 
 ### Features
 
@@ -614,13 +564,11 @@
 
 # [1.6.0](https://github.com/equinor/sdscoredev-components/compare/1.5.3...1.6.0) (2022-03-04)
 
-
 ### Features
 
 * sorting and optional columns ([c8175fe](https://github.com/equinor/sdscoredev-components/commit/c8175fec94e31e9d2cdf3987df34693415092deb))
 
 ## [1.5.3](https://github.com/equinor/sdscoredev-components/compare/1.5.2...1.5.3) (2022-03-03)
-
 
 ### Bug Fixes
 
@@ -628,13 +576,11 @@
 
 ## [1.5.2](https://github.com/equinor/sdscoredev-components/compare/1.5.1...1.5.2) (2022-03-03)
 
-
 ### Bug Fixes
 
 * fields not reset when cancel ([2627236](https://github.com/equinor/sdscoredev-components/commit/262723628624feabba5ba3ad17792728f3130a8d))
 
 ## [1.5.1](https://github.com/equinor/sdscoredev-components/compare/1.5.0...1.5.1) (2022-03-02)
-
 
 ### Bug Fixes
 
@@ -642,14 +588,12 @@
 
 # [1.5.0](https://github.com/equinor/sdscoredev-components/compare/1.4.6...1.5.0) (2022-03-01)
 
-
 ### Features
 
 * add rendering with props ([3e7ed36](https://github.com/equinor/sdscoredev-components/commit/3e7ed36c8effea2c17ebc68b9925b7019d72bc6d))
 * add truncated cell ([eb5f629](https://github.com/equinor/sdscoredev-components/commit/eb5f6292a463aae666eb4ec7af305b9cc819dcbb))
 
 ## [1.4.6](https://github.com/equinor/sdscoredev-components/compare/1.4.5...1.4.6) (2022-03-01)
-
 
 ### Bug Fixes
 
@@ -659,13 +603,11 @@
 
 ## [1.4.5](https://github.com/equinor/sdscoredev-components/compare/1.4.4...1.4.5) (2022-03-01)
 
-
 ### Bug Fixes
 
 * wrong default pagination ([83941be](https://github.com/equinor/sdscoredev-components/commit/83941be8f38520525f1bb891ae7c1333c341e9d5))
 
 ## [1.4.4](https://github.com/equinor/sdscoredev-components/compare/1.4.3...1.4.4) (2022-02-28)
-
 
 ### Bug Fixes
 
@@ -674,7 +616,6 @@
 
 ## [1.4.3](https://github.com/equinor/sdscoredev-components/compare/1.4.2...1.4.3) (2022-02-28)
 
-
 ### Bug Fixes
 
 * action ([f0d6faa](https://github.com/equinor/sdscoredev-components/commit/f0d6faa5c754b536c992e35e37a863f5df4aeeae))
@@ -682,13 +623,11 @@
 
 ## [1.4.2](https://github.com/equinor/sdscoredev-components/compare/1.4.1...1.4.2) (2022-02-28)
 
-
 ### Bug Fixes
 
 * move packages ([2fde80a](https://github.com/equinor/sdscoredev-components/commit/2fde80aefd20c6222a5dc7efebbc72a613f7fa5f))
 
 ## [1.4.1](https://github.com/equinor/sdscoredev-components/compare/1.4.0...1.4.1) (2022-02-28)
-
 
 ### Bug Fixes
 
@@ -696,12 +635,10 @@
 
 # [1.4.0](https://github.com/equinor/sdscoredev-components/compare/1.3.2...1.4.0) (2022-02-28)
 
-
 ### Bug Fixes
 
 * remove dist folder ([f032ef0](https://github.com/equinor/sdscoredev-components/commit/f032ef088880af6ccace8201502c5359ce71d8c0))
 * wrong pagination parse ([da2940e](https://github.com/equinor/sdscoredev-components/commit/da2940ea7c186eb9a9c81d066c8ac493a88e7405))
-
 
 ### Features
 
@@ -709,13 +646,11 @@
 
 ## [1.3.2](https://github.com/equinor/sdscoredev-components/compare/1.3.1...1.3.2) (2022-02-25)
 
-
 ### Bug Fixes
 
 * columns not showing in dev (try 1) ([b144ea7](https://github.com/equinor/sdscoredev-components/commit/b144ea75377a17e38694667d469205867f876e92))
 
 ## [1.3.1](https://github.com/equinor/sdscoredev-components/compare/1.3.0...1.3.1) (2022-02-25)
-
 
 ### Bug Fixes
 
@@ -723,13 +658,11 @@
 
 # [1.3.0](https://github.com/equinor/sdscoredev-components/compare/1.2.2...1.3.0) (2022-02-24)
 
-
 ### Features
 
 * update callback allow any object props ([80ba42f](https://github.com/equinor/sdscoredev-components/commit/80ba42f33b65e3101ea17652ac095b76f97c97f6))
 
 ## [1.2.2](https://github.com/equinor/sdscoredev-components/compare/1.2.1...1.2.2) (2022-02-24)
-
 
 ### Bug Fixes
 
@@ -738,13 +671,11 @@
 
 ## [1.2.1](https://github.com/equinor/sdscoredev-components/compare/1.2.0...1.2.1) (2022-02-23)
 
-
 ### Bug Fixes
 
 * try new name ([cf49d47](https://github.com/equinor/sdscoredev-components/commit/cf49d476ddd8f171c51dda5e8a6a58dbb9a2051e))
 
 # [1.2.0](https://github.com/equinor/sdscoredev-components/compare/v1.1.1...1.2.0) (2022-02-23)
-
 
 ### Bug Fixes
 
@@ -752,7 +683,6 @@
 * default pkgDir ([93d76ff](https://github.com/equinor/sdscoredev-components/commit/93d76ffea9e8c4c6be5c64ddda38f9d56d39957a))
 * try again ([4aad51b](https://github.com/equinor/sdscoredev-components/commit/4aad51b0a18e726de37c300981992e75847b0a47))
 * wrong pkgRoot ([dcef938](https://github.com/equinor/sdscoredev-components/commit/dcef9380ab2e7cc5781d65114fa176aefaf1394c))
-
 
 ### Features
 
