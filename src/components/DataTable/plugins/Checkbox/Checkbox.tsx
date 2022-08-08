@@ -1,13 +1,10 @@
-import { Typography } from '@equinor/eds-core-react';
 import React, { forwardRef, useContext, useEffect, useImperativeHandle, useRef } from 'react';
-import { CheckboxProps, CheckboxRef } from '.';
-import { DispatchContext, StateContext } from '../../DataTableStore';
 
-export const Checkbox = forwardRef<
-    CheckboxRef,
-    CheckboxProps
->((props: CheckboxProps, ref) => {
-    const { onChange, getKey } = props
+import { DispatchContext, StateContext } from '../../DataTableStore';
+import { CheckboxProps, CheckboxRef } from './index';
+
+export const Checkbox = forwardRef<CheckboxRef, CheckboxProps>((props: CheckboxProps, ref) => {
+    const { onChange, getKey, visible } = props;
     const state: any = useContext(StateContext);
     // const init = useRef(0);
     const dispatch: any = useContext(DispatchContext);
@@ -16,9 +13,15 @@ export const Checkbox = forwardRef<
      * TODO: This fires one time at initialization. Must do something to prevent it. Maybe with a useRef count.
      */
     useEffect(() => {
-        if (typeof onChange === 'function') onChange(state.checkboxReducer.selected)
-    }, [state.checkboxReducer.selected])
+        if (typeof onChange === 'function') onChange(state.checkboxReducer.selected);
+    }, [state.checkboxReducer.selected]);
 
+    /**
+     * Optional prop 'visible' to show or hide the checkbox column
+     */
+    useEffect(() => {
+        dispatch({ type: 'SET_VISIBLE', payload: visible });
+    }, [visible]);
 
     /**
      * Exposes a way to check a checkbox by reference
@@ -28,12 +31,10 @@ export const Checkbox = forwardRef<
     const check = (item: any) => {
         let result = [];
 
-        result = [
-            ...new Set([...state.checkboxReducer.selected, item]),
-        ];
+        result = [...new Set([...state.checkboxReducer.selected, item])];
 
         dispatch({ type: 'SET_SELECTED', payload: result });
-    }
+    };
 
     /**
      * Exposes a way to uncheck a checkbox by reference
@@ -41,7 +42,7 @@ export const Checkbox = forwardRef<
      * @param item any
      */
     const uncheck = (item: any) => {
-        let result = [...state.checkboxReducer.selected];
+        const result = [...state.checkboxReducer.selected];
 
         result.splice(
             state.checkboxReducer.selected.findIndex((x: any) => x[getKey || 'id'] === item[getKey || 'id']),
@@ -49,9 +50,9 @@ export const Checkbox = forwardRef<
         );
 
         dispatch({ type: 'SET_SELECTED', payload: result });
-    }
+    };
 
     useImperativeHandle(ref, () => ({ check, uncheck }), [state.checkboxReducer.selected]);
 
     return <></>;
-})
+});

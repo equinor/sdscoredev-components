@@ -1,5 +1,8 @@
-import React, { FunctionComponent, Ref } from 'react';
-import { ReducerProp } from 'types';
+import React, { Ref } from 'react';
+
+import { Density } from '@equinor/eds-core-react';
+
+import { ReducerProp } from '../../types';
 import { columnSelectorReducer } from './columnSelectorReducer';
 
 export type ColumnSelectorRef = {
@@ -16,6 +19,21 @@ export type ColumnSelectorRef = {
      */
     setColumns: (column: Array<string>, visible: boolean) => void;
 } | null;
+
+interface DialogStyle {
+    /**
+     * The number of columns used to divide the columns options; default is `2`
+     */
+    columnsNumber?: number;
+    /**
+     * The number of rows to divide the columns options; default is `5`
+     */
+    rowsNumber?: number;
+    /**
+     * Whether the columns checkbox-options are in compact or comfortable mode; defaults to "comfortable"
+     */
+    density?: Density;
+}
 
 export type ColumnSelectorProps = {
     /**
@@ -38,6 +56,14 @@ export type ColumnSelectorProps = {
      * Storage, either `window.localStorage` or `window.sessionStorage`, default is `window.sessionStorage`
      */
     storage?: Storage;
+    /**
+     * If set, it will show an Apply button; defaults to "false"
+     */
+    showApplyButton?: boolean;
+    /**
+     * Utilized to change the style of the `Dialog`
+     */
+    dialogStyle?: DialogStyle;
 };
 
 const ColumnSelector: React.FC<ColumnSelectorProps> & ReducerProp = (props) => {

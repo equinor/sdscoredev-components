@@ -1,49 +1,57 @@
-const casual = require('casual-browserify');
+import casual from 'casual-browserify';
 
-casual.define('user', function() {
-	return {
+casual.define('user', () => {
+    return {
         id: casual.uuid,
-		email: casual.email,
-		firstname: casual.first_name,
-		lastname: casual.last_name,
+        email: casual.email,
+        firstName: casual.first_name,
+        lastName: casual.last_name,
         title: casual.title,
         country: casual.country,
-        active: casual.boolean
-	};
+        active: casual.boolean,
+    };
 });
 
-casual.define('tree', function() {
+casual.define('tree', () => {
     return {
-		category: casual.title,
-		createdBy: casual.username,
-		active: casual.boolean,
-	};
-})
+        category: casual.title,
+        createdBy: casual.username,
+        active: casual.boolean,
+    };
+});
 
-export const users = (count: number) => {
-    return Array.apply(null, {length: count}).map(() => casual.user)
-}
+export const getUsers = (count: number) => {
+    const temp = new Array(count).fill({});
+    const users = temp.map(() => casual['user'] || 3);
+    return users;
+};
 
-export const tree = (count: number, maxDepth: number = 5, maxChildCount: number = 12) => {
+export const getTree = (count: number, maxDepth: number = 5, maxChildCount: number = 12) => {
     let id = 0;
 
-    const getTree = (itemsCount: any) => Array.apply(null, {length: itemsCount}).map(() => casual.tree)
+    const getTreeStructure = (itemsCount: any) => {
+        const tempTree = new Array(itemsCount).fill({});
+        return tempTree.map(() => casual['tree']);
+    };
 
     const generateTree = (tree: any, depth: number) => {
-        depth++
-        
-        return tree.map((item: any, index: number) => {
-            id++;
-            const tmpMaxDepth = Math.floor(Math.random() * maxDepth)
-            if (depth >= tmpMaxDepth) {
-                return {...item, id}
-            } else {
-                return {...item, id, children: generateTree(getTree(Math.floor(Math.random() * maxChildCount)), depth)}
-            }
-        })
-    }
+        const usableDepth = depth + 1;
 
-    const newTree = generateTree(getTree(count), 0)
+        return tree.map((item: any, index: number) => {
+            id += 1;
+            const tmpMaxDepth = Math.floor(Math.random() * maxDepth);
+            if (usableDepth >= tmpMaxDepth) {
+                return { ...item, id };
+            }
+            return {
+                ...item,
+                id,
+                children: generateTree(getTreeStructure(Math.floor(Math.random() * maxChildCount)), usableDepth),
+            };
+        });
+    };
+
+    const newTree = generateTree(getTreeStructure(count), 0);
 
     return newTree;
-}
+};

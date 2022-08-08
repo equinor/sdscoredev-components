@@ -1,10 +1,12 @@
 /* eslint-disable react/jsx-pascal-case */
 import React, { useContext, useEffect } from 'react';
+import styled from 'styled-components';
+
 import { NativeSelect, Pagination as EDSPagination } from '@equinor/eds-core-react';
 import { tokens } from '@equinor/eds-tokens';
-import styled from 'styled-components';
+
 import { DispatchContext, StateContext } from '../../DataTableStore';
-import { PaginationProps } from '.';
+import { PaginationProps } from './index';
 
 const {
     colors: {
@@ -43,7 +45,7 @@ export const Pagination: React.FC<InternalPaginationProps> = ({
     }
 
     useEffect(() => {
-        !pageSize && defaultPageSize && dispatch({ type: 'SET_PAGE_SIZE', payload: defaultPageSize });
+        if (!pageSize && defaultPageSize) dispatch({ type: 'SET_PAGE_SIZE', payload: defaultPageSize });
     }, []);
 
     /**

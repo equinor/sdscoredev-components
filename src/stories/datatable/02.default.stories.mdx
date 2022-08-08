@@ -1,7 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable, Source } from '@storybook/addon-docs';
 import { DataTable } from '../../components/DataTable';
-import { users } from '../data';
-
+import { getUsers } from '../data';
 
 <Meta title="Library/DataTable" component={DataTable} />
 
@@ -10,19 +9,19 @@ import { users } from '../data';
 This is an example of a default table with minimum plugins activated.
 
 <Canvas>
-  <Story name="Default example">
-      {() => {
-      const { Column, ColumnSelector, StickyHeader } = DataTable;
-      return (
-          <DataTable data={users(10)}>
-            <Column id="id">Uuid</Column>
-            <Column id="firstname">First name</Column>
-            <Column id="lastname">Last name</Column>
-            <Column id="email">Email</Column>
-            <Column id="title">Title</Column>
-            <Column id="country">Country</Column>
-        </DataTable>
-      )
-    }}
-  </Story>
+    <Story name="Default example">
+        {() => {
+            const { Column, ColumnSelector, StickyHeader } = DataTable;
+            return (
+                <DataTable data={getUsers(10)}>
+                    <Column id="id">Uuid</Column>
+                    <Column id="firstName">First name</Column>
+                    <Column id="lastName">Last name</Column>
+                    <Column id="email">Email</Column>
+                    <Column id="title">Title</Column>
+                    <Column id="country">Country</Column>
+                </DataTable>
+            );
+        }}
+    </Story>
 </Canvas>

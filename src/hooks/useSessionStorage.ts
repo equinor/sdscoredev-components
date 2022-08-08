@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const useSessionStorage = <T>(key: string, initialValue: T) => {
     const [storedValue, setStoredValue] = useState<T>(() => {
-        if (typeof window === "undefined") {
+        if (typeof window === 'undefined') {
             return initialValue;
         }
 
@@ -27,11 +27,11 @@ const useSessionStorage = <T>(key: string, initialValue: T) => {
             // Save state
             setStoredValue(valueToStore);
             // Save to local storage
-            if (typeof window !== "undefined") {
+            if (typeof window !== 'undefined') {
                 window.sessionStorage.setItem(key, JSON.stringify(valueToStore));
             }
         } catch (error) {
-        // A more advanced implementation would handle the error case
+            // A more advanced implementation would handle the error case
             console.log(error);
         }
     };

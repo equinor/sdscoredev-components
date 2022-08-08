@@ -1,8 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { Meta, Story, Canvas, ArgsTable, Source } from '@storybook/addon-docs';
 import { DataTable, columnSelectorReducer } from '../../components/DataTable';
-import { users } from '../data';
-
+import { getUsers } from '../data';
 
 <Meta title="Library/DataTable" component={DataTable} />
 
@@ -11,37 +10,41 @@ import { users } from '../data';
 This is an example of a table with sticky header. It is dependent on the `columnSelectorReducer` for now.
 
 <Canvas>
-  <Story name="Stickyheader example">
-      {() => {
-      const { Column, ColumnSelector, StickyHeader } = DataTable;
-      const stickyHeaderRef = useRef(null);
-      const handlePageScroll = () => {
-        stickyHeaderRef.current.handleScroll()
-      }
-      const handlePageResize = () => {
-        stickyHeaderRef.current.handleResize()
-      }
-      useEffect(() => {
-        if (stickyHeaderRef.current) {
-          document.addEventListener('scroll', handlePageScroll)
-          window.addEventListener('resize', handlePageResize)
-        }
-        return () => {
-          document.removeEventListener('scroll', handlePageScroll)
-          window.removeEventListener('resize', handlePageResize)
-        }
-      }, [stickyHeaderRef.current])
-      return (
-          <DataTable data={users(40)} onScroll={() => stickyHeaderRef.current.handleScroll()} reducers={{ columnSelectorReducer }}>
-            <Column id="id">Uuid</Column>
-            <Column id="firstname">First name</Column>
-            <Column id="lastname">Last name</Column>
-            <Column id="email">Email</Column>
-            <Column id="title">Title</Column>
-            <Column id="country">Country</Column>
-            <StickyHeader threshold={0} ref={stickyHeaderRef} />
-        </DataTable>
-      )
-    }}
-  </Story>
+    <Story name="Stickyheader example">
+        {() => {
+            const { Column, ColumnSelector, StickyHeader } = DataTable;
+            const stickyHeaderRef = useRef(null);
+            const handlePageScroll = () => {
+                stickyHeaderRef.current.handleScroll();
+            };
+            const handlePageResize = () => {
+                stickyHeaderRef.current.handleResize();
+            };
+            useEffect(() => {
+                if (stickyHeaderRef.current) {
+                    document.addEventListener('scroll', handlePageScroll);
+                    window.addEventListener('resize', handlePageResize);
+                }
+                return () => {
+                    document.removeEventListener('scroll', handlePageScroll);
+                    window.removeEventListener('resize', handlePageResize);
+                };
+            }, [stickyHeaderRef.current]);
+            return (
+                <DataTable
+                    data={getUsers(40)}
+                    onScroll={() => stickyHeaderRef.current.handleScroll()}
+                    reducers={{ columnSelectorReducer }}
+                >
+                    <Column id="id">Uuid</Column>
+                    <Column id="firstName">First name</Column>
+                    <Column id="lastName">Last name</Column>
+                    <Column id="email">Email</Column>
+                    <Column id="title">Title</Column>
+                    <Column id="country">Country</Column>
+                    <StickyHeader threshold={0} ref={stickyHeaderRef} />
+                </DataTable>
+            );
+        }}
+    </Story>
 </Canvas>

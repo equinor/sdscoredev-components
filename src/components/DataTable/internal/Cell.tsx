@@ -1,8 +1,11 @@
+/* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
-import styled from 'styled-components';
-import { CellProps, Table } from '@equinor/eds-core-react';
-import { resolve } from '../../helpers';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+import { CellProps, Table } from '@equinor/eds-core-react';
+
+import { resolve } from '../../utils';
 
 const StyledCell = styled(Table.Cell)<CellProps & { slim?: boolean; truncate?: number }>`
     border-top: unset !important;

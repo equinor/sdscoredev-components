@@ -1,8 +1,8 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import React, { createContext, ReactElement, useReducer } from 'react';
-import createPersistedReducer from '../Utils/createPersistedReducer';
-import { useCombinedReducers } from '../../hooks/useCombinedReducer';
-import { GeneralStoreProps, ReducerProp } from 'types';
+
+import createPersistedReducer from '../createPersistedReducer';
+import { useCombinedReducers } from '../utils';
+import { DataTableStoreProps, ReducerProp } from './types';
 
 export const StateContext = createContext({});
 export const DispatchContext = createContext({});
@@ -17,7 +17,7 @@ export const DataTableStore: React.FC<GeneralStoreProps> = React.memo((props) =>
      * @returns
      */
     const getCacheKey = (component: any) => {
-        return window.location.origin + component.props.cacheKey + '|' + component.type.displayName;
+        return `${window.location.origin + component.props.cacheKey}|${component.type.displayName}`;
     };
 
     /**
@@ -98,13 +98,14 @@ export const DataTableStore: React.FC<GeneralStoreProps> = React.memo((props) =>
             <StateContext.Provider value={state}>
                 <>
                     {children}
-                    {Object.entries(reducers).map((reducer: any, key: number) => {
-                        const component = reducer[1].component;
+                    {Object.entries(reducers).map((reducer: any, index: number) => {
+                        const { component } = reducer[1];
+                        const key = `key:${index}`;
                         if (component) {
                             return <React.Fragment key={key}>{component({ state, dispatch })}</React.Fragment>;
                         }
 
-                        return <React.Fragment key={key}></React.Fragment>;
+                        return <React.Fragment key={key} />;
                     })}
                 </>
             </StateContext.Provider>

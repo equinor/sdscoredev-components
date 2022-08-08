@@ -1,7 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ODataQueryProps } from '.';
+
+import { ODataQueryProps } from './index';
 import FilterParser from './parser';
 
 export const ODataQuery: React.FC<ODataQueryProps> = ({ state, dispatch }) => {
@@ -28,7 +28,7 @@ export const ODataQuery: React.FC<ODataQueryProps> = ({ state, dispatch }) => {
             const items = sort.split(',');
 
             dispatch({ type: 'SET_ORDER_BY', payload: items[0] });
-            dispatch({ type: 'SET_DIRECTION', payload: items[1] === 'ascending' ? true : false });
+            dispatch({ type: 'SET_DIRECTION', payload: items[1] === 'ascending' });
         }
     };
 
@@ -40,7 +40,7 @@ export const ODataQuery: React.FC<ODataQueryProps> = ({ state, dispatch }) => {
 
         dispatch({ type: 'SET_SEARCH_STRING', payload: location.search });
 
-        let filterQuery = new FilterParser(params, { logging: false, defaultPagination: '1,10' }).parse();
+        const filterQuery = new FilterParser(params, { logging: false, defaultPagination: '1,10' }).parse();
         dispatch({ type: 'SET_QUERY', payload: filterQuery });
     }, [location]);
 

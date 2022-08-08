@@ -1,193 +1,173 @@
-import React, {
-  forwardRef,
-  ForwardRefExoticComponent,
-  ForwardRefRenderFunction,
-  PropsWithoutRef,
-  RefAttributes,
-  useContext,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-} from "react";
-import { Button, Tooltip, Checkbox, Typography } from "@equinor/eds-core-react";
-import styled from "styled-components";
-import { Dialog, DialogRef } from "../../../Dialog";
-import { DispatchContext, StateContext } from "../../DataTableStore";
-import { ColumnSelectorProps, ColumnSelectorRef } from ".";
+import { CompactDialog, CompactDialogRef } from 'components/CompactDialog';
+import { Dialog, DialogRef } from 'components/Dialog';
+import React, { forwardRef, useContext, useImperativeHandle, useRef } from 'react';
 
-const OptionsWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, auto);
-  grid-template-rows: repeat(5, auto);
-  grid-auto-flow: row;
-  margin-top: 8px;
-`;
+import { Button, Tooltip } from '@equinor/eds-core-react';
+
+import { DispatchContext, StateContext } from '../../DataTableStore';
+import ColumnSelectorDialog from './ColumnSelectorDialog';
+import { ColumnSelectorProps, ColumnSelectorRef } from './index';
 
 export type InternalColumnSelectorProps = {
-  columns?: any;
-  visibleColumns?: Array<string>;
-  onChange?: Function;
+    columns?: any;
+    visibleColumns?: Array<string>;
+    onChange?: Function;
 } & ColumnSelectorProps;
 
-export const ColumnSelector = forwardRef<
-  ColumnSelectorRef,
-  InternalColumnSelectorProps
->((props: InternalColumnSelectorProps, ref) => {
-  const { title, icon, onChange } = props;
-  const state: any = useContext(StateContext);
-  const dispatch: any = useContext(DispatchContext);
-  const dialogRef = useRef<DialogRef>(null);
-  const init = useRef<boolean>(false);
+export const ColumnSelector = forwardRef<ColumnSelectorRef, InternalColumnSelectorProps>(
+    (props: InternalColumnSelectorProps, ref) => {
+        const { title, icon, onChange, dialogStyle, showApplyButton } = props;
+        const { columnsNumber, rowsNumber, density } = dialogStyle || {};
+        const state: any = useContext(StateContext);
+        const dispatch: any = useContext(DispatchContext);
 
-  /**
-   * Throw error if columnSelectorReducer is not added to the `reducers` prop of `<DataTable>`
-   */
-  // if (!state.columnSelectorReducer) {
-  //     throw Error("No columnSelectorReducer was found. Add one in the <DataTable> reducers prop.")
-  // }
+        // ? different refs for the dialogs
+        const dialogRef = useRef<DialogRef>(null);
+        const compactDialogRef = useRef<CompactDialogRef>(null);
 
-  const handleChange = (column: JSX.Element | string): void => {
-    const id = typeof column === "string" ? column : column.props.id;
+        const init = useRef<boolean>(false);
 
-    if (state.columnSelectorReducer.visibleColumns?.includes(id)) {
-      dispatch({
-        type: "SET_VISIBLE_COLUMNS",
-        payload: state.columnSelectorReducer.visibleColumns.filter(
-          (x: any) => x !== id
-        ),
-      });
-    } else {
-      dispatch({
-        type: "SET_VISIBLE_COLUMNS",
-        payload: [...state.columnSelectorReducer.visibleColumns, id],
-      });
-    }
+        /**
+         * Throw error if columnSelectorReducer is not added to the `reducers` prop of `<DataTable>`
+         */
+        // if (!state.columnSelectorReducer) {
+        //     throw Error("No columnSelectorReducer was found. Add one in the <DataTable> reducers prop.")
+        // }
 
-    onChange && onChange();
-  };
+        const handleChange = (column: JSX.Element | string): void => {
+            const id = typeof column === 'string' ? column : column.props.id;
 
-  /**
-   * Exposes a way to set a column visible / hidden throught the component ref
-   *
-   * @param column
-   * @param visible
-   */
-  const setColumn = (column: string, visible: boolean) => {
-    if (!init.current || !state.columnSelectorReducer.visibleColumns) {
-      init.current = true;
-      return;
-    }
+            if (state.columnSelectorReducer.visibleColumns?.includes(id)) {
+                dispatch({
+                    type: 'SET_VISIBLE_COLUMNS',
+                    payload: state.columnSelectorReducer.visibleColumns.filter((x: any) => x !== id),
+                });
+            } else {
+                dispatch({
+                    type: 'SET_VISIBLE_COLUMNS',
+                    payload: [...state.columnSelectorReducer.visibleColumns, id],
+                });
+            }
 
-    let result = [];
+            if (onChange) onChange();
+        };
 
-    if (visible) {
-      result = [
-        ...new Set([...state.columnSelectorReducer.visibleColumns, column]),
-      ];
-    } else {
-      result = state.columnSelectorReducer.visibleColumns.filter(
-        (x: string) => x !== column
-      );
-    }
+        /**
+         * Exposes a way to set a column visible / hidden through the component ref
+         *
+         * @param column
+         * @param visible
+         */
+        const setColumn = (column: string, visible: boolean) => {
+            if (!init.current || !state.columnSelectorReducer.visibleColumns) {
+                init.current = true;
+                return;
+            }
 
-    dispatch({ type: "SET_VISIBLE_COLUMNS", payload: result });
-  };
+            let result = [];
 
-  /**
-   * Exposes a way to set columns visible / hidden throught the component ref
-   *
-   * @param columns
-   * @param visible
-   */
-  const setColumns = (columns: Array<string>, visible: boolean) => {
-    if (!init.current || !state.columnSelectorReducer.visibleColumns) {
-      init.current = true;
-      return;
-    }
+            if (visible) {
+                result = [...new Set([...state.columnSelectorReducer.visibleColumns, column])];
+            } else {
+                result = state.columnSelectorReducer.visibleColumns.filter((x: string) => x !== column);
+            }
 
-    let result = [];
+            dispatch({ type: 'SET_VISIBLE_COLUMNS', payload: result });
+        };
 
-    if (visible) {
-      result = [
-        ...new Set([...state.columnSelectorReducer.visibleColumns, ...columns]),
-      ];
-    } else {
-      result = state.columnSelectorReducer.visibleColumns.filter(
-        (x: string) => !columns.includes(x)
-      );
-    }
+        /**
+         * Exposes a way to set columns visible / hidden through the component ref
+         *
+         * @param columns
+         * @param visible
+         */
+        const setColumns = (columns: Array<string>, visible: boolean) => {
+            if (!init.current || !state.columnSelectorReducer.visibleColumns) {
+                init.current = true;
+                return;
+            }
 
-    dispatch({ type: "SET_VISIBLE_COLUMNS", payload: result });
-  };
+            let result = [];
 
-  const handleResetColumns = (): void => {
-    dispatch({
-      type: "RESET_VISIBLE_COLUMNS",
-      payload: state.dataTableReducer.columns,
-    });
-  };
+            if (visible) {
+                result = [...new Set([...state.columnSelectorReducer.visibleColumns, ...columns])];
+            } else {
+                result = state.columnSelectorReducer.visibleColumns.filter((x: string) => !columns.includes(x));
+            }
 
-  useImperativeHandle(ref, () => ({ setColumn, setColumns }), [
-    state.columnSelectorReducer.visibleColumns,
-  ]);
+            dispatch({ type: 'SET_VISIBLE_COLUMNS', payload: result });
+        };
 
-  if (!state.dataTableReducer.columns.length) return <></>;
+        const handleResetColumns = (): void => {
+            dispatch({
+                type: 'RESET_VISIBLE_COLUMNS',
+                payload: state.dataTableReducer.columns,
+            });
+        };
 
-  return (
-    <>
-      <Tooltip title="Manage columns" placement="top">
-        <Button variant="ghost" onClick={() => dialogRef?.current?.open()}>
-          {title}
-          {icon}
-        </Button>
-      </Tooltip>
+        useImperativeHandle(ref, () => ({ setColumn, setColumns }), [state.columnSelectorReducer.visibleColumns]);
 
-      <Dialog
-        title={title}
-        width={800}
-        primaryButton="Apply"
-        cancelButton="Reset"
-        headerCloseButton={true}
-        noLoading={true}
-        onPrimary={() => dialogRef.current?.close()}
-        onCancel={handleResetColumns}
-        ref={dialogRef}
-      >
-        <Typography variant="h6">Default columns</Typography>
-        <OptionsWrapper>
-          {state.dataTableReducer.columns
-            .filter(
-              (x: any) => !x.props.optional && !x.props.id.startsWith("__")
-            )
-            .map((column: any) => (
-              <Checkbox
-                key={column.props.id}
-                label={column.props.children}
-                checked={state.columnSelectorReducer.visibleColumns?.includes(
-                  column.props.id
+        if (!state.dataTableReducer.columns.length) return <></>;
+
+        return (
+            <>
+                <Tooltip title="Manage columns" placement="top">
+                    <Button
+                        variant="ghost"
+                        onClick={() => {
+                            if (density === 'compact') compactDialogRef?.current?.open();
+                            else dialogRef?.current?.open();
+                        }}
+                    >
+                        {title}
+                        {icon}
+                    </Button>
+                </Tooltip>
+
+                {density === 'compact' ? (
+                    <>
+                        <CompactDialog ref={compactDialogRef} title={title}>
+                            <ColumnSelectorDialog
+                                columns={state.dataTableReducer.columns}
+                                visibleColumns={state.columnSelectorReducer.visibleColumns}
+                                onCheck={handleChange}
+                                density={density}
+                                columnsNumber={columnsNumber}
+                                rowsNumber={rowsNumber}
+                            />
+                            <CompactDialog.Actions>
+                                {showApplyButton && (
+                                    <Button onClick={() => compactDialogRef.current?.close()}>Apply</Button>
+                                )}
+                                <Button onClick={handleResetColumns} variant="ghost">
+                                    Reset
+                                </Button>
+                            </CompactDialog.Actions>
+                        </CompactDialog>
+                    </>
+                ) : (
+                    <Dialog
+                        ref={dialogRef}
+                        title={title}
+                        width={800}
+                        headerCloseButton
+                        noLoading
+                        primaryButton={showApplyButton ? 'Apply' : ''}
+                        onPrimary={showApplyButton ? () => dialogRef.current?.close() : undefined}
+                        cancelButton="Reset"
+                        onCancel={handleResetColumns}
+                    >
+                        <ColumnSelectorDialog
+                            columns={state.dataTableReducer.columns}
+                            visibleColumns={state.columnSelectorReducer.visibleColumns}
+                            onCheck={handleChange}
+                            density={density}
+                            columnsNumber={columnsNumber}
+                            rowsNumber={rowsNumber}
+                        />
+                    </Dialog>
                 )}
-                onChange={() => handleChange(column)}
-              />
-            ))}
-        </OptionsWrapper>
-        <Typography variant="h6">Optional columns</Typography>
-        <OptionsWrapper>
-          {state.dataTableReducer.columns
-            .filter(
-              (x: any) => x.props.optional && !x.props.id.startsWith("__")
-            )
-            .map((column: any) => (
-              <Checkbox
-                key={column.props.id}
-                label={column.props.children}
-                checked={state.columnSelectorReducer.visibleColumns?.includes(
-                  column.props.id
-                )}
-                onChange={() => handleChange(column)}
-              />
-            ))}
-        </OptionsWrapper>
-      </Dialog>
-    </>
-  );
-});
+            </>
+        );
+    },
+);

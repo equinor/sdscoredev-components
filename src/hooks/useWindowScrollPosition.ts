@@ -1,27 +1,27 @@
-import { useState, useEffect } from "react"
-const isWindowAvailable = typeof window !== "undefined"
+import { useState, useEffect } from 'react';
 
-const getPosition = () => isWindowAvailable ? window.pageYOffset : undefined
+const isWindowAvailable = typeof window !== 'undefined';
+
+const getPosition = () => (isWindowAvailable ? window.pageYOffset : undefined);
 
 const useWindowScrollPosition = () => {
+    const [scrollPosition, setScrollPosition] = useState(getPosition());
 
-  const [scrollPosition, setScrollPosition] = useState(getPosition())
+    useEffect((): any => {
+        if (!isWindowAvailable) {
+            return false;
+        }
 
-  useEffect((): any => {
-    if (!isWindowAvailable) {
-      return false
-    }
+        const handleScroll = () => {
+            setScrollPosition(getPosition());
+        };
 
-    const handleScroll = () => {
-      setScrollPosition(getPosition())
-    }
+        window.addEventListener('scroll', handleScroll);
 
-    window.addEventListener("scroll", handleScroll)
+        return (): any => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
-    return (): any => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    return scrollPosition;
+};
 
-  return scrollPosition
-}
-
-export default useWindowScrollPosition
+export default useWindowScrollPosition;

@@ -2,7 +2,7 @@ import { create } from '@storybook/theming';
 
 export default create({
   base: 'light',
-  brandTitle: 'Equinor SdsCoredev Components',
+  brandTitle: "SdsCoredev-Components",
   brandUrl: 'https://github.com/equinor/sdscoredev-components',
   colorPrimary: '#FF1243',
   colorSecondary: '#007079',

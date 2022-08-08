@@ -1,20 +1,22 @@
 import React, { Children, useEffect, useRef } from 'react';
-import Header from './internal/Header';
-import Body from './internal/Body';
+import styled from 'styled-components';
+
 import { EdsProvider, Table } from '@equinor/eds-core-react';
+
+import { getDataProps, makeId } from '../utils';
+import { DataTableStore } from './DataTableStore';
+import Body from './internal/Body';
+import Header from './internal/Header';
+import Toolbar from './internal/Toolbar';
+import { Checkbox } from './plugins/Checkbox/Checkbox';
 import { ColumnSelector } from './plugins/ColumnSelector/ColumnSelector';
 import { Export } from './plugins/Export/Export';
-import { Pagination } from './plugins/Pagination/Pagination';
-import { DataTableStore } from './DataTableStore';
-import { dataTableReducer } from './reducers/dataTableReducer';
-import styled from 'styled-components';
 import { Filter } from './plugins/Filter/Filter';
-import Toolbar from './internal/Toolbar';
-import { makeId, getDataProps } from '../helpers';
+import { Pagination } from './plugins/Pagination/Pagination';
+import { Sort } from './plugins/Sort/Sort';
 import { StickyHeader } from './plugins/StickyHeader/StickyHeader';
 import { Tree } from './plugins/Tree/Tree';
-import { Checkbox } from './plugins/Checkbox/Checkbox';
-import { Sort } from './plugins/Sort/Sort';
+import { dataTableReducer } from './reducers/dataTableReducer';
 
 const Wrapper = styled.div<{ width?: number }>`
     /* overflow-x: auto; */

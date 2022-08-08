@@ -1,0 +1,27 @@
+import { Meta, Story, Canvas, ArgsTable, Source } from '@storybook/addon-docs';
+import { DataTable } from '../../components/DataTable';
+import { getTree } from '../data';
+
+<Meta title="Library/DataTable" component={DataTable} />
+
+# Datatable with tree structure
+
+This is an example of a table with the tree structure plugin. It will dynamically set a render prop on a defined column. That column will then be
+providing the tree functionality. The data need to at least have these props: `id` and `children`.
+
+<Canvas>
+    <Story name="Tree example">
+        {() => {
+            const { Column, Tree } = DataTable;
+            return (
+                <DataTable data={getTree(10)}>
+                    <Column id="id">Id</Column>
+                    <Column id="category">Category</Column>
+                    <Column id="createdBy">Created By</Column>
+                    <Column id="active">Active</Column>
+                    <Tree id="category" />
+                </DataTable>
+            );
+        }}
+    </Story>
+</Canvas>
