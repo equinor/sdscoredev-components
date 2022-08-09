@@ -37,10 +37,10 @@ npm install
 ```
 
 3. Because sdscoredev-components and your project might be running two separate react libraries you need to link them.
-Do this for `react` and `react-dom` and you should be good to go (NB: you might also have to do this for `react-router-dom`). From sdscoredev-components directory, run:
+   Do this for `react` and `react-dom` and you should be good to go (NB: you might also have to do this for `react-router-dom`). From sdscoredev-components directory, run:
 
 ```
-npm link ../[local project]/node_modules/react ../[local project]/node_modules/react-dom  
+npm link ../[local project]/node_modules/react ../[local project]/node_modules/react-dom
 ```
 
 1. In your local project run
@@ -49,8 +49,7 @@ npm link ../[local project]/node_modules/react ../[local project]/node_modules/r
 npm install ../sdscoredev-components
 ```
 
-to install the local library.
-5. In sdscoredev-components folder run
+to install the local library. 5. In sdscoredev-components folder run
 
 ```
 npm run watch
@@ -62,7 +61,7 @@ to activate hot reloading. Now when you make changes to sdscoredev-components, y
 
 When you refactor or add imports/exports in sdscoredev-components you need to run `npm install ../sdscoredev-components` again to let the changes take effect in your local project.
 
-___
+---
 
 ## Contributing
 
@@ -76,7 +75,6 @@ It is appreciated that you would like to contribute.
 
 Some points to remember:
 
-* Make sure the storybook is building before you think about creating pull request.
-* Follow conventional commit guidelines to enable automatic versioning.
-* Diligently add typing.
-
+-   Make sure the storybook is building before you think about creating pull request.
+-   Follow conventional commit guidelines to enable automatic versioning.
+-   Diligently add typing.

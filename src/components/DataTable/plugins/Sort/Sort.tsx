@@ -1,3 +1,4 @@
+import { getByPath } from 'components/helpers';
 import { sort } from 'fast-sort';
 import React, { useContext, useEffect } from 'react';
 
@@ -19,10 +20,11 @@ export const Sort = (props: SortProps) => {
      */
     const sortTable = (orderBy: string, ascending: boolean) => {
         let sorted: Array<any> = [];
+
         if (ascending) {
-            sorted = sort(state.dataTableReducer.data).asc((x: any) => x[orderBy]);
+            sorted = sort(state.dataTableReducer.data).asc((x: any) => getByPath(x, orderBy));
         } else {
-            sorted = sort(state.dataTableReducer.data).desc((x: any) => x[orderBy]);
+            sorted = sort(state.dataTableReducer.data).desc((x: any) => getByPath(x, orderBy));
         }
 
         dispatch({ type: 'SET_DATA', payload: sorted });

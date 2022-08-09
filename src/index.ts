@@ -1,4 +1,4 @@
-import { addIcons } from './components/icons';
+import { addIcons } from 'components/Utils/icons';
 
 addIcons();
 

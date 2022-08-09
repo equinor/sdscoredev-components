@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Label as EdsLabel, TextFieldProps } from '@equinor/eds-core-react';
+import { Label as EdsLabel } from '@equinor/eds-core-react';
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Tooltip } from '../../Tooltip';

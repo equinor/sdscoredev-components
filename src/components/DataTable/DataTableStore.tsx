@@ -1,4 +1,5 @@
 import React, { createContext, ReactElement, useReducer } from 'react';
+import { GeneralStoreProps } from 'types';
 
 import createPersistedReducer from '../createPersistedReducer';
 import { useCombinedReducers } from '../utils';
@@ -7,7 +8,7 @@ import { DataTableStoreProps, ReducerProp } from './types';
 export const StateContext = createContext({});
 export const DispatchContext = createContext({});
 
-export const DataTableStore: React.FC<DataTableStoreProps> = React.memo((props) => {
+export const DataTableStore: React.FC<GeneralStoreProps> = React.memo((props) => {
     const { children, components, reducers } = props;
 
     /**
