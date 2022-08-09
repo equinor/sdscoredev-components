@@ -19,6 +19,7 @@ export const Sort = (props: SortProps) => {
      */
     const sortTable = (orderBy: string, ascending: boolean) => {
         let sorted: Array<any> = [];
+        console.log(orderBy);
         if (ascending) {
             sorted = sort(state.dataTableReducer.data).asc((x: any) => x[orderBy]);
         } else {
