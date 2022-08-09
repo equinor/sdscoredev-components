@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { Button, EdsProvider, Icon, Typography } from '@equinor/eds-core-react';
 
-import { icons } from 'components/icons';
+import { icons } from '../Utils/icons';
 
 const ScrimOuterWrapper = styled.div`
     min-width: 20em;

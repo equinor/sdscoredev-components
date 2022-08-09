@@ -1,8 +1,6 @@
 import React from 'react';
 import { FC } from 'types';
 
-import { FC } from '../../types';
-
 export type ExportProps = {
     /**
      * The trigger button label

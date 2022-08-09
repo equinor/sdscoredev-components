@@ -124,7 +124,7 @@ const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBo
 
     return (
         <Table.Body ref={ref} id={`dataTable.body.${id}`}>
-            {generateRows(usePagination() ? currentTableData : state.dataTableReducer.data)}
+            {generateRows(usePagination() && onFetch ? currentTableData : state.dataTableReducer.data)}
         </Table.Body>
     );
 });
