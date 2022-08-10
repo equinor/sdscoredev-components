@@ -16,10 +16,10 @@ const Cell = styled(Table.Cell)`
     /* width: 1%; */
     padding: 0 8px;
 
-    background-image: linear-gradient(to bottom, #cfcfcf, transparent 50%);
+    /* background-image: linear-gradient(to bottom, #cfcfcf, transparent 50%);
     background-position: right top, right bottom;
     background-repeat: repeat-y;
-    background-size: 1px 8px;
+    background-size: 1px 8px; */
 
     & div {
         margin-left: 0 !important;

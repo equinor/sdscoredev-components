@@ -39,13 +39,6 @@ export const StickyHeader = forwardRef<StickyHeaderRef, InternalStickyHeaderProp
         const headerElement = document.getElementById(`dataTable.headerRow.${id}`);
         const left = useRef<number>();
 
-        const handleClick = (columnProps: ColumnProps) => {
-            if (columnProps.sort) {
-                if (typeof columnProps.sort === 'boolean') dispatch({ type: 'SORT', payload: columnProps.id });
-                else dispatch({ type: 'SORT', payload: columnProps.sort });
-            }
-        };
-
         const getVisibleColumns = useCallback((): Array<string> => {
             let payload: Array<string> = [];
 
@@ -118,7 +111,6 @@ export const StickyHeader = forwardRef<StickyHeaderRef, InternalStickyHeaderProp
                                     width={state.stickyHeaderReducer.width[column.props.id]}
                                     id={`sticky-${column.props.id}`}
                                     column={column}
-                                    onClick={() => handleClick(column.props)}
                                 />
                             ))}
 
