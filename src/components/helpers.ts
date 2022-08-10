@@ -1,5 +1,8 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-param-reassign */
 export const combineReducers = (...reducers: any) => {
     return (state: any, action: any) => {
+        // eslint-disable-next-line no-restricted-syntax
         for (const reducer of reducers) {
             const result = reducer(state, action);
             if (result) return result;
@@ -7,8 +10,9 @@ export const combineReducers = (...reducers: any) => {
     };
 };
 
+// eslint-disable-next-line no-undef
 export const onNextFrame = (callback: FrameRequestCallback) => {
-    setTimeout(function () {
+    setTimeout(() => {
         requestAnimationFrame(callback);
     });
 };
@@ -17,7 +21,7 @@ export const resolve = (object: any, path: string | undefined, defaultValue: any
     path?.split('.').reduce((o: { [x: string]: any }, p: string | number) => (o ? o[p] : defaultValue), object);
 
 /**
- * Provides an item found recursively in an array with a pathstring looking like "0.param.4.name"
+ * Provides an item found recursively in an array with a path-string looking like "0.param.4.name"
  *
  * @param {any} obj Input object
  * @param {string} path The path to find
@@ -25,7 +29,7 @@ export const resolve = (object: any, path: string | undefined, defaultValue: any
  */
 export const getByPath = (obj: any, path: string) => {
     const pathArray = path.split('.');
-    for (let i = 0, n = pathArray.length; i < n; ++i) {
+    for (let i = 0, n = pathArray.length; i < n; i += 1) {
         const k = pathArray[i];
         if (k in obj) {
             obj = obj[k];
@@ -38,8 +42,8 @@ export const getByPath = (obj: any, path: string) => {
 
 export const makeId = () => {
     let id = '';
-    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    for (var i = 0; i < 6; i++) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    for (let i = 0; i < 6; i += 1) {
         id += characters.charAt(Math.floor(Math.random() * 36));
     }
     return id;
@@ -59,7 +63,7 @@ export const set = (obj: Record<string, string | number | object>, path: string,
     obj = typeof obj === 'object' ? obj : {};
     const keys = Array.isArray(path) ? path : path.split('.');
     let curStep: any = obj;
-    for (let i = 0; i < keys.length - 1; i++) {
+    for (let i = 0; i < keys.length - 1; i += 1) {
         const key = keys[i];
 
         if (!curStep[key] && !Object.prototype.hasOwnProperty.call(curStep, key)) {

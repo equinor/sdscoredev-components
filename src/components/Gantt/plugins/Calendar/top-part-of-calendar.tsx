@@ -1,5 +1,20 @@
 import React from 'react';
-import { CalendarTopText, CalendarTopTick } from './Calendar';
+import styled from 'styled-components';
+
+export const CalendarTopTick = styled.line`
+    stroke: #e6e4e4;
+`;
+
+export const CalendarTopText = styled.text`
+    text-anchor: middle;
+    fill: #555;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    pointer-events: none;
+`;
 
 type TopPartOfCalendarProps = {
     value: string;
@@ -20,8 +35,8 @@ export const TopPartOfCalendar: React.FC<TopPartOfCalendarProps> = ({
 }) => {
     return (
         <g className="calendarTop">
-            <CalendarTopTick x1={x1Line} y1={y1Line} x2={x1Line} y2={y2Line} key={value + 'line'} />
-            <CalendarTopText key={value + 'text'} y={yText} x={xText}>
+            <CalendarTopTick x1={x1Line} y1={y1Line} x2={x1Line} y2={y2Line} key={`${value}line`} />
+            <CalendarTopText key={`${value}text`} y={yText} x={xText}>
                 {value}
             </CalendarTopText>
         </g>
