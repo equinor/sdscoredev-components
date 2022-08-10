@@ -1,12 +1,12 @@
-/* eslint-disable no-multi-str */
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+
 import { Button } from '@equinor/eds-core-react';
-import { ILayout, IMenuItem } from './types';
+
+import { StateContext } from './LayoutStore';
 import { EquinorLogo } from './Svg';
-import { DispatchContext, StateContext } from './LayoutStore';
+import { ILayout, IMenuItem } from './types';
 
 const Parent = styled(Button)<any>`
     width: 100%;

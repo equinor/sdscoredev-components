@@ -1,3 +1,10 @@
+## [2.23.1](https://github.com/equinor/sdscoredev-components/compare/2.23.0...2.23.1) (2022-08-10)
+
+
+### Bug Fixes
+
+* add onHover to Row ([41b9997](https://github.com/equinor/sdscoredev-components/commit/41b9997d96bde48fc8b33f529a8f4969294c74c3))
+
 # [2.23.0](https://github.com/equinor/sdscoredev-components/compare/2.22.2...2.23.0) (2022-08-10)
 
 
