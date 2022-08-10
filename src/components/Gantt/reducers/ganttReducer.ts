@@ -1,19 +1,21 @@
-export const SET_TASKS = 'SET_TASKS';
+export const SET_DATES = 'SET_DATES';
 
 interface GanttState {
-    tasks?: Array<any>;
+    dates?: Array<Date>;
+    headerHeight?: number;
 }
 
 export const initialState: GanttState = {
-    tasks: [],
+    dates: [],
+    headerHeight: 50,
 };
 
 const reducer = (state = initialState, action: any): GanttState => {
     switch (action.type) {
-        case SET_TASKS:
+        case SET_DATES:
             return {
                 ...state,
-                tasks: action.payload,
+                dates: action.payload,
             };
         default:
             return state;
