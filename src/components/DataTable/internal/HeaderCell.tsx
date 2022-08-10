@@ -54,7 +54,7 @@ const HeaderCell: React.FC<TableHeaderCellProps> = ({ column, id, width }) => {
         }
     };
 
-    const isSorted: boolean = column.props.id === state.sortReducer.orderBy;
+    const isSorted: boolean = column.props.id === state.sortReducer?.orderBy;
 
     if (state.sortReducer && column.props.sort) {
         return (
