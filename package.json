@@ -1,6 +1,6 @@
 {
     "name": "equinor-sdscoredev-components",
-    "version": "2.23.1",
+    "version": "2.23.2",
     "description": "Composite react components based on equinor design system (EDS)",
     "author": "John Wennstrøm <john.wennstrom@protonmail.com>",
     "license": "ISC",
