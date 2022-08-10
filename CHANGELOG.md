@@ -1,3 +1,10 @@
+## [2.22.1](https://github.com/equinor/sdscoredev-components/compare/2.22.0...2.22.1) (2022-08-10)
+
+
+### Bug Fixes
+
+* Add sorting header styling ([9457d83](https://github.com/equinor/sdscoredev-components/commit/9457d83735d5c0ee43cac450857d1dae4568957c))
+
 # [2.22.0](https://github.com/equinor/sdscoredev-components/compare/2.21.1...2.22.0) (2022-08-10)
 
 
