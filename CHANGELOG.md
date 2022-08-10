@@ -1,3 +1,10 @@
+## [2.22.2](https://github.com/equinor/sdscoredev-components/compare/2.22.1...2.22.2) (2022-08-10)
+
+
+### Bug Fixes
+
+* orderBy can be undefined ([43dd640](https://github.com/equinor/sdscoredev-components/commit/43dd6408e3dde52570ced5ca403bbf2b17f8a0a1))
+
 ## [2.22.1](https://github.com/equinor/sdscoredev-components/compare/2.22.0...2.22.1) (2022-08-10)
 
 
