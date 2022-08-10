@@ -16,6 +16,26 @@ export const onNextFrame = (callback: FrameRequestCallback) => {
 export const resolve = (object: any, path: string | undefined, defaultValue: any = {}) =>
     path?.split('.').reduce((o: { [x: string]: any }, p: string | number) => (o ? o[p] : defaultValue), object);
 
+/**
+ * Provides an item found recursively in an array with a pathstring looking like "0.param.4.name"
+ *
+ * @param {any} obj Input object
+ * @param {string} path The path to find
+ * @return {object}
+ */
+export const getByPath = (obj: any, path: string) => {
+    const pathArray = path.split('.');
+    for (let i = 0, n = pathArray.length; i < n; ++i) {
+        const k = pathArray[i];
+        if (k in obj) {
+            obj = obj[k];
+        } else {
+            return;
+        }
+    }
+    return obj;
+};
+
 export const makeId = () => {
     let id = '';
     let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';

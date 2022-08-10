@@ -1,3 +1,30 @@
+## [2.22.1](https://github.com/equinor/sdscoredev-components/compare/2.22.0...2.22.1) (2022-08-10)
+
+
+### Bug Fixes
+
+* Add sorting header styling ([9457d83](https://github.com/equinor/sdscoredev-components/commit/9457d83735d5c0ee43cac450857d1dae4568957c))
+
+# [2.22.0](https://github.com/equinor/sdscoredev-components/compare/2.21.1...2.22.0) (2022-08-10)
+
+
+### Bug Fixes
+
+* checkbox not showing ([ff696d3](https://github.com/equinor/sdscoredev-components/commit/ff696d34a191f687a2a5b8a2ec95aea857a94d58))
+
+
+### Features
+
+* add default sort ([cbe2af4](https://github.com/equinor/sdscoredev-components/commit/cbe2af41af375fc3c3da05794e64894c9d3d0ad6))
+
+## [2.21.1](https://github.com/equinor/sdscoredev-components/compare/2.21.0...2.21.1) (2022-08-09)
+
+
+### Bug Fixes
+
+* sorting not working locally ([3a2ad36](https://github.com/equinor/sdscoredev-components/commit/3a2ad3688ac722765951bbca7fbf3e3337dc1eaf))
+* storybook build fail ([9b95c5b](https://github.com/equinor/sdscoredev-components/commit/9b95c5bf69d24ece56ebac6ce57b97d2415433af))
+
 # [2.21.0](https://github.com/equinor/sdscoredev-components/compare/2.20.0...2.21.0) (2022-07-20)
 
 

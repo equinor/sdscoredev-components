@@ -41,13 +41,6 @@ const Header: React.FC<HeaderProps> = ({ children, id, plugins }) => {
         dispatch({ type: 'SET_COLUMNS', payload: columns });
     }, [state.dataTableReducer.pluginColumnProps]);
 
-    const handleClick = (columnProps: ColumnProps) => {
-        if (columnProps.sort) {
-            if (typeof columnProps.sort === 'boolean') dispatch({ type: 'SORT', payload: columnProps.id });
-            else dispatch({ type: 'SORT', payload: columnProps.sort });
-        }
-    };
-
     if (!state.dataTableReducer.columns) return <></>;
 
     return (
@@ -61,24 +54,14 @@ const Header: React.FC<HeaderProps> = ({ children, id, plugins }) => {
                     state.dataTableReducer.columns
                         ?.filter((x: any) => state.columnSelectorReducer.visibleColumns?.includes(x.props.id))
                         .map((column: JSX.Element) => (
-                            <HeaderCell
-                                key={column.props.id}
-                                id={column.props.id}
-                                column={column}
-                                onClick={() => handleClick(column.props)}
-                            />
+                            <HeaderCell key={column.props.id} id={column.props.id} column={column} />
                         ))}
 
                 {!state.columnSelectorReducer &&
                     state.dataTableReducer.columns
                         ?.filter((x: any) => !x.props.optional)
                         .map((column: JSX.Element) => (
-                            <HeaderCell
-                                key={column.props.id}
-                                id={column.props.id}
-                                column={column}
-                                onClick={() => handleClick(column.props)}
-                            />
+                            <HeaderCell key={column.props.id} id={column.props.id} column={column} />
                         ))}
 
                 {/* ---- Subrow plugin implementation start ---------------------------------------------------------------------------------------- */}

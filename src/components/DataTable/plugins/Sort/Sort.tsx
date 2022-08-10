@@ -1,3 +1,4 @@
+import { getByPath } from 'components/helpers';
 import { sort } from 'fast-sort';
 import React, { useContext, useEffect } from 'react';
 
@@ -12,6 +13,23 @@ export const Sort = (props: SortProps) => {
     const dispatch: any = useContext(DispatchContext);
 
     /**
+     * If default prop is set, then the table will add sorting as default
+     */
+    useEffect(() => {
+        if (props.default) {
+            let sort = props.default.split(':');
+
+            if (sort.length >= 1) {
+                dispatch({ type: 'SET_ORDER_BY', payload: sort[0] });
+            }
+
+            if (sort.length === 2) {
+                dispatch({ type: 'SET_DIRECTION', payload: sort[1] === 'asc' ? true : false });
+            }
+        }
+    }, [props.default]);
+
+    /**
      * @ref https://github.com/snovakovic/fast-sort
      *
      * @param orderBy
@@ -19,11 +37,11 @@ export const Sort = (props: SortProps) => {
      */
     const sortTable = (orderBy: string, ascending: boolean) => {
         let sorted: Array<any> = [];
-        console.log(orderBy);
+
         if (ascending) {
-            sorted = sort(state.dataTableReducer.data).asc((x: any) => x[orderBy]);
+            sorted = sort(state.dataTableReducer.data).asc((x: any) => getByPath(x, orderBy));
         } else {
-            sorted = sort(state.dataTableReducer.data).desc((x: any) => x[orderBy]);
+            sorted = sort(state.dataTableReducer.data).desc((x: any) => getByPath(x, orderBy));
         }
 
         dispatch({ type: 'SET_DATA', payload: sorted });

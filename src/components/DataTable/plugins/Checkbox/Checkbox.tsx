@@ -20,7 +20,9 @@ export const Checkbox = forwardRef<CheckboxRef, CheckboxProps>((props: CheckboxP
      * Optional prop 'visible' to show or hide the checkbox column
      */
     useEffect(() => {
-        dispatch({ type: 'SET_VISIBLE', payload: visible });
+        if (typeof visible !== 'undefined') {
+            dispatch({ type: 'SET_VISIBLE', payload: visible });
+        }
     }, [visible]);
 
     /**
