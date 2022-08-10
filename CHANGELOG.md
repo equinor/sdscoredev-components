@@ -1,3 +1,10 @@
+# [2.23.0](https://github.com/equinor/sdscoredev-components/compare/2.22.2...2.23.0) (2022-08-10)
+
+
+### Features
+
+* add Gantt chart ([#23](https://github.com/equinor/sdscoredev-components/issues/23)) ([72d800b](https://github.com/equinor/sdscoredev-components/commit/72d800b1f8d65d494f26bc5bbedf6c8b02ff598b))
+
 ## [2.22.2](https://github.com/equinor/sdscoredev-components/compare/2.22.1...2.22.2) (2022-08-10)
 
 
