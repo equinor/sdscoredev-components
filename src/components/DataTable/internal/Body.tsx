@@ -94,6 +94,10 @@ const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBo
             return <PaddedText>No data was found</PaddedText>;
         }
 
+        if (state.columnSelectorReducer && !state.columnSelectorReducer.visibleColumns.length) {
+            return <PaddedText>No column was selected</PaddedText>;
+        }
+
         return items.map((item: any, index: number) => {
             const key = `key: ${index}`;
             return (

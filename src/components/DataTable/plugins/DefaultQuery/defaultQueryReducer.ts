@@ -13,4 +13,4 @@ const reducer = (state = initialState, action: any): DefaultQueryState => {
 
 const component = DefaultQuery;
 
-export const defaultQueryReducer = {reducer, initialState, component}
+export const defaultQueryReducer = { reducer, initialState, component };

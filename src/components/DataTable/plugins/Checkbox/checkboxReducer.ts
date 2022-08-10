@@ -1,7 +1,7 @@
 import { SET_PAGE_INDEX, SET_PAGE_SIZE } from '../Pagination/paginationReducer';
 
-export const SET_SELECTED = "SET_SELECTED";
-export const SET_VISIBLE = "SET_VISIBLE";
+export const SET_SELECTED = 'SET_SELECTED';
+export const SET_VISIBLE = 'SET_VISIBLE';
 
 interface SortingState {
     selected: Array<any>;
@@ -18,13 +18,13 @@ const reducer = (state = initialState, action: any): SortingState => {
         case SET_SELECTED:
             return {
                 ...state,
-                selected: action.payload
+                selected: action.payload,
             };
         case SET_PAGE_INDEX:
             if (state.selected.length > 0) {
                 return {
                     ...state,
-                    selected: []
+                    selected: [],
                 };
             }
 
@@ -33,7 +33,7 @@ const reducer = (state = initialState, action: any): SortingState => {
             if (state.selected.length > 0) {
                 return {
                     ...state,
-                    selected: []
+                    selected: [],
                 };
             }
 
@@ -42,7 +42,7 @@ const reducer = (state = initialState, action: any): SortingState => {
         case SET_VISIBLE:
             return {
                 ...state,
-                visible: action.payload
+                visible: action.payload,
             };
 
         default:
@@ -50,4 +50,4 @@ const reducer = (state = initialState, action: any): SortingState => {
     }
 };
 
-export const checkboxReducer = {reducer, initialState}
+export const checkboxReducer = { reducer, initialState };
