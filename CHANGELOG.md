@@ -1,3 +1,11 @@
+## [2.21.1](https://github.com/equinor/sdscoredev-components/compare/2.21.0...2.21.1) (2022-08-09)
+
+
+### Bug Fixes
+
+* sorting not working locally ([3a2ad36](https://github.com/equinor/sdscoredev-components/commit/3a2ad3688ac722765951bbca7fbf3e3337dc1eaf))
+* storybook build fail ([9b95c5b](https://github.com/equinor/sdscoredev-components/commit/9b95c5bf69d24ece56ebac6ce57b97d2415433af))
+
 # [2.21.0](https://github.com/equinor/sdscoredev-components/compare/2.20.0...2.21.0) (2022-07-20)
 
 
