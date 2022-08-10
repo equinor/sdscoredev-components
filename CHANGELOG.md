@@ -1,3 +1,15 @@
+# [2.22.0](https://github.com/equinor/sdscoredev-components/compare/2.21.1...2.22.0) (2022-08-10)
+
+
+### Bug Fixes
+
+* checkbox not showing ([ff696d3](https://github.com/equinor/sdscoredev-components/commit/ff696d34a191f687a2a5b8a2ec95aea857a94d58))
+
+
+### Features
+
+* add default sort ([cbe2af4](https://github.com/equinor/sdscoredev-components/commit/cbe2af41af375fc3c3da05794e64894c9d3d0ad6))
+
 ## [2.21.1](https://github.com/equinor/sdscoredev-components/compare/2.21.0...2.21.1) (2022-08-09)
 
 

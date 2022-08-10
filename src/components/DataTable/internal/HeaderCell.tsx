@@ -1,64 +1,75 @@
 import React, { MouseEventHandler, useContext } from 'react';
 import styled from 'styled-components';
 
-import { Icon, Table } from '@equinor/eds-core-react';
+import { CellProps, Icon, Table } from '@equinor/eds-core-react';
 
-import { StateContext } from '../DataTableStore';
+import { DispatchContext, StateContext } from '../DataTableStore';
 
 type TableHeaderCellProps = {
     column: JSX.Element;
-    onClick: MouseEventHandler<HTMLTableCellElement>;
     id: string;
     width?: number;
 };
 
-const Cell = styled(Table.Cell)<{ width?: number; fit?: boolean }>`
-    border-top: unset !important;
+const Wrapper = styled(Table.Cell)<{ width?: number; fit?: boolean } & CellProps>`
+    border-top: unset;
+    box-sizing: unset;
 
     min-width: ${(props: any) => (props.width ? `${props.width}px` : 'unset')};
     white-space: ${(props: any) => (props.fit ? 'nowrap' : 'normal')};
 
-    background-image: linear-gradient(to bottom, #cfcfcf, transparent 50%);
+    /* background-image: linear-gradient(to bottom, rgba(247, 247, 247, 1), transparent 50%);
     background-position: right top, right bottom;
     background-repeat: repeat-y;
-    background-size: 1px 8px;
+    background-size: 1px 8px; */
 `;
 
-const SortIcon = styled.div`
-    position: relative;
+const DefaultCell = styled(Wrapper)``;
+
+const SortCell = styled(Wrapper)<{ isSorted: boolean }>`
+    color: ${(props: any) => (props.isSorted ? 'rgba(0, 112, 121, 1)' : 'inherit')};
+    background: ${(props: any) => (props.isSorted ? 'rgba(234, 234, 234, 1)' : 'rgba(247, 247, 247, 1)')};
+
+    svg {
+        visibility: ${({ isSorted }) => (isSorted ? 'visible' : 'hidden')};
+    }
+    &:hover {
+        cursor: pointer;
+        background: rgba(220, 220, 220, 1);
+        svg {
+            visibility: visible;
+        }
+    }
 `;
 
-const HeaderCell: React.FC<TableHeaderCellProps> = ({ column, onClick, id, width }) => {
+const HeaderCell: React.FC<TableHeaderCellProps> = ({ column, id, width }) => {
     const { fit } = column.props;
     const state: any = useContext(StateContext);
+    const dispatch: any = useContext(DispatchContext);
 
-    const sortIcon = () => {
-        if (!state.sortReducer || !column.props.sort) return <></>;
-
-        /**
-         * Because sort can either be a boolean or a string, we need to check if
-         * `column prop sort = sortReducer orderBy` or `column prop id` = sort = sortReducer`
-         */
-        if (
-            column.props.sort === state.sortReducer.orderBy ||
-            (column.props.sort && column.props.id === state.sortReducer.orderBy)
-        ) {
-            return <Icon size={18} name={state.sortReducer.ascending ? 'chevron_up' : 'chevron_down'} />;
+    const handleClick = () => {
+        if (column.props.sort) {
+            if (typeof column.props.sort === 'boolean') dispatch({ type: 'SORT', payload: column.props.id });
+            else dispatch({ type: 'SORT', payload: column.props.sort });
         }
-        return (
-            <SortIcon>
-                <Icon size={16} name="chevron_up" style={{ position: 'absolute', top: '-12px' }} />
-                <Icon size={16} name="chevron_down" style={{ position: 'absolute', bottom: '-12px' }} />
-            </SortIcon>
-        );
     };
 
-    return (
-        <Cell onClick={onClick} id={id} className="dataTableTh" width={width} fit={fit}>
-            {column.props.children}
-            {sortIcon()}
-        </Cell>
-    );
+    const isSorted: boolean = column.props.id === state.sortReducer.orderBy;
+
+    if (state.sortReducer && column.props.sort) {
+        return (
+            <SortCell onClick={handleClick} id={id} className="dataTableTh" width={width} fit={fit} isSorted={isSorted}>
+                {column.props.children}
+                <Icon name={state.sortReducer.ascending ? 'arrow_up' : 'arrow_down'} />
+            </SortCell>
+        );
+    } else {
+        return (
+            <DefaultCell id={id} className="dataTableTh" width={width} fit={fit}>
+                {column.props.children}
+            </DefaultCell>
+        );
+    }
 };
 
 export default HeaderCell;
