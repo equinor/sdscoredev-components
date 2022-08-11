@@ -17,7 +17,7 @@ export type InternalColumnSelectorProps = {
 export const ColumnSelector = forwardRef<ColumnSelectorRef, InternalColumnSelectorProps>(
     (props: InternalColumnSelectorProps, ref) => {
         const { title, icon, onChange, dialogStyle, showApplyButton } = props;
-        const { columnsNumber, rowsNumber, density } = dialogStyle || {};
+        const { density } = dialogStyle || {};
         const state: any = useContext(StateContext);
         const dispatch: any = useContext(DispatchContext);
 
@@ -131,9 +131,7 @@ export const ColumnSelector = forwardRef<ColumnSelectorRef, InternalColumnSelect
                                 columns={state.dataTableReducer.columns}
                                 visibleColumns={state.columnSelectorReducer.visibleColumns}
                                 onCheck={handleChange}
-                                density={density}
-                                columnsNumber={columnsNumber}
-                                rowsNumber={rowsNumber}
+                                {...dialogStyle}
                             />
                             <CompactDialog.Actions>
                                 {showApplyButton && (
@@ -161,9 +159,7 @@ export const ColumnSelector = forwardRef<ColumnSelectorRef, InternalColumnSelect
                             columns={state.dataTableReducer.columns}
                             visibleColumns={state.columnSelectorReducer.visibleColumns}
                             onCheck={handleChange}
-                            density={density}
-                            columnsNumber={columnsNumber}
-                            rowsNumber={rowsNumber}
+                            {...dialogStyle}
                         />
                     </Dialog>
                 )}

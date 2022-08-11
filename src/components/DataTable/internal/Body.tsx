@@ -95,7 +95,7 @@ const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBo
         }
 
         if (state.columnSelectorReducer && !state.columnSelectorReducer.visibleColumns.length) {
-            return <PaddedText>No column was selected</PaddedText>;
+            return <PaddedText>No column selected</PaddedText>;
         }
 
         return items.map((item: any, index: number) => {
