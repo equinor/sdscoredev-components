@@ -22,6 +22,10 @@ export type ColumnSelectorRef = {
 
 interface DialogStyle {
     /**
+     * Whether the columns checkbox-options are in compact or comfortable mode; defaults to "comfortable"
+     */
+    density?: Density;
+    /**
      * The number of columns used to divide the columns options; default is `2`
      */
     columnsNumber?: number;
@@ -30,9 +34,21 @@ interface DialogStyle {
      */
     rowsNumber?: number;
     /**
-     * Whether the columns checkbox-options are in compact or comfortable mode; defaults to "comfortable"
+     * The max hight for the options block; This can be used in conjunction with the overflowY prop
      */
-    density?: Density;
+    maxHight?: string;
+    /**
+     * The max width for the options block; This can be used in conjunction with the overflowX prop
+     */
+    maxWidth?: string;
+    /**
+     * Determines whether the options-block can overflowY or not. Defaults to "visible"
+     */
+    overflowY?: 'visible' | 'hidden' | 'scroll' | 'auto';
+    /**
+     * Determines whether the options-block can overflowX or not. Defaults to "visible"
+     */
+    overflowX?: 'visible' | 'hidden' | 'scroll' | 'auto';
 }
 
 export type ColumnSelectorProps = {
