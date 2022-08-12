@@ -31,7 +31,6 @@ export const TaskList: React.FC<TaskListProps> = (props) => {
         horizontalContainerClass,
         render,
     } = props;
-    console.log(props);
     const horizontalContainerRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
         if (horizontalContainerRef.current) {

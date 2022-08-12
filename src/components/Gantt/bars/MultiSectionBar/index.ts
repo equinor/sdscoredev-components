@@ -4,25 +4,23 @@ import { dateByX, endByX, moveByX, startByX } from 'components/Gantt/helpers/bar
 import { BarMoveAction } from 'components/Gantt/types/gantt-task-actions';
 import { Task, TaskBar, TaskConvertOptions } from '../types';
 
-export type MultiSectionTaskBar = {
-    /**
-     * Array of mapped dates to x-position
-     */
-    sectionXPositions: number[];
-} & MultiSectionBarProps;
+export type MultiSectionTaskBar = {} & MultiSectionBarProps;
 
 export const convert = (
     task: Task<MultiSectionBarProps>,
     options: TaskConvertOptions,
 ): TaskBar<MultiSectionTaskBar> => {
     const { index = 0, dates, columnWidth, rowHeight, taskHeight, handleWidth } = options;
-    const { sections } = task.type[1];
+
+    let type = [...task.type];
 
     let x1 = taskXCoordinate(task.start, dates, columnWidth);
     let x2 = taskXCoordinate(task.end, dates, columnWidth);
     const y = taskYCoordinate(index, rowHeight, taskHeight);
 
-    const sectionXPositions = sections?.map((d: Date) => dateToProgress(d, [task.start, task.end])) || [];
+    if (type[1].dates.length) {
+        type[1].sections = type[1].dates;
+    }
 
     return {
         ...task,
@@ -33,27 +31,48 @@ export const convert = (
         handleWidth,
         height: taskHeight,
         barChildren: [],
-        sectionXPositions,
+        type,
     };
 };
 
 const handleMouseEvents = (
     svgX: number,
     action: BarMoveAction,
-    selectedTask: TaskBar,
+    selectedTask: TaskBar<MultiSectionTaskBar>,
     xStep: number,
     timeStep: number,
     initEventX1Delta: number,
-): { isChanged: boolean; changedTask: TaskBar } => {
-    const changedTask: TaskBar = { ...selectedTask };
+): { isChanged: boolean; changedTask: TaskBar<MultiSectionTaskBar> } => {
+    const changedTask: TaskBar<MultiSectionTaskBar> = { ...selectedTask };
     let isChanged = false;
     switch (action) {
         case 'start': {
             const newX1 = startByX(svgX, xStep, selectedTask);
             changedTask.x1 = newX1;
+
+            const getNewSectionDate = (index: number) => {
+                const oldX =
+                    (selectedTask.x2 - selectedTask.x1) * selectedTask.type[1].sectionXPositions[index] +
+                    selectedTask.x1;
+                const sectionX =
+                    (changedTask.x2 - changedTask.x1) * changedTask.type[1].sectionXPositions[index] + changedTask.x1;
+                return dateByX(sectionX, oldX, selectedTask.type[1].sections[index], xStep, timeStep);
+            };
+
             isChanged = changedTask.x1 !== selectedTask.x1;
             if (isChanged) {
                 changedTask.start = dateByX(newX1, selectedTask.x1, selectedTask.start, xStep, timeStep);
+
+                // const oldX =
+                //     (selectedTask.x2 - selectedTask.x1) * selectedTask.type[1].sectionXPositions[0] + selectedTask.x1;
+                // const sectionX =
+                //     (changedTask.x2 - changedTask.x1) * changedTask.type[1].sectionXPositions[0] + changedTask.x1;
+                // const newD = dateByX(sectionX, oldX, selectedTask.type[1].sections[0], xStep, timeStep);
+
+                for (let i = 0; i < changedTask.type[1].sections.length; i++) {
+                    changedTask.type[1].dates[i] = getNewSectionDate(i);
+                    console.log(changedTask.type[1].dates);
+                }
             }
             break;
         }
@@ -78,6 +97,7 @@ const handleMouseEvents = (
             break;
         }
     }
+
     return { isChanged, changedTask };
 };
 

@@ -1,3 +1,10 @@
+# [2.24.0](https://github.com/equinor/sdscoredev-components/compare/2.23.2...2.24.0) (2022-08-11)
+
+
+### Features
+
+* add more style options ([#25](https://github.com/equinor/sdscoredev-components/issues/25)) ([575f135](https://github.com/equinor/sdscoredev-components/commit/575f135067cee1104c654ec95d793d3b19a7279b))
+
 ## [2.23.2](https://github.com/equinor/sdscoredev-components/compare/2.23.1...2.23.2) (2022-08-10)
 
 

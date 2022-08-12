@@ -10,7 +10,20 @@ export const MultiSectionDisplay: React.FC<DisplayProps<MultiSectionTaskBar>> = 
     sectionXPositions,
     isSelected,
     onMouseDown,
+    theme,
 }) => {
+    const fill = () => {
+        if (theme?.fill) {
+            if (Array.isArray(theme?.fill)) {
+                return isSelected ? theme?.fill[1] : theme?.fill[0];
+            }
+
+            return theme?.fill;
+        }
+
+        return isSelected ? '#6565f6' : '#9292fc';
+    };
+
     return (
         <g onMouseDown={onMouseDown}>
             <rect
@@ -23,7 +36,7 @@ export const MultiSectionDisplay: React.FC<DisplayProps<MultiSectionTaskBar>> = 
                 fill={isSelected ? '#eee' : '#fff'}
                 style={{ userSelect: 'none', strokeWidth: 1, stroke: '#666' }}
             />
-            {sectionXPositions.map((p: number) => (
+            {sectionXPositions?.map((p: number) => (
                 <rect
                     key={p}
                     x={x}
@@ -32,7 +45,7 @@ export const MultiSectionDisplay: React.FC<DisplayProps<MultiSectionTaskBar>> = 
                     height={height}
                     ry={2}
                     rx={2}
-                    fill={isSelected ? '#6565f6' : '#9292fc'}
+                    fill={fill()}
                     fillOpacity={0.3}
                 />
             ))}
