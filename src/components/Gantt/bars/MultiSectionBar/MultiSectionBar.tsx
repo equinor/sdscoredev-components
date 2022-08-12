@@ -21,10 +21,16 @@ export type MultiSectionBarProps = {
      * Array of dates that will split the bar in sections
      */
     sections?: Date[];
+    dates?: Date[];
+    theme?: any;
+    /**
+     * Array of mapped dates to x-position
+     */
+    sectionXPositions?: number[];
 };
 
 export const MultiSectionBar: React.FC<Bar<MultiSectionTaskBar>> = (props) => {
-    const { taskBar, isDateChangeable = true, onEventStart, isSelected, sections } = props;
+    const { taskBar, isDateChangeable = true, onEventStart, isSelected, sections, theme } = props;
 
     return (
         <Wrapper>
@@ -33,8 +39,9 @@ export const MultiSectionBar: React.FC<Bar<MultiSectionTaskBar>> = (props) => {
                 y={taskBar.y}
                 width={taskBar.x2 - taskBar.x1}
                 height={taskBar.height}
-                sectionXPositions={taskBar.sectionXPositions}
+                sectionXPositions={taskBar.type[1].sectionXPositions}
                 isSelected={isSelected}
+                theme={theme}
                 onMouseDown={(e: any) => {
                     isDateChangeable && onEventStart('move', taskBar, e);
                 }}

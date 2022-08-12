@@ -17,14 +17,14 @@ export const Sort = (props: SortProps) => {
      */
     useEffect(() => {
         if (props.default) {
-            let sort = props.default.split(':');
+            const sort = props.default.split(':');
 
             if (sort.length >= 1) {
                 dispatch({ type: 'SET_ORDER_BY', payload: sort[0] });
             }
 
             if (sort.length === 2) {
-                dispatch({ type: 'SET_DIRECTION', payload: sort[1] === 'asc' ? true : false });
+                dispatch({ type: 'SET_DIRECTION', payload: sort[1] === 'asc' });
             }
         }
     }, [props.default]);

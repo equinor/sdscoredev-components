@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { GanttContentMoveAction } from '../types/gantt-task-actions';
 
 /**
@@ -6,7 +8,7 @@ import { GanttContentMoveAction } from '../types/gantt-task-actions';
  */
 export type Task<T = {}> = {
     id: string;
-    type: any; //[Bar<T>, T];
+    type: any; // [Bar<T>, T];
     name: string;
     start: Date;
     end: Date;
@@ -77,3 +79,6 @@ export type TaskConvertOptions = {
  * Mouse events for `TaskBar`
  */
 export type TaskBarMouseEvent<T> = { isChanged: boolean; changedTask: TaskBar<T> };
+
+// TODO: add real definition
+export type BarProps = any;

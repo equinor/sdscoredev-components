@@ -1,11 +1,23 @@
-import { Checkbox, Density, EdsProvider, Typography } from '@equinor/eds-core-react';
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
-const GroupsWrapper = styled.div`
+import { Checkbox, Density, EdsProvider, Typography } from '@equinor/eds-core-react';
+
+interface GroupsWrapperProps {
+    maxHight?: string;
+    maxWidth?: string;
+    overflowY?: string;
+    overflowX?: string;
+}
+const GroupsWrapper = styled.div<GroupsWrapperProps>`
     display: flex;
     flex-direction: column;
     gap: 1em;
+
+    max-height: ${({ maxHight }) => maxHight && maxHight};
+    max-width: ${({ maxWidth }) => maxWidth && maxWidth};
+    overflow-y: ${({ overflowY }) => overflowY && overflowY};
+    overflow-x: ${({ overflowX }) => overflowX && overflowX};
 `;
 interface OptionsWrapperProps {
     columnsNumber?: number;
@@ -36,19 +48,33 @@ const CheckBoxLabel = styled.div`
 `;
 
 interface Props {
-    density?: Density;
+    columns: any;
     columnsNumber?: number;
+    density?: Density;
+    maxHight?: string;
+    maxWidth?: string;
+    overflowX?: string;
+    overflowY?: string;
     rowsNumber?: number;
     visibleColumns?: any;
     onCheck: (column: JSX.Element | string) => void;
-
-    columns: any;
 }
 
-const ColumnSelectorDialog: FC<Props> = ({ density, columnsNumber, rowsNumber, visibleColumns, columns, onCheck }) => {
+const ColumnSelectorDialog: FC<Props> = ({
+    columns,
+    columnsNumber,
+    density,
+    maxHight,
+    maxWidth,
+    overflowX,
+    overflowY,
+    rowsNumber,
+    visibleColumns,
+    onCheck,
+}) => {
     return (
         <>
-            <GroupsWrapper>
+            <GroupsWrapper maxHight={maxHight} maxWidth={maxWidth} overflowX={overflowX} overflowY={overflowY}>
                 <EdsProvider density={density}>
                     <span>
                         <Typography variant="h6">Default columns</Typography>

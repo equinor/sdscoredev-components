@@ -6,6 +6,10 @@ export type RowProps = {
      */
     onClick?: Function;
     /**
+     * Callback for when the row is hovered
+     */
+    onHover?: Function;
+    /**
      * Callback for providing an url to be set for the row. By adding this, every cell in the row wil be wrapped with an `<a>`
      */
     getLink?: (row: any) => string;

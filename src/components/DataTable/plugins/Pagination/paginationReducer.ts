@@ -1,14 +1,14 @@
-export const SET_PAGE_INDEX = "SET_PAGE_INDEX";
-export const SET_PAGE_SIZE = "SET_PAGE_SIZE";
+export const SET_PAGE_INDEX = 'SET_PAGE_INDEX';
+export const SET_PAGE_SIZE = 'SET_PAGE_SIZE';
 
 interface PaginationState {
-    pageIndex?: number,
-    pageSize?: number,
+    pageIndex?: number;
+    pageSize?: number;
 }
 
 export const initialState: PaginationState = {
     pageIndex: 1,
-    pageSize: undefined
+    pageSize: undefined,
 };
 
 const reducer = (state = initialState, action: any): PaginationState => {
@@ -16,16 +16,16 @@ const reducer = (state = initialState, action: any): PaginationState => {
         case SET_PAGE_INDEX:
             return {
                 ...state,
-                pageIndex: action.payload
+                pageIndex: action.payload,
             };
         case SET_PAGE_SIZE:
             return {
-            ...state,
-            pageSize: action.payload
+                ...state,
+                pageSize: action.payload,
             };
         default:
             return state;
     }
 };
 
-export const paginationReducer = {reducer, initialState}
+export const paginationReducer = { reducer, initialState };

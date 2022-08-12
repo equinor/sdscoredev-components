@@ -1,5 +1,9 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-plusplus */
 export const combineReducers = (...reducers: any) => {
     return (state: any, action: any) => {
+        // eslint-disable-next-line no-restricted-syntax
         for (const reducer of reducers) {
             const result = reducer(state, action);
             if (result) return result;
@@ -7,8 +11,9 @@ export const combineReducers = (...reducers: any) => {
     };
 };
 
+// eslint-disable-next-line no-undef
 export const onNextFrame = (callback: FrameRequestCallback) => {
-    setTimeout(function () {
+    setTimeout(() => {
         requestAnimationFrame(callback);
     });
 };
@@ -17,7 +22,7 @@ export const resolve = (object: any, path: string | undefined, defaultValue: any
     path?.split('.').reduce((o: { [x: string]: any }, p: string | number) => (o ? o[p] : defaultValue), object);
 
 /**
- * Provides an item found recursively in an array with a pathstring looking like "0.param.4.name"
+ * Provides an item found recursively in an array with a path-string looking like "0.param.4.name"
  *
  * @param {any} obj Input object
  * @param {string} path The path to find
@@ -34,15 +39,6 @@ export const getByPath = (obj: any, path: string) => {
         }
     }
     return obj;
-};
-
-export const makeId = () => {
-    let id = '';
-    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    for (var i = 0; i < 6; i++) {
-        id += characters.charAt(Math.floor(Math.random() * 36));
-    }
-    return id;
 };
 
 /**
