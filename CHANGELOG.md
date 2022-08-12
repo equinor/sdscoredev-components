@@ -1,3 +1,24 @@
+# [2.24.0](https://github.com/equinor/sdscoredev-components/compare/2.23.2...2.24.0) (2022-08-11)
+
+
+### Features
+
+* add more style options ([#25](https://github.com/equinor/sdscoredev-components/issues/25)) ([575f135](https://github.com/equinor/sdscoredev-components/commit/575f135067cee1104c654ec95d793d3b19a7279b))
+
+## [2.23.2](https://github.com/equinor/sdscoredev-components/compare/2.23.1...2.23.2) (2022-08-10)
+
+
+### Bug Fixes
+
+* update minor dependencies; fix build errors ([#24](https://github.com/equinor/sdscoredev-components/issues/24)) ([fb4ba31](https://github.com/equinor/sdscoredev-components/commit/fb4ba31786e68014a7709ceb2a856bfc245b0142))
+
+## [2.23.1](https://github.com/equinor/sdscoredev-components/compare/2.23.0...2.23.1) (2022-08-10)
+
+
+### Bug Fixes
+
+* add onHover to Row ([41b9997](https://github.com/equinor/sdscoredev-components/commit/41b9997d96bde48fc8b33f529a8f4969294c74c3))
+
 # [2.23.0](https://github.com/equinor/sdscoredev-components/compare/2.22.2...2.23.0) (2022-08-10)
 
 

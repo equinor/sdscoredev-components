@@ -63,13 +63,12 @@ const HeaderCell: React.FC<TableHeaderCellProps> = ({ column, id, width }) => {
                 <Icon name={state.sortReducer.ascending ? 'arrow_up' : 'arrow_down'} />
             </SortCell>
         );
-    } else {
-        return (
-            <DefaultCell id={id} className="dataTableTh" width={width} fit={fit}>
-                {column.props.children}
-            </DefaultCell>
-        );
     }
+    return (
+        <DefaultCell id={id} className="dataTableTh" width={width} fit={fit}>
+            {column.props.children}
+        </DefaultCell>
+    );
 };
 
 export default HeaderCell;

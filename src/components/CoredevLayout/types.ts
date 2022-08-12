@@ -57,3 +57,6 @@ export type IMenuItem = {
 export type ViewProps = {
     path: string;
 };
+
+// TODO: add real definition
+export type ILayout = any;

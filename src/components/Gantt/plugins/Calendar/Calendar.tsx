@@ -1,5 +1,8 @@
+/* eslint-disable no-plusplus */
+import { StateContext } from 'components/Gantt/GanttStore';
 import React, { ReactChild, useContext } from 'react';
-import { LOCALE, ViewMode } from '../../types/public-types';
+import styled from 'styled-components';
+
 import {
     getCachedDateTimeFormat,
     getDaysInMonth,
@@ -7,28 +10,12 @@ import {
     getLocaleMonth,
     getWeekNumberISO8601,
 } from '../../helpers/date-helper';
-import { StateContext } from 'components/Gantt/GanttStore';
-import styled from 'styled-components';
+import { LOCALE, ViewMode } from '../../types/public-types';
 import { TopPartOfCalendar } from './top-part-of-calendar';
 
 export const CalendarBottomText = styled.text`
     text-anchor: middle;
     fill: #333;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    pointer-events: none;
-`;
-
-export const CalendarTopTick = styled.line`
-    stroke: #e6e4e4;
-`;
-
-export const CalendarTopText = styled.text`
-    text-anchor: middle;
-    fill: #555;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -70,9 +57,8 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode, columnWidth }) => 
             );
             if (i === 0 || date.getFullYear() !== state.ganttReducer.dates[i - 1].getFullYear()) {
                 const topValue = date.getFullYear().toString();
-                let xText: number;
 
-                xText = (6 + i - date.getMonth()) * columnWidth;
+                const xText: number = (6 + i - date.getMonth()) * columnWidth;
 
                 topValues.push(
                     <TopPartOfCalendar
@@ -95,7 +81,7 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode, columnWidth }) => 
         const bottomValues: ReactChild[] = [];
         let weeksCount: number = 1;
         const topDefaultHeight = headerHeight * 0.5;
-        const dates = state.ganttReducer.dates;
+        const { dates } = state.ganttReducer;
         for (let i = dates.length - 1; i >= 0; i--) {
             const date = dates[i];
             let topValue = '';
@@ -138,7 +124,7 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode, columnWidth }) => 
         const topValues: ReactChild[] = [];
         const bottomValues: ReactChild[] = [];
         const topDefaultHeight = headerHeight * 0.5;
-        const dates = state.ganttReducer.dates;
+        const { dates } = state.ganttReducer;
         for (let i = 0; i < dates.length; i++) {
             const date = dates[i];
             const bottomValue = `${getLocalDayOfWeek(date, 'short')}, ${date.getDate().toString()}`;
@@ -175,7 +161,7 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode, columnWidth }) => 
         const bottomValues: ReactChild[] = [];
         const ticks = viewMode === ViewMode.HalfDay ? 2 : 4;
         const topDefaultHeight = headerHeight * 0.5;
-        const dates = state.ganttReducer.dates;
+        const { dates } = state.ganttReducer;
         for (let i = 0; i < dates.length; i++) {
             const date = dates[i];
             const bottomValue = getCachedDateTimeFormat(LOCALE, {
@@ -210,7 +196,7 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode, columnWidth }) => 
         const topValues: ReactChild[] = [];
         const bottomValues: ReactChild[] = [];
         const topDefaultHeight = headerHeight * 0.5;
-        const dates = state.ganttReducer.dates;
+        const { dates } = state.ganttReducer;
         for (let i = 0; i < dates.length; i++) {
             const date = dates[i];
             const bottomValue = getCachedDateTimeFormat(LOCALE, {
@@ -263,6 +249,8 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode, columnWidth }) => 
             break;
         case ViewMode.Hour:
             [topValues, bottomValues] = getCalendarValuesForHour();
+            break;
+        default:
     }
     return (
         <g className="calendar">
