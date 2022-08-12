@@ -3,7 +3,7 @@ import { DisplayOption, EventOption, StylingOption, ViewMode } from './types/pub
 import React, { useState, SyntheticEvent, useRef, useEffect, useMemo } from 'react';
 import { removeHiddenTasks, sortTasks } from './helpers/other-helper';
 import { ganttDateRange, seedDates } from './helpers/date-helper';
-import { convertToBars } from './helpers/bar-helper';
+import { convertToBars, dateToProgress } from './helpers/bar-helper';
 import { TaskGanttContentProps } from './internal/TaskGanttContent';
 // import { TaskList, TaskListProps } from './components/task-list/task-list';
 import { Container } from './internal/Container';
@@ -101,6 +101,20 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
             filteredTasks = filteredTasks.sort(sortTasks);
 
             const [startDate, endDate] = ganttDateRange(filteredTasks, viewMode);
+
+            filteredTasks = filteredTasks.map((t: any) => {
+                if (t.type && t.type[1] && t.type[1].sections && !t.type[1].sectionXPositions) {
+                    const sections = t.type[1].sections;
+                    const type = [...t.type];
+                    type[1].sectionXPositions = sections?.map((d: Date) => dateToProgress(d, [t.start, t.end])) || [];
+                    type[1].sections = sections;
+                    type[1].dates = [];
+
+                    return { ...t, type };
+                }
+
+                return t;
+            });
 
             const dates = seedDates(startDate, endDate, viewMode);
             const bars = convertToBars(filteredTasks, dates, columnWidth, rowHeight, taskHeight, handleWidth);
