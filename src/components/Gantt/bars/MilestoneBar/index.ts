@@ -19,6 +19,8 @@ export const convert = (task: Task<MilestoneBarProps>, options: TaskConvertOptio
         end: task.start,
         x1,
         x2,
+        sx1: 0,
+        sx2: 0,
         y,
         index,
         handleWidth,

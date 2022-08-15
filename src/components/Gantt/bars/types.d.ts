@@ -56,10 +56,14 @@ export type TaskBar<T = {}> = {
     index: number;
     x1: number;
     x2: number;
+    sx1: number;
+    sx2: number;
     y: number;
     height: number;
     handleWidth: number;
     barChildren: TaskBar<T>[];
+    timeStep?: number;
+    xStep?: number;
 } & Task &
     T;
 

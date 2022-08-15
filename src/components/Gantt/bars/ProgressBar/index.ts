@@ -38,6 +38,8 @@ export const convert = (task: Task<ProgressBarProps>, options: TaskConvertOption
         ...task,
         x1,
         x2,
+        sx1: 0,
+        sx2: 0,
         y,
         index,
         handleWidth,

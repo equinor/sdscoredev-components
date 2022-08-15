@@ -132,6 +132,11 @@ export const dateByX = (x: number, taskX: number, taskDate: Date, xStep: number,
     return newDate;
 };
 
+export const dateByPercents = (start: Date, end: Date, percentage: number) => {
+    const ms = Math.round((end.getTime() - start.getTime()) * percentage + start.getTime());
+    return new Date(ms);
+};
+
 /**
  * Method handles event in real time(mousemove) and on finish(mouseup)
  */
