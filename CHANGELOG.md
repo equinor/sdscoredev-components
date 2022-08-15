@@ -1,3 +1,12 @@
+## [2.24.2](https://github.com/equinor/sdscoredev-components/compare/2.24.1...2.24.2) (2022-08-12)
+
+
+### Bug Fixes
+
+* add missing icons ([d72cd6c](https://github.com/equinor/sdscoredev-components/commit/d72cd6c228222577480cb5d9cafc22278cbff1da))
+* export Gantt ([6f7cc2e](https://github.com/equinor/sdscoredev-components/commit/6f7cc2e0abfd5c3023aa0b9030c4f99d0a3c3ba8))
+* some errors ([954d128](https://github.com/equinor/sdscoredev-components/commit/954d1289c754aade9a8fd984939945f8f0ad2355))
+
 ## [2.24.1](https://github.com/equinor/sdscoredev-components/compare/2.24.0...2.24.1) (2022-08-12)
 
 

@@ -17,14 +17,6 @@ Design System components to comply with Equinor design standards.
 It is created so that developers can easily integrate it into their applications. The complexity that
 a datatable generate over time is avoided by abstractions and combined reducers.
 
-### `useForm`
-
-A hook that simplify working with form requests. It handles most common use cases when the task is to work with data sent to and from backend.
-
-### `withInput`
-
-A hoc component to wrap your input fields with that handles validation, labeling, tooltips and more.
-
 ---
 
 ## Development
