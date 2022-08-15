@@ -1,3 +1,10 @@
+## [2.24.3](https://github.com/equinor/sdscoredev-components/compare/2.24.2...2.24.3) (2022-08-15)
+
+
+### Bug Fixes
+
+* remove unused docs ([93990ec](https://github.com/equinor/sdscoredev-components/commit/93990ec045dad8205dfa7a1884458eca218d047d))
+
 ## [2.24.2](https://github.com/equinor/sdscoredev-components/compare/2.24.1...2.24.2) (2022-08-12)
 
 
