@@ -29,6 +29,7 @@ export type DialogProps = {
     onDanger?: MouseEventHandler<HTMLButtonElement>;
     cancelButton?: string;
     primaryButton?: string;
+    disablePrimary?: boolean;
     dangerButton?: string;
     width?: number;
     noLoading?: boolean;
@@ -51,6 +52,7 @@ export const Dialog = forwardRef<DialogRef, DialogProps>((props: DialogProps, re
         onDanger,
         cancelButton,
         primaryButton,
+        disablePrimary,
         dangerButton,
         width,
         noLoading = false,
@@ -109,7 +111,7 @@ export const Dialog = forwardRef<DialogRef, DialogProps>((props: DialogProps, re
                 <Divider />
                 <ButtonWrapper>
                     {primaryButton && (
-                        <Button color="primary" variant="contained" onClick={handlePrimary} data-cy="dialog-close">
+                        <Button color="primary" variant="contained" onClick={handlePrimary} data-cy="dialog-close" disabled={isLoading || disablePrimary}>
                             {!noLoading && isLoading ? <DotProgress /> : primaryButton}
                         </Button>
                     )}
