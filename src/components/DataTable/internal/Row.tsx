@@ -35,7 +35,7 @@ type TableRowProps = {
 };
 
 const Row: React.FC<TableRowProps & RowProps & RefAttributes<HTMLTableRowElement>> = forwardRef((props, ref) => {
-    const { data, onClick, onHover, getLink, getStyle, plugins } = props;
+    const { data, onClick, onHover, onHoverLeave, getLink, getStyle, plugins } = props;
     const state: any = useContext(StateContext);
 
     const handleClick = (e: any) => {
@@ -52,6 +52,12 @@ const Row: React.FC<TableRowProps & RowProps & RefAttributes<HTMLTableRowElement
         e.preventDefault();
 
         if (onHover) onHover(data);
+    };
+
+    const handleHoverLeave = (e: any) => {
+        e.preventDefault();
+
+        if (onHoverLeave) onHoverLeave(data);
     };
 
     if (!data || !state.dataTableReducer.columns) return <></>;
@@ -73,6 +79,7 @@ const Row: React.FC<TableRowProps & RowProps & RefAttributes<HTMLTableRowElement
                             column={column}
                             onClick={handleClick}
                             onHover={handleHover}
+                            onHoverLeave={handleHoverLeave}
                             item={data}
                             href={getLink ? getLink(data) : undefined}
                         />
@@ -86,6 +93,7 @@ const Row: React.FC<TableRowProps & RowProps & RefAttributes<HTMLTableRowElement
                             column={column}
                             onClick={handleClick}
                             onHover={handleHover}
+                            onHoverLeave={handleHoverLeave}
                             item={data}
                             href={getLink ? getLink(data) : undefined}
                         />
