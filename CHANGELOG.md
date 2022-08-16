@@ -1,3 +1,10 @@
+# [2.25.0](https://github.com/equinor/sdscoredev-components/compare/2.24.3...2.25.0) (2022-08-16)
+
+
+### Features
+
+* add prop to disable primary dialog button ([47f1508](https://github.com/equinor/sdscoredev-components/commit/47f1508d9388d83d253b0c786114cbcac31eb29a))
+
 ## [2.24.3](https://github.com/equinor/sdscoredev-components/compare/2.24.2...2.24.3) (2022-08-15)
 
 
