@@ -90,13 +90,14 @@ type TableCellProps = {
     column?: any;
     onClick?: Function;
     onHover?: Function;
+    onHoverLeave?: Function;
     item?: any;
     href?: string;
     depth?: number; // TODO: Try refactor out depth prop, it belongs to Tree plugin
 };
 
 const Cell: React.FC<TableCellProps> = (props) => {
-    const { column, item, href, depth, onClick, onHover } = props;
+    const { column, item, href, depth, onClick, onHover, onHoverLeave } = props;
     const { slim, fit, id, render, truncate } = column.props;
 
     const RenderCell = () => {
@@ -138,6 +139,7 @@ const Cell: React.FC<TableCellProps> = (props) => {
                 id={id}
                 onClick={(e: any) => onClick(e)}
                 onMouseOver={(e: any) => onHover && onHover(e)}
+                onMouseLeave={(e: any) => onHoverLeave && onHoverLeave(e)}
             >
                 {RenderCell()}
             </StyledCell>
@@ -145,7 +147,13 @@ const Cell: React.FC<TableCellProps> = (props) => {
     }
 
     return (
-        <StyledCell slim={slim || fit} truncate={truncate} id={id} onMouseOver={(e: any) => onHover && onHover(e)}>
+        <StyledCell
+            slim={slim || fit}
+            truncate={truncate}
+            id={id}
+            onMouseOver={(e: any) => onHover && onHover(e)}
+            onMouseLeave={(e: any) => onHoverLeave && onHoverLeave(e)}
+        >
             <Link className="row-link" to={{ pathname: href }}>
                 {RenderCell()}
             </Link>
