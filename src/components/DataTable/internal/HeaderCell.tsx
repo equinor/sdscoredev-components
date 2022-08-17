@@ -29,7 +29,7 @@ const DefaultCell = styled(Wrapper)``;
 const SortCell = styled(Wrapper)<{ isSorted: boolean }>`
     color: ${(props: any) => (props.isSorted ? 'rgba(0, 112, 121, 1)' : 'inherit')};
     background: ${(props: any) => (props.isSorted ? 'rgba(234, 234, 234, 1)' : 'rgba(247, 247, 247, 1)')};
-
+    border-bottom: ${(props: any) => (props.isSorted ? '2px solid rgba(0, 112, 121, 1)' : 'inherit')};
     svg {
         visibility: ${({ isSorted }) => (isSorted ? 'visible' : 'hidden')};
     }

@@ -1,3 +1,10 @@
+# [2.26.0](https://github.com/equinor/sdscoredev-components/compare/2.25.0...2.26.0) (2022-08-16)
+
+
+### Features
+
+* **table:** add mouse leave property ([7128a62](https://github.com/equinor/sdscoredev-components/commit/7128a629aa153c29683a879b2ed0a1ac3d56e412))
+
 # [2.25.0](https://github.com/equinor/sdscoredev-components/compare/2.24.3...2.25.0) (2022-08-16)
 
 
