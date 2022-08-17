@@ -1,3 +1,10 @@
+## [2.26.1](https://github.com/equinor/sdscoredev-components/compare/2.26.0...2.26.1) (2022-08-17)
+
+
+### Bug Fixes
+
+* change border color on sorting column ([f72af98](https://github.com/equinor/sdscoredev-components/commit/f72af98f3756ab5e996a8555a9b15adc27b07e53))
+
 # [2.26.0](https://github.com/equinor/sdscoredev-components/compare/2.25.0...2.26.0) (2022-08-16)
 
 
