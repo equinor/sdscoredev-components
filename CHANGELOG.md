@@ -1,3 +1,10 @@
+## [2.26.2](https://github.com/equinor/sdscoredev-components/compare/2.26.1...2.26.2) (2022-08-17)
+
+
+### Bug Fixes
+
+* textfield not working properly ([3d3d53e](https://github.com/equinor/sdscoredev-components/commit/3d3d53e2e92235746c4f3217130c042b7138beac))
+
 ## [2.26.1](https://github.com/equinor/sdscoredev-components/compare/2.26.0...2.26.1) (2022-08-17)
 
 
