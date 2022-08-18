@@ -24,6 +24,7 @@ export type InputProps = {
      * Controlled value, recieved from the form object
      */
     value?: any;
+    defaultValue?: any;
     /**
      * Text to be shown in a tooltip.
      * Adds a question mark icon to the right of the label
