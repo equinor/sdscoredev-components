@@ -7,6 +7,7 @@ import { tokens } from '@equinor/eds-tokens';
 
 import { DispatchContext, StateContext } from '../../DataTableStore';
 import { PaginationProps } from './index';
+import { useLocation } from 'react-router-dom';
 
 const {
     colors: {
@@ -35,6 +36,7 @@ export const Pagination: React.FC<InternalPaginationProps> = ({
 }) => {
     const state: any = useContext(StateContext);
     const dispatch: any = useContext(DispatchContext);
+    const location = useLocation();
 
     const { pageIndex, pageSize } = state.paginationReducer;
 
@@ -47,6 +49,35 @@ export const Pagination: React.FC<InternalPaginationProps> = ({
     useEffect(() => {
         if (!pageSize && defaultPageSize) dispatch({ type: 'SET_PAGE_SIZE', payload: defaultPageSize });
     }, []);
+
+    /**
+     * Resets the pagination when search filter updates
+     */
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const pagination = params.get('pagination');
+
+        params.delete('pagination');
+        params.delete('sort');
+
+        const current = new URLSearchParams(state.filterReducer?.searchString);
+        if (current) {
+            current.delete('pagination');
+            current.delete('sort');
+
+            if (params.toString() !== current.toString()) {
+                dispatch({ type: 'SET_PAGE_INDEX', payload: 1 });
+            }
+        }
+
+        if (pagination) {
+            const parts = pagination.split(',');
+
+            if (parts[0] !== state.paginationReducer.pageIndex) {
+                dispatch({ type: 'SET_PAGE_INDEX', payload: parts[0] });
+            }
+        }
+    }, [location]);
 
     /**
      * Handler for updating page index
