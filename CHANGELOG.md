@@ -1,3 +1,10 @@
+## [2.26.3](https://github.com/equinor/sdscoredev-components/compare/2.26.2...2.26.3) (2022-08-18)
+
+
+### Bug Fixes
+
+* missing defaultValue ([a675f42](https://github.com/equinor/sdscoredev-components/commit/a675f4239bdd1a6667f62e95c62808ea1ba20071))
+
 ## [2.26.2](https://github.com/equinor/sdscoredev-components/compare/2.26.1...2.26.2) (2022-08-17)
 
 
