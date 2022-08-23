@@ -9,8 +9,8 @@ export const convertToBars = (
     taskHeight: number,
     handleWidth: number,
 ) => {
-    let barTasks = tasks.map((t, i) => {
-        return convertToTaskBar(t, i, dates, columnWidth, rowHeight, taskHeight, handleWidth);
+    let barTasks = tasks.map((task, index) => {
+        return task.type[0].convert(task, { index, dates, columnWidth, rowHeight, taskHeight, handleWidth });
     });
 
     // set dependencies
@@ -26,16 +26,23 @@ export const convertToBars = (
     return barTasks;
 };
 
-const convertToTaskBar = (
-    task: Task,
-    index: number,
+export const convertToNuggets = (
+    tasks: Task[],
     dates: Date[],
     columnWidth: number,
     rowHeight: number,
     taskHeight: number,
     handleWidth: number,
-): TaskBar => {
-    return task.type[0].convert(task, { index, dates, columnWidth, rowHeight, taskHeight, handleWidth });
+) => {
+    let nuggets = tasks.map((task, index) => {
+        if (task.nugget) {
+            return task.nugget[0].convert(task, { index, dates, columnWidth, rowHeight, taskHeight, handleWidth });
+        }
+
+        return null;
+    });
+
+    return nuggets.filter((x) => x !== null);
 };
 
 export const dateToProgress = (xDate: Date, dates: Date[]) => {

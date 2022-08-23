@@ -26,11 +26,12 @@ export const HorizontalContainer = styled.div<{ height: number; width: number }>
 
 export type TaskGanttProps = {
     bars: TaskBar[];
+    nuggets: TaskBar[];
     calendarProps: CalendarProps;
     barProps: TaskGanttContentProps;
     ganttHeight: number;
 };
-export const Container: React.FC<TaskGanttProps> = ({ bars, calendarProps, barProps, ganttHeight }) => {
+export const Container: React.FC<TaskGanttProps> = ({ bars, nuggets, calendarProps, barProps, ganttHeight }) => {
     const horizontalContainerRef = useRef<HTMLDivElement>(null);
     const verticalGanttContainerRef = useRef<HTMLDivElement>(null);
 
@@ -47,8 +48,6 @@ export const Container: React.FC<TaskGanttProps> = ({ bars, calendarProps, barPr
             type: 'SET_MEASURES',
             payload: { svgWidth: state.ganttReducer.dates.length * columnWidth, columnWidth },
         });
-
-        console.log(state.ganttReducer.dates.length * columnWidth, columnWidth);
 
         if (init.current < 5 && state.ganttReducer.dates && verticalGanttContainerRef.current) {
             for (let i = 0; i < state.ganttReducer.dates.length; i++) {
@@ -101,7 +100,7 @@ export const Container: React.FC<TaskGanttProps> = ({ bars, calendarProps, barPr
                 height={ganttHeight}
                 width={state.gridReducer.svgWidth}
             >
-                <Grid {...state.gridReducer} bars={bars} />
+                <Grid {...state.gridReducer} bars={bars} nuggets={nuggets} />
                 <TaskGanttContent {...barProps} />
             </HorizontalContainer>
         </VerticalContainer>

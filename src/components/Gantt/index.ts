@@ -18,5 +18,6 @@ Gantt.TaskList.displayName = 'Gantt.TaskList';
 export { Gantt };
 export { ViewMode } from './types/public-types';
 export * from './bars/index';
+export * from './nuggets/index';
 export type { GanttProps, StylingOption, DisplayOption, EventOption } from './types/public-types';
 export type { Bar, Task } from './bars/types';

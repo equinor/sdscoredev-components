@@ -7,9 +7,11 @@ import { InternalBar } from './Bar';
 import { BarMoveAction, GanttContentMoveAction, GanttEvent } from '../types/gantt-task-actions';
 import { DispatchContext, StateContext } from 'components/Gantt/GanttStore';
 import { TaskBar } from '../bars/types';
+import { Nugget } from './Nugget';
 
 export type TaskGanttContentProps = {
     bars: TaskBar[];
+    nuggets: TaskBar[];
     ganttEvent: GanttEvent;
     selectedTask: TaskBar | undefined;
     rowHeight: number;
@@ -25,6 +27,7 @@ export type TaskGanttContentProps = {
 
 export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
     bars,
+    nuggets,
     ganttEvent,
     selectedTask,
     rowHeight,
@@ -298,6 +301,11 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
                                 isSelected={!!selectedTask && task.id === selectedTask.id}
                             />
                         );
+                    })}
+                </g>
+                <g className="nugget">
+                    {nuggets.map((task: TaskBar) => {
+                        return <Nugget taskBar={task} taskHeight={taskHeight} />;
                     })}
                 </g>
             </g>

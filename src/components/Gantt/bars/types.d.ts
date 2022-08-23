@@ -9,6 +9,7 @@ import { GanttContentMoveAction } from '../types/gantt-task-actions';
 export type Task<T = {}> = {
     id: string;
     type: any; // [Bar<T>, T];
+    nugget: any; // [Bar<T>, T];
     name: string;
     start: Date;
     end: Date;
@@ -36,6 +37,11 @@ export type Bar<T = {}> = {
         event?: React.MouseEvent | React.KeyboardEvent,
     ) => any;
 } & T;
+
+export type NuggetProp = {
+    taskBar: TaskBar;
+    taskHeight: number;
+};
 
 /**
  * Props for creating the content of the bar

@@ -23,6 +23,7 @@ export const GridTick = styled.line`
 
 export type InternalGridProps = {
     bars: TaskBar[];
+    nuggets: TaskBar[];
     /**
      * Row height
      */
@@ -30,7 +31,7 @@ export type InternalGridProps = {
 } & GridProps;
 
 export const Grid: React.FC<InternalGridProps> = (props: InternalGridProps) => {
-    const { bars, rowHeight, columnWidth, todayColor } = props;
+    const { bars, nuggets, rowHeight, columnWidth, todayColor } = props;
 
     const state: any = useContext(StateContext);
     const canvas = useRef<HTMLCanvasElement>(null);

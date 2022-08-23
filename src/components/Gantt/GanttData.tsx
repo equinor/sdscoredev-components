@@ -3,7 +3,7 @@ import { DisplayOption, EventOption, StylingOption, ViewMode } from './types/pub
 import React, { useState, SyntheticEvent, useRef, useEffect, useMemo } from 'react';
 import { removeHiddenTasks, sortTasks } from './helpers/other-helper';
 import { ganttDateRange, seedDates } from './helpers/date-helper';
-import { convertToBars, dateToProgress } from './helpers/bar-helper';
+import { convertToBars, convertToNuggets, dateToProgress } from './helpers/bar-helper';
 import { TaskGanttContentProps } from './internal/TaskGanttContent';
 // import { TaskList, TaskListProps } from './components/task-list/task-list';
 import { Container } from './internal/Container';
@@ -84,6 +84,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
     const [failedTask, setFailedTask] = useState<TaskBar | null>(null);
 
     const [bars, setBars] = useState<TaskBar[]>([]);
+    const [nuggets, setNuggets] = useState<TaskBar[]>([]);
 
     const ganttFullHeight = bars.length * rowHeight;
 
@@ -120,9 +121,11 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
             const dates = seedDates(startDate, endDate, state.ganttReducer.viewMode);
             const columnWidth = state.ganttReducer.viewModeTickWidth[state.ganttReducer.viewMode.toLowerCase()];
             const bars = convertToBars(filteredTasks, dates, columnWidth, rowHeight, taskHeight, handleWidth);
+            const nuggets = convertToNuggets(filteredTasks, dates, columnWidth, rowHeight, taskHeight, handleWidth);
 
             dispatch({ type: 'SET_DATES', payload: dates });
             setBars(bars);
+            setNuggets(nuggets);
         }
     }, [
         props.tasks,
@@ -355,6 +358,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
     };
     const barProps: TaskGanttContentProps = {
         bars,
+        nuggets,
         ganttEvent,
         selectedTask,
         rowHeight,
@@ -398,7 +402,13 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
                 width={taskList?.props?.width}
             >
                 {taskList && listCellWidth && <TaskList {...tableProps} {...taskList.props} />}
-                <Container bars={bars} calendarProps={calendarProps} barProps={barProps} ganttHeight={ganttHeight} />
+                <Container
+                    bars={bars}
+                    nuggets={nuggets}
+                    calendarProps={calendarProps}
+                    barProps={barProps}
+                    ganttHeight={ganttHeight}
+                />
                 {ganttEvent.changedTask && (
                     <Tooltip
                         arrowIndent={arrowIndent}
