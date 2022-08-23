@@ -6,16 +6,19 @@ import { LOCALE } from '../../types/public-types';
 
 export const TaskListWrapper = styled.div`
     display: table;
-    border-bottom: #e6e4e4 1px solid;
-    border-left: #e6e4e4 1px solid;
+    border-bottom: #ebeff2 1px solid;
+    border-left: #ebeff2 1px solid;
+    width: 100%;
 `;
 
 export const TaskListTableRow = styled.div`
     display: table-row;
     text-overflow: ellipsis;
-    &:nth-of-type(even) {
+
+    /* Uncomment for stripes */
+    /* &:nth-of-type(even) {
         background-color: #f5f5f5;
-    }
+    } */
 `;
 export const TaskListCell = styled.div`
     display: table-cell;
@@ -23,6 +26,7 @@ export const TaskListCell = styled.div`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    border-top: 1px solid #ebeff2;
 `;
 export const TaskListNameWrapper = styled.div`
     display: flex;

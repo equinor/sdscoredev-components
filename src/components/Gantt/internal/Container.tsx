@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Grid } from '../plugins/Grid/Grid';
 import { TaskBar } from '../bars/types';
 import { Calendar, CalendarProps } from '../plugins/Calendar/Calendar';
+import { isToday } from '../helpers/date-helper';
 
 export const VerticalContainer = styled.div`
     overflow-x: scroll;
@@ -14,10 +15,13 @@ export const VerticalContainer = styled.div`
     display: grid;
 `;
 
-export const HorizontalContainer = styled.div`
+export const HorizontalContainer = styled.div<{ height: number; width: number }>`
     margin: 0;
     padding: 0;
     overflow: hidden;
+    height: ${(props: any) => (props.height ? `${props.height}px` : 'unset')};
+    width: ${(props: any) => (props.width ? `${props.width}px` : 'unset')};
+    position: relative;
 `;
 
 export type TaskGanttProps = {
@@ -25,26 +29,15 @@ export type TaskGanttProps = {
     calendarProps: CalendarProps;
     barProps: TaskGanttContentProps;
     ganttHeight: number;
-    scrollY: number;
-    scrollX: number;
     columnWidth: number;
 };
-export const Container: React.FC<TaskGanttProps> = ({
-    bars,
-    calendarProps,
-    barProps,
-    ganttHeight,
-    scrollY,
-    scrollX,
-    columnWidth,
-}) => {
-    const ganttSVGRef = useRef<SVGSVGElement>(null);
+export const Container: React.FC<TaskGanttProps> = ({ bars, calendarProps, barProps, ganttHeight, columnWidth }) => {
     const horizontalContainerRef = useRef<HTMLDivElement>(null);
     const verticalGanttContainerRef = useRef<HTMLDivElement>(null);
-    const newBarProps = { ...barProps, svg: ganttSVGRef };
 
     const state: any = useContext(StateContext);
     const dispatch: any = useContext(DispatchContext);
+    const init = useRef(0);
 
     /**
      * Set SVG width when dates or columnWidth updates
@@ -54,19 +47,37 @@ export const Container: React.FC<TaskGanttProps> = ({
             type: 'SET_MEASURES',
             payload: { svgWidth: state.ganttReducer.dates.length * columnWidth, columnWidth },
         });
+
+        if (init.current < 5 && state.ganttReducer.dates && verticalGanttContainerRef.current) {
+            for (let i = 0; i < state.ganttReducer.dates.length; i++) {
+                if (isToday(state.ganttReducer.dates[i])) {
+                    init.current++;
+                    dispatch({
+                        type: 'SET_SCROLL_X',
+                        payload: (i - 1) * columnWidth,
+                    });
+                    verticalGanttContainerRef.current.scrollTo((i - 1) * columnWidth, 0);
+                }
+            }
+        }
     }, [state.ganttReducer.dates, columnWidth]);
 
     useEffect(() => {
         if (horizontalContainerRef.current) {
-            horizontalContainerRef.current.scrollTop = scrollY;
+            horizontalContainerRef.current.scrollTop = state.gridReducer.scrollY;
         }
-    }, [scrollY]);
+    }, [state.gridReducer.scrollY]);
 
     useEffect(() => {
         if (verticalGanttContainerRef.current) {
-            verticalGanttContainerRef.current.scrollLeft = scrollX;
+            verticalGanttContainerRef.current.scrollLeft = state.gridReducer.scrollX;
         }
-    }, [scrollX]);
+    }, [state.gridReducer.scrollX]);
+
+    // if (verticalGanttContainerRef.current) {
+
+    //     verticalGanttContainerRef.current.scrollTo(state.gridReducer.scrollX, 0);
+    // }
 
     return (
         <VerticalContainer id="gantt-vertical-container" ref={verticalGanttContainerRef}>
@@ -80,18 +91,15 @@ export const Container: React.FC<TaskGanttProps> = ({
                     fontSize: '12px',
                 }}
             >
-                <Calendar {...calendarProps} />
+                {/* <Calendar {...calendarProps} /> */}
             </svg>
             <HorizontalContainer
                 id="gantt-horizontal-container"
                 ref={horizontalContainerRef}
-                style={
-                    ganttHeight
-                        ? { height: ganttHeight, width: state.gridReducer.svgWidth }
-                        : { width: state.gridReducer.svgWidth }
-                }
+                height={ganttHeight}
+                width={state.gridReducer.svgWidth}
             >
-                <svg
+                {/* <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width={state.gridReducer.svgWidth}
                     height={barProps.rowHeight * bars.length}
@@ -100,10 +108,10 @@ export const Container: React.FC<TaskGanttProps> = ({
                         fontFamily: 'Equinor',
                         fontSize: '12px',
                     }}
-                >
-                    <Grid {...state.gridReducer} bars={bars} />
-                    <TaskGanttContent {...newBarProps} />
-                </svg>
+                > */}
+                <Grid {...state.gridReducer} bars={bars} viewMode={calendarProps.viewMode} />
+                <TaskGanttContent {...barProps} />
+                {/* </svg> */}
             </HorizontalContainer>
         </VerticalContainer>
     );

@@ -2,12 +2,16 @@ import { ReactNode } from 'react';
 
 // export const SET_WIDTH = "SET_WIDTH";
 export const SET_MEASURES = 'SET_MEASURES';
+export const SET_SCROLL_X = 'SET_SCROLL_X';
+export const SET_SCROLL_Y = 'SET_SCROLL_Y';
 
 type GridState = {
     svgWidth: number;
     rowHeight: number;
     columnWidth: number;
     todayColor: string;
+    scrollX: number;
+    scrollY: number;
 };
 
 export const initialState: GridState = {
@@ -15,6 +19,8 @@ export const initialState: GridState = {
     rowHeight: 50,
     columnWidth: 100,
     todayColor: '#eee',
+    scrollX: 0,
+    scrollY: 0,
 };
 
 const reducer = (state = initialState, action: any): GridState => {
@@ -23,6 +29,16 @@ const reducer = (state = initialState, action: any): GridState => {
             return {
                 ...state,
                 ...action.payload,
+            };
+        case SET_SCROLL_X:
+            return {
+                ...state,
+                scrollX: action.payload,
+            };
+        case SET_SCROLL_Y:
+            return {
+                ...state,
+                scrollY: action.payload,
             };
         default:
             return state;

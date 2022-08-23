@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { EventOption } from '../types/public-types';
 import { Arrow } from './Arrow';
 import { handleTaskBySVGMouseEvent } from '../helpers/bar-helper';
@@ -15,7 +15,6 @@ export type TaskGanttContentProps = {
     rowHeight: number;
     columnWidth: number;
     timeStep: number;
-    svg?: React.RefObject<SVGSVGElement>;
     taskHeight: number;
     arrowColor: string;
     arrowIndent: number;
@@ -32,7 +31,6 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
     rowHeight,
     columnWidth,
     timeStep,
-    svg,
     taskHeight,
     arrowColor,
     arrowIndent,
@@ -46,12 +44,14 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
     onClick,
     onDelete,
 }) => {
-    const point = svg?.current?.createSVGPoint();
     const [xStep, setXStep] = useState(0);
     const [initEventX1Delta, setInitEventX1Delta] = useState(0);
     const [isMoving, setIsMoving] = useState(false);
     const state: any = useContext(StateContext);
     const dispatch: any = useContext(DispatchContext);
+    const ganttSVGRef = useRef<SVGSVGElement>(null);
+    const svg: React.RefObject<SVGSVGElement> = ganttSVGRef;
+    const point = svg?.current?.createSVGPoint();
 
     // create xStep
     useEffect(() => {
@@ -253,40 +253,55 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
     };
 
     return (
-        <g className="gantt-content">
-            <g className="arrows" fill={arrowColor} stroke={arrowColor}>
-                {bars.map((task: TaskBar) => {
-                    return task.barChildren.map((child: TaskBar) => {
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={state.gridReducer.svgWidth}
+            height={50 * bars.length}
+            ref={ganttSVGRef}
+            style={{
+                fontFamily: 'Equinor',
+                fontSize: '12px',
+                zIndex: 99,
+                position: 'absolute',
+                top: 0,
+                left: 0,
+            }}
+        >
+            <g className="gantt-content">
+                <g className="arrows" fill={arrowColor} stroke={arrowColor}>
+                    {bars.map((task: TaskBar) => {
+                        return task.barChildren.map((child: TaskBar) => {
+                            return (
+                                <Arrow
+                                    key={`Arrow from ${task.id} to ${bars[child.index].id}`}
+                                    taskFrom={task}
+                                    taskTo={bars[child.index]}
+                                    rowHeight={rowHeight}
+                                    taskHeight={taskHeight}
+                                    arrowIndent={arrowIndent}
+                                />
+                            );
+                        });
+                    })}
+                </g>
+                <g className="bar">
+                    {bars.map((task: TaskBar) => {
                         return (
-                            <Arrow
-                                key={`Arrow from ${task.id} to ${bars[child.index].id}`}
-                                taskFrom={task}
-                                taskTo={bars[child.index]}
-                                rowHeight={rowHeight}
-                                taskHeight={taskHeight}
+                            <InternalBar
+                                taskBar={task}
                                 arrowIndent={arrowIndent}
+                                taskHeight={taskHeight}
+                                isProgressChangeable={!!onProgressChange && !task.isDisabled}
+                                isDateChangeable={!task.isDisabled}
+                                isDelete={!task.isDisabled}
+                                onEventStart={handleBarEventStart}
+                                key={task.id}
+                                isSelected={!!selectedTask && task.id === selectedTask.id}
                             />
                         );
-                    });
-                })}
+                    })}
+                </g>
             </g>
-            <g className="bar">
-                {bars.map((task: TaskBar) => {
-                    return (
-                        <InternalBar
-                            taskBar={task}
-                            arrowIndent={arrowIndent}
-                            taskHeight={taskHeight}
-                            isProgressChangeable={!!onProgressChange && !task.isDisabled}
-                            isDateChangeable={!task.isDisabled}
-                            isDelete={!task.isDisabled}
-                            onEventStart={handleBarEventStart}
-                            key={task.id}
-                            isSelected={!!selectedTask && task.id === selectedTask.id}
-                        />
-                    );
-                })}
-            </g>
-        </g>
+        </svg>
     );
 };

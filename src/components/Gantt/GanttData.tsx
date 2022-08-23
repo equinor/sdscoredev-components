@@ -16,10 +16,10 @@ import { CalendarProps } from './plugins/Calendar/Calendar';
 import { StandardTooltipContent, Tooltip } from './internal/Tooltip';
 import styled from 'styled-components';
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ width: number }>`
     overflow: hidden;
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: ${(props) => (props.width ? `${props.width}px 1fr` : 'auto 1fr')};
     padding: 0px;
     margin: 0px;
     list-style: none;
@@ -38,7 +38,7 @@ export type GanttDataProps = {
 export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps, ref) => {
     const {
         grid,
-        columnWidth = 60, // Will be set from outside when picking view mode
+        columnWidth = 100, // Will be set from outside when picking view mode
         listCellWidth = '155px',
         rowHeight = 50,
         ganttHeight = 0,
@@ -88,8 +88,6 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
 
     const ganttFullHeight = bars.length * rowHeight;
 
-    const [scrollY, setScrollY] = useState(0);
-    const [scrollX, setScrollX] = useState(-1);
     const [ignoreScrollEvent, setIgnoreScrollEvent] = useState(false);
 
     /**
@@ -122,7 +120,16 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
             dispatch({ type: 'SET_DATES', payload: dates });
             setBars(bars);
         }
-    }, [props.tasks, viewMode, rowHeight, columnWidth, taskHeight, handleWidth, scrollX, onExpanderClick]);
+    }, [
+        props.tasks,
+        viewMode,
+        rowHeight,
+        columnWidth,
+        taskHeight,
+        handleWidth,
+        state.gridReducer.scrollX,
+        onExpanderClick,
+    ]);
 
     useEffect(() => {
         if (
@@ -139,8 +146,9 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
             if (index === -1) {
                 return;
             }
+
             setCurrentViewDate(viewDate);
-            setScrollX(columnWidth * index);
+            dispatch({ type: 'SET_SCROLL_X', payload: columnWidth * index });
         }
     }, [viewDate, columnWidth, state.ganttReducer.dates, viewMode, currentViewDate, setCurrentViewDate]);
 
@@ -200,18 +208,17 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         }
     }, [ganttHeight, bars, state.ganttReducer.headerHeight, rowHeight]);
 
-    // scroll events
     useEffect(() => {
         const handleWheel = (event: WheelEvent) => {
             if (event.shiftKey || event.deltaX) {
                 const scrollMove = event.deltaX ? event.deltaX : event.deltaY;
-                let newScrollX = scrollX + scrollMove;
+                let newScrollX = state.gridReducer.scrollX + scrollMove;
                 if (newScrollX < 0) {
                     newScrollX = 0;
                 } else if (newScrollX > state.gridReducer.svgWidth) {
                     newScrollX = state.gridReducer.svgWidth;
                 }
-                setScrollX(newScrollX);
+                dispatch({ type: 'SET_SCROLL_X', payload: newScrollX });
                 event.preventDefault();
             } else if (ganttHeight) {
                 let newScrollY = scrollY + event.deltaY;
@@ -220,8 +227,8 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
                 } else if (newScrollY > ganttFullHeight - ganttHeight) {
                     newScrollY = ganttFullHeight - ganttHeight;
                 }
-                if (newScrollY !== scrollY) {
-                    setScrollY(newScrollY);
+                if (newScrollY !== state.gridReducer.scrollY) {
+                    dispatch({ type: 'SET_SCROLL_Y', payload: newScrollY });
                     event.preventDefault();
                 }
             }
@@ -236,7 +243,14 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         return () => {
             wrapperRef.current?.removeEventListener('wheel', handleWheel);
         };
-    }, [wrapperRef, scrollY, scrollX, ganttHeight, state.gridReducer.svgWidth, ganttFullHeight]);
+    }, [
+        wrapperRef,
+        state.gridReducer.scrollY,
+        state.gridReducer.scrollX,
+        ganttHeight,
+        state.gridReducer.svgWidth,
+        ganttFullHeight,
+    ]);
 
     // const handleScrollY = (event: SyntheticEvent<HTMLDivElement>) => {
     //     if (scrollY !== event.currentTarget.scrollTop && !ignoreScrollEvent) {
@@ -261,8 +275,8 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
      */
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
         event.preventDefault();
-        let newScrollY = scrollY;
-        let newScrollX = scrollX;
+        let newScrollY = state.gridReducer.scrollY;
+        let newScrollX = state.gridReducer.scrollX;
         let isX = true;
         switch (event.key) {
             case 'Down': // IE/Edge specific value
@@ -290,14 +304,14 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
             } else if (newScrollX > state.gridReducer.svgWidth) {
                 newScrollX = state.gridReducer.svgWidth;
             }
-            setScrollX(newScrollX);
+            dispatch({ type: 'SET_SCROLL_X', payload: newScrollX });
         } else {
             if (newScrollY < 0) {
                 newScrollY = 0;
             } else if (newScrollY > ganttFullHeight - ganttHeight) {
                 newScrollY = ganttFullHeight - ganttHeight;
             }
-            setScrollY(newScrollY);
+            dispatch({ type: 'SET_SCROLL_Y', payload: newScrollY });
         }
         setIgnoreScrollEvent(true);
     };
@@ -373,15 +387,19 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
     if (!bars.length || !state.ganttReducer.dates.length) return <></>;
     return (
         <>
-            <Wrapper id="gantt-wrapper" onKeyDown={handleKeyDown} tabIndex={0} ref={wrapperRef}>
+            <Wrapper
+                id="gantt-wrapper"
+                onKeyDown={handleKeyDown}
+                tabIndex={0}
+                ref={wrapperRef}
+                width={taskList?.props?.width}
+            >
                 {taskList && listCellWidth && <TaskList {...tableProps} {...taskList.props} />}
                 <Container
                     bars={bars}
                     calendarProps={calendarProps}
                     barProps={barProps}
                     ganttHeight={ganttHeight}
-                    scrollY={scrollY}
-                    scrollX={scrollX}
                     columnWidth={columnWidth}
                 />
                 {ganttEvent.changedTask && (
@@ -390,8 +408,6 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
                         rowHeight={rowHeight}
                         svgContainerHeight={svgContainerHeight}
                         svgContainerWidth={svgContainerWidth}
-                        scrollX={scrollX}
-                        scrollY={scrollY}
                         task={ganttEvent.changedTask}
                         taskListWidth={taskListWidth}
                         TooltipContent={TooltipContent}
