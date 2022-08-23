@@ -8,7 +8,6 @@ export const SET_SCROLL_Y = 'SET_SCROLL_Y';
 type GridState = {
     svgWidth: number;
     rowHeight: number;
-    columnWidth: number;
     todayColor: string;
     scrollX: number;
     scrollY: number;
@@ -17,7 +16,6 @@ type GridState = {
 export const initialState: GridState = {
     svgWidth: 0,
     rowHeight: 50,
-    columnWidth: 100,
     todayColor: '#eee',
     scrollX: 0,
     scrollY: 0,

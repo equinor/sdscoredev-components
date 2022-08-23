@@ -6,14 +6,12 @@ export const SET_MEASURES = 'SET_MEASURES';
 type TaskListState = {
     svgWidth: number;
     rowHeight: number;
-    columnWidth: number;
     todayColor: string;
 };
 
 export const initialState: TaskListState = {
     svgWidth: 0,
     rowHeight: 50,
-    columnWidth: 100,
     todayColor: '#eee',
 };
 

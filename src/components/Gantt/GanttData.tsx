@@ -38,11 +38,10 @@ export type GanttDataProps = {
 export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps, ref) => {
     const {
         grid,
-        columnWidth = 100, // Will be set from outside when picking view mode
         listCellWidth = '155px',
         rowHeight = 50,
         ganttHeight = 0,
-        viewMode = ViewMode.Day,
+        viewMode,
         barFill = 60,
         handleWidth = 8,
         timeStep = 300000,
@@ -90,6 +89,10 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
 
     const [ignoreScrollEvent, setIgnoreScrollEvent] = useState(false);
 
+    useEffect(() => {
+        dispatch({ type: 'SET_VIEW_MODE', payload: viewMode });
+    }, [viewMode]);
+
     /**
      * Generate bars and dates and update state
      */
@@ -98,7 +101,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
             let filteredTasks = onExpanderClick ? removeHiddenTasks(props.tasks) : props.tasks;
             filteredTasks = filteredTasks.sort(sortTasks);
 
-            const [startDate, endDate] = ganttDateRange(filteredTasks, viewMode);
+            const [startDate, endDate] = ganttDateRange(filteredTasks, state.ganttReducer.viewMode);
 
             filteredTasks = filteredTasks.map((t: any) => {
                 if (t.type && t.type[1] && t.type[1].sections && !t.type[1].sectionXPositions) {
@@ -114,7 +117,8 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
                 return t;
             });
 
-            const dates = seedDates(startDate, endDate, viewMode);
+            const dates = seedDates(startDate, endDate, state.ganttReducer.viewMode);
+            const columnWidth = state.ganttReducer.viewModeTickWidth[state.ganttReducer.viewMode.toLowerCase()];
             const bars = convertToBars(filteredTasks, dates, columnWidth, rowHeight, taskHeight, handleWidth);
 
             dispatch({ type: 'SET_DATES', payload: dates });
@@ -122,12 +126,11 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         }
     }, [
         props.tasks,
-        viewMode,
         rowHeight,
-        columnWidth,
         taskHeight,
         handleWidth,
         state.gridReducer.scrollX,
+        state.ganttReducer.viewMode,
         onExpanderClick,
     ]);
 
@@ -148,9 +151,10 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
             }
 
             setCurrentViewDate(viewDate);
+            const columnWidth = state.ganttReducer.viewModeTickWidth[state.ganttReducer.viewMode.toLowerCase()];
             dispatch({ type: 'SET_SCROLL_X', payload: columnWidth * index });
         }
-    }, [viewDate, columnWidth, state.ganttReducer.dates, viewMode, currentViewDate, setCurrentViewDate]);
+    }, [viewDate, state.ganttReducer.dates, viewMode, currentViewDate, setCurrentViewDate]);
 
     useEffect(() => {
         const { changedTask, action } = ganttEvent;
@@ -277,6 +281,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         event.preventDefault();
         let newScrollY = state.gridReducer.scrollY;
         let newScrollX = state.gridReducer.scrollX;
+        const columnWidth = state.ganttReducer.viewModeTickWidth[state.ganttReducer.viewMode.toLowerCase()];
         let isX = true;
         switch (event.key) {
             case 'Down': // IE/Edge specific value
@@ -346,8 +351,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
     };
 
     const calendarProps: CalendarProps = {
-        viewMode,
-        columnWidth,
+        viewMode: state.ganttReducer.viewMode,
     };
     const barProps: TaskGanttContentProps = {
         bars,
@@ -355,7 +359,6 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         selectedTask,
         rowHeight,
         taskHeight,
-        columnWidth,
         arrowColor,
         timeStep,
         arrowIndent,
@@ -395,13 +398,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
                 width={taskList?.props?.width}
             >
                 {taskList && listCellWidth && <TaskList {...tableProps} {...taskList.props} />}
-                <Container
-                    bars={bars}
-                    calendarProps={calendarProps}
-                    barProps={barProps}
-                    ganttHeight={ganttHeight}
-                    columnWidth={columnWidth}
-                />
+                <Container bars={bars} calendarProps={calendarProps} barProps={barProps} ganttHeight={ganttHeight} />
                 {ganttEvent.changedTask && (
                     <Tooltip
                         arrowIndent={arrowIndent}

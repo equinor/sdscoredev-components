@@ -30,14 +30,13 @@ export const CalendarHeader = styled.rect`
     stroke-width: 1.4;
 `;
 
-export type CalendarProps = {
-    viewMode: ViewMode;
-    columnWidth: number;
-};
+export type CalendarProps = {};
 
-export const Calendar: React.FC<CalendarProps> = ({ viewMode, columnWidth }) => {
+export const Calendar: React.FC<CalendarProps> = (props) => {
     const state: any = useContext(StateContext);
     const { headerHeight } = state.ganttReducer;
+
+    const columnWidth = state.ganttReducer.viewModeTickWidth[state.ganttReducer.viewMode.toLowerCase()];
 
     const getCalendarValuesForMonth = () => {
         const topValues: ReactChild[] = [];
@@ -46,9 +45,12 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode, columnWidth }) => 
         for (let i = 0; i < state.ganttReducer.dates.length; i++) {
             const date = state.ganttReducer.dates[i];
             const bottomValue = getLocaleMonth(date);
+
+            let uuid = crypto.randomUUID();
+
             bottomValues.push(
                 <CalendarBottomText
-                    key={bottomValue + date.getFullYear()}
+                    key={bottomValue + date.getFullYear() + uuid}
                     y={headerHeight * 0.8}
                     x={columnWidth * i + columnWidth * 0.5}
                 >
@@ -159,7 +161,7 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode, columnWidth }) => 
     const getCalendarValuesForPartOfDay = () => {
         const topValues: ReactChild[] = [];
         const bottomValues: ReactChild[] = [];
-        const ticks = viewMode === ViewMode.HalfDay ? 2 : 4;
+        const ticks = state.ganttReducer.viewMode === ViewMode.HalfDay ? 2 : 4;
         const topDefaultHeight = headerHeight * 0.5;
         const { dates } = state.ganttReducer;
         for (let i = 0; i < dates.length; i++) {
@@ -233,7 +235,7 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode, columnWidth }) => 
 
     let topValues: ReactChild[] = [];
     let bottomValues: ReactChild[] = [];
-    switch (viewMode) {
+    switch (state.ganttReducer.viewMode) {
         case ViewMode.Month:
             [topValues, bottomValues] = getCalendarValuesForMonth();
             break;

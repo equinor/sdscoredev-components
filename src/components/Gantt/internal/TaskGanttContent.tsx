@@ -13,7 +13,6 @@ export type TaskGanttContentProps = {
     ganttEvent: GanttEvent;
     selectedTask: TaskBar | undefined;
     rowHeight: number;
-    columnWidth: number;
     timeStep: number;
     taskHeight: number;
     arrowColor: string;
@@ -29,7 +28,6 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
     ganttEvent,
     selectedTask,
     rowHeight,
-    columnWidth,
     timeStep,
     taskHeight,
     arrowColor,
@@ -55,6 +53,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
 
     // create xStep
     useEffect(() => {
+        const columnWidth = state.ganttReducer.viewModeTickWidth[state.ganttReducer.viewMode.toLowerCase()];
         const dateDelta =
             state.ganttReducer.dates[1].getTime() -
             state.ganttReducer.dates[0].getTime() -
@@ -62,7 +61,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
             state.ganttReducer.dates[0].getTimezoneOffset() * 60 * 1000;
         const newXStep = (timeStep * columnWidth) / dateDelta;
         setXStep(newXStep);
-    }, [columnWidth, state.ganttReducer?.dates, timeStep]);
+    }, [state.ganttReducer.viewMode, state.ganttReducer?.dates, timeStep]);
 
     /**
      * Internal dateChange event handler

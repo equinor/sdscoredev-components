@@ -29,9 +29,8 @@ export type TaskGanttProps = {
     calendarProps: CalendarProps;
     barProps: TaskGanttContentProps;
     ganttHeight: number;
-    columnWidth: number;
 };
-export const Container: React.FC<TaskGanttProps> = ({ bars, calendarProps, barProps, ganttHeight, columnWidth }) => {
+export const Container: React.FC<TaskGanttProps> = ({ bars, calendarProps, barProps, ganttHeight }) => {
     const horizontalContainerRef = useRef<HTMLDivElement>(null);
     const verticalGanttContainerRef = useRef<HTMLDivElement>(null);
 
@@ -43,10 +42,13 @@ export const Container: React.FC<TaskGanttProps> = ({ bars, calendarProps, barPr
      * Set SVG width when dates or columnWidth updates
      */
     useEffect(() => {
+        const columnWidth = state.ganttReducer.viewModeTickWidth[state.ganttReducer.viewMode.toLowerCase()];
         dispatch({
             type: 'SET_MEASURES',
             payload: { svgWidth: state.ganttReducer.dates.length * columnWidth, columnWidth },
         });
+
+        console.log(state.ganttReducer.dates.length * columnWidth, columnWidth);
 
         if (init.current < 5 && state.ganttReducer.dates && verticalGanttContainerRef.current) {
             for (let i = 0; i < state.ganttReducer.dates.length; i++) {
@@ -60,7 +62,7 @@ export const Container: React.FC<TaskGanttProps> = ({ bars, calendarProps, barPr
                 }
             }
         }
-    }, [state.ganttReducer.dates, columnWidth]);
+    }, [state.ganttReducer.dates, state.ganttReducer.viewMode]);
 
     useEffect(() => {
         if (horizontalContainerRef.current) {
@@ -91,7 +93,7 @@ export const Container: React.FC<TaskGanttProps> = ({ bars, calendarProps, barPr
                     fontSize: '12px',
                 }}
             >
-                {/* <Calendar {...calendarProps} /> */}
+                <Calendar {...calendarProps} />
             </svg>
             <HorizontalContainer
                 id="gantt-horizontal-container"
@@ -99,19 +101,8 @@ export const Container: React.FC<TaskGanttProps> = ({ bars, calendarProps, barPr
                 height={ganttHeight}
                 width={state.gridReducer.svgWidth}
             >
-                {/* <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width={state.gridReducer.svgWidth}
-                    height={barProps.rowHeight * bars.length}
-                    ref={ganttSVGRef}
-                    style={{
-                        fontFamily: 'Equinor',
-                        fontSize: '12px',
-                    }}
-                > */}
-                <Grid {...state.gridReducer} bars={bars} viewMode={calendarProps.viewMode} />
+                <Grid {...state.gridReducer} bars={bars} />
                 <TaskGanttContent {...barProps} />
-                {/* </svg> */}
             </HorizontalContainer>
         </VerticalContainer>
     );

@@ -1,9 +1,8 @@
 import { TaskBar } from 'components/Gantt/bars/types';
-import React, { ReactChild, useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { GridProps } from '.';
-import { DispatchContext, StateContext } from '../../GanttStore';
-import { addToDate } from '../../helpers/date-helper';
+import { StateContext } from '../../GanttStore';
 
 export const GridRowLine = styled.line`
     stroke: #ebeff2;
@@ -25,28 +24,20 @@ export const GridTick = styled.line`
 export type InternalGridProps = {
     bars: TaskBar[];
     /**
-     * Width of the generated svg
-     */
-    svgWidth: number;
-    /**
      * Row height
      */
     rowHeight: number;
-
-    viewMode?: any;
 } & GridProps;
 
 export const Grid: React.FC<InternalGridProps> = (props: InternalGridProps) => {
-    const { bars, svgWidth, rowHeight, columnWidth, todayColor, viewMode } = props;
+    const { bars, rowHeight, columnWidth, todayColor } = props;
 
     const state: any = useContext(StateContext);
     const canvas = useRef<HTMLCanvasElement>(null);
-    const dateCount = useRef<number>(0);
 
     const drawTicks = (ctx: CanvasRenderingContext2D, w: number, h: number): void => {
         let x = 0;
         for (let i = 0; i < state.ganttReducer.dates.length; i++) {
-            console.log(i, x);
             ctx.beginPath();
             ctx.moveTo(x + 0.5, 0);
             ctx.lineTo(x + 0.5, h);
@@ -72,7 +63,9 @@ export const Grid: React.FC<InternalGridProps> = (props: InternalGridProps) => {
 
     useEffect(() => {
         if (canvas.current?.getContext) {
-            const width = state.ganttReducer.dates.length * 100; // TODO: Remove hardcoded
+            const width =
+                state.ganttReducer.dates.length *
+                state.ganttReducer.viewModeTickWidth[state.ganttReducer.viewMode.toLowerCase()]; // TODO: Remove hardcoded
 
             if (width > 65200) {
                 console.warn('Canvas width is limited to 65200. Your canvas width is: ' + width);
@@ -87,7 +80,6 @@ export const Grid: React.FC<InternalGridProps> = (props: InternalGridProps) => {
                 const w = canvas.current.width;
                 const h = bars.length * rowHeight;
 
-                console.log(w, h);
                 ctx.rect(0, 0, w, h);
                 ctx.fillStyle = '#ffffff';
                 ctx.fill();
@@ -99,7 +91,6 @@ export const Grid: React.FC<InternalGridProps> = (props: InternalGridProps) => {
     }, [canvas.current, state.ganttReducer.dates.length]);
 
     // useEffect(() => {
-    //     console.log(state.ganttReducer.dates.length);
     // }, [state.ganttReducer.dates.length]);
 
     // if (
@@ -122,14 +113,8 @@ export const Grid: React.FC<InternalGridProps> = (props: InternalGridProps) => {
             className="grid"
             ref={canvas}
             id="DemoCanvas"
-            height="1000"
+            height={bars.length * rowHeight}
             style={{ borderBottom: '1px solid rgb(235, 239, 242)' }}
         ></canvas>
-        // <g className="grid">
-        //     <g className="rows">{gridRows}</g>
-        //     <g className="rowLines">{rowLines}</g>
-        //     {/* <g className="ticks">{ticks}</g> */}
-        //     <g className="today">{today}</g>
-        // </g>
     );
 };
