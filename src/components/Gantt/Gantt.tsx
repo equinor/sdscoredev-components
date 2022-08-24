@@ -1,5 +1,5 @@
 import { Children, useState } from 'react';
-import { DisplayOption, EventOption, StylingOption } from './types/public-types';
+import { EventOption, StylingOption, ViewMode } from './types/public-types';
 import React from 'react';
 import { GanttStore } from './GanttStore';
 import { ganttReducer } from './reducers/ganttReducer';
@@ -12,6 +12,12 @@ export type GanttProps = {
     tasks: Task[];
     children?: any;
     /**
+     * Which way to split the calendar into ticks.
+     * When changed, the grid and calendar redraw.
+     */
+    viewMode?: ViewMode;
+    viewDate?: Date;
+    /**
      * Object containing additional reducers (plugins) to be used. They will be handled as reducer slices
      * and will manipulate the Gantt root state, as well as it's own separate states.
      *
@@ -21,7 +27,6 @@ export type GanttProps = {
      */
     reducers?: any;
 } & EventOption &
-    DisplayOption &
     StylingOption;
 
 export const Gantt = (props: GanttProps) => {

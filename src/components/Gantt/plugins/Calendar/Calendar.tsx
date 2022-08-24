@@ -254,6 +254,8 @@ export const Calendar: React.FC<CalendarProps> = (props) => {
             break;
         default:
     }
+
+    if (!state.ganttReducer.dates) return <></>;
     return (
         <g className="calendar">
             <CalendarHeader x={0} y={0} width={columnWidth * state.ganttReducer.dates.length} height={headerHeight} />

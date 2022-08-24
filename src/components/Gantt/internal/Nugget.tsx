@@ -38,11 +38,11 @@ export const Nugget: React.FC<NuggetProp> = (props) => {
         setTaskItem(taskBar.nugget[0]({ ...props, ...taskBar.nugget[1] }));
     }, [taskBar]);
 
-    useEffect(() => {
-        if (textRef.current) {
-            setIsTextInside(textRef.current.getBBox().width < taskBar.x2 - taskBar.x1);
-        }
-    }, [textRef, taskBar]);
+    // useEffect(() => {
+    //     if (textRef.current) {
+    //         setIsTextInside(textRef.current.getBBox().width < taskBar.x2 - taskBar.x1);
+    //     }
+    // }, [textRef, taskBar]);
 
     const getX = () => {
         const width = taskBar.x2 - taskBar.x1;

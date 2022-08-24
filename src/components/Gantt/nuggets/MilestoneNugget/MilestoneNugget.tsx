@@ -18,7 +18,7 @@ export const MilestoneNugget: React.FC<Bar<MilestoneNuggetProps>> = (props) => {
     return (
         <MilestoneWrapper tabIndex={0}>
             <rect
-                fill="#7b7b7b"
+                fill="#9d9d9d"
                 x={taskBar.x1}
                 width={taskBar.height}
                 y={taskBar.y}

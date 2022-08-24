@@ -52,15 +52,6 @@ export type EventOption = {
     onSetTasks?: (tasks: Task[]) => void;
 };
 
-export type DisplayOption = {
-    viewMode?: ViewMode;
-    viewDate?: Date;
-    /**
-     * Specifies the month name language. Able formats: ISO 639-2, Java Locale
-     */
-    locale?: string;
-};
-
 export type StylingOption = {
     headerHeight?: number;
     columnWidth?: number;
@@ -118,6 +109,7 @@ export type StylingOption = {
 
 export type GanttProps = {
     tasks: Task[];
+    viewMode?: ViewMode;
+    viewDate?: Date;
 } & EventOption &
-    DisplayOption &
     StylingOption;

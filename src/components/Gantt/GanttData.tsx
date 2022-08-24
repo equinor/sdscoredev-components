@@ -1,9 +1,9 @@
 import { forwardRef, useContext } from 'react';
-import { DisplayOption, EventOption, StylingOption, ViewMode } from './types/public-types';
-import React, { useState, SyntheticEvent, useRef, useEffect, useMemo } from 'react';
+import { EventOption, StylingOption, ViewMode } from './types/public-types';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { removeHiddenTasks, sortTasks } from './helpers/other-helper';
 import { ganttDateRange, seedDates } from './helpers/date-helper';
-import { convertToBars, convertToNuggets, dateToProgress } from './helpers/bar-helper';
+import { convertToBars, dateToProgress } from './helpers/bar-helper';
 import { TaskGanttContentProps } from './internal/TaskGanttContent';
 // import { TaskList, TaskListProps } from './components/task-list/task-list';
 import { Container } from './internal/Container';
@@ -31,8 +31,13 @@ export type GanttDataProps = {
     tasks: Task[];
     grid?: GridProps;
     taskList?: any;
+    /**
+     * Which way to split the calendar into ticks.
+     * When changed, the grid and calendar redraw.
+     */
+    viewMode?: ViewMode;
+    viewDate?: Date;
 } & EventOption &
-    DisplayOption &
     StylingOption;
 
 export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps, ref) => {
@@ -41,7 +46,6 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         listCellWidth = '155px',
         rowHeight = 50,
         ganttHeight = 0,
-        viewMode,
         barFill = 60,
         handleWidth = 8,
         timeStep = 300000,
@@ -49,6 +53,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         arrowIndent = 20,
         todayColor = 'rgba(252, 248, 227, 0.5)',
         viewDate,
+        viewMode = ViewMode.Month,
         TooltipContent = StandardTooltipContent,
         onDateChange,
         onProgressChange,
@@ -90,6 +95,9 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
 
     const [ignoreScrollEvent, setIgnoreScrollEvent] = useState(false);
 
+    /**
+     * Updates the view Mode in state
+     */
     useEffect(() => {
         dispatch({ type: 'SET_VIEW_MODE', payload: viewMode });
     }, [viewMode]);
@@ -102,7 +110,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
             let filteredTasks = onExpanderClick ? removeHiddenTasks(props.tasks) : props.tasks;
             filteredTasks = filteredTasks.sort(sortTasks);
 
-            const [startDate, endDate] = ganttDateRange(filteredTasks, state.ganttReducer.viewMode);
+            const [startDate, endDate] = ganttDateRange(filteredTasks, viewMode);
 
             filteredTasks = filteredTasks.map((t: any) => {
                 if (t.type && t.type[1] && t.type[1].sections && !t.type[1].sectionXPositions) {
@@ -118,30 +126,19 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
                 return t;
             });
 
-            const dates = seedDates(startDate, endDate, state.ganttReducer.viewMode);
-            const columnWidth = state.ganttReducer.viewModeTickWidth[state.ganttReducer.viewMode.toLowerCase()];
+            const dates = seedDates(startDate, endDate, viewMode);
+            const columnWidth = state.ganttReducer.viewModeTickWidth[viewMode.toLowerCase()];
             const bars = convertToBars(filteredTasks, dates, columnWidth, rowHeight, taskHeight, handleWidth);
-            const nuggets = convertToNuggets(filteredTasks, dates, columnWidth, rowHeight, taskHeight, handleWidth);
+            // const nuggets = convertToNuggets(filteredTasks, dates, columnWidth, rowHeight, taskHeight, handleWidth);
 
             dispatch({ type: 'SET_DATES', payload: dates });
             setBars(bars);
-            setNuggets(nuggets);
+            // setNuggets(nuggets);
         }
-    }, [
-        props.tasks,
-        rowHeight,
-        taskHeight,
-        handleWidth,
-        state.gridReducer.scrollX,
-        state.ganttReducer.viewMode,
-        onExpanderClick,
-    ]);
+    }, [props.tasks, rowHeight, taskHeight, handleWidth, state.gridReducer.scrollX, viewMode, onExpanderClick]);
 
     useEffect(() => {
-        if (
-            viewMode === viewMode &&
-            ((viewDate && !currentViewDate) || (viewDate && currentViewDate?.valueOf() !== viewDate.valueOf()))
-        ) {
+        if ((viewDate && !currentViewDate) || (viewDate && currentViewDate?.valueOf() !== viewDate.valueOf())) {
             const dates = state.ganttReducer.dates;
             const index = dates.findIndex(
                 (d: any, i: any) =>
@@ -154,7 +151,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
             }
 
             setCurrentViewDate(viewDate);
-            const columnWidth = state.ganttReducer.viewModeTickWidth[state.ganttReducer.viewMode.toLowerCase()];
+            const columnWidth = state.ganttReducer.viewModeTickWidth[viewMode.toLowerCase()];
             dispatch({ type: 'SET_SCROLL_X', payload: columnWidth * index });
         }
     }, [viewDate, state.ganttReducer.dates, viewMode, currentViewDate, setCurrentViewDate]);
@@ -284,7 +281,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         event.preventDefault();
         let newScrollY = state.gridReducer.scrollY;
         let newScrollX = state.gridReducer.scrollX;
-        const columnWidth = state.ganttReducer.viewModeTickWidth[state.ganttReducer.viewMode.toLowerCase()];
+        const columnWidth = state.ganttReducer.viewModeTickWidth[viewMode.toLowerCase()];
         let isX = true;
         switch (event.key) {
             case 'Down': // IE/Edge specific value
@@ -354,7 +351,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
     };
 
     const calendarProps: CalendarProps = {
-        viewMode: state.ganttReducer.viewMode,
+        viewMode,
     };
     const barProps: TaskGanttContentProps = {
         bars,
