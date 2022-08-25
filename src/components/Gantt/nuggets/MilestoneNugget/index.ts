@@ -9,6 +9,8 @@ export const convert = (task: Task<MilestoneNuggetProps>, options: TaskConvertOp
 
     let nugget = [...task.nugget];
 
+    console.log(nugget[1].date, dates.length);
+
     const x = taskXCoordinate(nugget[1].date, dates, columnWidth);
     const y = taskYCoordinate(index, rowHeight, taskHeight);
 

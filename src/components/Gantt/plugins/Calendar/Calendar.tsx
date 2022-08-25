@@ -30,13 +30,38 @@ export const CalendarHeader = styled.rect`
     stroke-width: 1.4;
 `;
 
-export type CalendarProps = {};
+export type CalendarProps = {
+    viewMode: ViewMode;
+};
 
-export const Calendar: React.FC<CalendarProps> = (props) => {
+export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
     const state: any = useContext(StateContext);
     const { headerHeight } = state.ganttReducer;
 
-    const columnWidth = state.ganttReducer.viewModeTickWidth[state.ganttReducer.viewMode.toLowerCase()];
+    const columnWidth = state.ganttReducer.viewModeTickWidth[viewMode.toLowerCase()];
+
+    const getCalendarValuesForYear = () => {
+        const topValues: ReactChild[] = [];
+        const bottomValues: ReactChild[] = [];
+
+        for (let i = 0; i < state.ganttReducer.dates.length; i++) {
+            const date = state.ganttReducer.dates[i];
+            const bottomValue = date.getFullYear();
+
+            let uuid = crypto.randomUUID();
+
+            bottomValues.push(
+                <CalendarBottomText
+                    key={bottomValue + uuid}
+                    y={headerHeight * 0.8}
+                    x={columnWidth * i + columnWidth * 0.5}
+                >
+                    {bottomValue}
+                </CalendarBottomText>,
+            );
+        }
+        return [topValues, bottomValues];
+    };
 
     const getCalendarValuesForMonth = () => {
         const topValues: ReactChild[] = [];
@@ -95,7 +120,7 @@ export const Calendar: React.FC<CalendarProps> = (props) => {
             const bottomValue = `W${getWeekNumberISO8601(date)}`;
 
             bottomValues.push(
-                <CalendarBottomText key={date.getTime()} y={headerHeight * 0.8} x={columnWidth * i}>
+                <CalendarBottomText key={date.getTime()} y={headerHeight * 0.8} x={columnWidth * i + columnWidth * 0.5}>
                     {bottomValue}
                 </CalendarBottomText>,
             );
@@ -235,7 +260,14 @@ export const Calendar: React.FC<CalendarProps> = (props) => {
 
     let topValues: ReactChild[] = [];
     let bottomValues: ReactChild[] = [];
-    switch (state.ganttReducer.viewMode) {
+    switch (viewMode) {
+        case ViewMode.Year:
+            [topValues, bottomValues] = getCalendarValuesForYear();
+            break;
+        // case ViewMode.HalfYear:
+        // case ViewMode.QuarterYear:
+        //     [topValues, bottomValues] = getCalendarValuesForMonth();
+        //     break;
         case ViewMode.Month:
             [topValues, bottomValues] = getCalendarValuesForMonth();
             break;

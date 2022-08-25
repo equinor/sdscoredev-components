@@ -71,7 +71,6 @@ const handleMouseEvents = (
 
                 for (let i = 0; i < changedTask.type[1].sections.length; i++) {
                     changedTask.type[1].dates[i] = getNewSectionDate(i);
-                    console.log(changedTask.type[1].dates);
                 }
             }
             break;

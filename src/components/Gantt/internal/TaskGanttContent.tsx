@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { EventOption } from '../types/public-types';
+import { EventOption, ViewMode } from '../types/public-types';
 import { Arrow } from './Arrow';
 import { handleTaskBySVGMouseEvent } from '../helpers/bar-helper';
 import { isKeyboardEvent } from '../helpers/other-helper';
@@ -11,6 +11,7 @@ import { Nugget } from './Nugget';
 
 export type TaskGanttContentProps = {
     bars: TaskBar[];
+    viewMode: ViewMode;
     nuggets: TaskBar[];
     ganttEvent: GanttEvent;
     selectedTask: TaskBar | undefined;
@@ -27,6 +28,7 @@ export type TaskGanttContentProps = {
 
 export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
     bars,
+    viewMode,
     nuggets,
     ganttEvent,
     selectedTask,
@@ -56,7 +58,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
 
     // create xStep
     useEffect(() => {
-        const columnWidth = state.ganttReducer.viewModeTickWidth[state.ganttReducer.viewMode.toLowerCase()];
+        const columnWidth = state.ganttReducer.viewModeTickWidth[viewMode.toLowerCase()];
         const dateDelta =
             state.ganttReducer.dates[1].getTime() -
             state.ganttReducer.dates[0].getTime() -
@@ -64,7 +66,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
             state.ganttReducer.dates[0].getTimezoneOffset() * 60 * 1000;
         const newXStep = (timeStep * columnWidth) / dateDelta;
         setXStep(newXStep);
-    }, [state.ganttReducer.viewMode, state.ganttReducer?.dates, timeStep]);
+    }, [viewMode, state.ganttReducer?.dates, timeStep]);
 
     /**
      * Internal dateChange event handler

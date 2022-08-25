@@ -6,14 +6,14 @@ export const SET_VIEW_MODE = 'SET_VIEW_MODE';
 interface GanttState {
     dates?: Array<Date>;
     headerHeight?: number;
-    viewMode: ViewMode;
+    viewMode?: ViewMode | null;
     viewModeTickWidth?: any;
 }
 
 export const initialState: GanttState = {
     dates: [],
     headerHeight: 50,
-    viewMode: ViewMode.Month,
+    viewMode: null,
     viewModeTickWidth: {
         hour: 50,
         quarterday: 60,

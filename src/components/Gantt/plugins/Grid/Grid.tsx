@@ -1,5 +1,6 @@
 import { TaskBar } from 'components/Gantt/bars/types';
-import React, { useContext, useEffect, useRef } from 'react';
+import { ViewMode } from 'components/Gantt/types/public-types';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { GridProps } from '.';
 import { StateContext } from '../../GanttStore';
@@ -24,6 +25,7 @@ export const GridTick = styled.line`
 export type InternalGridProps = {
     bars: TaskBar[];
     nuggets: TaskBar[];
+    viewMode: ViewMode;
     /**
      * Row height
      */
@@ -31,7 +33,7 @@ export type InternalGridProps = {
 } & GridProps;
 
 export const Grid: React.FC<InternalGridProps> = (props: InternalGridProps) => {
-    const { bars, nuggets, rowHeight, columnWidth, todayColor } = props;
+    const { bars, nuggets, viewMode, rowHeight, columnWidth, todayColor } = props;
 
     const state: any = useContext(StateContext);
     const canvas = useRef<HTMLCanvasElement>(null);
@@ -65,8 +67,7 @@ export const Grid: React.FC<InternalGridProps> = (props: InternalGridProps) => {
     useEffect(() => {
         if (canvas.current?.getContext) {
             const width =
-                state.ganttReducer.dates.length *
-                state.ganttReducer.viewModeTickWidth[state.ganttReducer.viewMode.toLowerCase()]; // TODO: Remove hardcoded
+                state.ganttReducer.dates.length * state.ganttReducer.viewModeTickWidth[viewMode.toLowerCase()];
 
             if (width > 65200) {
                 console.warn('Canvas width is limited to 65200. Your canvas width is: ' + width);
@@ -89,7 +90,7 @@ export const Grid: React.FC<InternalGridProps> = (props: InternalGridProps) => {
                 drawRowLines(ctx, w, h);
             }
         }
-    }, [canvas.current, state.ganttReducer.dates.length]);
+    }, [canvas.current, state.ganttReducer.dates.length, viewMode]);
 
     // useEffect(() => {
     // }, [state.ganttReducer.dates.length]);
