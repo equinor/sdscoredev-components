@@ -95,32 +95,47 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
     const [ignoreScrollEvent, setIgnoreScrollEvent] = useState(false);
 
     /**
+     * Removes hidden tasks and maps some props
+     *
+     * @param tasks
+     * @returns Array<Task>
+     */
+    const filterTasks = (tasks: Array<Task>): Array<Task> => {
+        let filteredTasks = onExpanderClick ? removeHiddenTasks(tasks) : tasks;
+        filteredTasks = filteredTasks.sort(sortTasks);
+
+        filteredTasks = filteredTasks.map((t: any) => {
+            if (t.type && t.type[1] && t.type[1].sections && !t.type[1].sectionXPositions) {
+                const sections = t.type[1].sections;
+                const type = [...t.type];
+                type[1].sectionXPositions = sections?.map((d: Date) => dateToProgress(d, [t.start, t.end])) || [];
+                type[1].sections = sections;
+                type[1].dates = [];
+
+                return { ...t, type };
+            }
+
+            return t;
+        });
+
+        return filteredTasks;
+    };
+
+    /**
      * Generate bars and dates and update state
      */
     useEffect(() => {
         if (props.tasks.length) {
-            let filteredTasks = onExpanderClick ? removeHiddenTasks(props.tasks) : props.tasks;
-            filteredTasks = filteredTasks.sort(sortTasks);
+            const filteredTasks = filterTasks(props.tasks);
 
+            /** Main functions to draw grid and calendar */
             const [startDate, endDate] = ganttDateRange(filteredTasks, viewMode);
             const dates = seedDates(startDate, endDate, viewMode);
 
-            filteredTasks = filteredTasks.map((t: any) => {
-                if (t.type && t.type[1] && t.type[1].sections && !t.type[1].sectionXPositions) {
-                    const sections = t.type[1].sections;
-                    const type = [...t.type];
-                    type[1].sectionXPositions = sections?.map((d: Date) => dateToProgress(d, [t.start, t.end])) || [];
-                    type[1].sections = sections;
-                    type[1].dates = [];
-
-                    return { ...t, type };
-                }
-
-                return t;
-            });
-
-            
+            /** Get column width from state. The width is determined by the current viewMode */
             const columnWidth = state.ganttReducer.viewModeTickWidth[viewMode.toLowerCase()];
+
+            /** Generate bars and nuggets to be displayed */
             const bars = convertToBars(filteredTasks, dates, columnWidth, rowHeight, taskHeight, handleWidth);
             const nuggets = convertToNuggets(filteredTasks, dates, columnWidth, rowHeight, taskHeight, handleWidth);
 
@@ -400,6 +415,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
                     calendarProps={calendarProps}
                     barProps={barProps}
                     ganttHeight={ganttHeight}
+                    grid={grid}
                 />
                 {ganttEvent.changedTask && (
                     <Tooltip

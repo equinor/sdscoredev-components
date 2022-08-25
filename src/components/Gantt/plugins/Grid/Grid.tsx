@@ -3,7 +3,7 @@ import { ViewMode } from 'components/Gantt/types/public-types';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { GridProps } from '.';
-import { StateContext } from '../../GanttStore';
+import { DispatchContext, StateContext } from '../../GanttStore';
 
 export const GridRowLine = styled.line`
     stroke: #ebeff2;
@@ -33,10 +33,11 @@ export type InternalGridProps = {
 } & GridProps;
 
 export const Grid: React.FC<InternalGridProps> = (props: InternalGridProps) => {
-    const { bars, nuggets, viewMode, rowHeight, columnWidth, todayColor } = props;
+    const { bars, focus, nuggets, viewMode, rowHeight, columnWidth, todayColor } = props;
 
     const state: any = useContext(StateContext);
     const canvas = useRef<HTMLCanvasElement>(null);
+    const dispatch: any = useContext(DispatchContext);
 
     const drawTicks = (ctx: CanvasRenderingContext2D, w: number, h: number): void => {
         let x = 0;
@@ -92,8 +93,9 @@ export const Grid: React.FC<InternalGridProps> = (props: InternalGridProps) => {
         }
     }, [canvas.current, state.ganttReducer.dates.length, viewMode]);
 
-    // useEffect(() => {
-    // }, [state.ganttReducer.dates.length]);
+    useEffect(() => {
+        dispatch({ type: 'SET_FOCUS', payload: focus });
+    }, [focus]);
 
     // if (
     //     (i + 1 !== state.ganttReducer.dates.length &&

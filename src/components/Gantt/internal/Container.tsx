@@ -32,6 +32,7 @@ export type TaskGanttProps = {
     barProps: TaskGanttContentProps;
     ganttHeight: number;
     viewMode: ViewMode;
+    grid: any;
 };
 export const Container: React.FC<TaskGanttProps> = ({
     bars,
@@ -40,6 +41,7 @@ export const Container: React.FC<TaskGanttProps> = ({
     barProps,
     ganttHeight,
     viewMode,
+    grid,
 }) => {
     const horizontalContainerRef = useRef<HTMLDivElement>(null);
     const verticalGanttContainerRef = useRef<HTMLDivElement>(null);
@@ -109,7 +111,7 @@ export const Container: React.FC<TaskGanttProps> = ({
                 height={ganttHeight}
                 width={state.gridReducer.svgWidth}
             >
-                <Grid {...state.gridReducer} bars={bars} nuggets={nuggets} viewMode={viewMode} />
+                <Grid {...state.gridReducer} bars={bars} nuggets={nuggets} viewMode={viewMode} {...grid.props} />
                 <TaskGanttContent {...barProps} />
             </HorizontalContainer>
         </VerticalContainer>

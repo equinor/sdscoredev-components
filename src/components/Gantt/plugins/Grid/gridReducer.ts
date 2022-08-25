@@ -4,6 +4,7 @@ import { ReactNode } from 'react';
 export const SET_MEASURES = 'SET_MEASURES';
 export const SET_SCROLL_X = 'SET_SCROLL_X';
 export const SET_SCROLL_Y = 'SET_SCROLL_Y';
+export const SET_FOCUS = 'SET_FOCUS';
 
 type GridState = {
     svgWidth: number;
@@ -11,6 +12,7 @@ type GridState = {
     todayColor: string;
     scrollX: number;
     scrollY: number;
+    focus: Array<Date>;
 };
 
 export const initialState: GridState = {
@@ -19,6 +21,7 @@ export const initialState: GridState = {
     todayColor: '#eee',
     scrollX: 0,
     scrollY: 0,
+    focus: [],
 };
 
 const reducer = (state = initialState, action: any): GridState => {
@@ -37,6 +40,11 @@ const reducer = (state = initialState, action: any): GridState => {
             return {
                 ...state,
                 scrollY: action.payload,
+            };
+        case SET_FOCUS:
+            return {
+                ...state,
+                focus: action.payload,
             };
         default:
             return state;

@@ -11,6 +11,7 @@ export type GridProps = {
      * Column width, will be reset by changing view
      */
     columnWidth: number;
+    focus?: Array<Date>;
 };
 
 const Grid: React.FC<GridProps> & ReducerProp = (props) => {
