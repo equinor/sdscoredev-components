@@ -32,7 +32,7 @@ export type InternalPaginationProps = {
 export const Pagination: React.FC<InternalPaginationProps> = ({
     count,
     defaultPageSize,
-    pageSizeOptions = [5, 10, 20, 50],
+    pageSizeOptions = [5, 10, 20, 50, 100],
 }) => {
     const state: any = useContext(StateContext);
     const dispatch: any = useContext(DispatchContext);
