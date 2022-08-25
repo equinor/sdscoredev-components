@@ -3,7 +3,7 @@ import { EventOption, StylingOption, ViewMode } from './types/public-types';
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { removeHiddenTasks, sortTasks } from './helpers/other-helper';
 import { ganttDateRange, seedDates } from './helpers/date-helper';
-import { convertToBars, dateToProgress } from './helpers/bar-helper';
+import { convertToBars, convertToNuggets, dateToProgress } from './helpers/bar-helper';
 import { TaskGanttContentProps } from './internal/TaskGanttContent';
 // import { TaskList, TaskListProps } from './components/task-list/task-list';
 import { Container } from './internal/Container';
@@ -51,7 +51,6 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         timeStep = 300000,
         arrowColor = 'grey',
         arrowIndent = 20,
-        todayColor = 'rgba(252, 248, 227, 0.5)',
         viewDate,
         viewMode = ViewMode.Month,
         TooltipContent = StandardTooltipContent,
@@ -96,13 +95,6 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
     const [ignoreScrollEvent, setIgnoreScrollEvent] = useState(false);
 
     /**
-     * Updates the view Mode in state
-     */
-    useEffect(() => {
-        dispatch({ type: 'SET_VIEW_MODE', payload: viewMode });
-    }, [viewMode]);
-
-    /**
      * Generate bars and dates and update state
      */
     useEffect(() => {
@@ -111,6 +103,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
             filteredTasks = filteredTasks.sort(sortTasks);
 
             const [startDate, endDate] = ganttDateRange(filteredTasks, viewMode);
+            const dates = seedDates(startDate, endDate, viewMode);
 
             filteredTasks = filteredTasks.map((t: any) => {
                 if (t.type && t.type[1] && t.type[1].sections && !t.type[1].sectionXPositions) {
@@ -126,14 +119,14 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
                 return t;
             });
 
-            const dates = seedDates(startDate, endDate, viewMode);
+            
             const columnWidth = state.ganttReducer.viewModeTickWidth[viewMode.toLowerCase()];
             const bars = convertToBars(filteredTasks, dates, columnWidth, rowHeight, taskHeight, handleWidth);
-            // const nuggets = convertToNuggets(filteredTasks, dates, columnWidth, rowHeight, taskHeight, handleWidth);
+            const nuggets = convertToNuggets(filteredTasks, dates, columnWidth, rowHeight, taskHeight, handleWidth);
 
             dispatch({ type: 'SET_DATES', payload: dates });
             setBars(bars);
-            // setNuggets(nuggets);
+            setNuggets(nuggets);
         }
     }, [props.tasks, rowHeight, taskHeight, handleWidth, state.gridReducer.scrollX, viewMode, onExpanderClick]);
 
@@ -356,6 +349,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
     const barProps: TaskGanttContentProps = {
         bars,
         nuggets,
+        viewMode,
         ganttEvent,
         selectedTask,
         rowHeight,
@@ -401,6 +395,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
                 {taskList && listCellWidth && <TaskList {...tableProps} {...taskList.props} />}
                 <Container
                     bars={bars}
+                    viewMode={viewMode}
                     nuggets={nuggets}
                     calendarProps={calendarProps}
                     barProps={barProps}
