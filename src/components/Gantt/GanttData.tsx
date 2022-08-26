@@ -52,7 +52,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         arrowColor = 'grey',
         arrowIndent = 20,
         viewDate,
-        viewMode = ViewMode.Month,
+        viewMode = ViewMode.Year,
         TooltipContent = StandardTooltipContent,
         onDateChange,
         onProgressChange,
@@ -145,6 +145,9 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         }
     }, [props.tasks, rowHeight, taskHeight, handleWidth, state.gridReducer.scrollX, viewMode, onExpanderClick]);
 
+    /**
+     * Will scroll to the date set in the viewDate
+     */
     useEffect(() => {
         if ((viewDate && !currentViewDate) || (viewDate && currentViewDate?.valueOf() !== viewDate.valueOf())) {
             const dates = state.ganttReducer.dates;

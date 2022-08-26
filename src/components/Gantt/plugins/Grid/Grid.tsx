@@ -93,9 +93,21 @@ export const Grid: React.FC<InternalGridProps> = (props: InternalGridProps) => {
         }
     }, [canvas.current, state.ganttReducer.dates.length, viewMode]);
 
+    const getTickIndex = (focusDate: Date, dates: Array<Date>): number => {
+        return dates.findIndex(
+            (date: any, i: any) =>
+                focusDate.valueOf() >= date.valueOf() &&
+                i + 1 !== dates.length &&
+                focusDate.valueOf() < dates[i + 1].valueOf(),
+        );
+    };
+
     useEffect(() => {
+        if (!focus || focus === state.gridReducer.focus.valueOf() || !Array.isArray(focus)) return;
+        const index = getTickIndex(focus[0], state.ganttReducer.dates);
+        dispatch({ type: 'SET_SCROLL_X', payload: columnWidth * index });
         dispatch({ type: 'SET_FOCUS', payload: focus });
-    }, [focus]);
+    }, [focus, viewMode]);
 
     // if (
     //     (i + 1 !== state.ganttReducer.dates.length &&
