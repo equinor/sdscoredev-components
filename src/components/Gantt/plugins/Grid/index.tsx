@@ -1,6 +1,13 @@
-import React from 'react';
+import React, { Ref } from 'react';
 import { ReducerProp } from 'types';
 import { gridReducer } from './gridReducer';
+
+export type GridRef = {
+    /**
+     * Callback for resize event
+     */
+    handleResize: () => void;
+} | null;
 
 export type GridProps = {
     /**
@@ -11,7 +18,14 @@ export type GridProps = {
      * Column width, will be reset by changing view
      */
     columnWidth: number;
+    /**
+     * When set to a date range, the gantt chart will zoom into and show that date range
+     */
     focus?: Array<Date>;
+    /**
+     * A ref to this element
+     */
+    ref: Ref<GridRef>;
 };
 
 const Grid: React.FC<GridProps> & ReducerProp = (props) => {

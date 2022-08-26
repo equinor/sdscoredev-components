@@ -111,7 +111,17 @@ export const Container: React.FC<TaskGanttProps> = ({
                 height={ganttHeight}
                 width={state.gridReducer.svgWidth}
             >
-                <Grid {...state.gridReducer} bars={bars} nuggets={nuggets} viewMode={viewMode} {...grid.props} />
+                {grid && (
+                    <Grid
+                        {...state.gridReducer}
+                        bars={bars}
+                        nuggets={nuggets}
+                        viewMode={viewMode}
+                        {...grid.props}
+                        ref={grid.ref}
+                    />
+                )}
+
                 <TaskGanttContent {...barProps} />
             </HorizontalContainer>
         </VerticalContainer>

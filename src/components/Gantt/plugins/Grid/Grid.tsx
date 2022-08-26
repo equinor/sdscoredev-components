@@ -1,8 +1,8 @@
 import { TaskBar } from 'components/Gantt/bars/types';
 import { ViewMode } from 'components/Gantt/types/public-types';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useContext, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { GridProps } from '.';
+import { GridProps, GridRef } from '.';
 import { DispatchContext, StateContext } from '../../GanttStore';
 
 export const GridRowLine = styled.line`
@@ -32,12 +32,20 @@ export type InternalGridProps = {
     rowHeight: number;
 } & GridProps;
 
-export const Grid: React.FC<InternalGridProps> = (props: InternalGridProps) => {
+export const Grid = forwardRef<GridRef, InternalGridProps>((props: InternalGridProps, ref) => {
     const { bars, focus, nuggets, viewMode, rowHeight, columnWidth, todayColor } = props;
 
     const state: any = useContext(StateContext);
     const canvas = useRef<HTMLCanvasElement>(null);
     const dispatch: any = useContext(DispatchContext);
+
+    const renderGrid = () => {
+        console.log('renderGrid');
+    };
+
+    useImperativeHandle(ref, () => ({
+        handleResize: () => renderGrid(),
+    }));
 
     const drawTicks = (ctx: CanvasRenderingContext2D, w: number, h: number): void => {
         let x = 0;
@@ -65,34 +73,6 @@ export const Grid: React.FC<InternalGridProps> = (props: InternalGridProps) => {
         }
     };
 
-    useEffect(() => {
-        if (canvas.current?.getContext) {
-            const width =
-                state.ganttReducer.dates.length * state.ganttReducer.viewModeTickWidth[viewMode.toLowerCase()];
-
-            if (width > 65200) {
-                console.warn('Canvas width is limited to 65200. Your canvas width is: ' + width);
-                canvas.current.width = 65200;
-            } else {
-                canvas.current.width = width;
-            }
-
-            const ctx = canvas.current.getContext('2d');
-
-            if (ctx) {
-                const w = canvas.current.width;
-                const h = bars.length * rowHeight;
-
-                ctx.rect(0, 0, w, h);
-                ctx.fillStyle = '#ffffff';
-                ctx.fill();
-
-                drawTicks(ctx, w, h);
-                drawRowLines(ctx, w, h);
-            }
-        }
-    }, [canvas.current, state.ganttReducer.dates.length, viewMode]);
-
     const getTickIndex = (focusDate: Date, dates: Array<Date>): number => {
         return dates.findIndex(
             (date: any, i: any) =>
@@ -107,7 +87,7 @@ export const Grid: React.FC<InternalGridProps> = (props: InternalGridProps) => {
         const index = getTickIndex(focus[0], state.ganttReducer.dates);
         dispatch({ type: 'SET_SCROLL_X', payload: columnWidth * index });
         dispatch({ type: 'SET_FOCUS', payload: focus });
-    }, [focus, viewMode]);
+    }, [focus]);
 
     // if (
     //     (i + 1 !== state.ganttReducer.dates.length &&
@@ -124,6 +104,31 @@ export const Grid: React.FC<InternalGridProps> = (props: InternalGridProps) => {
     //     // dispatch({ type: 'SET_SCROLL_X', payload: tickX - columnWidth });
     // }
 
+    if (canvas.current?.getContext && viewMode && state.ganttReducer.dates.length) {
+        const width = state.ganttReducer.dates.length * state.ganttReducer.viewModeTickWidth[viewMode.toLowerCase()];
+
+        if (width > 65200) {
+            console.warn('Canvas width is limited to 65200. Your canvas width is: ' + width);
+            canvas.current.width = 65200;
+        } else {
+            canvas.current.width = width;
+        }
+
+        const ctx = canvas.current.getContext('2d');
+
+        if (ctx) {
+            const w = canvas.current.width;
+            const h = bars.length * rowHeight;
+
+            ctx.rect(0, 0, w, h);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+
+            drawTicks(ctx, w, h);
+            drawRowLines(ctx, w, h);
+        }
+    }
+
     return (
         <canvas
             className="grid"
@@ -133,4 +138,4 @@ export const Grid: React.FC<InternalGridProps> = (props: InternalGridProps) => {
             style={{ borderBottom: '1px solid rgb(235, 239, 242)' }}
         ></canvas>
     );
-};
+});
