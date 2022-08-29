@@ -75,7 +75,7 @@ export type TaskBar<T = {}> = {
 export type TaskConvertOptions = {
     index: number;
     dates: Date[];
-    columnWidth: number;
+    tickWidth: number;
     rowHeight: number;
     taskHeight: number;
     handleWidth: number;

@@ -6,8 +6,8 @@ import { Task, TaskBar, TaskConvertOptions } from '../types';
 export type MilestoneTaskBar = {} & MilestoneBarProps;
 
 export const convert = (task: Task<MilestoneBarProps>, options: TaskConvertOptions): TaskBar => {
-    const { index = 0, dates, columnWidth, rowHeight, taskHeight, handleWidth } = options;
-    const x = taskXCoordinate(task.start, dates, columnWidth);
+    const { index = 0, dates, tickWidth, rowHeight, taskHeight, handleWidth } = options;
+    const x = taskXCoordinate(task.start, dates, tickWidth);
     const y = taskYCoordinate(index, rowHeight, taskHeight);
 
     const x1 = x - taskHeight * 0.5;

@@ -54,7 +54,7 @@ export type EventOption = {
 
 export type StylingOption = {
     headerHeight?: number;
-    columnWidth?: number;
+    tickWidth?: number;
     listCellWidth?: string;
     rowHeight?: number;
     ganttHeight?: number;

@@ -17,7 +17,7 @@ export type GridProps = {
     /**
      * Column width, will be reset by changing view
      */
-    columnWidth: number;
+    tickWidth: number;
     /**
      * When set to a date range, the gantt chart will zoom into and show that date range
      */

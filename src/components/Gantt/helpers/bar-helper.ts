@@ -4,13 +4,13 @@ import { BarMoveAction } from '../types/gantt-task-actions';
 export const convertToBars = (
     tasks: Task[],
     dates: Date[],
-    columnWidth: number,
+    tickWidth: number,
     rowHeight: number,
     taskHeight: number,
     handleWidth: number,
 ) => {
     let barTasks = tasks.map((task, index) => {
-        return task.type[0].convert(task, { index, dates, columnWidth, rowHeight, taskHeight, handleWidth });
+        return task.type[0].convert(task, { index, dates, tickWidth, rowHeight, taskHeight, handleWidth });
     });
 
     // set dependencies
@@ -29,14 +29,14 @@ export const convertToBars = (
 export const convertToNuggets = (
     tasks: Task[],
     dates: Date[],
-    columnWidth: number,
+    tickWidth: number,
     rowHeight: number,
     taskHeight: number,
     handleWidth: number,
 ) => {
     let nuggets = tasks.map((task, index) => {
         if (task.nugget) {
-            return task.nugget[0].convert(task, { index, dates, columnWidth, rowHeight, taskHeight, handleWidth });
+            return task.nugget[0].convert(task, { index, dates, tickWidth, rowHeight, taskHeight, handleWidth });
         }
 
         return null;
@@ -52,12 +52,12 @@ export const dateToProgress = (xDate: Date, dates: Date[]) => {
     return q / d;
 };
 
-export const taskXCoordinate = (xDate: Date, dates: Date[], columnWidth: number) => {
+export const taskXCoordinate = (xDate: Date, dates: Date[], tickWidth: number) => {
     const index = dates.findIndex((d) => d.getTime() >= xDate.getTime()) - 1;
 
     const remainderMillis = xDate.getTime() - dates[index].getTime();
     const percentOfInterval = remainderMillis / (dates[index + 1].getTime() - dates[index].getTime());
-    const x = index * columnWidth + percentOfInterval * columnWidth;
+    const x = index * tickWidth + percentOfInterval * tickWidth;
     return x;
 };
 

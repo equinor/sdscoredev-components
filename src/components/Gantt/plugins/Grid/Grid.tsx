@@ -23,8 +23,10 @@ export const GridTick = styled.line`
 `;
 
 export type InternalGridProps = {
-    bars: TaskBar[];
-    nuggets: TaskBar[];
+    /**
+     * Count of visible bars
+     */
+    barCount: number;
     viewMode: ViewMode;
     /**
      * Row height
@@ -33,11 +35,13 @@ export type InternalGridProps = {
 } & GridProps;
 
 export const Grid = forwardRef<GridRef, InternalGridProps>((props: InternalGridProps, ref) => {
-    const { bars, focus, nuggets, viewMode, rowHeight, columnWidth, todayColor } = props;
+    const { barCount, focus, viewMode, rowHeight, todayColor } = props;
 
     const state: any = useContext(StateContext);
     const canvas = useRef<HTMLCanvasElement>(null);
     const dispatch: any = useContext(DispatchContext);
+
+    const tickWidth = state.gridReducer.tickWidth;
 
     const renderGrid = () => {
         console.log('renderGrid');
@@ -56,13 +60,13 @@ export const Grid = forwardRef<GridRef, InternalGridProps>((props: InternalGridP
             ctx.strokeStyle = 'rgb(235, 239, 242)';
             ctx.lineWidth = 1;
             ctx.stroke();
-            x = x + columnWidth;
+            x = x + tickWidth;
         }
     };
 
     const drawRowLines = (ctx: CanvasRenderingContext2D, w: number, h: number): void => {
         let y = 0;
-        for (let i = 0; i < bars.length; i++) {
+        for (let i = 0; i < barCount; i++) {
             ctx.beginPath();
             ctx.moveTo(0, y + 0.5);
             ctx.lineTo(w, y + 0.5);
@@ -85,9 +89,10 @@ export const Grid = forwardRef<GridRef, InternalGridProps>((props: InternalGridP
     useEffect(() => {
         if (!focus || focus === state.gridReducer.focus.valueOf() || !Array.isArray(focus)) return;
         const index = getTickIndex(focus[0], state.ganttReducer.dates);
-        dispatch({ type: 'SET_SCROLL_X', payload: columnWidth * index });
+
+        dispatch({ type: 'SET_SCROLL_X', payload: state.gridReducer.tickWidth * index });
         dispatch({ type: 'SET_FOCUS', payload: focus });
-    }, [focus]);
+    }, [focus, state.gridReducer.tickWidth]);
 
     // if (
     //     (i + 1 !== state.ganttReducer.dates.length &&
@@ -100,8 +105,8 @@ export const Grid = forwardRef<GridRef, InternalGridProps>((props: InternalGridP
     //         addToDate(date, date.getTime() - state.ganttReducer.dates[i - 1].getTime(), 'millisecond').getTime() >=
     //             now.getTime())
     // ) {
-    //     today = <rect x={tickX} y={0} width={columnWidth} height={y} fill={todayColor} />;
-    //     // dispatch({ type: 'SET_SCROLL_X', payload: tickX - columnWidth });
+    //     today = <rect x={tickX} y={0} width={tickWidth} height={y} fill={todayColor} />;
+    //     // dispatch({ type: 'SET_SCROLL_X', payload: tickX - tickWidth });
     // }
 
     if (canvas.current?.getContext && viewMode && state.ganttReducer.dates.length) {
@@ -118,7 +123,7 @@ export const Grid = forwardRef<GridRef, InternalGridProps>((props: InternalGridP
 
         if (ctx) {
             const w = canvas.current.width;
-            const h = bars.length * rowHeight;
+            const h = barCount * rowHeight;
 
             ctx.rect(0, 0, w, h);
             ctx.fillStyle = '#ffffff';
@@ -134,7 +139,7 @@ export const Grid = forwardRef<GridRef, InternalGridProps>((props: InternalGridP
             className="grid"
             ref={canvas}
             id="DemoCanvas"
-            height={bars.length * rowHeight}
+            height={barCount * rowHeight}
             style={{ borderBottom: '1px solid rgb(235, 239, 242)' }}
         ></canvas>
     );

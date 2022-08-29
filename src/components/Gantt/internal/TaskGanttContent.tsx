@@ -54,17 +54,20 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
     const dispatch: any = useContext(DispatchContext);
     const ganttSVGRef = useRef<SVGSVGElement>(null);
     const svg: React.RefObject<SVGSVGElement> = ganttSVGRef;
-    const point = svg?.current?.createSVGPoint();
+    let point = svg?.current?.createSVGPoint();
 
+    useEffect(() => {
+        point = svg?.current?.createSVGPoint();
+    }, [svg.current]);
     // create xStep
     useEffect(() => {
-        const columnWidth = state.ganttReducer.viewModeTickWidth[viewMode.toLowerCase()];
+        const tickWidth = state.gridReducer.tickWidth;
         const dateDelta =
             state.ganttReducer.dates[1].getTime() -
             state.ganttReducer.dates[0].getTime() -
             state.ganttReducer.dates[1].getTimezoneOffset() * 60 * 1000 +
             state.ganttReducer.dates[0].getTimezoneOffset() * 60 * 1000;
-        const newXStep = (timeStep * columnWidth) / dateDelta;
+        const newXStep = (timeStep * tickWidth) / dateDelta;
         setXStep(newXStep);
     }, [viewMode, state.ganttReducer?.dates, timeStep]);
 
@@ -259,7 +262,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
-            width={state.gridReducer.svgWidth}
+            width={state.ganttReducer.dates.length * state.gridReducer.tickWidth}
             height={50 * bars.length}
             ref={ganttSVGRef}
             style={{

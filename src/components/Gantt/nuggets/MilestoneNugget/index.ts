@@ -5,11 +5,11 @@ import { Task, TaskBar, TaskConvertOptions } from '../../bars/types';
 export type MilestoneTaskBar = {} & MilestoneNuggetProps;
 
 export const convert = (task: Task<MilestoneNuggetProps>, options: TaskConvertOptions): TaskBar => {
-    const { index = 0, dates, columnWidth, rowHeight, taskHeight, handleWidth } = options;
+    const { index = 0, dates, tickWidth, rowHeight, taskHeight, handleWidth } = options;
 
     let nugget = [...task.nugget];
 
-    const x = taskXCoordinate(nugget[1].date, dates, columnWidth);
+    const x = taskXCoordinate(nugget[1].date, dates, tickWidth);
     const y = taskYCoordinate(index, rowHeight, taskHeight);
 
     const x1 = x - taskHeight * 0.5;

@@ -38,7 +38,7 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
     const state: any = useContext(StateContext);
     const { headerHeight } = state.ganttReducer;
 
-    const columnWidth = state.ganttReducer.viewModeTickWidth[viewMode.toLowerCase()];
+    const tickWidth = state.gridReducer.tickWidth;
 
     const getCalendarValuesForYear = () => {
         const topValues: ReactChild[] = [];
@@ -51,11 +51,7 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
             let uuid = crypto.randomUUID();
 
             bottomValues.push(
-                <CalendarBottomText
-                    key={bottomValue + uuid}
-                    y={headerHeight * 0.8}
-                    x={columnWidth * i + columnWidth * 0.5}
-                >
+                <CalendarBottomText key={bottomValue + uuid} y={headerHeight * 0.8} x={tickWidth * i + tickWidth * 0.5}>
                     {bottomValue}
                 </CalendarBottomText>,
             );
@@ -77,7 +73,7 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
                 <CalendarBottomText
                     key={bottomValue + date.getFullYear() + uuid}
                     y={headerHeight * 0.8}
-                    x={columnWidth * i + columnWidth * 0.5}
+                    x={tickWidth * i + tickWidth * 0.5}
                 >
                     {bottomValue}
                 </CalendarBottomText>,
@@ -85,13 +81,13 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
             if (i === 0 || date.getFullYear() !== state.ganttReducer.dates[i - 1].getFullYear()) {
                 const topValue = date.getFullYear().toString();
 
-                const xText: number = (6 + i - date.getMonth()) * columnWidth;
+                const xText: number = (6 + i - date.getMonth()) * tickWidth;
 
                 topValues.push(
                     <TopPartOfCalendar
                         key={topValue}
                         value={topValue}
-                        x1Line={columnWidth * i}
+                        x1Line={tickWidth * i}
                         y1Line={0}
                         y2Line={topDefaultHeight}
                         xText={xText}
@@ -120,7 +116,7 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
             const bottomValue = `W${getWeekNumberISO8601(date)}`;
 
             bottomValues.push(
-                <CalendarBottomText key={date.getTime()} y={headerHeight * 0.8} x={columnWidth * i + columnWidth * 0.5}>
+                <CalendarBottomText key={date.getTime()} y={headerHeight * 0.8} x={tickWidth * i + tickWidth * 0.5}>
                     {bottomValue}
                 </CalendarBottomText>,
             );
@@ -132,10 +128,10 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
                         <TopPartOfCalendar
                             key={topValue}
                             value={topValue}
-                            x1Line={columnWidth * i + weeksCount * columnWidth}
+                            x1Line={tickWidth * i + weeksCount * tickWidth}
                             y1Line={0}
                             y2Line={topDefaultHeight}
-                            xText={columnWidth * i + columnWidth * weeksCount * 0.5}
+                            xText={tickWidth * i + tickWidth * weeksCount * 0.5}
                             yText={topDefaultHeight * 0.9}
                         />,
                     );
@@ -157,7 +153,7 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
             const bottomValue = `${getLocalDayOfWeek(date, 'short')}, ${date.getDate().toString()}`;
 
             bottomValues.push(
-                <CalendarBottomText key={date.getTime()} y={headerHeight * 0.8} x={columnWidth * i + columnWidth * 0.5}>
+                <CalendarBottomText key={date.getTime()} y={headerHeight * 0.8} x={tickWidth * i + tickWidth * 0.5}>
                     {bottomValue}
                 </CalendarBottomText>,
             );
@@ -168,12 +164,11 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
                     <TopPartOfCalendar
                         key={topValue + date.getFullYear()}
                         value={topValue}
-                        x1Line={columnWidth * (i + 1)}
+                        x1Line={tickWidth * (i + 1)}
                         y1Line={0}
                         y2Line={topDefaultHeight}
                         xText={
-                            columnWidth * (i + 1) -
-                            getDaysInMonth(date.getMonth(), date.getFullYear()) * columnWidth * 0.5
+                            tickWidth * (i + 1) - getDaysInMonth(date.getMonth(), date.getFullYear()) * tickWidth * 0.5
                         }
                         yText={topDefaultHeight * 0.9}
                     />,
@@ -196,7 +191,7 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
             }).format(date);
 
             bottomValues.push(
-                <CalendarBottomText key={date.getTime()} y={headerHeight * 0.8} x={columnWidth * i}>
+                <CalendarBottomText key={date.getTime()} y={headerHeight * 0.8} x={tickWidth * i}>
                     {bottomValue}
                 </CalendarBottomText>,
             );
@@ -206,10 +201,10 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
                     <TopPartOfCalendar
                         key={topValue + date.getFullYear()}
                         value={topValue}
-                        x1Line={columnWidth * i + ticks * columnWidth}
+                        x1Line={tickWidth * i + ticks * tickWidth}
                         y1Line={0}
                         y2Line={topDefaultHeight}
-                        xText={columnWidth * i + ticks * columnWidth * 0.5}
+                        xText={tickWidth * i + ticks * tickWidth * 0.5}
                         yText={topDefaultHeight * 0.9}
                     />,
                 );
@@ -231,7 +226,7 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
             }).format(date);
 
             bottomValues.push(
-                <CalendarBottomText key={date.getTime()} y={headerHeight * 0.8} x={columnWidth * i}>
+                <CalendarBottomText key={date.getTime()} y={headerHeight * 0.8} x={tickWidth * i}>
                     {bottomValue}
                 </CalendarBottomText>,
             );
@@ -245,10 +240,10 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
                     <TopPartOfCalendar
                         key={topValue + displayDate.getFullYear()}
                         value={topValue}
-                        x1Line={columnWidth * i}
+                        x1Line={tickWidth * i}
                         y1Line={0}
                         y2Line={topDefaultHeight}
-                        xText={columnWidth * (i + topPosition)}
+                        xText={tickWidth * (i + topPosition)}
                         yText={topDefaultHeight * 0.9}
                     />,
                 );
@@ -289,9 +284,20 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
 
     if (!state.ganttReducer.dates) return <></>;
     return (
-        <g className="calendar">
-            <CalendarHeader x={0} y={0} width={columnWidth * state.ganttReducer.dates.length} height={headerHeight} />
-            {bottomValues} {topValues}
-        </g>
+        <svg
+            id="gantt-calendar"
+            xmlns="http://www.w3.org/2000/svg"
+            width={state.ganttReducer.dates.length * state.gridReducer.tickWidth}
+            height={state.ganttReducer.headerHeight}
+            style={{
+                fontFamily: 'Equinor',
+                fontSize: '12px',
+            }}
+        >
+            <g className="calendar">
+                <CalendarHeader x={0} y={0} width={tickWidth * state.ganttReducer.dates.length} height={headerHeight} />
+                {bottomValues} {topValues}
+            </g>
+        </svg>
     );
 };

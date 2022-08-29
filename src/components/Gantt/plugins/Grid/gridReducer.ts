@@ -5,32 +5,28 @@ export const SET_MEASURES = 'SET_MEASURES';
 export const SET_SCROLL_X = 'SET_SCROLL_X';
 export const SET_SCROLL_Y = 'SET_SCROLL_Y';
 export const SET_FOCUS = 'SET_FOCUS';
+export const SET_TICK_WIDTH = 'SET_TICK_WIDTH';
 
 type GridState = {
-    svgWidth: number;
     rowHeight: number;
     todayColor: string;
     scrollX: number;
     scrollY: number;
     focus: Array<Date>;
+    tickWidth: number;
 };
 
 export const initialState: GridState = {
-    svgWidth: 0,
     rowHeight: 50,
     todayColor: '#eee',
     scrollX: 0,
     scrollY: 0,
     focus: [],
+    tickWidth: 0,
 };
 
 const reducer = (state = initialState, action: any): GridState => {
     switch (action.type) {
-        case SET_MEASURES:
-            return {
-                ...state,
-                ...action.payload,
-            };
         case SET_SCROLL_X:
             return {
                 ...state,
@@ -45,6 +41,11 @@ const reducer = (state = initialState, action: any): GridState => {
             return {
                 ...state,
                 focus: action.payload,
+            };
+        case SET_TICK_WIDTH:
+            return {
+                ...state,
+                tickWidth: action.payload,
             };
         default:
             return state;
