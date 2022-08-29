@@ -15,6 +15,8 @@ import { Calendar, CalendarProps } from './plugins/Calendar/Calendar';
 import { StandardTooltipContent, Tooltip } from './internal/Tooltip';
 import styled from 'styled-components';
 import { GridProps } from './plugins/Grid';
+import { debounce } from 'components/helpers';
+import { GanttProps } from './Gantt';
 
 const Wrapper = styled.div<{ width: number }>`
     overflow: hidden;
@@ -55,11 +57,13 @@ export type GanttDataProps = {
     viewMode?: ViewMode;
     viewDate?: Date;
 } & EventOption &
+    GanttProps &
     StylingOption;
 
 export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps, ref) => {
     const {
         grid,
+        focus,
         listCellWidth = '155px',
         rowHeight = 50,
         ganttHeight = 0,
@@ -100,9 +104,6 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
 
     const [currentViewDate, setCurrentViewDate] = useState<Date | undefined>(undefined);
 
-    const [taskListWidth, setTaskListWidth] = useState(0);
-    const [svgContainerWidth, setSvgContainerWidth] = useState(0);
-    const [svgContainerHeight, setSvgContainerHeight] = useState(ganttHeight);
     const [ganttEvent, setGanttEvent] = useState<GanttEvent>({
         action: '',
     });
@@ -147,7 +148,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         return filteredTasks;
     };
 
-    const getTickWidth = (dates: Array<Date>, range: Array<Date>) => {
+    const getTickWidth = (dates: Array<Date>) => {
         const defaultWidth = state.ganttReducer.viewModeTickWidth[viewMode.toLowerCase()];
         if (verticalGanttContainerRef.current) {
             const wrapperWidth = verticalGanttContainerRef.current.offsetWidth;
@@ -157,13 +158,22 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
                 return wrapperWidth / dates.length;
             }
 
-            if (viewMode === ViewMode.Day) {
-                const tickCount = (new Date(range[1]).getTime() - new Date(range[0]).getTime()) / (1000 * 60 * 60 * 24);
+            if (viewMode === ViewMode.Day && focus) {
+                const tickCount = (new Date(focus[1]).getTime() - new Date(focus[0]).getTime()) / (1000 * 60 * 60 * 24);
                 return wrapperWidth / tickCount;
             }
         }
 
         return defaultWidth;
+    };
+
+    const getTickIndex = (focusDate: Date, dates: Array<Date>): number => {
+        return dates.findIndex(
+            (date: any, i: any) =>
+                focusDate.valueOf() >= date.valueOf() &&
+                i + 1 !== dates.length &&
+                focusDate.valueOf() < dates[i + 1].valueOf(),
+        );
     };
 
     /**
@@ -178,27 +188,23 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
             const dates = seedDates(startDate, endDate, viewMode);
 
             /** Get column width from state. The width is determined by the current viewMode */
-            const tickWidth = getTickWidth(dates, state.gridReducer.focus);
+            const tickWidth = getTickWidth(dates);
 
             /** Generate bars and nuggets to be displayed */
             const bars = convertToBars(filteredTasks, dates, tickWidth, rowHeight, taskHeight, handleWidth);
             const nuggets = convertToNuggets(filteredTasks, dates, tickWidth, rowHeight, taskHeight, handleWidth);
+
+            if (focus) {
+                const index = getTickIndex(focus[0], dates);
+                dispatch({ type: 'SET_SCROLL_X', payload: tickWidth * index });
+            }
 
             dispatch({ type: 'SET_DATES', payload: dates });
             dispatch({ type: 'SET_TICK_WIDTH', payload: tickWidth });
             setBars(bars);
             setNuggets(nuggets);
         }
-    }, [
-        props.tasks,
-        state.gridReducer.focus,
-        rowHeight,
-        taskHeight,
-        handleWidth,
-        state.gridReducer.scrollX,
-        viewMode,
-        onExpanderClick,
-    ]);
+    }, [props.tasks, focus, viewMode, onExpanderClick]);
 
     /**
      * Will scroll to the date set in the viewDate
@@ -217,14 +223,29 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
             }
 
             setCurrentViewDate(viewDate);
-            const tickWidth = getTickWidth(dates, state.gridReducer.focus);
+            const tickWidth = getTickWidth(dates);
 
             dispatch({ type: 'SET_SCROLL_X', payload: tickWidth * index });
         }
     }, [viewDate, state.ganttReducer.dates, viewMode, currentViewDate, setCurrentViewDate]);
 
+    const recalculateBars = (changedTask: Task) => {
+        const prevStateTask = bars.find((t: any) => t.id === changedTask.id);
+        if (
+            prevStateTask &&
+            (prevStateTask.start.getTime() !== changedTask.start.getTime() ||
+                prevStateTask.end.getTime() !== changedTask.end.getTime())
+            // prevStateTask.progress !== changedTask.progress)
+        ) {
+            // actions for change
+            const payload = bars.map((t: any) => (t.id === changedTask.id ? changedTask : t));
+            setBars(payload);
+        }
+    };
+
     useEffect(() => {
         const { changedTask, action } = ganttEvent;
+
         if (changedTask) {
             if (action === 'delete') {
                 setGanttEvent({ action: '' });
@@ -232,17 +253,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
                 const payload = bars.filter((t: any) => t.id !== changedTask.id);
                 setBars(payload);
             } else if (action === 'move' || action === 'end' || action === 'start' || action === 'progress') {
-                const prevStateTask = bars.find((t: any) => t.id === changedTask.id);
-                if (
-                    prevStateTask &&
-                    (prevStateTask.start.getTime() !== changedTask.start.getTime() ||
-                        prevStateTask.end.getTime() !== changedTask.end.getTime())
-                    // prevStateTask.progress !== changedTask.progress)
-                ) {
-                    // actions for change
-                    const payload = bars.map((t: any) => (t.id === changedTask.id ? changedTask : t));
-                    setBars(payload);
-                }
+                recalculateBars(changedTask);
             }
         }
     }, [ganttEvent, bars]);
@@ -255,29 +266,6 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
             setFailedTask(null);
         }
     }, [failedTask, bars]);
-
-    useEffect(() => {
-        if (!listCellWidth) {
-            setTaskListWidth(0);
-        }
-        if (taskListRef.current) {
-            setTaskListWidth(taskListRef.current.offsetWidth);
-        }
-    }, [taskListRef, listCellWidth]);
-
-    useEffect(() => {
-        if (wrapperRef.current) {
-            setSvgContainerWidth(wrapperRef.current.offsetWidth - taskListWidth);
-        }
-    }, [wrapperRef, taskListWidth]);
-
-    useEffect(() => {
-        if (ganttHeight) {
-            setSvgContainerHeight(ganttHeight + state.ganttReducer.headerHeight);
-        } else {
-            setSvgContainerHeight(bars.length * rowHeight + state.ganttReducer.headerHeight);
-        }
-    }, [ganttHeight, bars, state.ganttReducer.headerHeight, rowHeight]);
 
     useEffect(() => {
         const handleWheel = (event: WheelEvent) => {
@@ -306,6 +294,14 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
 
             setIgnoreScrollEvent(true);
         };
+
+        if (horizontalContainerRef.current) {
+            horizontalContainerRef.current.scrollTop = state.gridReducer.scrollY;
+        }
+
+        if (verticalGanttContainerRef.current) {
+            verticalGanttContainerRef.current.scrollLeft = state.gridReducer.scrollX;
+        }
 
         // subscribe if scroll is necessary
         wrapperRef.current?.addEventListener('wheel', handleWheel, {
@@ -344,18 +340,6 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         }
     }, [state.ganttReducer.dates, viewMode]);
 
-    useEffect(() => {
-        if (horizontalContainerRef.current) {
-            horizontalContainerRef.current.scrollTop = state.gridReducer.scrollY;
-        }
-    }, [state.gridReducer.scrollY]);
-
-    useEffect(() => {
-        if (verticalGanttContainerRef.current) {
-            verticalGanttContainerRef.current.scrollLeft = state.gridReducer.scrollX;
-        }
-    }, [state.gridReducer.scrollX]);
-
     // const handleScrollY = (event: SyntheticEvent<HTMLDivElement>) => {
     //     if (scrollY !== event.currentTarget.scrollTop && !ignoreScrollEvent) {
     //         setScrollY(event.currentTarget.scrollTop);
@@ -382,7 +366,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         let newScrollY = state.gridReducer.scrollY;
         let newScrollX = state.gridReducer.scrollX;
         const dates = state.ganttReducer.dates;
-        const tickWidth = getTickWidth(dates, state.gridReducer.focus);
+        const tickWidth = getTickWidth(dates);
         let isX = true;
         switch (event.key) {
             case 'Down': // IE/Edge specific value

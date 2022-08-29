@@ -32,10 +32,11 @@ export type InternalGridProps = {
      * Row height
      */
     rowHeight: number;
+    setFocus: Function;
 } & GridProps;
 
 export const Grid = forwardRef<GridRef, InternalGridProps>((props: InternalGridProps, ref) => {
-    const { barCount, focus, viewMode, rowHeight, todayColor } = props;
+    const { barCount, setFocus, viewMode, rowHeight, todayColor } = props;
 
     const state: any = useContext(StateContext);
     const canvas = useRef<HTMLCanvasElement>(null);
@@ -77,22 +78,13 @@ export const Grid = forwardRef<GridRef, InternalGridProps>((props: InternalGridP
         }
     };
 
-    const getTickIndex = (focusDate: Date, dates: Array<Date>): number => {
-        return dates.findIndex(
-            (date: any, i: any) =>
-                focusDate.valueOf() >= date.valueOf() &&
-                i + 1 !== dates.length &&
-                focusDate.valueOf() < dates[i + 1].valueOf(),
-        );
-    };
+    // useEffect(() => {
+    //     if (!focus || focus === state.gridReducer.focus.valueOf() || !Array.isArray(focus)) return;
+    //     const index = getTickIndex(focus[0], state.ganttReducer.dates);
 
-    useEffect(() => {
-        if (!focus || focus === state.gridReducer.focus.valueOf() || !Array.isArray(focus)) return;
-        const index = getTickIndex(focus[0], state.ganttReducer.dates);
-
-        dispatch({ type: 'SET_SCROLL_X', payload: state.gridReducer.tickWidth * index });
-        dispatch({ type: 'SET_FOCUS', payload: focus });
-    }, [focus, state.gridReducer.tickWidth]);
+    //     dispatch({ type: 'SET_SCROLL_X', payload: state.gridReducer.tickWidth * index });
+    //     dispatch({ type: 'SET_FOCUS', payload: focus });
+    // }, [focus, state.gridReducer.tickWidth]);
 
     // if (
     //     (i + 1 !== state.ganttReducer.dates.length &&
@@ -113,7 +105,7 @@ export const Grid = forwardRef<GridRef, InternalGridProps>((props: InternalGridP
         const width = state.ganttReducer.dates.length * state.ganttReducer.viewModeTickWidth[viewMode.toLowerCase()];
 
         if (width > 65200) {
-            console.warn('Canvas width is limited to 65200. Your canvas width is: ' + width);
+            // console.warn('Canvas width is limited to 65200. Your canvas width is: ' + width);
             canvas.current.width = 65200;
         } else {
             canvas.current.width = width;

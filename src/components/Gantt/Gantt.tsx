@@ -11,6 +11,7 @@ import { TaskList } from './plugins/TaskList/TaskList';
 export type GanttProps = {
     tasks: Task[];
     children?: any;
+    focus?: any[];
     /**
      * Which way to split the calendar into ticks.
      * When changed, the grid and calendar redraw.

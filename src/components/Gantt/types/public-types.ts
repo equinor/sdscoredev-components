@@ -106,10 +106,3 @@ export type StylingOption = {
         onExpanderClick: (task: Task) => void;
     }>;
 };
-
-export type GanttProps = {
-    tasks: Task[];
-    viewMode?: ViewMode;
-    viewDate?: Date;
-} & EventOption &
-    StylingOption;
