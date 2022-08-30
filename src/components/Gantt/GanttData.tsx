@@ -180,50 +180,59 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
      * @returns number
      */
     const getTickWidth = (dates: Array<Date>) => {
-        const defaultWidth = state.ganttReducer.viewModeTickWidth[viewMode.toLowerCase()];
+        const minWidth = state.ganttReducer.viewModeTickWidth[viewMode.toLowerCase()];
         if (verticalGanttContainerRef.current) {
             const wrapperWidth = verticalGanttContainerRef.current.offsetWidth;
-            const gridWidth = dates.length * defaultWidth;
-
-            // if (wrapperWidth > gridWidth) {
-            //     return wrapperWidth / dates.length;
-            // }
+            let tickWidth = minWidth;
 
             if (viewMode === ViewMode.Day && focus) {
                 const tickCount = (new Date(focus[1]).getTime() - new Date(focus[0]).getTime()) / (1000 * 60 * 60 * 24);
-                return wrapperWidth / tickCount;
+                tickWidth = wrapperWidth / tickCount;
             }
 
             if (viewMode === ViewMode.Week && focus) {
                 const tickCount =
                     (new Date(focus[1]).getTime() - new Date(focus[0]).getTime()) / (1000 * 60 * 60 * 24 * 7);
-                return roundUp(wrapperWidth / tickCount, 0) + 1;
+                tickWidth = roundUp(wrapperWidth / tickCount, 0) + 1;
             }
 
             if (viewMode === ViewMode.Month && focus) {
-                const tickCount = monthDiff(new Date(focus[0]), new Date(focus[1]));
-                return wrapperWidth / tickCount + 1;
+                const tickCount = monthDiff(new Date(focus[0]), new Date(focus[1])) + 1;
+                console.log(tickCount);
+                tickWidth = wrapperWidth / tickCount;
             }
 
             if (viewMode === ViewMode.QuarterYear && focus) {
                 const months = monthDiff(new Date(focus[0]), new Date(focus[1]));
                 const tickCount = roundUp(months / 4, 0);
-                return wrapperWidth / tickCount;
+                tickWidth = wrapperWidth / tickCount;
             }
 
             if (viewMode === ViewMode.HalfYear && focus) {
                 const months = monthDiff(new Date(focus[0]), new Date(focus[1]));
                 const tickCount = roundUp(months / 2, 0);
-                return wrapperWidth / tickCount;
+                tickWidth = wrapperWidth / tickCount;
             }
 
             if (viewMode === ViewMode.Year && focus) {
                 const tickCount = new Date(focus[1]).getFullYear() - new Date(focus[0]).getFullYear() + 1;
-                return wrapperWidth / tickCount;
+                tickWidth = wrapperWidth / tickCount;
             }
+
+            console.log(minWidth, tickWidth);
+
+            if (wrapperWidth > dates.length * tickWidth) {
+                tickWidth = wrapperWidth / dates.length;
+            }
+
+            if (tickWidth < minWidth) {
+                return minWidth;
+            }
+
+            return tickWidth;
         }
 
-        return defaultWidth;
+        return minWidth;
     };
 
     /**

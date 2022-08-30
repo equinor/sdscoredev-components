@@ -186,7 +186,7 @@ export const seedDates = (startDate: Date, endDate: Date, viewMode: ViewMode) =>
                 currentDate = addToDate(currentDate, 6, 'month');
                 break;
             case ViewMode.QuarterYear:
-                currentDate = addToDate(currentDate, 4, 'month');
+                currentDate = addToDate(currentDate, 3, 'month');
                 break;
             case ViewMode.Month:
                 currentDate = addToDate(currentDate, 1, 'month');

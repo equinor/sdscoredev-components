@@ -11,7 +11,7 @@ import {
     getWeekNumberISO8601,
 } from '../../helpers/date-helper';
 import { LOCALE, ViewMode } from '../../types/public-types';
-import { TopPartOfCalendar } from './top-part-of-calendar';
+import { Section } from './Section';
 
 export const CalendarBottomText = styled.text`
     text-anchor: middle;
@@ -51,11 +51,60 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
             let uuid = crypto.randomUUID();
 
             bottomValues.push(
-                <CalendarBottomText key={bottomValue + uuid} y={headerHeight * 0.8} x={tickWidth * i + tickWidth * 0.5}>
-                    {bottomValue}
-                </CalendarBottomText>,
+                <Section
+                    value={bottomValue}
+                    key={bottomValue + uuid}
+                    x1Line={tickWidth * i}
+                    y1Line={0}
+                    y2Line={headerHeight}
+                    yText={headerHeight * 0.8}
+                    xText={tickWidth * i + tickWidth * 0.5}
+                />,
             );
         }
+        return [topValues, bottomValues];
+    };
+
+    const getCalendarValuesForPartOfYear = () => {
+        const topValues: ReactChild[] = [];
+        const bottomValues: ReactChild[] = [];
+        console.log(viewMode);
+        const ticks = viewMode === ViewMode.HalfYear ? 2 : 4;
+        const topDefaultHeight = headerHeight * 0.5;
+        const { dates } = state.ganttReducer;
+        for (let i = 0; i < dates.length; i++) {
+            const date = dates[i];
+            const bottomValue = new Date(date).getMonth();
+
+            bottomValues.push(
+                <Section
+                    key={date.getTime()}
+                    value={`${bottomValue}`}
+                    x1Line={tickWidth * i}
+                    y1Line={headerHeight / 2}
+                    y2Line={headerHeight}
+                    yText={headerHeight * 0.8}
+                    xText={tickWidth * i + tickWidth * 0.5}
+                />,
+            );
+
+            let uuid = crypto.randomUUID();
+
+            if (i === 0 || date.getFullYear() !== dates[i - 1].getFullYear()) {
+                topValues.push(
+                    <Section
+                        key={date.getFullYear() + uuid}
+                        value={date.getFullYear()}
+                        x1Line={tickWidth * i}
+                        y1Line={0}
+                        y2Line={topDefaultHeight}
+                        xText={tickWidth * i + ticks * tickWidth * 0.5}
+                        yText={topDefaultHeight * 0.9}
+                    />,
+                );
+            }
+        }
+
         return [topValues, bottomValues];
     };
 
@@ -70,13 +119,15 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
             let uuid = crypto.randomUUID();
 
             bottomValues.push(
-                <CalendarBottomText
+                <Section
+                    value={`${bottomValue}`}
                     key={bottomValue + date.getFullYear() + uuid}
-                    y={headerHeight * 0.8}
-                    x={tickWidth * i + tickWidth * 0.5}
-                >
-                    {bottomValue}
-                </CalendarBottomText>,
+                    x1Line={tickWidth * i}
+                    y1Line={headerHeight / 2}
+                    y2Line={headerHeight}
+                    yText={headerHeight * 0.8}
+                    xText={tickWidth * i + tickWidth * 0.5}
+                />,
             );
             if (i === 0 || date.getFullYear() !== state.ganttReducer.dates[i - 1].getFullYear()) {
                 const topValue = date.getFullYear().toString();
@@ -84,7 +135,7 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
                 const xText: number = (6 + i - date.getMonth()) * tickWidth;
 
                 topValues.push(
-                    <TopPartOfCalendar
+                    <Section
                         key={topValue}
                         value={topValue}
                         x1Line={tickWidth * i}
@@ -116,16 +167,22 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
             const bottomValue = `W${getWeekNumberISO8601(date)}`;
 
             bottomValues.push(
-                <CalendarBottomText key={date.getTime()} y={headerHeight * 0.8} x={tickWidth * i + tickWidth * 0.5}>
-                    {bottomValue}
-                </CalendarBottomText>,
+                <Section
+                    value={`${bottomValue}`}
+                    key={date.getTime()}
+                    x1Line={tickWidth * i}
+                    y1Line={headerHeight / 2}
+                    y2Line={headerHeight}
+                    yText={headerHeight * 0.8}
+                    xText={tickWidth * i + tickWidth * 0.5}
+                />,
             );
 
             if (topValue) {
                 // if last day is new month
                 if (i !== dates.length - 1) {
                     topValues.push(
-                        <TopPartOfCalendar
+                        <Section
                             key={topValue}
                             value={topValue}
                             x1Line={tickWidth * i + weeksCount * tickWidth}
@@ -153,15 +210,21 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
             const bottomValue = `${getLocalDayOfWeek(date, 'short')}, ${date.getDate().toString()}`;
 
             bottomValues.push(
-                <CalendarBottomText key={date.getTime()} y={headerHeight * 0.8} x={tickWidth * i + tickWidth * 0.5}>
-                    {bottomValue}
-                </CalendarBottomText>,
+                <Section
+                    value={`${bottomValue}`}
+                    key={date.getTime()}
+                    x1Line={tickWidth * i}
+                    y1Line={headerHeight / 2}
+                    y2Line={headerHeight}
+                    yText={headerHeight * 0.8}
+                    xText={tickWidth * i + tickWidth * 0.5}
+                />,
             );
             if (i + 1 !== dates.length && date.getMonth() !== dates[i + 1].getMonth()) {
                 const topValue = getLocaleMonth(date);
 
                 topValues.push(
-                    <TopPartOfCalendar
+                    <Section
                         key={topValue + date.getFullYear()}
                         value={topValue}
                         x1Line={tickWidth * (i + 1)}
@@ -198,7 +261,7 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
             if (i === 0 || date.getDate() !== dates[i - 1].getDate()) {
                 const topValue = `${getLocalDayOfWeek(date, 'short')}, ${date.getDate()} ${getLocaleMonth(date)}`;
                 topValues.push(
-                    <TopPartOfCalendar
+                    <Section
                         key={topValue + date.getFullYear()}
                         value={topValue}
                         x1Line={tickWidth * i + ticks * tickWidth}
@@ -237,7 +300,7 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
                 )}`;
                 const topPosition = (date.getHours() - 24) / 2;
                 topValues.push(
-                    <TopPartOfCalendar
+                    <Section
                         key={topValue + displayDate.getFullYear()}
                         value={topValue}
                         x1Line={tickWidth * i}
@@ -259,10 +322,10 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
         case ViewMode.Year:
             [topValues, bottomValues] = getCalendarValuesForYear();
             break;
-        // case ViewMode.HalfYear:
-        // case ViewMode.QuarterYear:
-        //     [topValues, bottomValues] = getCalendarValuesForMonth();
-        //     break;
+        case ViewMode.HalfYear:
+        case ViewMode.QuarterYear:
+            [topValues, bottomValues] = getCalendarValuesForPartOfYear();
+            break;
         case ViewMode.Month:
             [topValues, bottomValues] = getCalendarValuesForMonth();
             break;
