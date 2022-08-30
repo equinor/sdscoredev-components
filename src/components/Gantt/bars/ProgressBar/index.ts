@@ -27,11 +27,11 @@ export type ProgressTaskBar = {
  * Maps a `Task` into a `TaskBar`
  */
 export const convert = (task: Task<ProgressBarProps>, options: TaskConvertOptions): TaskBar<ProgressTaskBar> => {
-    const { index = 0, dates, columnWidth, rowHeight, taskHeight, handleWidth } = options;
+    const { index = 0, dates, tickWidth, rowHeight, taskHeight, handleWidth } = options;
     const { progress } = task.type[1];
 
-    let x1 = taskXCoordinate(task.start, dates, columnWidth);
-    let x2 = taskXCoordinate(task.end, dates, columnWidth);
+    let x1 = taskXCoordinate(task.start, dates, tickWidth);
+    let x2 = taskXCoordinate(task.end, dates, tickWidth);
     let y = taskYCoordinate(index, rowHeight, taskHeight);
 
     return {

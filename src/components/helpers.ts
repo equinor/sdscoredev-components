@@ -83,3 +83,23 @@ export const getDataProps = (props: any) => {
 export const camelize = (str: string) => {
     return str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase());
 };
+
+/**
+ * Debounces a callback
+ *
+ * @param callback Function
+ * @param wait Milliseconds
+ */
+export const debounce = (fn: Function, time: number) => {
+    let timeoutId: any;
+    return wrapper;
+    function wrapper(...args: any[]) {
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+        }
+        timeoutId = setTimeout(() => {
+            timeoutId = null;
+            fn(...args);
+        }, time);
+    }
+};

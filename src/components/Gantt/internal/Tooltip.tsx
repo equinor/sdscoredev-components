@@ -35,8 +35,6 @@ export type TooltipProps = {
     svgContainerWidth: number;
     svgWidth: number;
     taskListWidth: number;
-    scrollX: number;
-    scrollY: number;
     rowHeight: number;
     TooltipContent: React.FC<{
         task: Task;
@@ -47,8 +45,6 @@ export const Tooltip: React.FC<TooltipProps> = ({
     rowHeight,
     svgContainerHeight,
     svgContainerWidth,
-    scrollX,
-    scrollY,
     arrowIndent,
     taskListWidth,
     TooltipContent,
@@ -64,22 +60,22 @@ export const Tooltip: React.FC<TooltipProps> = ({
             const tooltipHeight = tooltipRef.current.offsetHeight * 1.1;
             const tooltipWidth = tooltipRef.current.offsetWidth * 1.1;
 
-            let newRelatedY = task.index * rowHeight - scrollY + state.ganttReducer.headerHeight;
+            let newRelatedY = task.index * rowHeight - state.gridReducer.scrollY + state.ganttReducer.headerHeight;
             let newRelatedX: number;
 
-            newRelatedX = task.x2 + arrowIndent * 1.5 + taskListWidth - scrollX;
+            newRelatedX = task.x2 + arrowIndent * 1.5 + taskListWidth - state.gridReducer.scrollX;
             const tooltipLeftmostPoint = tooltipWidth + newRelatedX;
             const fullChartWidth = taskListWidth + svgContainerWidth;
             if (tooltipLeftmostPoint > fullChartWidth) {
-                newRelatedX = task.x1 + taskListWidth - arrowIndent * 1.5 - scrollX - tooltipWidth;
+                newRelatedX = task.x1 + taskListWidth - arrowIndent * 1.5 - state.gridReducer.scrollX - tooltipWidth;
             }
             if (newRelatedX < taskListWidth) {
                 newRelatedX = svgContainerWidth + taskListWidth - tooltipWidth;
                 newRelatedY += rowHeight;
             }
 
-            const tooltipLowerPoint = tooltipHeight + newRelatedY - scrollY;
-            if (tooltipLowerPoint > svgContainerHeight - scrollY) {
+            const tooltipLowerPoint = tooltipHeight + newRelatedY - state.gridReducer.scrollY;
+            if (tooltipLowerPoint > svgContainerHeight - state.gridReducer.scrollY) {
                 newRelatedY = svgContainerHeight - tooltipHeight;
             }
             setRelatedY(newRelatedY);
@@ -89,8 +85,8 @@ export const Tooltip: React.FC<TooltipProps> = ({
         tooltipRef,
         task,
         arrowIndent,
-        scrollX,
-        scrollY,
+        state.gridReducer.scrollX,
+        state.gridReducer.scrollY,
         taskListWidth,
         rowHeight,
         svgContainerHeight,

@@ -14,15 +14,16 @@ export type ResizeHandleProps = {
 
 export const ResizeHandle: React.FC<ResizeHandleProps> = (props) => {
     const { task, onEventStart } = props;
-    const handleHeight = task.height - 2;
+    const handleHeight = task.height - 8;
+    const handleWidth = 5; // task.handleWidth
 
     return (
         <g>
             {/* Left handle */}
             <BarDateHandle
-                x={task.x1 + 1}
-                y={task.y + 1}
-                width={task.handleWidth}
+                x={task.x1 + 3}
+                y={task.y + 4}
+                width={handleWidth}
                 height={handleHeight}
                 onMouseDown={(e) => {
                     onEventStart('start', task, e);
@@ -30,9 +31,9 @@ export const ResizeHandle: React.FC<ResizeHandleProps> = (props) => {
             />
             {/* Right handle */}
             <BarDateHandle
-                x={task.x2 - task.handleWidth - 1}
-                y={task.y + 1}
-                width={task.handleWidth}
+                x={task.x2 - handleWidth - 2}
+                y={task.y + 4}
+                width={handleWidth}
                 height={handleHeight}
                 onMouseDown={(e) => {
                     onEventStart('end', task, e);

@@ -7,9 +7,11 @@ export enum ViewMode {
     QuarterDay = 'Quarter Day',
     HalfDay = 'Half Day',
     Day = 'Day',
-    /** ISO-8601 week */
     Week = 'Week',
     Month = 'Month',
+    QuarterYear = 'QuarterYear',
+    HalfYear = 'HalfYear',
+    Year = 'Year',
 }
 export type TaskType = 'task' | 'milestone' | 'project' | 'action';
 
@@ -50,18 +52,9 @@ export type EventOption = {
     onSetTasks?: (tasks: Task[]) => void;
 };
 
-export type DisplayOption = {
-    viewMode?: ViewMode;
-    viewDate?: Date;
-    /**
-     * Specifies the month name language. Able formats: ISO 639-2, Java Locale
-     */
-    locale?: string;
-};
-
 export type StylingOption = {
     headerHeight?: number;
-    columnWidth?: number;
+    tickWidth?: number;
     listCellWidth?: string;
     rowHeight?: number;
     ganttHeight?: number;
@@ -113,9 +106,3 @@ export type StylingOption = {
         onExpanderClick: (task: Task) => void;
     }>;
 };
-
-export type GanttProps = {
-    tasks: Task[];
-} & EventOption &
-    DisplayOption &
-    StylingOption;

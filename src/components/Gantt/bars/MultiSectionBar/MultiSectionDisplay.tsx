@@ -27,9 +27,9 @@ export const MultiSectionDisplay: React.FC<DisplayProps<MultiSectionTaskBar>> = 
     return (
         <g onMouseDown={onMouseDown}>
             <rect
-                x={x}
+                x={x + 0.5}
                 width={width}
-                y={y}
+                y={y + 0.5}
                 height={height}
                 ry={2}
                 rx={2}
@@ -39,9 +39,9 @@ export const MultiSectionDisplay: React.FC<DisplayProps<MultiSectionTaskBar>> = 
             {sectionXPositions?.map((p: number) => (
                 <rect
                     key={p}
-                    x={x}
+                    x={x + 0.5}
                     width={width * p}
-                    y={y}
+                    y={y + 0.5}
                     height={height}
                     ry={2}
                     rx={2}
