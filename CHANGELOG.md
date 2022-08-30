@@ -1,3 +1,10 @@
+## [2.26.4](https://github.com/equinor/sdscoredev-components/compare/2.26.3...2.26.4) (2022-08-22)
+
+
+### Bug Fixes
+
+* add pagination reset ([63b452b](https://github.com/equinor/sdscoredev-components/commit/63b452b6a3cae3337a4c4a59ed2c83fe51faafae))
+
 ## [2.26.3](https://github.com/equinor/sdscoredev-components/compare/2.26.2...2.26.3) (2022-08-18)
 
 

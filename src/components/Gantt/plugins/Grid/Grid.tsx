@@ -1,9 +1,9 @@
 import { TaskBar } from 'components/Gantt/bars/types';
-import React, { ReactChild, useContext } from 'react';
+import { ViewMode } from 'components/Gantt/types/public-types';
+import React, { forwardRef, useContext, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { GridProps } from '.';
-import { StateContext } from '../../GanttStore';
-import { addToDate } from '../../helpers/date-helper';
+import { GridProps, GridRef } from '.';
+import { DispatchContext, StateContext } from '../../GanttStore';
 
 export const GridRowLine = styled.line`
     stroke: #ebeff2;
@@ -12,9 +12,10 @@ export const GridRowLine = styled.line`
 export const GridRow = styled.rect`
     fill: #fff;
 
-    &:nth-child(even) {
+    /* Uncomment for stripes */
+    /* &:nth-child(even) {
         fill: #f5f5f5;
-    }
+    } */
 `;
 
 export const GridTick = styled.line`
@@ -22,62 +23,116 @@ export const GridTick = styled.line`
 `;
 
 export type InternalGridProps = {
-    bars: TaskBar[];
     /**
-     * Width of the generated svg
+     * Count of visible bars
      */
-    svgWidth: number;
+    barCount: number;
+    viewMode: ViewMode;
     /**
      * Row height
      */
     rowHeight: number;
+    setFocus: Function;
 } & GridProps;
 
-export const Grid: React.FC<InternalGridProps> = (props: InternalGridProps) => {
-    const { bars, svgWidth, rowHeight, columnWidth, todayColor } = props;
+export const Grid = forwardRef<GridRef, InternalGridProps>((props: InternalGridProps, ref) => {
+    const { barCount, setFocus, viewMode, rowHeight, todayColor } = props;
 
     const state: any = useContext(StateContext);
+    const canvas = useRef<HTMLCanvasElement>(null);
+    const dispatch: any = useContext(DispatchContext);
 
-    let y = 0;
-    const gridRows: ReactChild[] = [];
-    const rowLines: ReactChild[] = [<GridRowLine key="RowLineFirst" x="0" y1={0} x2={svgWidth} y2={0} />];
-    for (const bar of bars) {
-        gridRows.push(<GridRow key={'Row' + bar.id} x="0" y={y} width={svgWidth} height={rowHeight} />);
-        rowLines.push(
-            <GridRowLine key={'RowLine' + bar.id} x="0" y1={y + rowHeight} x2={svgWidth} y2={y + rowHeight} />,
-        );
-        y += rowHeight;
-    }
+    const tickWidth = state.gridReducer.tickWidth;
 
-    const now = new Date();
-    let tickX = 0;
-    const ticks: ReactChild[] = [];
-    let today: ReactChild = <rect />;
-    for (let i = 0; i < state.ganttReducer.dates.length; i++) {
-        const date = state.ganttReducer.dates[i];
-        ticks.push(<GridTick key={date.getTime()} x1={tickX} y1={0} x2={tickX} y2={y} />);
-        if (
-            (i + 1 !== state.ganttReducer.dates.length &&
-                date.getTime() < now.getTime() &&
-                state.ganttReducer.dates[i + 1].getTime() >= now.getTime()) ||
-            // if current date is last
-            (i !== 0 &&
-                i + 1 === state.ganttReducer.dates.length &&
-                date.getTime() < now.getTime() &&
-                addToDate(date, date.getTime() - state.ganttReducer.dates[i - 1].getTime(), 'millisecond').getTime() >=
-                    now.getTime())
-        ) {
-            today = <rect x={tickX} y={0} width={columnWidth} height={y} fill={todayColor} />;
+    const renderGrid = () => {
+        console.log('renderGrid');
+    };
+
+    useImperativeHandle(ref, () => ({
+        handleResize: () => renderGrid(),
+    }));
+
+    const drawTicks = (ctx: CanvasRenderingContext2D, w: number, h: number): void => {
+        let x = 0;
+        for (let i = 0; i < state.ganttReducer.dates.length; i++) {
+            ctx.beginPath();
+            ctx.moveTo(x + 0.5, 0);
+            ctx.lineTo(x + 0.5, h);
+            ctx.strokeStyle = 'rgb(235, 239, 242)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            x = x + tickWidth;
+        }
+    };
+
+    const drawRowLines = (ctx: CanvasRenderingContext2D, w: number, h: number): void => {
+        let y = 0;
+        for (let i = 0; i < barCount; i++) {
+            ctx.beginPath();
+            ctx.moveTo(0, y + 0.5);
+            ctx.lineTo(w, y + 0.5);
+            ctx.strokeStyle = 'rgb(235, 239, 242)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            y = y + rowHeight;
+        }
+    };
+
+    // useEffect(() => {
+    //     if (!focus || focus === state.gridReducer.focus.valueOf() || !Array.isArray(focus)) return;
+    //     const index = getTickIndex(focus[0], state.ganttReducer.dates);
+
+    //     dispatch({ type: 'SET_SCROLL_X', payload: state.gridReducer.tickWidth * index });
+    //     dispatch({ type: 'SET_FOCUS', payload: focus });
+    // }, [focus, state.gridReducer.tickWidth]);
+
+    // if (
+    //     (i + 1 !== state.ganttReducer.dates.length &&
+    //         date.getTime() < now.getTime() &&
+    //         state.ganttReducer.dates[i + 1].getTime() >= now.getTime()) ||
+    //     // if current date is last
+    //     (i !== 0 &&
+    //         i + 1 === state.ganttReducer.dates.length &&
+    //         date.getTime() < now.getTime() &&
+    //         addToDate(date, date.getTime() - state.ganttReducer.dates[i - 1].getTime(), 'millisecond').getTime() >=
+    //             now.getTime())
+    // ) {
+    //     today = <rect x={tickX} y={0} width={tickWidth} height={y} fill={todayColor} />;
+    //     // dispatch({ type: 'SET_SCROLL_X', payload: tickX - tickWidth });
+    // }
+
+    if (canvas.current?.getContext && viewMode && state.ganttReducer.dates.length) {
+        const width = state.ganttReducer.dates.length * state.ganttReducer.viewModeTickWidth[viewMode.toLowerCase()];
+
+        if (width > 65200) {
+            // console.warn('Canvas width is limited to 65200. Your canvas width is: ' + width);
+            canvas.current.width = 65200;
+        } else {
+            canvas.current.width = width;
         }
 
-        tickX += columnWidth;
+        const ctx = canvas.current.getContext('2d');
+
+        if (ctx) {
+            const w = canvas.current.width;
+            const h = barCount * rowHeight;
+
+            ctx.rect(0, 0, w, h);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+
+            drawTicks(ctx, w, h);
+            drawRowLines(ctx, w, h);
+        }
     }
+
     return (
-        <g className="grid">
-            <g className="rows">{gridRows}</g>
-            <g className="rowLines">{rowLines}</g>
-            <g className="ticks">{ticks}</g>
-            <g className="today">{today}</g>
-        </g>
+        <canvas
+            className="grid"
+            ref={canvas}
+            id="DemoCanvas"
+            height={barCount * rowHeight}
+            style={{ borderBottom: '1px solid rgb(235, 239, 242)' }}
+        ></canvas>
     );
-};
+});

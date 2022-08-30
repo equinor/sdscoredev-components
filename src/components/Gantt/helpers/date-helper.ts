@@ -19,6 +19,21 @@ export const getCachedDateTimeFormat = (
     return dtf;
 };
 
+/**
+ * Adds a quantity (day, month, year) to a date
+ * example:
+ * ```
+ * addToDate(Sun May 15 2022 00:00:00 GMT+0200, -1, 'month')
+ * ```
+ * will return a date set one month earlier
+ * ```
+ * Fri Apr 15 2022 00:00:00 GMT+0200
+ * ```
+ * @param date
+ * @param quantity
+ * @param scale
+ * @returns
+ */
 export const addToDate = (date: Date, quantity: number, scale: DateHelperScales) => {
     const newDate = new Date(
         date.getFullYear() + (scale === 'year' ? quantity : 0),
@@ -32,6 +47,21 @@ export const addToDate = (date: Date, quantity: number, scale: DateHelperScales)
     return newDate;
 };
 
+/**
+ * Sets the date to start of 'day', 'month', 'year' and so on.
+ * example:
+ * ```
+ * startOfDate(Sun May 15 2022 00:00:00 GMT+0200, 'month')
+ * ```
+ * will return the beginning of the month
+ * ```
+ * Fri May 01 2022 00:00:00 GMT+0200
+ * ```
+ *
+ * @param date Date
+ * @param scale DateHelperScales
+ * @returns Date
+ */
 export const startOfDate = (date: Date, scale: DateHelperScales) => {
     const scores = ['millisecond', 'second', 'minute', 'hour', 'day', 'month', 'year'];
 
@@ -51,56 +81,97 @@ export const startOfDate = (date: Date, scale: DateHelperScales) => {
     return newDate;
 };
 
+/**
+ * Provides the start date and end date of
+ * the total visible range based on the ViewMode
+ *
+ * @param tasks Visible tasks
+ * @param viewMode
+ * @returns [startDate, endDate]
+ */
 export const ganttDateRange = (tasks: Task[], viewMode: ViewMode) => {
-    let newStartDate: Date = tasks[0].start;
-    let newEndDate: Date = tasks[0].start;
-    for (const task of tasks) {
-        if (task.start < newStartDate) {
-            newStartDate = task.start;
+    let start: Date = tasks[0].start;
+    let end: Date = tasks[0].start;
+
+    for (let task of tasks) {
+        if (task.start < start) {
+            start = task.start;
         }
-        if (task.end > newEndDate) {
-            newEndDate = task.end;
+        if (task.end > end) {
+            end = task.end;
+        }
+
+        /**
+         * Check to see if nugget is present and recalculate the dates
+         */
+        if (task.nugget) {
+            if (task.nugget[1].date < start) {
+                start = task.nugget[1].date;
+            }
+
+            if (task.nugget[1].date > end) {
+                end = task.nugget[1].date;
+            }
         }
     }
+
     switch (viewMode) {
+        case ViewMode.Year:
+            start = addToDate(start, -1, 'year');
+            start = startOfDate(start, 'year');
+            end = addToDate(end, 1, 'year');
+            end = startOfDate(end, 'year');
+            break;
+        case ViewMode.HalfYear:
+            start = addToDate(start, -1, 'year');
+            start = startOfDate(start, 'year');
+            end = addToDate(end, 1, 'year');
+            end = startOfDate(end, 'year');
+            break;
+        case ViewMode.QuarterYear:
+            start = addToDate(start, -1, 'year');
+            start = startOfDate(start, 'year');
+            end = addToDate(end, 1, 'year');
+            end = startOfDate(end, 'year');
+            break;
         case ViewMode.Month:
-            newStartDate = addToDate(newStartDate, -1, 'month');
-            newStartDate = startOfDate(newStartDate, 'month');
-            newEndDate = addToDate(newEndDate, 1, 'year');
-            newEndDate = startOfDate(newEndDate, 'year');
+            start = addToDate(start, -1, 'month');
+            start = startOfDate(start, 'month');
+            end = addToDate(end, 1, 'year');
+            end = startOfDate(end, 'year');
             break;
         case ViewMode.Week:
-            newStartDate = startOfDate(newStartDate, 'day');
-            newEndDate = startOfDate(newEndDate, 'day');
-            newStartDate = addToDate(getMonday(newStartDate), -7, 'day');
-            newEndDate = addToDate(newEndDate, 1.5, 'month');
+            start = startOfDate(start, 'day');
+            start = addToDate(getMonday(start), -7, 'day');
+            end = startOfDate(end, 'day');
+            end = addToDate(end, 1.5, 'month');
             break;
         case ViewMode.Day:
-            newStartDate = startOfDate(newStartDate, 'day');
-            newEndDate = startOfDate(newEndDate, 'day');
-            newStartDate = addToDate(newStartDate, -1, 'day');
-            newEndDate = addToDate(newEndDate, 19, 'day');
-            break;
-        case ViewMode.QuarterDay:
-            newStartDate = startOfDate(newStartDate, 'day');
-            newEndDate = startOfDate(newEndDate, 'day');
-            newStartDate = addToDate(newStartDate, -1, 'day');
-            newEndDate = addToDate(newEndDate, 66, 'hour'); // 24(1 day)*3 - 6
+            start = startOfDate(start, 'day');
+            start = addToDate(start, -1, 'day');
+            end = startOfDate(end, 'day');
+            end = addToDate(end, 19, 'day');
             break;
         case ViewMode.HalfDay:
-            newStartDate = startOfDate(newStartDate, 'day');
-            newEndDate = startOfDate(newEndDate, 'day');
-            newStartDate = addToDate(newStartDate, -1, 'day');
-            newEndDate = addToDate(newEndDate, 108, 'hour'); // 24(1 day)*5 - 12
+            start = startOfDate(start, 'day');
+            start = addToDate(start, -1, 'day');
+            end = startOfDate(end, 'day');
+            end = addToDate(end, 108, 'hour'); // 24(1 day)*5 - 12
+            break;
+        case ViewMode.QuarterDay:
+            start = startOfDate(start, 'day');
+            start = addToDate(start, -1, 'day');
+            end = startOfDate(end, 'day');
+            end = addToDate(end, 66, 'hour'); // 24(1 day)*3 - 6
             break;
         case ViewMode.Hour:
-            newStartDate = startOfDate(newStartDate, 'hour');
-            newEndDate = startOfDate(newEndDate, 'day');
-            newStartDate = addToDate(newStartDate, -1, 'hour');
-            newEndDate = addToDate(newEndDate, 1, 'day');
+            start = startOfDate(start, 'hour');
+            start = addToDate(start, -1, 'hour');
+            end = startOfDate(end, 'day');
+            end = addToDate(end, 1, 'day');
             break;
     }
-    return [newStartDate, newEndDate];
+    return [start, end];
 };
 
 export const seedDates = (startDate: Date, endDate: Date, viewMode: ViewMode) => {
@@ -108,6 +179,15 @@ export const seedDates = (startDate: Date, endDate: Date, viewMode: ViewMode) =>
     const dates: Date[] = [currentDate];
     while (currentDate < endDate) {
         switch (viewMode) {
+            case ViewMode.Year:
+                currentDate = addToDate(currentDate, 1, 'year');
+                break;
+            case ViewMode.HalfYear:
+                currentDate = addToDate(currentDate, 6, 'month');
+                break;
+            case ViewMode.QuarterYear:
+                currentDate = addToDate(currentDate, 4, 'month');
+                break;
             case ViewMode.Month:
                 currentDate = addToDate(currentDate, 1, 'month');
                 break;
@@ -178,4 +258,13 @@ export const getWeekNumberISO8601 = (date: Date) => {
 
 export const getDaysInMonth = (month: number, year: number) => {
     return new Date(year, month + 1, 0).getDate();
+};
+
+export const isToday = (date: Date): boolean => {
+    const today = new Date();
+    return (
+        date.getDate() === today.getDate() &&
+        date.getMonth() === today.getMonth() &&
+        date.getFullYear() === today.getFullYear()
+    );
 };

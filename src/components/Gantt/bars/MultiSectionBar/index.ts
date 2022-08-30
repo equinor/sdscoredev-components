@@ -10,12 +10,12 @@ export const convert = (
     task: Task<MultiSectionBarProps>,
     options: TaskConvertOptions,
 ): TaskBar<MultiSectionTaskBar> => {
-    const { index = 0, dates, columnWidth, rowHeight, taskHeight, handleWidth } = options;
+    const { index = 0, dates, tickWidth, rowHeight, taskHeight, handleWidth } = options;
 
     let type = [...task.type];
 
-    let x1 = taskXCoordinate(task.start, dates, columnWidth);
-    let x2 = taskXCoordinate(task.end, dates, columnWidth);
+    let x1 = taskXCoordinate(task.start, dates, tickWidth);
+    let x2 = taskXCoordinate(task.end, dates, tickWidth);
     const y = taskYCoordinate(index, rowHeight, taskHeight);
 
     if (type[1].dates.length) {
@@ -71,7 +71,6 @@ const handleMouseEvents = (
 
                 for (let i = 0; i < changedTask.type[1].sections.length; i++) {
                     changedTask.type[1].dates[i] = getNewSectionDate(i);
-                    console.log(changedTask.type[1].dates);
                 }
             }
             break;
