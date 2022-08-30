@@ -14,8 +14,6 @@ import { Task, TaskBar } from './bars/types';
 import { Calendar, CalendarProps } from './plugins/Calendar/Calendar';
 import { StandardTooltipContent, Tooltip } from './internal/Tooltip';
 import styled from 'styled-components';
-import { GridProps } from './plugins/Grid';
-import { debounce } from 'components/helpers';
 import { GanttProps } from './Gantt';
 
 const Wrapper = styled.div<{ width: number }>`
@@ -148,11 +146,25 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         return filteredTasks;
     };
 
+    /**
+     * Round up a number
+     *
+     * @param num
+     * @param precision
+     * @returns
+     */
     function roundUp(num: number, precision: number) {
         precision = Math.pow(10, precision);
         return Math.ceil(num * precision) / precision;
     }
 
+    /**
+     * Provide amount of months between two dates
+     *
+     * @param d1
+     * @param d2
+     * @returns
+     */
     function monthDiff(d1: Date, d2: Date) {
         var months;
         months = (d2.getFullYear() - d1.getFullYear()) * 12;
@@ -161,6 +173,12 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         return months <= 0 ? 0 : months;
     }
 
+    /**
+     * Provide tick width based on viewMode
+     *
+     * @param dates
+     * @returns number
+     */
     const getTickWidth = (dates: Array<Date>) => {
         const defaultWidth = state.ganttReducer.viewModeTickWidth[viewMode.toLowerCase()];
         if (verticalGanttContainerRef.current) {
@@ -208,6 +226,13 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         return defaultWidth;
     };
 
+    /**
+     * Provide tick index based on the focued date
+     *
+     * @param focusDate
+     * @param dates
+     * @returns number
+     */
     const getTickIndex = (focusDate: Date, dates: Array<Date>): number => {
         return dates.findIndex(
             (date: any, i: any) =>
@@ -270,6 +295,11 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         }
     }, [viewDate, state.ganttReducer.dates, viewMode, currentViewDate, setCurrentViewDate]);
 
+    /**
+     * Recalculates bars when event is dispatched
+     *
+     * @param changedTask
+     */
     const recalculateBars = (changedTask: Task) => {
         const prevStateTask = bars.find((t: any) => t.id === changedTask.id);
         if (
@@ -284,6 +314,9 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         }
     };
 
+    /**
+     * Listens for events
+     */
     useEffect(() => {
         const { changedTask, action } = ganttEvent;
 
@@ -299,6 +332,9 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         }
     }, [ganttEvent, bars]);
 
+    /**
+     * Listens for failed task
+     */
     useEffect(() => {
         if (failedTask) {
             const payload = bars.map((t: any) => (t.id !== failedTask.id ? t : failedTask));
@@ -308,6 +344,10 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         }
     }, [failedTask, bars]);
 
+    /**
+     * Setup wheel event listener
+     * Sets scroll positions of containers
+     */
     useEffect(() => {
         const handleWheel = (event: WheelEvent) => {
             if (event.shiftKey || event.deltaX) {
