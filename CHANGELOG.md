@@ -1,3 +1,16 @@
+# [2.27.0](https://github.com/equinor/sdscoredev-components/compare/2.26.4...2.27.0) (2022-08-30)
+
+
+### Bug Fixes
+
+* focus ([b428479](https://github.com/equinor/sdscoredev-components/commit/b428479489c1132b7fac0837f008237533d185f8))
+
+
+### Features
+
+* alpha gantt ([05621d7](https://github.com/equinor/sdscoredev-components/commit/05621d75ad07e81e2588a06efcd1ed4932016285))
+* gantt release ([7870980](https://github.com/equinor/sdscoredev-components/commit/78709806433e2242040b7cce1503860419a10eec))
+
 ## [2.26.4](https://github.com/equinor/sdscoredev-components/compare/2.26.3...2.26.4) (2022-08-22)
 
 
