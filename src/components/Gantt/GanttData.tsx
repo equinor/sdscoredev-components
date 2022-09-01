@@ -5,19 +5,18 @@ import { removeHiddenTasks, sortTasks } from './helpers/other-helper';
 import { ganttDateRange, isToday, seedDates } from './helpers/date-helper';
 import { convertToBars, convertToNuggets, dateToProgress } from './helpers/bar-helper';
 import { TaskGanttContent, TaskGanttContentProps } from './internal/TaskGanttContent';
-// import { TaskList, TaskListProps } from './components/task-list/task-list';
 import { GanttEvent } from './types/gantt-task-actions';
 import { DispatchContext, StateContext } from './GanttStore';
 import { TaskList, TaskListProps } from './plugins/TaskList/TaskList';
 import { Grid } from './plugins/Grid/Grid';
 import { Task, TaskBar } from './bars/types';
 import { Calendar, CalendarProps } from './plugins/Calendar/Calendar';
-import { StandardTooltipContent, Tooltip } from './internal/Tooltip';
 import styled from 'styled-components';
 import { GanttProps } from './Gantt';
+import { Tooltip } from './plugins/Tooltip/Tooltip';
 
 const Wrapper = styled.div<{ width: number }>`
-    overflow: hidden;
+    overflow: visible;
     display: grid;
     grid-template-columns: ${(props) => (props.width ? `${props.width}px 1fr` : 'auto 1fr')};
     padding: 0px;
@@ -45,9 +44,8 @@ export const HorizontalContainer = styled.div<{ height: number; width: number }>
 `;
 
 export type GanttDataProps = {
+    plugins?: any;
     tasks: Task[];
-    grid?: any;
-    taskList?: any;
     /**
      * Which way to split the calendar into ticks.
      * When changed, the grid and calendar redraw.
@@ -60,7 +58,7 @@ export type GanttDataProps = {
 
 export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps, ref) => {
     const {
-        grid,
+        plugins,
         focus,
         listCellWidth = '155px',
         rowHeight = 50,
@@ -72,7 +70,6 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         arrowIndent = 20,
         viewDate,
         viewMode = ViewMode.Year,
-        TooltipContent = StandardTooltipContent,
         onDateChange,
         onProgressChange,
         onDoubleClick,
@@ -81,7 +78,6 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         onSelect,
         onSetTasks,
         onExpanderClick,
-        taskList,
     } = props;
 
     const state: any = useContext(StateContext);
@@ -198,7 +194,6 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
 
             if (viewMode === ViewMode.Month && focus) {
                 const tickCount = monthDiff(new Date(focus[0]), new Date(focus[1])) + 1;
-                console.log(tickCount);
                 tickWidth = wrapperWidth / tickCount;
             }
 
@@ -218,8 +213,6 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
                 const tickCount = new Date(focus[1]).getFullYear() - new Date(focus[0]).getFullYear() + 1;
                 tickWidth = wrapperWidth / tickCount;
             }
-
-            console.log(minWidth, tickWidth);
 
             if (wrapperWidth > dates.length * tickWidth) {
                 tickWidth = wrapperWidth / dates.length;
@@ -571,9 +564,9 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
                 onKeyDown={handleKeyDown}
                 tabIndex={0}
                 ref={wrapperRef}
-                width={taskList?.props?.width}
+                width={plugins.taskList?.props?.width}
             >
-                {taskList && listCellWidth && <TaskList {...tableProps} {...taskList.props} />}
+                {plugins.taskList && listCellWidth && <TaskList {...tableProps} {...plugins.taskList.props} />}
 
                 <VerticalContainer id="gantt-vertical-container" ref={verticalGanttContainerRef}>
                     <Calendar {...calendarProps} viewMode={viewMode} />
@@ -584,31 +577,30 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
                         height={ganttHeight}
                         width={state.ganttReducer.dates.length * state.gridReducer.tickWidth}
                     >
-                        {grid && (
+                        {plugins.grid && (
                             <Grid
                                 barCount={bars.length}
                                 rowHeight={rowHeight}
                                 viewMode={viewMode}
-                                {...grid.props}
-                                ref={grid.ref}
+                                {...plugins.grid.props}
+                                ref={plugins.grid.ref}
                             />
                         )}
 
                         <TaskGanttContent {...barProps} />
                     </HorizontalContainer>
                 </VerticalContainer>
-                {/* {ganttEvent.changedTask && (
+
+                {plugins.tooltip && ganttEvent.action === 'mouseenter' && (
                     <Tooltip
-                        arrowIndent={arrowIndent}
-                        rowHeight={rowHeight}
-                        svgContainerHeight={svgContainerHeight}
-                        svgContainerWidth={svgContainerWidth}
                         task={ganttEvent.changedTask}
-                        taskListWidth={taskListWidth}
-                        TooltipContent={TooltipContent}
-                        svgWidth={state.gridReducer.svgWidth}
+                        anchorRef={verticalGanttContainerRef}
+                        containerRef={verticalGanttContainerRef}
+                        taskListRef={taskListRef}
+                        {...plugins.tooltip.props}
                     />
-                )} */}
+                )}
+
                 {/* <VerticalScroll
                         ganttFullHeight={ganttFullHeight}
                         ganttHeight={ganttHeight}

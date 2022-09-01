@@ -82,7 +82,7 @@ export const InternalBar: React.FC<Bar> = (props) => {
             }}
         >
             {taskBarItem}
-            {isTextInside ? (
+            {/* {isTextInside ? (
                 <BarLabelInside x={getX()} y={taskBar.y + taskHeight * 0.5} ref={textRef}>
                     {taskBar.name}
                 </BarLabelInside>
@@ -90,7 +90,7 @@ export const InternalBar: React.FC<Bar> = (props) => {
                 <BarLabelOutside x={getX()} y={taskBar.y + taskHeight * 0.5} ref={textRef}>
                     {taskBar.name}
                 </BarLabelOutside>
-            )}
+            )} */}
         </g>
     );
 };
