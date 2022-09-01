@@ -33,7 +33,8 @@ export const MultiSectionDisplay: React.FC<DisplayProps<MultiSectionTaskBar>> = 
                 height={height}
                 ry={2}
                 rx={2}
-                fill={isSelected ? '#eee' : '#fff'}
+                fill={fill()}
+                fillOpacity={0.1}
                 style={{ userSelect: 'none', strokeWidth: 1, stroke: '#666' }}
             />
             {sectionXPositions?.map((p: number) => (
@@ -46,7 +47,7 @@ export const MultiSectionDisplay: React.FC<DisplayProps<MultiSectionTaskBar>> = 
                     ry={2}
                     rx={2}
                     fill={fill()}
-                    fillOpacity={0.3}
+                    fillOpacity={0.2}
                 />
             ))}
         </g>

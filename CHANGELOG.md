@@ -1,3 +1,10 @@
+## [2.27.1](https://github.com/equinor/sdscoredev-components/compare/2.27.0...2.27.1) (2022-08-31)
+
+
+### Bug Fixes
+
+* Calendar ([a9e922f](https://github.com/equinor/sdscoredev-components/commit/a9e922fc46538c6f9a28124bed911d4ad5931c7f))
+
 # [2.27.0](https://github.com/equinor/sdscoredev-components/compare/2.26.4...2.27.0) (2022-08-30)
 
 

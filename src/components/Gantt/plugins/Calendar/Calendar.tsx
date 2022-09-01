@@ -68,7 +68,6 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
     const getCalendarValuesForPartOfYear = () => {
         const topValues: ReactChild[] = [];
         const bottomValues: ReactChild[] = [];
-        console.log(viewMode);
         const ticks = viewMode === ViewMode.HalfYear ? 2 : 4;
         const topDefaultHeight = headerHeight * 0.5;
         const { dates } = state.ganttReducer;
