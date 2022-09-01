@@ -17,6 +17,10 @@ export const Tooltip: React.FC<InternalTooltipProps> = (props) => {
     let y = 0;
     let x = 0;
 
+    /**
+     * When the task is updated, either by hovering the bar, dragging or resizing, this effect will run.
+     * The task in the dependency contains a TaskBar with positional data as well as the task props.
+     */
     useEffect(() => {
         const handleMouseMove = (evt: MouseEvent) => {
             if (taskListRef?.current && containerRef?.current && tooltipRef.current) {
@@ -24,13 +28,16 @@ export const Tooltip: React.FC<InternalTooltipProps> = (props) => {
                 const rect = containerRef.current.getBoundingClientRect();
                 x = taskListWidth + evt.clientX - rect.left - tooltipRef.current.offsetWidth / 2;
 
+                /** Set new tooltip position based on mouse and bar position */
                 tooltipRef.current.style.transform = `translate(${x}px, ${y}px)`;
             }
         };
 
+        /** Calculate y position and also add listener for mouse move event */
         if (tooltipRef.current && containerRef?.current && taskListRef?.current && task) {
             y = -(containerRef.current.offsetHeight - calendarHeight - task.y) - 10;
 
+            /** Set new tooltip position based on mouse and bar position */
             tooltipRef.current.style.transform = `translate(${x}px, ${y}px)`;
 
             containerRef.current.addEventListener('mousemove', handleMouseMove);
