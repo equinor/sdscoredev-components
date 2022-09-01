@@ -1,3 +1,10 @@
+# [2.28.0](https://github.com/equinor/sdscoredev-components/compare/2.27.1...2.28.0) (2022-09-01)
+
+
+### Features
+
+* add tooltip plugin ([009ba9f](https://github.com/equinor/sdscoredev-components/commit/009ba9f83c9fbed30e5b5cd94783f366305b4225))
+
 ## [2.27.1](https://github.com/equinor/sdscoredev-components/compare/2.27.0...2.27.1) (2022-08-31)
 
 
