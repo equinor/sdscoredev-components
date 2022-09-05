@@ -1,3 +1,11 @@
+## [2.28.1](https://github.com/equinor/sdscoredev-components/compare/2.28.0...2.28.1) (2022-09-05)
+
+
+### Bug Fixes
+
+* some eds problems ([61aa994](https://github.com/equinor/sdscoredev-components/commit/61aa9940c5e0e83e82d3d156790b017f854af2e4))
+* zoom not working ([25886cc](https://github.com/equinor/sdscoredev-components/commit/25886cc9935b65b5dad7ae249f7f563ae10b7a69))
+
 # [2.28.0](https://github.com/equinor/sdscoredev-components/compare/2.27.1...2.28.0) (2022-09-01)
 
 
