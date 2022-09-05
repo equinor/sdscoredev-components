@@ -34,7 +34,7 @@ export const convertToNuggets = (
     taskHeight: number,
     handleWidth: number,
 ) => {
-    let nuggets = tasks.map((task, index) => {
+    const nuggets = tasks.map((task, index) => {
         if (task.nugget) {
             return task.nugget[0].convert(task, { index, dates, tickWidth, rowHeight, taskHeight, handleWidth });
         }
@@ -68,9 +68,7 @@ export const taskYCoordinate = (index: number, rowHeight: number, taskHeight: nu
 
 export const progressWithByParams = (taskX1: number, taskX2: number, progress: number) => {
     const progressWidth = (taskX2 - taskX1) * progress * 0.01;
-    let progressX: number;
-
-    progressX = taskX1;
+    const progressX: number = taskX1;
 
     return { progressWidth, progressX };
 };
@@ -79,18 +77,17 @@ export const progressByProgressWidth = (progressWidth: number, barTask: TaskBar)
     const barWidth = barTask.x2 - barTask.x1;
     const progressPercent = Math.round((progressWidth * 100) / barWidth);
     if (progressPercent >= 100) return 100;
-    else if (progressPercent <= 0) return 0;
-    else return progressPercent;
+    if (progressPercent <= 0) return 0;
+    return progressPercent;
 };
 
 export const progressByX = (x: number, task: TaskBar) => {
     if (x >= task.x2) return 100;
-    else if (x <= task.x1) return 0;
-    else {
-        const barWidth = task.x2 - task.x1;
-        const progressPercent = Math.round(((x - task.x1) * 100) / barWidth);
-        return progressPercent;
-    }
+    if (x <= task.x1) return 0;
+
+    const barWidth = task.x2 - task.x1;
+    const progressPercent = Math.round(((x - task.x1) * 100) / barWidth);
+    return progressPercent;
 };
 
 export const getProgressPoint = (progressX: number, taskY: number, taskHeight: number) => {
@@ -107,6 +104,7 @@ export const getProgressPoint = (progressX: number, taskY: number, taskHeight: n
 
 export const startByX = (x: number, xStep: number, task: TaskBar) => {
     if (x >= task.x2 - task.handleWidth * 2) {
+        // eslint-disable-next-line no-param-reassign
         x = task.x2 - task.handleWidth * 2;
     }
     const steps = Math.round((x - task.x1) / xStep);
@@ -117,6 +115,7 @@ export const startByX = (x: number, xStep: number, task: TaskBar) => {
 
 export const endByX = (x: number, xStep: number, task: TaskBar) => {
     if (x <= task.x1 + task.handleWidth * 2) {
+        // eslint-disable-next-line no-param-reassign
         x = task.x1 + task.handleWidth * 2;
     }
     const steps = Math.round((x - task.x2) / xStep);

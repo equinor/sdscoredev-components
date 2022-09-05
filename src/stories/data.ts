@@ -1,4 +1,5 @@
 import casual from 'casual-browserify';
+import { DefaultBar, MilestoneBar } from 'components/Gantt';
 
 casual.define('user', () => {
     return {
@@ -54,4 +55,36 @@ export const getTree = (count: number, maxDepth: number = 5, maxChildCount: numb
     const newTree = generateTree(getTreeStructure(count), 0);
 
     return newTree;
+};
+
+export const getTasks = () => {
+    const currentDate = new Date();
+
+    return [
+        {
+            start: new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1),
+            end: new Date(currentDate.getFullYear(), currentDate.getMonth() + 8, 1),
+            name: 'Task 1',
+            id: 1,
+            type: [DefaultBar],
+            displayOrder: 1,
+        },
+        {
+            start: new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1),
+            end: new Date(currentDate.getFullYear(), currentDate.getMonth() + 8, 1),
+            name: 'Task 2',
+            id: 2,
+            type: [DefaultBar],
+            displayOrder: 2,
+        },
+        {
+            start: new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1),
+            end: new Date(currentDate.getFullYear(), currentDate.getMonth() + 8, 1),
+            name: 'Milestone 1',
+            id: 3,
+            type: [MilestoneBar],
+            displayOrder: 3,
+            dependencies: [2],
+        },
+    ];
 };

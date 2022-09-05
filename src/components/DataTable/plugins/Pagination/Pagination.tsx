@@ -1,13 +1,11 @@
 /* eslint-disable react/jsx-pascal-case */
 import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
-
+import { useLocation } from 'react-router-dom';
 import { NativeSelect, Pagination as EDSPagination } from '@equinor/eds-core-react';
 import { tokens } from '@equinor/eds-tokens';
-
 import { DispatchContext, StateContext } from '../../DataTableStore';
 import { PaginationProps } from './index';
-import { useLocation } from 'react-router-dom';
 
 const {
     colors: {

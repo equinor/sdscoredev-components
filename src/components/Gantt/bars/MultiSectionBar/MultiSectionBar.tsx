@@ -1,5 +1,4 @@
 import React from 'react';
-import { dateToProgress } from '../../helpers/bar-helper';
 import styled from 'styled-components';
 import { ResizeHandle } from '../../internal/ResizeHandle';
 import { MultiSectionDisplay } from './MultiSectionDisplay';
@@ -43,6 +42,7 @@ export const MultiSectionBar: React.FC<Bar<MultiSectionTaskBar>> = (props) => {
                 isSelected={isSelected}
                 theme={theme}
                 onMouseDown={(e: any) => {
+                    // eslint-disable-next-line no-unused-expressions
                     isDateChangeable && onEventStart('move', taskBar, e);
                 }}
             />

@@ -42,7 +42,7 @@ export const Grid = forwardRef<GridRef, InternalGridProps>((props: InternalGridP
     const canvas = useRef<HTMLCanvasElement>(null);
     const dispatch: any = useContext(DispatchContext);
 
-    const tickWidth = state.gridReducer.tickWidth;
+    const { tickWidth } = state.gridReducer;
 
     const renderGrid = () => {
         console.log('renderGrid');
@@ -61,7 +61,7 @@ export const Grid = forwardRef<GridRef, InternalGridProps>((props: InternalGridP
             ctx.strokeStyle = 'rgb(235, 239, 242)';
             ctx.lineWidth = 1;
             ctx.stroke();
-            x = x + tickWidth;
+            x += tickWidth;
         }
     };
 
@@ -74,7 +74,7 @@ export const Grid = forwardRef<GridRef, InternalGridProps>((props: InternalGridP
             ctx.strokeStyle = 'rgb(235, 239, 242)';
             ctx.lineWidth = 1;
             ctx.stroke();
-            y = y + rowHeight;
+            y += rowHeight;
         }
     };
 
@@ -133,6 +133,6 @@ export const Grid = forwardRef<GridRef, InternalGridProps>((props: InternalGridP
             id="DemoCanvas"
             height={barCount * rowHeight}
             style={{ borderBottom: '1px solid rgb(235, 239, 242)' }}
-        ></canvas>
+        />
     );
 });

@@ -1,3 +1,4 @@
+import React from 'react';
 import { Task, TaskBar } from '../bars/types';
 
 export function isKeyboardEvent(
@@ -22,6 +23,7 @@ export function removeHiddenTasks(tasks: Task[]) {
         for (let i = 0; groupedTasks.length > i; i++) {
             const groupedTask = groupedTasks[i];
             const children = getChildren(tasks, groupedTask);
+            // eslint-disable-next-line no-param-reassign
             tasks = tasks.filter((t) => children.indexOf(t) === -1);
         }
     }
@@ -45,9 +47,9 @@ export const sortTasks = (taskA: Task, taskB: Task) => {
     const orderB = taskB.displayOrder || Number.MAX_VALUE;
     if (orderA > orderB) {
         return 1;
-    } else if (orderA < orderB) {
-        return -1;
-    } else {
-        return 0;
     }
+    if (orderA < orderB) {
+        return -1;
+    }
+    return 0;
 };

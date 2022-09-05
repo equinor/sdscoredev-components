@@ -1,0 +1,35 @@
+import { Gantt } from '../../components/Gantt';
+import { Grid } from '../../components/Gantt/plugins/Grid';
+import { TaskList } from '../../components/Gantt/plugins/TaskList';
+import { Tooltip } from '../../components/Gantt/plugins/Tooltip';
+import { Meta, Story, Canvas, ArgsTable, Source } from '@storybook/addon-docs';
+
+<Meta title="Library/Gantt/Documentation" />
+
+# Gantt
+
+SDSCoredev Components provides a gantt chart with lots of functionality.
+
+The `<Gantt>` provides these props:
+
+<ArgsTable of={Gantt} />
+
+# Plugins
+
+## `<Grid>`
+
+Can be added as a child to provide configuration for grid
+
+<ArgsTable of={Grid} />
+
+## `<TaskList>`
+
+Can be added as a child to provide configuration for task list
+
+<ArgsTable of={TaskList} />
+
+## `<Tooltip>`
+
+Can be added as a child to provide tooltip functionality.
+
+<ArgsTable of={Tooltip} />

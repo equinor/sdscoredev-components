@@ -1,6 +1,6 @@
 import React from 'react';
-import { BarDateHandle } from '../DateHandle';
 import styled from 'styled-components';
+import { BarDateHandle } from '../DateHandle';
 import { DefaultDisplay } from './DefaultDisplay';
 import { Bar } from '../types';
 
@@ -43,6 +43,7 @@ export const DefaultBar: React.FC<Bar<DefaultBarProps>> = (props) => {
                 height={taskBar.height}
                 isSelected={isSelected}
                 onMouseDown={(e) => {
+                    // eslint-disable-next-line no-unused-expressions
                     isDateChangeable && onEventStart('move', taskBar, e);
                 }}
             />

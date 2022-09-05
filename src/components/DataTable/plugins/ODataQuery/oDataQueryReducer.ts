@@ -13,4 +13,4 @@ const reducer = (state = initialState, action: any): ODataQueryState => {
 
 const component = ODataQuery;
 
-export const oDataQueryReducer = {reducer, initialState, component}
+export const oDataQueryReducer = { reducer, initialState, component };

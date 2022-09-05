@@ -1,6 +1,6 @@
-import { MilestoneBar, MilestoneBarProps } from './MilestoneBar';
 import { dateByX, moveByX, taskXCoordinate, taskYCoordinate } from 'components/Gantt/helpers/bar-helper';
 import { BarMoveAction } from 'components/Gantt/types/gantt-task-actions';
+import { MilestoneBar, MilestoneBarProps } from './MilestoneBar';
 import { Task, TaskBar, TaskConvertOptions } from '../types';
 
 export type MilestoneTaskBar = {} & MilestoneBarProps;
@@ -38,6 +38,7 @@ const handleMouseEvents = (
 ): { isChanged: boolean; changedTask: TaskBar } => {
     const changedTask: TaskBar = { ...selectedTask };
     let isChanged = false;
+    // eslint-disable-next-line default-case
     switch (action) {
         case 'move': {
             const [newMoveX1, newMoveX2] = moveByX(svgX - initEventX1Delta, xStep, selectedTask);

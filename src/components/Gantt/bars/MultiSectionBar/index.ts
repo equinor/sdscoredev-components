@@ -1,7 +1,13 @@
-import { MultiSectionBar, MultiSectionBarProps } from './MultiSectionBar';
-import { dateToProgress, taskXCoordinate, taskYCoordinate } from 'components/Gantt/helpers/bar-helper';
-import { dateByX, endByX, moveByX, startByX } from 'components/Gantt/helpers/bar-helper';
+import {
+    dateByX,
+    endByX,
+    moveByX,
+    startByX,
+    taskXCoordinate,
+    taskYCoordinate,
+} from 'components/Gantt/helpers/bar-helper';
 import { BarMoveAction } from 'components/Gantt/types/gantt-task-actions';
+import { MultiSectionBar, MultiSectionBarProps } from './MultiSectionBar';
 import { Task, TaskBar, TaskConvertOptions } from '../types';
 
 export type MultiSectionTaskBar = {} & MultiSectionBarProps;
@@ -12,10 +18,10 @@ export const convert = (
 ): TaskBar<MultiSectionTaskBar> => {
     const { index = 0, dates, tickWidth, rowHeight, taskHeight, handleWidth } = options;
 
-    let type = [...task.type];
+    const type = [...task.type];
 
-    let x1 = taskXCoordinate(task.start, dates, tickWidth);
-    let x2 = taskXCoordinate(task.end, dates, tickWidth);
+    const x1 = taskXCoordinate(task.start, dates, tickWidth);
+    const x2 = taskXCoordinate(task.end, dates, tickWidth);
     const y = taskYCoordinate(index, rowHeight, taskHeight);
 
     if (type[1].dates.length) {
@@ -45,6 +51,7 @@ const handleMouseEvents = (
 ): { isChanged: boolean; changedTask: TaskBar<MultiSectionTaskBar> } => {
     const changedTask: TaskBar<MultiSectionTaskBar> = { ...selectedTask };
     let isChanged = false;
+    // eslint-disable-next-line default-case
     switch (action) {
         case 'start': {
             const newX1 = startByX(svgX, xStep, selectedTask);

@@ -1,7 +1,7 @@
 import React from 'react';
+import styled from 'styled-components';
 import { getProgressPoint } from '../../helpers/bar-helper';
 import { BarDateHandle } from '../DateHandle';
-import styled from 'styled-components';
 import { ProgressDisplay } from './ProgressDisplay';
 import { BarProgressHandle } from '../ProgressHandle';
 import { Bar } from '../types';
@@ -54,6 +54,7 @@ export const ProgressBar: React.FC<Bar<ProgressTaskBar>> = (props) => {
                 progressWidth={taskBar.progressWidth}
                 isSelected={isSelected}
                 onMouseDown={(e) => {
+                    // eslint-disable-next-line no-unused-expressions
                     isDateChangeable && onEventStart('move', taskBar, e);
                 }}
             />

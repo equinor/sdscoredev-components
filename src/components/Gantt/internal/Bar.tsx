@@ -57,6 +57,7 @@ export const InternalBar: React.FC<Bar> = (props) => {
     return (
         <g
             onKeyDown={(e) => {
+                // eslint-disable-next-line default-case
                 switch (e.key) {
                     case 'Delete': {
                         if (isDelete) onEventStart('delete', taskBar, e);

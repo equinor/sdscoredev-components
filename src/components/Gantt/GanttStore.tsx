@@ -1,7 +1,6 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import React, { createContext, ReactElement, useReducer } from 'react';
-import { useCombinedReducers } from '../../hooks/useCombinedReducer';
 import { GeneralStoreProps, ReducerProp } from 'types';
+import { useCombinedReducers } from '../../hooks/useCombinedReducer';
 
 export const StateContext = createContext({});
 export const DispatchContext = createContext({});
@@ -16,7 +15,7 @@ export const GanttStore: React.FC<GeneralStoreProps> = React.memo((props) => {
      * @returns
      */
     const getCacheKey = (component: any) => {
-        return window.location.origin + component.props.cacheKey + '|' + component.type.displayName;
+        return `${window.location.origin + component.props.cacheKey}|${component.type.displayName}`;
     };
 
     /**
@@ -75,12 +74,14 @@ export const GanttStore: React.FC<GeneralStoreProps> = React.memo((props) => {
                 <>
                     {children}
                     {Object.entries(reducers).map((reducer: any, key: number) => {
-                        const component = reducer[1].component;
+                        const { component } = reducer[1];
                         if (component) {
+                            // eslint-disable-next-line react/no-array-index-key
                             return <React.Fragment key={key}>{component({ state, dispatch })}</React.Fragment>;
                         }
 
-                        return <React.Fragment key={key}></React.Fragment>;
+                        // eslint-disable-next-line react/no-array-index-key
+                        return <React.Fragment key={key} />;
                     })}
                 </>
             </StateContext.Provider>

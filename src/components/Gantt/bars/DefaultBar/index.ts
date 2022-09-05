@@ -1,4 +1,3 @@
-import { DefaultBar, DefaultBarProps } from './DefaultBar';
 import {
     dateByX,
     endByX,
@@ -7,16 +6,16 @@ import {
     taskXCoordinate,
     taskYCoordinate,
 } from 'components/Gantt/helpers/bar-helper';
-import { TaskTypeInternal } from 'components/Gantt/types/bar-task';
 import { BarMoveAction } from 'components/Gantt/types/gantt-task-actions';
+import { DefaultBar, DefaultBarProps } from './DefaultBar';
 import { Task, TaskBar, TaskConvertOptions } from '../types';
 
 export type DefaultTaskBar = {} & DefaultBarProps;
 
 export const convert = (task: Task<DefaultBarProps>, options: TaskConvertOptions): TaskBar => {
     const { index = 0, dates, tickWidth, rowHeight, taskHeight, handleWidth } = options;
-    let x1 = taskXCoordinate(task.start, dates, tickWidth);
-    let x2 = taskXCoordinate(task.end, dates, tickWidth);
+    const x1 = taskXCoordinate(task.start, dates, tickWidth);
+    const x2 = taskXCoordinate(task.end, dates, tickWidth);
 
     const y = taskYCoordinate(index, rowHeight, taskHeight);
     const hideChildren = task.type === 'project' ? task.hideChildren : undefined;
@@ -43,6 +42,7 @@ const handleMouseEvents = (
 ): { isChanged: boolean; changedTask: TaskBar } => {
     const changedTask: TaskBar = { ...selectedTask };
     let isChanged = false;
+    // eslint-disable-next-line default-case
     switch (action) {
         case 'start': {
             const newX1 = startByX(svgX, xStep, selectedTask);

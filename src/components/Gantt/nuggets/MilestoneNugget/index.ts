@@ -1,5 +1,5 @@
-import { MilestoneNugget, MilestoneNuggetProps } from './MilestoneNugget';
 import { taskXCoordinate, taskYCoordinate } from 'components/Gantt/helpers/bar-helper';
+import { MilestoneNugget, MilestoneNuggetProps } from './MilestoneNugget';
 import { Task, TaskBar, TaskConvertOptions } from '../../bars/types';
 
 export type MilestoneTaskBar = {} & MilestoneNuggetProps;
@@ -7,7 +7,7 @@ export type MilestoneTaskBar = {} & MilestoneNuggetProps;
 export const convert = (task: Task<MilestoneNuggetProps>, options: TaskConvertOptions): TaskBar => {
     const { index = 0, dates, tickWidth, rowHeight, taskHeight, handleWidth } = options;
 
-    let nugget = [...task.nugget];
+    const nugget = [...task.nugget];
 
     const x = taskXCoordinate(nugget[1].date, dates, tickWidth);
     const y = taskYCoordinate(index, rowHeight, taskHeight);

@@ -37,8 +37,7 @@ export type CalendarProps = {
 export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
     const state: any = useContext(StateContext);
     const { headerHeight } = state.ganttReducer;
-
-    const tickWidth = state.gridReducer.tickWidth;
+    const { tickWidth } = state.gridReducer;
 
     const getCalendarValuesForYear = () => {
         const topValues: ReactChild[] = [];
@@ -48,7 +47,7 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
             const date = state.ganttReducer.dates[i];
             const bottomValue = date.getFullYear();
 
-            let uuid = crypto.randomUUID();
+            const uuid = crypto.randomUUID();
 
             bottomValues.push(
                 <Section
@@ -87,7 +86,7 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
                 />,
             );
 
-            let uuid = crypto.randomUUID();
+            const uuid = crypto.randomUUID();
 
             if (i === 0 || date.getFullYear() !== dates[i - 1].getFullYear()) {
                 topValues.push(
@@ -115,7 +114,7 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
             const date = state.ganttReducer.dates[i];
             const bottomValue = getLocaleMonth(date);
 
-            let uuid = crypto.randomUUID();
+            const uuid = crypto.randomUUID();
 
             bottomValues.push(
                 <Section

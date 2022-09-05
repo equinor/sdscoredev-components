@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
+import { DispatchContext, StateContext } from 'components/Gantt/GanttStore';
 import { EventOption, ViewMode } from '../types/public-types';
 import { Arrow } from './Arrow';
 import { handleTaskBySVGMouseEvent } from '../helpers/bar-helper';
 import { isKeyboardEvent } from '../helpers/other-helper';
 import { InternalBar } from './Bar';
 import { BarMoveAction, GanttContentMoveAction, GanttEvent } from '../types/gantt-task-actions';
-import { DispatchContext, StateContext } from 'components/Gantt/GanttStore';
 import { TaskBar } from '../bars/types';
 import { Nugget } from './Nugget';
 
@@ -61,7 +61,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
     }, [svg.current]);
     // create xStep
     useEffect(() => {
-        const tickWidth = state.gridReducer.tickWidth;
+        const { tickWidth } = state.gridReducer;
         const dateDelta =
             state.ganttReducer.dates[1].getTime() -
             state.ganttReducer.dates[0].getTime() -
@@ -216,7 +216,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
                             setGanttEvent({ action, changedTask: task });
                         }
                     } catch (error) {
-                        console.error('Error on Delete. ' + error);
+                        console.error(`Error on Delete. ${error}`);
                     }
                 }
             }
@@ -235,8 +235,10 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
                 setGanttEvent({ action: '' });
             }
         } else if (action === 'dblclick') {
+            // eslint-disable-next-line no-unused-expressions
             !!onDoubleClick && onDoubleClick(task);
         } else if (action === 'click') {
+            // eslint-disable-next-line no-unused-expressions
             !!onClick && onClick(task);
         }
         // Change task event start

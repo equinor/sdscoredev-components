@@ -31,6 +31,7 @@ export const MilestoneBar: React.FC<Bar<MilestoneBarProps>> = (props) => {
                 transform={transform}
                 style={{ userSelect: 'none' }}
                 onMouseDown={(e) => {
+                    // eslint-disable-next-line no-unused-expressions
                     isDateChangeable && onEventStart('move', taskBar, e);
                 }}
             />

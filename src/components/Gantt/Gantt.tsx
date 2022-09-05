@@ -1,12 +1,9 @@
-import { Children, useState } from 'react';
+import React, { Children, useState } from 'react';
 import { EventOption, StylingOption, ViewMode } from './types/public-types';
-import React from 'react';
 import { GanttStore } from './GanttStore';
 import { ganttReducer } from './reducers/ganttReducer';
 import { GanttData } from './GanttData';
 import { Task } from './bars/types';
-import styled from 'styled-components';
-import { TaskList } from './plugins/TaskList/TaskList';
 
 export type GanttProps = {
     tasks: Task[];

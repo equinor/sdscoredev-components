@@ -1,6 +1,6 @@
-import { forwardRef, useContext } from 'react';
+import React, { useState, useRef, useEffect, useMemo, forwardRef, useContext } from 'react';
+import styled from 'styled-components';
 import { EventOption, StylingOption, ViewMode } from './types/public-types';
-import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { removeHiddenTasks, sortTasks } from './helpers/other-helper';
 import { ganttDateRange, isToday, seedDates } from './helpers/date-helper';
 import { convertToBars, convertToNuggets, dateToProgress } from './helpers/bar-helper';
@@ -11,7 +11,6 @@ import { TaskList, TaskListProps } from './plugins/TaskList/TaskList';
 import { Grid } from './plugins/Grid/Grid';
 import { Task, TaskBar } from './bars/types';
 import { Calendar, CalendarProps } from './plugins/Calendar/Calendar';
-import styled from 'styled-components';
 import { GanttProps } from './Gantt';
 import { Tooltip } from './plugins/Tooltip/Tooltip';
 
@@ -113,8 +112,6 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
 
     const [ignoreScrollEvent, setIgnoreScrollEvent] = useState(false);
 
-    const svgWidth = state.ganttReducer.dates.length * state.gridReducer.tickWidth;
-
     /**
      * Removes hidden tasks and maps some props
      *
@@ -127,7 +124,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
 
         filteredTasks = filteredTasks.map((t: any) => {
             if (t.type && t.type[1] && t.type[1].sections && !t.type[1].sectionXPositions) {
-                const sections = t.type[1].sections;
+                const { sections } = t.type[1];
                 const type = [...t.type];
                 type[1].sectionXPositions = sections?.map((d: Date) => dateToProgress(d, [t.start, t.end])) || [];
                 type[1].sections = sections;
@@ -150,7 +147,8 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
      * @returns
      */
     function roundUp(num: number, precision: number) {
-        precision = Math.pow(10, precision);
+        // eslint-disable-next-line no-param-reassign
+        precision = 10 ** precision;
         return Math.ceil(num * precision) / precision;
     }
 
@@ -162,7 +160,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
      * @returns
      */
     function monthDiff(d1: Date, d2: Date) {
-        var months;
+        let months;
         months = (d2.getFullYear() - d1.getFullYear()) * 12;
         months -= d1.getMonth();
         months += d2.getMonth();
@@ -248,7 +246,8 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
      * Generate bars and dates and update state
      */
     useEffect(() => {
-        if (props.tasks.length) {
+        if (props.tasks && props.tasks.length) {
+            console.log(1111);
             const filteredTasks = filterTasks(props.tasks);
 
             /** Main functions to draw grid and calendar */
@@ -279,7 +278,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
      */
     useEffect(() => {
         if ((viewDate && !currentViewDate) || (viewDate && currentViewDate?.valueOf() !== viewDate.valueOf())) {
-            const dates = state.ganttReducer.dates;
+            const { dates } = state.ganttReducer;
             const index = dates.findIndex(
                 (d: any, i: any) =>
                     viewDate.valueOf() >= d.valueOf() &&
@@ -351,6 +350,10 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
      * Sets scroll positions of containers
      */
     useEffect(() => {
+        const svgWidth =
+            state.gridReducer && state.gridReducer.tickWidth
+                ? state.ganttReducer.dates.length * state.gridReducer.tickWidth
+                : 0;
         const handleWheel = (event: WheelEvent) => {
             if (event.shiftKey || event.deltaX) {
                 const scrollMove = event.deltaX ? event.deltaX : event.deltaY;
@@ -363,7 +366,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
                 dispatch({ type: 'SET_SCROLL_X', payload: newScrollX });
                 event.preventDefault();
             } else if (ganttHeight) {
-                let newScrollY = scrollY + event.deltaY;
+                let newScrollY = state.gridReducer.scrollY + event.deltaY;
                 if (newScrollY < 0) {
                     newScrollY = 0;
                 } else if (newScrollY > ganttFullHeight - ganttHeight) {
@@ -393,21 +396,13 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         return () => {
             wrapperRef.current?.removeEventListener('wheel', handleWheel);
         };
-    }, [
-        wrapperRef,
-        state.gridReducer.scrollY,
-        state.gridReducer.scrollX,
-        ganttHeight,
-        // state.gridReducer.svgWidth,
-        ganttFullHeight,
-    ]);
+    }, [wrapperRef, state.gridReducer, state.ganttReducer, ganttHeight, ganttFullHeight]);
 
     /**
      * Set SVG width when dates or tickWidth updates
      */
     useEffect(() => {
-        const tickWidth = state.gridReducer.tickWidth;
-        // dispatch('SET_TICK_WIDTH', { payload: { tickWidth } });
+        const tickWidth = state.gridReducer && state.gridReducer.tickWidth ? state.gridReducer.tickWidth : 0;
 
         if (init.current < 5 && state.ganttReducer.dates && verticalGanttContainerRef.current) {
             for (let i = 0; i < state.ganttReducer.dates.length; i++) {
@@ -421,7 +416,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
                 }
             }
         }
-    }, [state.ganttReducer.dates, viewMode]);
+    }, [state.ganttReducer.dates, state.gridReducer, viewMode]);
 
     // const handleScrollY = (event: SyntheticEvent<HTMLDivElement>) => {
     //     if (scrollY !== event.currentTarget.scrollTop && !ignoreScrollEvent) {
@@ -445,12 +440,14 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
      * Handles arrow keys events and transform it to new scroll
      */
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        const svgWidth = state.ganttReducer.dates.length * state.gridReducer.tickWidth;
         event.preventDefault();
         let newScrollY = state.gridReducer.scrollY;
         let newScrollX = state.gridReducer.scrollX;
-        const dates = state.ganttReducer.dates;
+        const { dates } = state.ganttReducer;
         const tickWidth = getTickWidth(dates);
         let isX = true;
+        // eslint-disable-next-line default-case
         switch (event.key) {
             case 'Down': // IE/Edge specific value
             case 'ArrowDown':
@@ -547,7 +544,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         bars,
         rowHeight,
         rowWidth: listCellWidth,
-        scrollY,
+        scrollY: state.gridReducer.scrollY,
         ganttHeight,
         selectedTask,
         taskListRef,
@@ -555,7 +552,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         onExpanderClick: handleExpanderClick,
     };
 
-    if (!bars.length || !state.ganttReducer.dates.length) return <></>;
+    if (!bars.length || !state.ganttReducer.dates.length || !state.gridReducer?.tickWidth) return <></>;
 
     return (
         <>

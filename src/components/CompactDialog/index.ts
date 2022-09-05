@@ -1,11 +1,11 @@
-import { CompactDialog as CompactDialogBase, CompactDialogProps, CompactDialogRef } from './CompactDialog';
+import { CompactDialog as BaseCompactDialog, CompactDialogProps, CompactDialogRef } from './CompactDialog';
 import { CompactDialogAction } from './CompactDialogAction';
 
-type CompactDialogCompound = typeof CompactDialogBase & {
+type CompactDialogCompound = typeof BaseCompactDialog & {
     Actions: typeof CompactDialogAction;
 };
 
-const CompactDialog = CompactDialogBase as CompactDialogCompound;
+const CompactDialog = BaseCompactDialog as CompactDialogCompound;
 
 CompactDialog.Actions = CompactDialogAction;
 

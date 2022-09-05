@@ -1,4 +1,3 @@
-import { ProgressBar, ProgressBarProps } from './ProgressBar';
 import {
     dateByX,
     endByX,
@@ -10,6 +9,7 @@ import {
     taskYCoordinate,
 } from 'components/Gantt/helpers/bar-helper';
 import { BarMoveAction } from 'components/Gantt/types/gantt-task-actions';
+import { ProgressBar, ProgressBarProps } from './ProgressBar';
 import { Task, TaskBar, TaskBarMouseEvent, TaskConvertOptions } from '../types';
 
 export type ProgressTaskBar = {
@@ -30,9 +30,9 @@ export const convert = (task: Task<ProgressBarProps>, options: TaskConvertOption
     const { index = 0, dates, tickWidth, rowHeight, taskHeight, handleWidth } = options;
     const { progress } = task.type[1];
 
-    let x1 = taskXCoordinate(task.start, dates, tickWidth);
-    let x2 = taskXCoordinate(task.end, dates, tickWidth);
-    let y = taskYCoordinate(index, rowHeight, taskHeight);
+    const x1 = taskXCoordinate(task.start, dates, tickWidth);
+    const x2 = taskXCoordinate(task.end, dates, tickWidth);
+    const y = taskYCoordinate(index, rowHeight, taskHeight);
 
     return {
         ...task,
@@ -60,6 +60,7 @@ const handleMouseEvents = (
 
     let isChanged = false;
 
+    // eslint-disable-next-line default-case
     switch (action) {
         case 'progress':
             changedTask.progress = progressByX(svgX, selectedTask);

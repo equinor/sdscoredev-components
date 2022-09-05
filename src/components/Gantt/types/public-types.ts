@@ -1,3 +1,4 @@
+import React from 'react';
 import { Task } from '../bars/types';
 
 export const LOCALE = 'no-NO';

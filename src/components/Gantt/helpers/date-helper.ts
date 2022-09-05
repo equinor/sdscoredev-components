@@ -90,10 +90,11 @@ export const startOfDate = (date: Date, scale: DateHelperScales) => {
  * @returns [startDate, endDate]
  */
 export const ganttDateRange = (tasks: Task[], viewMode: ViewMode) => {
-    let start: Date = tasks[0].start;
+    let { start } = tasks[0];
     let end: Date = tasks[0].start;
 
-    for (let task of tasks) {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const task of tasks) {
         if (task.start < start) {
             start = task.start;
         }
@@ -115,6 +116,7 @@ export const ganttDateRange = (tasks: Task[], viewMode: ViewMode) => {
         }
     }
 
+    // eslint-disable-next-line default-case
     switch (viewMode) {
         case ViewMode.Year:
             start = addToDate(start, -1, 'year');
@@ -178,6 +180,7 @@ export const seedDates = (startDate: Date, endDate: Date, viewMode: ViewMode) =>
     let currentDate: Date = new Date(startDate);
     const dates: Date[] = [currentDate];
     while (currentDate < endDate) {
+        // eslint-disable-next-line default-case
         switch (viewMode) {
             case ViewMode.Year:
                 currentDate = addToDate(currentDate, 1, 'year');
@@ -251,9 +254,8 @@ export const getWeekNumberISO8601 = (date: Date) => {
 
     if (weekNumber.length === 1) {
         return `0${weekNumber}`;
-    } else {
-        return weekNumber;
     }
+    return weekNumber;
 };
 
 export const getDaysInMonth = (month: number, year: number) => {

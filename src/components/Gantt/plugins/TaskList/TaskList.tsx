@@ -46,7 +46,7 @@ export const TaskList: React.FC<TaskListProps> = (props) => {
         bars,
         rowHeight,
         rowWidth,
-        selectedTaskId: selectedTaskId,
+        selectedTaskId,
         setSelectedTask,
         onExpanderClick,
         render,

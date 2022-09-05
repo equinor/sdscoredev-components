@@ -9,10 +9,7 @@ type ArrowProps = {
     arrowIndent: number;
 };
 export const Arrow: React.FC<ArrowProps> = ({ taskFrom, taskTo, rowHeight, taskHeight, arrowIndent }) => {
-    let path: string;
-    let trianglePoints: string;
-
-    [path, trianglePoints] = drownPathAndTriangle(taskFrom, taskTo, rowHeight, taskHeight, arrowIndent);
+    const [path, trianglePoints] = drownPathAndTriangle(taskFrom, taskTo, rowHeight, taskHeight, arrowIndent);
 
     return (
         <g className="arrow">
