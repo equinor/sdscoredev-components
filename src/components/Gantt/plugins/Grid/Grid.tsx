@@ -42,8 +42,6 @@ export const Grid = forwardRef<GridRef, InternalGridProps>((props: InternalGridP
     const canvas = useRef<HTMLCanvasElement>(null);
     const dispatch: any = useContext(DispatchContext);
 
-    const { tickWidth } = state.gridReducer;
-
     const renderGrid = () => {
         console.log('renderGrid');
     };
@@ -52,7 +50,7 @@ export const Grid = forwardRef<GridRef, InternalGridProps>((props: InternalGridP
         handleResize: () => renderGrid(),
     }));
 
-    const drawTicks = (ctx: CanvasRenderingContext2D, w: number, h: number): void => {
+    const drawTicks = (ctx: CanvasRenderingContext2D, w: number, h: number, tickWidth: number): void => {
         let x = 0;
         for (let i = 0; i < state.ganttReducer.dates.length; i++) {
             ctx.beginPath();
@@ -101,30 +99,57 @@ export const Grid = forwardRef<GridRef, InternalGridProps>((props: InternalGridP
     //     // dispatch({ type: 'SET_SCROLL_X', payload: tickX - tickWidth });
     // }
 
-    if (canvas.current?.getContext && viewMode && state.ganttReducer.dates.length) {
-        const width = state.ganttReducer.dates.length * state.ganttReducer.viewModeTickWidth[viewMode.toLowerCase()];
+    useEffect(() => {
+        if (state.gridReducer.tickWidth && canvas.current?.getContext && viewMode && state.ganttReducer.dates.length) {
+            const width = state.ganttReducer.dates.length * state.gridReducer.tickWidth;
 
-        if (width > 65200) {
-            // console.warn('Canvas width is limited to 65200. Your canvas width is: ' + width);
-            canvas.current.width = 65200;
-        } else {
-            canvas.current.width = width;
+            if (width > 65200) {
+                // console.warn('Canvas width is limited to 65200. Your canvas width is: ' + width);
+                canvas.current.width = 65200;
+            } else {
+                canvas.current.width = width;
+            }
+
+            const ctx = canvas.current.getContext('2d');
+
+            if (ctx) {
+                const w = canvas.current.width;
+                const h = barCount * rowHeight;
+
+                ctx.rect(0, 0, w, h);
+                ctx.fillStyle = '#ffffff';
+                ctx.fill();
+
+                drawTicks(ctx, w, h, state.gridReducer.tickWidth);
+                drawRowLines(ctx, w, h);
+            }
         }
+    }, [state.gridReducer.tickWidth, viewMode, state.ganttReducer.dates.length]);
 
-        const ctx = canvas.current.getContext('2d');
+    // if (canvas.current?.getContext && viewMode && state.ganttReducer.dates.length) {
+    //     const width = state.ganttReducer.dates.length * state.ganttReducer.viewModeTickWidth[viewMode.toLowerCase()];
 
-        if (ctx) {
-            const w = canvas.current.width;
-            const h = barCount * rowHeight;
+    //     if (width > 65200) {
+    //         // console.warn('Canvas width is limited to 65200. Your canvas width is: ' + width);
+    //         canvas.current.width = 65200;
+    //     } else {
+    //         canvas.current.width = width;
+    //     }
 
-            ctx.rect(0, 0, w, h);
-            ctx.fillStyle = '#ffffff';
-            ctx.fill();
+    //     const ctx = canvas.current.getContext('2d');
 
-            drawTicks(ctx, w, h);
-            drawRowLines(ctx, w, h);
-        }
-    }
+    //     if (ctx) {
+    //         const w = canvas.current.width;
+    //         const h = barCount * rowHeight;
+
+    //         ctx.rect(0, 0, w, h);
+    //         ctx.fillStyle = '#ffffff';
+    //         ctx.fill();
+
+    //         drawTicks(ctx, w, h);
+    //         drawRowLines(ctx, w, h);
+    //     }
+    // }
 
     return (
         <canvas

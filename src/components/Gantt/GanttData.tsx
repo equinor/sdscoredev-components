@@ -13,6 +13,7 @@ import { Task, TaskBar } from './bars/types';
 import { Calendar, CalendarProps } from './plugins/Calendar/Calendar';
 import { GanttProps } from './Gantt';
 import { Tooltip } from './plugins/Tooltip/Tooltip';
+import { getTickIndex, monthDiff, roundUp } from './internal/functions';
 
 const Wrapper = styled.div<{ width: number }>`
     overflow: visible;
@@ -140,34 +141,6 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
     };
 
     /**
-     * Round up a number
-     *
-     * @param num
-     * @param precision
-     * @returns
-     */
-    function roundUp(num: number, precision: number) {
-        // eslint-disable-next-line no-param-reassign
-        precision = 10 ** precision;
-        return Math.ceil(num * precision) / precision;
-    }
-
-    /**
-     * Provide amount of months between two dates
-     *
-     * @param d1
-     * @param d2
-     * @returns
-     */
-    function monthDiff(d1: Date, d2: Date) {
-        let months;
-        months = (d2.getFullYear() - d1.getFullYear()) * 12;
-        months -= d1.getMonth();
-        months += d2.getMonth();
-        return months <= 0 ? 0 : months;
-    }
-
-    /**
      * Provide tick width based on viewMode
      *
      * @param dates
@@ -203,12 +176,12 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
 
             if (viewMode === ViewMode.HalfYear && focus) {
                 const months = monthDiff(new Date(focus[0]), new Date(focus[1]));
-                const tickCount = roundUp(months / 2, 0);
+                const tickCount = roundUp(months / 6, 0);
                 tickWidth = wrapperWidth / tickCount;
             }
 
             if (viewMode === ViewMode.Year && focus) {
-                const tickCount = new Date(focus[1]).getFullYear() - new Date(focus[0]).getFullYear() + 1;
+                const tickCount = new Date(focus[1]).getFullYear() - new Date(focus[0]).getFullYear() + 2;
                 tickWidth = wrapperWidth / tickCount;
             }
 
@@ -227,27 +200,10 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
     };
 
     /**
-     * Provide tick index based on the focued date
-     *
-     * @param focusDate
-     * @param dates
-     * @returns number
-     */
-    const getTickIndex = (focusDate: Date, dates: Array<Date>): number => {
-        return dates.findIndex(
-            (date: any, i: any) =>
-                focusDate.valueOf() >= date.valueOf() &&
-                i + 1 !== dates.length &&
-                focusDate.valueOf() < dates[i + 1].valueOf(),
-        );
-    };
-
-    /**
      * Generate bars and dates and update state
      */
     useEffect(() => {
         if (props.tasks && props.tasks.length) {
-            console.log(1111);
             const filteredTasks = filterTasks(props.tasks);
 
             /** Main functions to draw grid and calendar */
