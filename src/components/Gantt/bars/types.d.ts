@@ -7,16 +7,52 @@ import { GanttContentMoveAction } from '../types/gantt-task-actions';
  * This will be mapped into a `TaskBar` that contain technical properties aswell.
  */
 export type Task<T = {}> = {
+    /**
+     * Unique id of the task.
+     * This will need to be set so that other tasks can point to this task with the `dependencies` property.
+     */
     id: string;
-    type: any; // [Bar<T>, T];
-    nugget: any; // [Bar<T>, T];
+    /**
+     * Definition for the type of bar this task will be displayed with.
+     * Must be set, and most often the `DefaultBar` is to be prefered.
+     */
+    type: [Bar<T>, T];
+    /**
+     * An extra bar item to be displayed in the row. Can be more or less anything
+     */
+    nugget: any;
+    /**
+     * Name for the action, will be displayed inside the bar. Temporarily not in use
+     */
     name: string;
+    /**
+     * Start date for task
+     */
     start: Date;
+    /**
+     * End date for task
+     */
     end: Date;
+    /**
+     * Set to true to hide the task and it's bar
+     */
     isDisabled?: boolean;
+    /**
+     * Not yet in use
+     */
     project?: string;
+    /**
+     * This is where the connections are defined.
+     * Add an id to this array to make this task dependent
+     */
     dependencies?: string[];
+    /**
+     * Hides all dependencies or children
+     */
     hideChildren?: boolean;
+    /**
+     * Order of task display.
+     */
     displayOrder?: number;
 };
 
