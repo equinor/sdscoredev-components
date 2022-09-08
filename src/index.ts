@@ -9,3 +9,5 @@ export * from './components/Dialog';
 export * from './components/Form';
 export * from './components/Tooltip';
 export * from './components/Gantt';
+
+export { ViewMode } from './types';

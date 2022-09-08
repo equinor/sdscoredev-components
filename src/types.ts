@@ -1,3 +1,5 @@
+import React from 'react';
+
 export type GeneralStoreProps = {
     reducers: any;
     components: (React.ReactChild | React.ReactFragment | React.ReactPortal)[];
@@ -20,3 +22,15 @@ export type Action = {
     type: any;
     payload?: any;
 };
+
+export enum ViewMode {
+    Hour = 256,
+    QuarterDay = 128,
+    HalfDay = 64,
+    Day = 32,
+    Week = 16,
+    Month = 4,
+    QuarterYear = 2,
+    HalfYear = 1,
+    Year = 0,
+}

@@ -16,7 +16,7 @@ export type Task<T = {}> = {
      * Definition for the type of bar this task will be displayed with.
      * Must be set, and most often the `DefaultBar` is to be prefered.
      */
-    type: [Bar<T>, T];
+    type: any; // [Bar<T>, T];
     /**
      * An extra bar item to be displayed in the row. Can be more or less anything
      */

@@ -53,7 +53,7 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
     };
 
     const cancel = () => {
-        setForm((state: any) => ({ ...state, ...formData }));
+        setForm(formData);
         dispatch({ type: 'SET_ERRORS', payload: undefined });
     };
 
