@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useMemo, forwardRef, useContext } from 'react';
 import styled from 'styled-components';
-import { EventOption, StylingOption, ViewMode } from './types/public-types';
+import { ViewMode } from 'types';
+import { EventOption, StylingOption } from './types/public-types';
 import { removeHiddenTasks, sortTasks } from './helpers/other-helper';
 import { ganttDateRange, isToday, seedDates } from './helpers/date-helper';
 import { convertToBars, convertToNuggets, dateToProgress } from './helpers/bar-helper';
@@ -147,7 +148,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
      * @returns number
      */
     const getTickWidth = (dates: Array<Date>) => {
-        const minWidth = state.ganttReducer.viewModeTickWidth[viewMode.toLowerCase()];
+        const minWidth = state.ganttReducer.viewModeTickWidth[viewMode];
         if (verticalGanttContainerRef.current) {
             const wrapperWidth = verticalGanttContainerRef.current.offsetWidth;
             let tickWidth = minWidth;

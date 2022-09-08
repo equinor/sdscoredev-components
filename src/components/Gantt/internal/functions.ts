@@ -1,5 +1,4 @@
 import React from 'react';
-import { ViewMode } from '../types/public-types';
 
 /**
  * Round up a number

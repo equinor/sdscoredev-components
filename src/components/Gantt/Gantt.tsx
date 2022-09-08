@@ -1,5 +1,6 @@
 import React, { Children, useState } from 'react';
-import { EventOption, StylingOption, ViewMode } from './types/public-types';
+import { ViewMode } from 'types';
+import { EventOption, StylingOption } from './types/public-types';
 import { GanttStore } from './GanttStore';
 import { ganttReducer } from './reducers/ganttReducer';
 import { GanttData } from './GanttData';
@@ -13,7 +14,7 @@ export type GanttProps = {
      * Which way to split the calendar into ticks.
      * When changed, the grid and calendar redraw.
      */
-    viewMode?: ViewMode;
+    viewMode: ViewMode;
     viewDate?: Date;
     /**
      * Object containing additional reducers (plugins) to be used. They will be handled as reducer slices

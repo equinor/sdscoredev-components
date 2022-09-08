@@ -2,6 +2,7 @@
 import { StateContext } from 'components/Gantt/GanttStore';
 import React, { ReactChild, useContext } from 'react';
 import styled from 'styled-components';
+import { ViewMode } from 'types';
 
 import {
     getCachedDateTimeFormat,
@@ -10,7 +11,7 @@ import {
     getLocaleMonth,
     getWeekNumberISO8601,
 } from '../../helpers/date-helper';
-import { LOCALE, ViewMode } from '../../types/public-types';
+import { LOCALE } from '../../types/public-types';
 import { Section } from './Section';
 
 export const CalendarBottomText = styled.text`

@@ -20,7 +20,7 @@ Gantt.TaskList.displayName = 'Gantt.TaskList';
 Gantt.Tooltip.displayName = 'Gantt.Tooltip';
 
 export { Gantt };
-export { ViewMode } from './types/public-types';
+export { ViewMode } from 'types';
 export * from './bars/index';
 export * from './nuggets/index';
 export type { StylingOption, EventOption } from './types/public-types';

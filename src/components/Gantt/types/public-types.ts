@@ -3,17 +3,6 @@ import { Task } from '../bars/types';
 
 export const LOCALE = 'no-NO';
 
-export enum ViewMode {
-    Hour = 'Hour',
-    QuarterDay = 'Quarter Day',
-    HalfDay = 'Half Day',
-    Day = 'Day',
-    Week = 'Week',
-    Month = 'Month',
-    QuarterYear = 'QuarterYear',
-    HalfYear = 'HalfYear',
-    Year = 'Year',
-}
 export type TaskType = 'task' | 'milestone' | 'project' | 'action';
 
 export type EventOption = {

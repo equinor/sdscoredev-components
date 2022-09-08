@@ -1,7 +1,7 @@
 import { TaskBar } from 'components/Gantt/bars/types';
-import { ViewMode } from 'components/Gantt/types/public-types';
 import React, { forwardRef, useContext, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { ViewMode } from 'types';
 import { GridProps, GridRef } from '.';
 import { DispatchContext, StateContext } from '../../GanttStore';
 

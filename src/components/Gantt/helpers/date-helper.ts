@@ -1,5 +1,6 @@
+import { ViewMode } from 'types';
 import { Task } from '../bars/types';
-import { LOCALE, ViewMode } from '../types/public-types';
+import { LOCALE } from '../types/public-types';
 import DateTimeFormatOptions = Intl.DateTimeFormatOptions;
 import DateTimeFormat = Intl.DateTimeFormat;
 

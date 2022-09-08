@@ -24,11 +24,11 @@ export type Action = {
 };
 
 export enum ViewMode {
-    Hour = 256,
-    QuarterDay = 128,
-    HalfDay = 64,
-    Day = 32,
-    Week = 16,
+    Hour = 128,
+    QuarterDay = 64,
+    HalfDay = 32,
+    Day = 16,
+    Week = 8,
     Month = 4,
     QuarterYear = 2,
     HalfYear = 1,

@@ -1,4 +1,4 @@
-import { ViewMode } from '../types/public-types';
+import { ViewMode } from 'types';
 
 export const SET_DATES = 'SET_DATES';
 export const SET_VIEW_MODE = 'SET_VIEW_MODE';
@@ -15,15 +15,15 @@ export const initialState: GanttState = {
     headerHeight: 50,
     viewMode: null,
     viewModeTickWidth: {
-        hour: 30,
-        quarterday: 40,
-        halfday: 50,
-        day: 60,
-        week: 80,
-        month: 100,
-        quarteryear: 100,
-        halfyear: 100,
-        year: 100,
+        128: 30,
+        64: 40,
+        32: 50,
+        16: 60,
+        8: 80,
+        4: 100,
+        2: 100,
+        1: 100,
+        0: 100,
     },
 };
 

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { DispatchContext, StateContext } from 'components/Gantt/GanttStore';
-import { EventOption, ViewMode } from '../types/public-types';
+import { ViewMode } from 'types';
 import { Arrow } from './Arrow';
 import { handleTaskBySVGMouseEvent } from '../helpers/bar-helper';
 import { isKeyboardEvent } from '../helpers/other-helper';
@@ -8,6 +8,7 @@ import { InternalBar } from './Bar';
 import { BarMoveAction, GanttContentMoveAction, GanttEvent } from '../types/gantt-task-actions';
 import { TaskBar } from '../bars/types';
 import { Nugget } from './Nugget';
+import { EventOption } from '../types/public-types';
 
 export type TaskGanttContentProps = {
     bars: TaskBar[];
