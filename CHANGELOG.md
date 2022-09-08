@@ -1,3 +1,10 @@
+## [2.28.2](https://github.com/equinor/sdscoredev-components/compare/2.28.1...2.28.2) (2022-09-08)
+
+
+### Bug Fixes
+
+* form not cancel ([9a5395d](https://github.com/equinor/sdscoredev-components/commit/9a5395d3384f032a9ac086c770e33ee6dd991267))
+
 ## [2.28.1](https://github.com/equinor/sdscoredev-components/compare/2.28.0...2.28.1) (2022-09-05)
 
 
