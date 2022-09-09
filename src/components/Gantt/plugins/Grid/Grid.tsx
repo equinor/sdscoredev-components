@@ -42,6 +42,8 @@ export const Grid = forwardRef<GridRef, InternalGridProps>((props: InternalGridP
     const canvas = useRef<HTMLCanvasElement>(null);
     const dispatch: any = useContext(DispatchContext);
 
+    const { tickWidth } = state.gridReducer;
+
     const renderGrid = () => {
         console.log('renderGrid');
     };
@@ -100,8 +102,8 @@ export const Grid = forwardRef<GridRef, InternalGridProps>((props: InternalGridP
     // }
 
     useEffect(() => {
-        if (state.gridReducer.tickWidth && canvas.current?.getContext && viewMode && state.ganttReducer.dates.length) {
-            const width = state.ganttReducer.dates.length * state.gridReducer.tickWidth;
+        if (tickWidth && canvas.current?.getContext && state.ganttReducer.dates.length) {
+            const width = state.ganttReducer.dates.length * tickWidth;
 
             if (width > 65200) {
                 // console.warn('Canvas width is limited to 65200. Your canvas width is: ' + width);
@@ -120,11 +122,11 @@ export const Grid = forwardRef<GridRef, InternalGridProps>((props: InternalGridP
                 ctx.fillStyle = '#ffffff';
                 ctx.fill();
 
-                drawTicks(ctx, w, h, state.gridReducer.tickWidth);
+                drawTicks(ctx, w, h, tickWidth);
                 drawRowLines(ctx, w, h);
             }
         }
-    }, [state.gridReducer.tickWidth, viewMode, state.ganttReducer.dates.length]);
+    }, [tickWidth, viewMode, state.ganttReducer.dates.length]);
 
     // if (canvas.current?.getContext && viewMode && state.ganttReducer.dates.length) {
     //     const width = state.ganttReducer.dates.length * state.ganttReducer.viewModeTickWidth[viewMode.toLowerCase()];

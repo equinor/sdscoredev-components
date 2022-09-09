@@ -7,18 +7,20 @@ import packageJson from './package.json';
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
     input: 'src/index.ts',
+    sourcemap: false,
+    treeshake: false,
     output: [
         {
             format: 'cjs',
             file: packageJson.main,
             exports: 'named',
-            sourcemap: true,
+            sourcemap: false,
         },
         {
             format: 'es',
             file: packageJson.module,
             exports: 'named',
-            sourcemap: true,
+            sourcemap: false,
         },
     ],
     external: ['react', 'react-dom', 'styled-components', 'react-router-dom'],
@@ -29,6 +31,7 @@ export default {
         }),
         external(),
         typescript({
+            check: false,
             clean: true,
             exclude: ['node_modules'],
         }),
