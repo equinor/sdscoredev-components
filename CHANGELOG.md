@@ -1,3 +1,10 @@
+## [2.28.6](https://github.com/equinor/sdscoredev-components/compare/2.28.5...2.28.6) (2022-09-12)
+
+
+### Bug Fixes
+
+* add readonly capability ([a874e5c](https://github.com/equinor/sdscoredev-components/commit/a874e5c7a9d0ee9423e5ffd3c27f791dd2166422))
+
 ## [2.28.5](https://github.com/equinor/sdscoredev-components/compare/2.28.4...2.28.5) (2022-09-12)
 
 
