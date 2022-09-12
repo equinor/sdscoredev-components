@@ -6,7 +6,7 @@ export const GanttTable = styled.div`
     display: table;
     border-bottom: #e6e4e4 1px solid;
     border-top: #e6e4e4 1px solid;
-    border-left: #e6e4e4 1px solid;
+    /* border-left: #e6e4e4 1px solid; */
 `;
 export const GanttTableHeader = styled.div`
     display: table-row;

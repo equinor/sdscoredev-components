@@ -15,6 +15,9 @@ export type GanttProps = {
      * When changed, the grid and calendar redraw.
      */
     viewMode: ViewMode;
+    /**
+     * DEPRECATED: use `focus` instead.
+     */
     viewDate?: Date;
     /**
      * Object containing additional reducers (plugins) to be used. They will be handled as reducer slices
@@ -25,6 +28,10 @@ export type GanttProps = {
      * Most common reducer to add is `paginationReducer`. It will add `pageSize` and `pageIndex` as state params.
      */
     reducers?: any;
+    /**
+     * If set yo true, it will be impossible to change the data in the Gantt
+     */
+    readonly?: boolean;
 } & EventOption &
     StylingOption;
 

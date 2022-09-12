@@ -7,13 +7,14 @@ import { LOCALE } from '../../types/public-types';
 export const TaskListWrapper = styled.div`
     display: table;
     border-bottom: #ebeff2 1px solid;
-    border-left: #ebeff2 1px solid;
+    border-right: #ebeff2 1px solid;
     width: 100%;
 `;
 
 export const TaskListTableRow = styled.div`
     display: table-row;
     text-overflow: ellipsis;
+    border-right: #ebeff2 1px solid;
 
     /* Uncomment for stripes */
     /* &:nth-of-type(even) {
