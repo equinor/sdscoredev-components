@@ -1,3 +1,10 @@
+## [2.28.4](https://github.com/equinor/sdscoredev-components/compare/2.28.3...2.28.4) (2022-09-09)
+
+
+### Bug Fixes
+
+* grid not updating ([94c13f4](https://github.com/equinor/sdscoredev-components/commit/94c13f40b04391d1e06b384ca7dff8e6f5d279bb))
+
 ## [2.28.3](https://github.com/equinor/sdscoredev-components/compare/2.28.2...2.28.3) (2022-09-08)
 
 
