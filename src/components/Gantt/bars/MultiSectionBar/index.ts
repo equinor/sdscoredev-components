@@ -51,30 +51,24 @@ const handleMouseEvents = (
 ): { isChanged: boolean; changedTask: TaskBar<MultiSectionTaskBar> } => {
     const changedTask: TaskBar<MultiSectionTaskBar> = { ...selectedTask };
     let isChanged = false;
+
+    const getNewSectionDate = (index: number) => {
+        const delta = selectedTask.type[1].sectionXPositions[index];
+        const start = new Date(changedTask.start).getTime();
+        const end = new Date(changedTask.end).getTime();
+
+        return new Date((end - start) * delta + start);
+    };
+
     // eslint-disable-next-line default-case
     switch (action) {
         case 'start': {
             const newX1 = startByX(svgX, xStep, selectedTask);
             changedTask.x1 = newX1;
 
-            const getNewSectionDate = (index: number) => {
-                const oldX =
-                    (selectedTask.x2 - selectedTask.x1) * selectedTask.type[1].sectionXPositions[index] +
-                    selectedTask.x1;
-                const sectionX =
-                    (changedTask.x2 - changedTask.x1) * changedTask.type[1].sectionXPositions[index] + changedTask.x1;
-                return dateByX(sectionX, oldX, selectedTask.type[1].sections[index], xStep, timeStep);
-            };
-
             isChanged = changedTask.x1 !== selectedTask.x1;
             if (isChanged) {
                 changedTask.start = dateByX(newX1, selectedTask.x1, selectedTask.start, xStep, timeStep);
-
-                // const oldX =
-                //     (selectedTask.x2 - selectedTask.x1) * selectedTask.type[1].sectionXPositions[0] + selectedTask.x1;
-                // const sectionX =
-                //     (changedTask.x2 - changedTask.x1) * changedTask.type[1].sectionXPositions[0] + changedTask.x1;
-                // const newD = dateByX(sectionX, oldX, selectedTask.type[1].sections[0], xStep, timeStep);
 
                 for (let i = 0; i < changedTask.type[1].sections.length; i++) {
                     changedTask.type[1].dates[i] = getNewSectionDate(i);
@@ -85,9 +79,14 @@ const handleMouseEvents = (
         case 'end': {
             const newX2 = endByX(svgX, xStep, selectedTask);
             changedTask.x2 = newX2;
+
             isChanged = changedTask.x2 !== selectedTask.x2;
             if (isChanged) {
                 changedTask.end = dateByX(newX2, selectedTask.x2, selectedTask.end, xStep, timeStep);
+
+                for (let i = 0; i < changedTask.type[1].sections.length; i++) {
+                    changedTask.type[1].dates[i] = getNewSectionDate(i);
+                }
             }
             break;
         }
@@ -99,6 +98,10 @@ const handleMouseEvents = (
                 changedTask.end = dateByX(newMoveX2, selectedTask.x2, selectedTask.end, xStep, timeStep);
                 changedTask.x1 = newMoveX1;
                 changedTask.x2 = newMoveX2;
+
+                for (let i = 0; i < changedTask.type[1].sections.length; i++) {
+                    changedTask.type[1].dates[i] = getNewSectionDate(i);
+                }
             }
             break;
         }
