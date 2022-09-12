@@ -46,7 +46,7 @@ export const Gantt = (props: GanttProps) => {
 
     return (
         <GanttStore components={components} reducers={{ ganttReducer, ...reducers }}>
-            <GanttData {...props} tasks={tasks} onSetTasks={setTasks} plugins={{ grid, taskList, tooltip }} />
+            <GanttData {...props} tasks={props.tasks} onSetTasks={setTasks} plugins={{ grid, taskList, tooltip }} />
         </GanttStore>
     );
 };

@@ -67,6 +67,7 @@ export type Bar<T = {}> = {
     isDateChangeable: boolean;
     isDelete: boolean;
     isSelected: boolean;
+    readonly?: boolean;
     onEventStart: (
         action: GanttContentMoveAction,
         selectedTask: TaskBar,

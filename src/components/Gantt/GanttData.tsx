@@ -79,6 +79,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         onSelect,
         onSetTasks,
         onExpanderClick,
+        readonly,
     } = props;
 
     const state: any = useContext(StateContext);
@@ -495,6 +496,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         onDoubleClick,
         onClick,
         onDelete,
+        readonly,
     };
 
     const tableProps: TaskListProps = {

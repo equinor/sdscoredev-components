@@ -29,7 +29,7 @@ export type MultiSectionBarProps = {
 };
 
 export const MultiSectionBar: React.FC<Bar<MultiSectionTaskBar>> = (props) => {
-    const { taskBar, isDateChangeable = true, onEventStart, isSelected, sections, theme } = props;
+    const { taskBar, isDateChangeable = true, onEventStart, isSelected, sections, theme, readonly } = props;
 
     return (
         <Wrapper>
@@ -46,8 +46,10 @@ export const MultiSectionBar: React.FC<Bar<MultiSectionTaskBar>> = (props) => {
                     isDateChangeable && onEventStart('move', taskBar, e);
                 }}
             />
+
+            {/* Only show handle if date is changeable and readonly is not active */}
             <g className="handleGroup">
-                {isDateChangeable && <ResizeHandle task={taskBar} onEventStart={onEventStart} />}
+                {isDateChangeable && !readonly && <ResizeHandle task={taskBar} onEventStart={onEventStart} />}
             </g>
         </Wrapper>
     );

@@ -25,6 +25,7 @@ export type TaskGanttContentProps = {
     setFailedTask: (value: TaskBar | null) => void;
     setSelectedTask: (taskId: string) => void;
     setBars: (tasks: TaskBar[]) => void;
+    readonly?: boolean;
 } & EventOption;
 
 export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
@@ -47,6 +48,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
     onDoubleClick,
     onClick,
     onDelete,
+    readonly,
 }) => {
     const [xStep, setXStep] = useState(0);
     const [initEventX1Delta, setInitEventX1Delta] = useState(0);
@@ -100,7 +102,12 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
         return operationSuccess;
     };
 
+    /**
+     * If readonly is set, we disable all interactions
+     */
     useEffect(() => {
+        if (readonly) return;
+
         const handleMouseMove = async (event: MouseEvent) => {
             if (!ganttEvent.changedTask || !point || !svg?.current) return;
             event.preventDefault();
@@ -307,6 +314,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
                                 onEventStart={handleBarEventStart}
                                 key={task.id}
                                 isSelected={!!selectedTask && task.id === selectedTask.id}
+                                readonly={readonly}
                             />
                         );
                     })}
