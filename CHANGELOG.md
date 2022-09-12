@@ -1,3 +1,10 @@
+## [2.28.5](https://github.com/equinor/sdscoredev-components/compare/2.28.4...2.28.5) (2022-09-12)
+
+
+### Bug Fixes
+
+* declaration was removed ([5219234](https://github.com/equinor/sdscoredev-components/commit/521923417a5815a3652cc935c835b61bbd22d9ad))
+
 ## [2.28.4](https://github.com/equinor/sdscoredev-components/compare/2.28.3...2.28.4) (2022-09-09)
 
 
