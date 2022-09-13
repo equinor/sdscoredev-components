@@ -58,7 +58,7 @@ export const Grid = forwardRef<GridRef, InternalGridProps>((props: InternalGridP
             ctx.beginPath();
             ctx.moveTo(x + 0.5, 0);
             ctx.lineTo(x + 0.5, h);
-            ctx.strokeStyle = 'rgb(235, 239, 242)';
+            ctx.strokeStyle = 'rgb(220,220,220)';
             ctx.lineWidth = 1;
             ctx.stroke();
             x += tickWidth;
@@ -69,9 +69,9 @@ export const Grid = forwardRef<GridRef, InternalGridProps>((props: InternalGridP
         let y = 0;
         for (let i = 0; i < barCount; i++) {
             ctx.beginPath();
-            ctx.moveTo(0, y + 0.5);
-            ctx.lineTo(w, y + 0.5);
-            ctx.strokeStyle = 'rgb(235, 239, 242)';
+            ctx.moveTo(0, y - 0.5);
+            ctx.lineTo(w, y - 0.5);
+            ctx.strokeStyle = 'rgb(220,220,220)';
             ctx.lineWidth = 1;
             ctx.stroke();
             y += rowHeight;

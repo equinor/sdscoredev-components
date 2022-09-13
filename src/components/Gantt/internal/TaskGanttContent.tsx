@@ -273,7 +273,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
         <svg
             xmlns="http://www.w3.org/2000/svg"
             width={state.ganttReducer.dates.length * state.gridReducer.tickWidth}
-            height={50 * bars.length}
+            height={rowHeight * bars.length}
             ref={ganttSVGRef}
             style={{
                 fontFamily: 'Equinor',

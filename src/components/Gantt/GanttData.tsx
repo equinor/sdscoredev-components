@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useMemo, forwardRef, useContext } from 'react';
 import styled from 'styled-components';
 import { ViewMode } from 'types';
+import { DataTable } from 'components/DataTable';
 import { EventOption, StylingOption } from './types/public-types';
 import { removeHiddenTasks, sortTasks } from './helpers/other-helper';
 import { ganttDateRange, isToday, seedDates } from './helpers/date-helper';
@@ -27,13 +28,15 @@ const Wrapper = styled.div<{ width: number }>`
     position: relative;
 `;
 
-export const VerticalContainer = styled.div`
+export const Right = styled.div`
     overflow-x: scroll;
     font-size: 0;
     margin: 0;
     padding: 0;
     display: grid;
 `;
+
+const Left = styled.div``;
 
 export const HorizontalContainer = styled.div<{ height: number; width: number }>`
     margin: 0;
@@ -62,9 +65,9 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         plugins,
         focus,
         listCellWidth = '155px',
-        rowHeight = 50,
+        rowHeight = 48,
         ganttHeight = 0,
-        barFill = 60,
+        barFill = 50,
         handleWidth = 8,
         timeStep = 300000,
         arrowColor = 'grey',
@@ -513,6 +516,8 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
 
     if (!bars.length || !state.ganttReducer.dates.length || !state.gridReducer?.tickWidth) return <></>;
 
+    console.log(plugins.dataTable);
+
     return (
         <>
             <Wrapper
@@ -522,9 +527,12 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
                 ref={wrapperRef}
                 width={plugins.taskList?.props?.width}
             >
-                {plugins.taskList && listCellWidth && <TaskList {...tableProps} {...plugins.taskList.props} />}
+                <Left>
+                    {plugins.taskList && listCellWidth && <TaskList {...tableProps} {...plugins.taskList.props} />}
+                    {plugins.dataTable && listCellWidth && <DataTable {...plugins.dataTable.props} />}
+                </Left>
 
-                <VerticalContainer id="gantt-vertical-container" ref={verticalGanttContainerRef}>
+                <Right id="gantt-vertical-container" ref={verticalGanttContainerRef}>
                     <Calendar {...calendarProps} viewMode={viewMode} />
 
                     <HorizontalContainer
@@ -545,7 +553,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
 
                         <TaskGanttContent {...barProps} />
                     </HorizontalContainer>
-                </VerticalContainer>
+                </Right>
 
                 {plugins.tooltip && ganttEvent.action === 'mouseenter' && (
                     <Tooltip

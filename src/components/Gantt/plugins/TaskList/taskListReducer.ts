@@ -11,7 +11,7 @@ type TaskListState = {
 
 export const initialState: TaskListState = {
     svgWidth: 0,
-    rowHeight: 50,
+    rowHeight: 48,
     todayColor: '#eee',
 };
 

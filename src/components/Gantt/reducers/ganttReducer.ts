@@ -12,7 +12,7 @@ interface GanttState {
 
 export const initialState: GanttState = {
     dates: [],
-    headerHeight: 50,
+    headerHeight: 48,
     viewMode: null,
     viewModeTickWidth: {
         128: 30,

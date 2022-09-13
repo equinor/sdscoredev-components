@@ -17,7 +17,7 @@ type GridState = {
 };
 
 export const initialState: GridState = {
-    rowHeight: 50,
+    rowHeight: 48,
     todayColor: '#eee',
     scrollX: 0,
     scrollY: 0,

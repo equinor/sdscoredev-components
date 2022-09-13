@@ -43,10 +43,16 @@ export const Gantt = (props: GanttProps) => {
     const grid: any = components.find((x: JSX.Element) => x.type.displayName === 'Gantt.Grid');
     const tooltip: any = components.find((x: JSX.Element) => x.type.displayName === 'Gantt.Tooltip');
     const taskList: any = components.find((x: JSX.Element) => x.type.displayName === 'Gantt.TaskList');
+    const dataTable: any = components.find((x: JSX.Element) => x.type.displayName === 'Gantt.DataTable');
 
     return (
         <GanttStore components={components} reducers={{ ganttReducer, ...reducers }}>
-            <GanttData {...props} tasks={props.tasks} onSetTasks={setTasks} plugins={{ grid, taskList, tooltip }} />
+            <GanttData
+                {...props}
+                tasks={props.tasks}
+                onSetTasks={setTasks}
+                plugins={{ grid, taskList, tooltip, dataTable }}
+            />
         </GanttStore>
     );
 };

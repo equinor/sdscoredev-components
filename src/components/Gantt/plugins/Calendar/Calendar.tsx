@@ -26,9 +26,7 @@ export const CalendarBottomText = styled.text`
 `;
 
 export const CalendarHeader = styled.rect`
-    fill: #ffffff;
-    stroke: #e0e0e0;
-    stroke-width: 1.4;
+    fill: #f7f7f7;
 `;
 
 export type CalendarProps = {
@@ -354,6 +352,8 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
             style={{
                 fontFamily: 'Equinor',
                 fontSize: '12px',
+                borderBottom: '2px solid #dcdcdc',
+                fontWeight: 500,
             }}
         >
             <g className="calendar">

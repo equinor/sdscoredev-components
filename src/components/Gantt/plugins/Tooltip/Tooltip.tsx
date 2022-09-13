@@ -13,7 +13,7 @@ export type InternalTooltipProps = {
 export const Tooltip: React.FC<InternalTooltipProps> = (props) => {
     const { task, anchorRef, containerRef, taskListRef, render } = props;
     const tooltipRef = useRef<HTMLDivElement | null>(null);
-    const calendarHeight = 50; // TODO: Remove hardcoded
+    const calendarHeight = 48; // TODO: Remove hardcoded
     let y = 0;
     let x = 0;
 
