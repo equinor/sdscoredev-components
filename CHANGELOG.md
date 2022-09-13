@@ -1,3 +1,11 @@
+## [2.28.8](https://github.com/equinor/sdscoredev-components/compare/2.28.7...2.28.8) (2022-09-13)
+
+
+### Bug Fixes
+
+* add reference nugget ([261930a](https://github.com/equinor/sdscoredev-components/commit/261930aaa20cc5144deebfa763e074dc8eaa2248))
+* finish reference nugget ([5965898](https://github.com/equinor/sdscoredev-components/commit/5965898f7533d074c6e5faf07a4457962b1fa040))
+
 ## [2.28.7](https://github.com/equinor/sdscoredev-components/compare/2.28.6...2.28.7) (2022-09-12)
 
 
