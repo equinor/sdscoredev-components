@@ -20,7 +20,7 @@ export type Task<T = {}> = {
     /**
      * An extra bar item to be displayed in the row. Can be more or less anything
      */
-    nugget: any;
+    nuggets: any[];
     /**
      * Name for the action, will be displayed inside the bar. Temporarily not in use
      */
@@ -78,6 +78,7 @@ export type Bar<T = {}> = {
 export type NuggetProp = {
     taskBar: TaskBar;
     taskHeight: number;
+    nugget: any;
 };
 
 /**

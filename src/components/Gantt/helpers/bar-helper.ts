@@ -34,15 +34,20 @@ export const convertToNuggets = (
     taskHeight: number,
     handleWidth: number,
 ) => {
-    const nuggets = tasks.map((task, index) => {
-        if (task.nugget) {
-            return task.nugget[0].convert(task, { index, dates, tickWidth, rowHeight, taskHeight, handleWidth });
-        }
+    let result: any[] = [];
 
-        return null;
+    tasks.forEach((task, index) => {
+        if (task.nuggets) {
+            result = [
+                ...result,
+                ...task.nuggets.map((nugget) =>
+                    nugget[0].convert(task, nugget, { index, dates, tickWidth, rowHeight, taskHeight, handleWidth }),
+                ),
+            ];
+        }
     });
 
-    return nuggets.filter((x) => x !== null);
+    return result.filter((x) => x !== null);
 };
 
 export const dateToProgress = (xDate: Date, dates: Date[]) => {

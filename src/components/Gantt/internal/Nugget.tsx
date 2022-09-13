@@ -26,7 +26,7 @@ export const BarLabelOutside = styled.text`
 `;
 
 export const Nugget: React.FC<NuggetProp> = (props) => {
-    const { taskBar, taskHeight } = {
+    const { taskBar, taskHeight, nugget } = {
         ...props,
     };
 
@@ -35,7 +35,9 @@ export const Nugget: React.FC<NuggetProp> = (props) => {
     const [isTextInside, setIsTextInside] = useState(true);
 
     useEffect(() => {
-        setTaskItem(taskBar.nugget[0]({ ...props, ...taskBar.nugget[1] }));
+        if (nugget) {
+            setTaskItem(nugget[0]({ ...props, ...nugget[1] }));
+        }
     }, [taskBar]);
 
     // useEffect(() => {

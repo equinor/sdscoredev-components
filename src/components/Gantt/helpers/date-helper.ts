@@ -106,14 +106,17 @@ export const ganttDateRange = (tasks: Task[], viewMode: ViewMode) => {
         /**
          * Check to see if nugget is present and recalculate the dates
          */
-        if (task.nugget) {
-            if (task.nugget[1].date < start) {
-                start = task.nugget[1].date;
-            }
+        if (task.nuggets) {
+            // eslint-disable-next-line no-loop-func
+            task.nuggets.forEach((nugget) => {
+                if (nugget[1].start < start) {
+                    start = nugget[1].start;
+                }
 
-            if (task.nugget[1].date > end) {
-                end = task.nugget[1].date;
-            }
+                if (nugget[1].end > end) {
+                    end = nugget[1].end;
+                }
+            });
         }
     }
 

@@ -1,3 +1,4 @@
 import { MilestoneNugget } from './MilestoneNugget';
+import { ReferenceNugget } from './ReferenceNugget';
 
-export { MilestoneNugget };
+export { MilestoneNugget, ReferenceNugget };

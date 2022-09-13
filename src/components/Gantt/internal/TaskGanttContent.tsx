@@ -319,9 +319,11 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
                         );
                     })}
                 </g>
-                <g className="nugget">
-                    {nuggets.map((task: TaskBar) => {
-                        return <Nugget key={task.nugget[1].id} taskBar={task} taskHeight={taskHeight} />;
+                <g className="nuggets">
+                    {nuggets.map((task: any) => {
+                        return (
+                            <Nugget key={task.nugget.id} taskBar={task} nugget={task.nugget} taskHeight={taskHeight} />
+                        );
                     })}
                 </g>
             </g>
