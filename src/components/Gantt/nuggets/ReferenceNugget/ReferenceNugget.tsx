@@ -15,14 +15,18 @@ export const ReferenceNugget: React.FC<Bar<ReferenceNuggetProps>> = (props) => {
     return (
         <ReferenceWrapper tabIndex={0}>
             <rect
-                fill="#9d9d9d"
+                fill="#ffffff"
+                fillOpacity="0"
+                strokeDasharray="5,3"
+                stroke="#006269"
+                strokeWidth="1"
                 x={taskBar.x1 + 0.5}
                 width={taskBar.x2 - taskBar.x1}
-                y={taskBar.y}
+                y={taskBar.y + 0.5}
                 height={taskBar.height}
                 rx={2}
                 ry={2}
-                style={{ userSelect: 'none', strokeWidth: 1, stroke: '#3e3e3e' }}
+                style={{ userSelect: 'none' }}
             />
         </ReferenceWrapper>
     );

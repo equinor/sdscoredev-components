@@ -13,13 +13,10 @@ export const convert = (
 ): TaskBar<Nugget> => {
     const { index = 0, dates, tickWidth, rowHeight, taskHeight, handleWidth } = options;
 
-    const x = taskXCoordinate(nugget[1].start, dates, tickWidth);
+    const x1 = taskXCoordinate(nugget[1].start, dates, tickWidth);
+    const x2 = taskXCoordinate(nugget[1].end, dates, tickWidth);
     const y = taskYCoordinate(index, rowHeight, taskHeight);
 
-    const x1 = x - taskHeight * 0.5;
-    const x2 = x + taskHeight * 0.5;
-
-    const rotatedHeight = taskHeight / 1.414;
     return {
         ...task,
         end: task.start,
@@ -28,7 +25,7 @@ export const convert = (
         y,
         index,
         handleWidth,
-        height: rotatedHeight,
+        height: taskHeight,
         hideChildren: undefined,
         barChildren: [],
         nugget,

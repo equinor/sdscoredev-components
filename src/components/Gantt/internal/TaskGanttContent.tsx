@@ -301,6 +301,13 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
                         });
                     })}
                 </g>
+                <g className="nuggets">
+                    {nuggets.map((task: any) => {
+                        return (
+                            <Nugget key={task.nugget.id} taskBar={task} nugget={task.nugget} taskHeight={taskHeight} />
+                        );
+                    })}
+                </g>
                 <g className="bar">
                     {bars.map((task: TaskBar) => {
                         return (
@@ -316,13 +323,6 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
                                 isSelected={!!selectedTask && task.id === selectedTask.id}
                                 readonly={readonly}
                             />
-                        );
-                    })}
-                </g>
-                <g className="nuggets">
-                    {nuggets.map((task: any) => {
-                        return (
-                            <Nugget key={task.nugget.id} taskBar={task} nugget={task.nugget} taskHeight={taskHeight} />
                         );
                     })}
                 </g>
