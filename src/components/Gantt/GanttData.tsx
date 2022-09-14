@@ -132,7 +132,8 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
             if (t.type && t.type[1] && t.type[1].sections && !t.type[1].sectionXPositions) {
                 const { sections } = t.type[1];
                 const type = [...t.type];
-                type[1].sectionXPositions = sections?.map((d: Date) => dateToProgress(d, [t.start, t.end])) || [];
+                type[1].sectionXPositions =
+                    sections?.map((d: Date) => (d ? dateToProgress(d, [t.start, t.end]) : null)) || [];
                 type[1].sections = sections;
                 type[1].dates = [];
 
@@ -282,7 +283,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
     useEffect(() => {
         const { changedTask, action } = ganttEvent;
 
-        if (changedTask) {
+        if (changedTask && !readonly) {
             if (action === 'delete') {
                 setGanttEvent({ action: '' });
 
@@ -292,7 +293,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
                 recalculateBars(changedTask);
             }
         }
-    }, [ganttEvent, bars]);
+    }, [ganttEvent, bars, readonly]);
 
     /**
      * Listens for failed task
@@ -509,14 +510,11 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         scrollY: state.gridReducer.scrollY,
         ganttHeight,
         selectedTask,
-        taskListRef,
         setSelectedTask: handleSelectedTask,
         onExpanderClick: handleExpanderClick,
     };
 
     if (!bars.length || !state.ganttReducer.dates.length || !state.gridReducer?.tickWidth) return <></>;
-
-    console.log(plugins.dataTable);
 
     return (
         <>
@@ -527,7 +525,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
                 ref={wrapperRef}
                 width={plugins.taskList?.props?.width}
             >
-                <Left>
+                <Left ref={taskListRef}>
                     {plugins.taskList && listCellWidth && <TaskList {...tableProps} {...plugins.taskList.props} />}
                     {plugins.dataTable && listCellWidth && <DataTable {...plugins.dataTable.props} />}
                 </Left>

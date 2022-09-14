@@ -10,7 +10,7 @@ export const MilestoneWrapper = styled.g`
 export type MilestoneBarProps = {};
 
 export const MilestoneBar: React.FC<Bar<MilestoneBarProps>> = (props) => {
-    const { taskBar, isDateChangeable = true, onEventStart, isSelected } = props;
+    const { taskBar, isDateChangeable = true, onEventStart, isSelected, readonly } = props;
 
     const transform = `rotate(45 ${taskBar.x1 + taskBar.height * 0.356} 
     ${taskBar.y + taskBar.height * 0.85})`;
@@ -32,7 +32,7 @@ export const MilestoneBar: React.FC<Bar<MilestoneBarProps>> = (props) => {
                 style={{ userSelect: 'none' }}
                 onMouseDown={(e) => {
                     // eslint-disable-next-line no-unused-expressions
-                    isDateChangeable && onEventStart('move', taskBar, e);
+                    isDateChangeable && !readonly && onEventStart('move', taskBar, e);
                 }}
             />
         </MilestoneWrapper>

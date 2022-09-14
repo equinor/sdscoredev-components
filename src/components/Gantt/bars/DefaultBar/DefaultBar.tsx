@@ -31,7 +31,7 @@ export const ProgressHandle = styled.polygon`
 export type DefaultBarProps = {};
 
 export const DefaultBar: React.FC<Bar<DefaultBarProps>> = (props) => {
-    const { taskBar, isDateChangeable = true, onEventStart, isSelected } = props;
+    const { taskBar, isDateChangeable = true, onEventStart, isSelected, readonly } = props;
     const handleHeight = taskBar.height - 2;
 
     return (
@@ -44,7 +44,7 @@ export const DefaultBar: React.FC<Bar<DefaultBarProps>> = (props) => {
                 isSelected={isSelected}
                 onMouseDown={(e) => {
                     // eslint-disable-next-line no-unused-expressions
-                    isDateChangeable && onEventStart('move', taskBar, e);
+                    isDateChangeable && !readonly && onEventStart('move', taskBar, e);
                 }}
             />
             <g className="handleGroup">

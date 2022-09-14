@@ -39,7 +39,7 @@ export type ProgressBarProps = {
 };
 
 export const ProgressBar: React.FC<Bar<ProgressTaskBar>> = (props) => {
-    const { taskBar, isProgressChangeable, isDateChangeable, onEventStart, isSelected } = props;
+    const { taskBar, isProgressChangeable, isDateChangeable, onEventStart, isSelected, readonly } = props;
     const progressPoint = getProgressPoint(taskBar.progressWidth + taskBar.progressX, taskBar.y, taskBar.height);
     const handleHeight = taskBar.height - 2;
 
@@ -55,7 +55,7 @@ export const ProgressBar: React.FC<Bar<ProgressTaskBar>> = (props) => {
                 isSelected={isSelected}
                 onMouseDown={(e) => {
                     // eslint-disable-next-line no-unused-expressions
-                    isDateChangeable && onEventStart('move', taskBar, e);
+                    isDateChangeable && !readonly && onEventStart('move', taskBar, e);
                 }}
             />
             <g className="handleGroup">

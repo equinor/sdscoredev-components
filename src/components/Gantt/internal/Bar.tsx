@@ -54,10 +54,6 @@ export const InternalBar: React.FC<Bar> = (props) => {
         return taskBar.x1 + width + arrowIndent * +hasChild + arrowIndent * 0.2;
     };
 
-    if (readonly) {
-        return <g>{taskBarItem}</g>;
-    }
-
     return (
         <g
             onKeyDown={(e) => {

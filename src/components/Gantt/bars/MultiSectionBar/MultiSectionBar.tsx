@@ -43,7 +43,7 @@ export const MultiSectionBar: React.FC<Bar<MultiSectionTaskBar>> = (props) => {
                 theme={theme}
                 onMouseDown={(e: any) => {
                     // eslint-disable-next-line no-unused-expressions
-                    isDateChangeable && onEventStart('move', taskBar, e);
+                    isDateChangeable && !readonly && onEventStart('move', taskBar, e);
                 }}
             />
 

@@ -102,12 +102,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
         return operationSuccess;
     };
 
-    /**
-     * If readonly is set, we disable all interactions
-     */
     useEffect(() => {
-        if (readonly) return;
-
         const handleMouseMove = async (event: MouseEvent) => {
             if (!ganttEvent.changedTask || !point || !svg?.current) return;
             event.preventDefault();
@@ -184,7 +179,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
             svg?.current
         ) {
             svg.current.addEventListener('mousemove', handleMouseMove);
-            svg.current.addEventListener('mouseup', handleMouseUp);
+            if (!readonly) svg.current.addEventListener('mouseup', handleMouseUp);
             setIsMoving(true);
         }
     }, [
@@ -199,6 +194,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
         point,
         setFailedTask,
         setGanttEvent,
+        readonly,
     ]);
 
     /**

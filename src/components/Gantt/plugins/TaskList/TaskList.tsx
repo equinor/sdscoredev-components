@@ -10,7 +10,6 @@ export type TaskListProps = {
     ganttHeight: number;
     scrollY: number;
     render?: Function;
-    taskListRef: React.RefObject<HTMLDivElement>;
     horizontalContainerClass?: string;
     selectedTask: TaskBar | undefined;
     setSelectedTask: (task: string) => void;
@@ -27,7 +26,6 @@ export const TaskList: React.FC<TaskListProps> = (props) => {
         setSelectedTask,
         onExpanderClick,
         ganttHeight,
-        taskListRef,
         horizontalContainerClass,
         render,
     } = props;
@@ -53,7 +51,7 @@ export const TaskList: React.FC<TaskListProps> = (props) => {
     };
 
     return (
-        <div ref={taskListRef}>
+        <div>
             <TaskListHeader {...headerProps} />
             <div
                 ref={horizontalContainerRef}
