@@ -1,3 +1,10 @@
+## [2.28.9](https://github.com/equinor/sdscoredev-components/compare/2.28.8...2.28.9) (2022-09-13)
+
+
+### Bug Fixes
+
+* add dataTable plugin ([d66a993](https://github.com/equinor/sdscoredev-components/commit/d66a993424e81f3814b1af84c7bbb08b3c19206d))
+
 ## [2.28.8](https://github.com/equinor/sdscoredev-components/compare/2.28.7...2.28.8) (2022-09-13)
 
 
