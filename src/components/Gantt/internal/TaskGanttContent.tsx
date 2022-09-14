@@ -282,9 +282,9 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
         >
             <g className="gantt-content">
                 <g className="arrows" fill={arrowColor} stroke={arrowColor}>
-                    {bars.map((task: TaskBar) => {
-                        return task.barChildren.map((child: TaskBar) => {
-                            return (
+                    {bars.map((task: TaskBar) => (
+                        <React.Fragment key={`arrow-group-${task.id}`}>
+                            {task.barChildren.map((child: TaskBar) => (
                                 <Arrow
                                     key={`Arrow from ${task.id} to ${bars[child.index].id}`}
                                     taskFrom={task}
@@ -293,34 +293,30 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
                                     taskHeight={taskHeight}
                                     arrowIndent={arrowIndent}
                                 />
-                            );
-                        });
-                    })}
+                            ))}
+                        </React.Fragment>
+                    ))}
                 </g>
                 <g className="nuggets">
-                    {nuggets.map((task: any) => {
-                        return (
-                            <Nugget key={task.nugget.id} taskBar={task} nugget={task.nugget} taskHeight={taskHeight} />
-                        );
-                    })}
+                    {nuggets.map((task: any) => (
+                        <Nugget key={task.nugget[1].id} taskBar={task} nugget={task.nugget} taskHeight={taskHeight} />
+                    ))}
                 </g>
                 <g className="bar">
-                    {bars.map((task: TaskBar) => {
-                        return (
-                            <InternalBar
-                                taskBar={task}
-                                arrowIndent={arrowIndent}
-                                taskHeight={taskHeight}
-                                isProgressChangeable={!!onProgressChange && !task.isDisabled}
-                                isDateChangeable={!task.isDisabled}
-                                isDelete={!task.isDisabled}
-                                onEventStart={handleBarEventStart}
-                                key={task.id}
-                                isSelected={!!selectedTask && task.id === selectedTask.id}
-                                readonly={readonly}
-                            />
-                        );
-                    })}
+                    {bars.map((task: TaskBar) => (
+                        <InternalBar
+                            taskBar={task}
+                            arrowIndent={arrowIndent}
+                            taskHeight={taskHeight}
+                            isProgressChangeable={!!onProgressChange && !task.isDisabled}
+                            isDateChangeable={!task.isDisabled}
+                            isDelete={!task.isDisabled}
+                            onEventStart={handleBarEventStart}
+                            key={task.id}
+                            isSelected={!!selectedTask && task.id === selectedTask.id}
+                            readonly={readonly}
+                        />
+                    ))}
                 </g>
             </g>
         </svg>

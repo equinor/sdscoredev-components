@@ -30,15 +30,15 @@ export const Nugget: React.FC<NuggetProp> = (props) => {
         ...props,
     };
 
-    const textRef = useRef<SVGTextElement>(null);
-    const [taskBarItem, setTaskItem] = useState<JSX.Element>(<div />);
-    const [isTextInside, setIsTextInside] = useState(true);
+    // const textRef = useRef<SVGTextElement>(null);
+    // const [taskBarItem, setTaskItem] = useState<JSX.Element>(<div />);
+    // const [isTextInside, setIsTextInside] = useState(true);
 
-    useEffect(() => {
-        if (nugget) {
-            setTaskItem(nugget[0]({ ...props, ...nugget[1] }));
-        }
-    }, [taskBar]);
+    // useEffect(() => {
+    //     if (nugget) {
+    //         setTaskItem(nugget[0]({ ...props, ...nugget[1] }));
+    //     }
+    // }, [taskBar]);
 
     // useEffect(() => {
     //     if (textRef.current) {
@@ -46,19 +46,19 @@ export const Nugget: React.FC<NuggetProp> = (props) => {
     //     }
     // }, [textRef, taskBar]);
 
-    const getX = () => {
-        const width = taskBar.x2 - taskBar.x1;
-        const hasChild = taskBar.barChildren.length > 0;
-        if (isTextInside) {
-            return taskBar.x1 + width * 0.5;
-        }
+    // const getX = () => {
+    //     const width = taskBar.x2 - taskBar.x1;
+    //     const hasChild = taskBar.barChildren.length > 0;
+    //     if (isTextInside) {
+    //         return taskBar.x1 + width * 0.5;
+    //     }
 
-        return taskBar.x1 + width + +hasChild + 0.2;
-    };
+    //     return taskBar.x1 + width + +hasChild + 0.2;
+    // };
 
     return (
         <g>
-            {taskBarItem}
+            {React.createElement(nugget[0], { ...props, ...nugget[1] })}
             {/* {isTextInside ? (
                 <BarLabelInside x={getX()} y={taskBar.y + taskHeight * 0.5} ref={textRef}>
                     {taskBar.name}
