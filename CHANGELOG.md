@@ -1,3 +1,10 @@
+## [2.28.10](https://github.com/equinor/sdscoredev-components/compare/2.28.9...2.28.10) (2022-09-14)
+
+
+### Bug Fixes
+
+* tooltip bad placement ([41d3cf6](https://github.com/equinor/sdscoredev-components/commit/41d3cf61eb011d5ed21681453b0c28ed573e5379))
+
 ## [2.28.9](https://github.com/equinor/sdscoredev-components/compare/2.28.8...2.28.9) (2022-09-13)
 
 
