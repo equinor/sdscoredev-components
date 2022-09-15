@@ -16,6 +16,7 @@ import { Calendar, CalendarProps } from './plugins/Calendar/Calendar';
 import { GanttProps } from './Gantt';
 import { Tooltip } from './plugins/Tooltip/Tooltip';
 import { getTickIndex, monthDiff, roundUp } from './internal/functions';
+import { Toolbar } from './plugins/Toolbar/Toolbar';
 
 const Wrapper = styled.div<{ width: number }>`
     overflow: visible;
@@ -518,6 +519,8 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
 
     return (
         <>
+            {plugins.toolbar && <Toolbar {...plugins.toolbar.props} ref={plugins.toolbar.ref} />}
+
             <Wrapper
                 id="gantt-wrapper"
                 onKeyDown={handleKeyDown}

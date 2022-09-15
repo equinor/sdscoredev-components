@@ -12,8 +12,8 @@ type TableHeaderCellProps = {
 };
 
 const Wrapper = styled(Table.Cell)<{ width?: number; fit?: boolean } & CellProps>`
-    border-top: unset;
-    box-sizing: unset;
+    /* border-top: unset; */
+    /* box-sizing: unset; */
 
     min-width: ${(props: any) => (props.width ? `${props.width}px` : 'unset')};
     white-space: ${(props: any) => (props.fit ? 'nowrap' : 'normal')};
@@ -24,12 +24,16 @@ const Wrapper = styled(Table.Cell)<{ width?: number; fit?: boolean } & CellProps
     background-size: 1px 8px; */
 `;
 
-const DefaultCell = styled(Wrapper)``;
+const DefaultCell = styled(Wrapper)`
+    /* border-bottom: '2px solid rgba(0, 112, 121, 1)' : 'inherit'; */
+`;
 
 const SortCell = styled(Wrapper)<{ isSorted: boolean }>`
     color: ${(props: any) => (props.isSorted ? 'rgba(0, 112, 121, 1)' : 'inherit')};
     background: ${(props: any) => (props.isSorted ? 'rgba(234, 234, 234, 1)' : 'rgba(247, 247, 247, 1)')};
-    border-bottom: ${(props: any) => (props.isSorted ? '2px solid rgba(0, 112, 121, 1)' : 'inherit')};
+    border-bottom: ${(props: any) =>
+        props.isSorted ? '2px solid rgba(0, 112, 121, 1)' : '2px solid rgba(220,220,220,1)'};
+
     svg {
         visibility: ${({ isSorted }) => (isSorted ? 'visible' : 'hidden')};
     }

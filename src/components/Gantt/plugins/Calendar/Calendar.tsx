@@ -35,8 +35,10 @@ export type CalendarProps = {
 
 export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
     const state: any = useContext(StateContext);
-    const { headerHeight } = state.ganttReducer;
+    let { headerHeight } = state.ganttReducer;
     const { tickWidth } = state.gridReducer;
+
+    headerHeight -= 2;
 
     const getCalendarValuesForYear = () => {
         const topValues: ReactChild[] = [];
@@ -348,7 +350,7 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
             id="gantt-calendar"
             xmlns="http://www.w3.org/2000/svg"
             width={state.ganttReducer.dates.length * state.gridReducer.tickWidth}
-            height={state.ganttReducer.headerHeight}
+            height={state.ganttReducer.headerHeight - 2}
             style={{
                 fontFamily: 'Equinor',
                 fontSize: '12px',
