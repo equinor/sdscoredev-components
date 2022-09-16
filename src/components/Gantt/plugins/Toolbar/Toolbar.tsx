@@ -1,6 +1,6 @@
-import React, { forwardRef, ReactChild, ReactFragment, ReactPortal, RefAttributes } from 'react';
+import React, { ReactChild, ReactFragment, ReactPortal, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { ToolbarProps } from '.';
+import { ToolbarProps, ToolbarRef } from '.';
 
 const Wrapper = styled.div`
     width: 100%;
@@ -33,31 +33,23 @@ export type InternalToolbarProps = {
     components?: (ReactChild | ReactFragment | ReactPortal)[];
 } & ToolbarProps;
 
-export const Toolbar: React.FC<InternalToolbarProps & RefAttributes<HTMLDivElement>> = forwardRef((props, ref) => {
-    const { children, components } = props;
+export const Toolbar = (props: InternalToolbarProps) => {
+    const { children, components, id } = props;
+    const toolbarRef = useRef<any>(null);
+
     // if (!components?.length && !children) return <></>;
 
-    console.log('test');
-    return (
-        <Wrapper ref={ref}>
-            <Left>
-                {components
-                    ?.filter((x: any) => x.props.placement.endsWith('left') || !x.props.placement)
-                    .map((component: any, index: number) => {
-                        const key = `lt-Index: ${index}`;
-                        return <React.Fragment key={key}>{component.props.children}</React.Fragment>;
-                    })}
-            </Left>
-            <Right>
-                {children}
+    // TODO: Add default toolbar, just like DataTable
 
-                {components
-                    ?.filter((x: any) => x.props.placement.endsWith('right'))
-                    .map((component: any, index: number) => {
-                        const key = `rt-Index: ${index}`;
-                        return <RightInner key={key}>{component.props.children}</RightInner>;
-                    })}
-            </Right>
-        </Wrapper>
+    useEffect(() => {
+        document.getElementsByClassName('top-right')[0].append(toolbarRef.current);
+    }, [children]);
+
+    return (
+        <div id={id}>
+            <div ref={toolbarRef} style={{ float: 'right' }}>
+                {children}
+            </div>
+        </div>
     );
-});
+};

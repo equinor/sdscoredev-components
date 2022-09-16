@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo, forwardRef, useContext } from 'react';
+import React, { useState, useRef, useEffect, useMemo, forwardRef, useContext, useCallback } from 'react';
 import styled from 'styled-components';
 import { ViewMode } from 'types';
 import { DataTable } from 'components/DataTable';
@@ -519,7 +519,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
 
     return (
         <>
-            {plugins.toolbar && <Toolbar {...plugins.toolbar.props} ref={plugins.toolbar.ref} />}
+            {plugins.toolbar && <Toolbar {...plugins.toolbar.props}>{plugins.toolbar.props.children}</Toolbar>}
 
             <Wrapper
                 id="gantt-wrapper"

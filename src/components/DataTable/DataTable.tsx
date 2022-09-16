@@ -79,13 +79,35 @@ export type DataTableProps = {
      * Sets the maximum width of table
      */
     width?: number;
+    /**
+     * Contains the children of the DataTable
+     */
     children?: any;
+    /**
+     * Provides a callback with the toolbar DOM, so that you can place it elsewhere
+     *
+     * example:
+     * ```
+     * toolbarDOM={(dom: any) => document.getElementById('gantt-toolbar')?.append(dom)}
+     * ```
+     */
+    toolbarDOM?: (toolbar: any) => void;
 };
 
 const id = makeId();
 
 export const DataTable = React.memo((props: DataTableProps) => {
-    const { data = [], getData, children, reducers = [], onFetch, onScroll, compact = false, width } = props;
+    const {
+        data = [],
+        getData,
+        children,
+        reducers = [],
+        onFetch,
+        onScroll,
+        compact = false,
+        width,
+        toolbarDOM,
+    } = props;
     const components = Children.toArray(children);
     const wrapperRef = useRef<any>(null);
 
@@ -128,7 +150,7 @@ export const DataTable = React.memo((props: DataTableProps) => {
                  * or plugins `export` | `columnSelector` | `filter`
                  */}
                 {(topComponents.length > 0 || exportPlugin || columnSelector || filter) && (
-                    <Toolbar components={topComponents}>
+                    <Toolbar id="dataTable-toolbar-top" components={topComponents} shareDOM={toolbarDOM}>
                         <>
                             {exportPlugin && <Export {...exportPlugin.props} />}
                             {columnSelector && <ColumnSelector {...columnSelector.props} ref={columnSelector.ref} />}
@@ -177,7 +199,7 @@ export const DataTable = React.memo((props: DataTableProps) => {
                 {/**
                  * Bottom toolbar will list all toolbars with placement beginning with string `bottom`
                  */}
-                {bottomComponents.length > 0 && <Toolbar components={bottomComponents} />}
+                {bottomComponents.length > 0 && <Toolbar id="dataTable-toolbar-bottom" components={bottomComponents} />}
 
                 {tree && <Tree {...tree.props} />}
 

@@ -1,8 +1,17 @@
-import React, { RefObject } from 'react';
+import React, { Ref } from 'react';
+
+export type ToolbarRef = {
+    add: (item: any) => void;
+} | null;
 
 export type ToolbarProps = {
     placement?: 'right' | 'left' | 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
     children?: any;
+    id?: string;
+    /**
+     * A ref to this element
+     */
+    ref?: Ref<ToolbarRef>;
 };
 
 /**

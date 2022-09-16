@@ -1,4 +1,4 @@
-import React, { Children, useState } from 'react';
+import React, { Children, forwardRef, RefAttributes, useRef, useState } from 'react';
 import { ViewMode } from 'types';
 import { EventOption, StylingOption } from './types/public-types';
 import { GanttStore } from './GanttStore';
@@ -35,7 +35,7 @@ export type GanttProps = {
 } & EventOption &
     StylingOption;
 
-export const Gantt = (props: GanttProps) => {
+export const Gantt: React.FC<GanttProps & RefAttributes<HTMLDivElement>> = forwardRef((props, ref) => {
     const { children, reducers = [] } = props;
     const [tasks, setTasks] = useState<Task[]>(props.tasks);
 
@@ -44,15 +44,18 @@ export const Gantt = (props: GanttProps) => {
     const tooltip: any = components.find((x: JSX.Element) => x.type.displayName === 'Gantt.Tooltip');
     const taskList: any = components.find((x: JSX.Element) => x.type.displayName === 'Gantt.TaskList');
     const dataTable: any = components.find((x: JSX.Element) => x.type.displayName === 'Gantt.DataTable');
+    const toolbar: any = components.find((x: JSX.Element) => x.type.displayName === 'Gantt.Toolbar');
 
     return (
         <GanttStore components={components} reducers={{ ganttReducer, ...reducers }}>
-            <GanttData
-                {...props}
-                tasks={props.tasks}
-                onSetTasks={setTasks}
-                plugins={{ grid, taskList, tooltip, dataTable }}
-            />
+            <div ref={ref}>
+                <GanttData
+                    {...props}
+                    tasks={props.tasks}
+                    onSetTasks={setTasks}
+                    plugins={{ grid, taskList, tooltip, dataTable, toolbar }}
+                />
+            </div>
         </GanttStore>
     );
-};
+});

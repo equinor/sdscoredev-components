@@ -1,4 +1,4 @@
-import React, { ReactChild, ReactFragment, ReactPortal } from 'react';
+import React, { Children, createRef, ReactChild, ReactFragment, ReactPortal, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -22,6 +22,7 @@ const Right = styled.div`
     width: 100%;
     display: inline-flex;
     align-items: center;
+    gap: 16px;
 `;
 
 const RightInner = styled.div`
@@ -30,14 +31,24 @@ const RightInner = styled.div`
 
 export type ToolbarProps = {
     components?: (ReactChild | ReactFragment | ReactPortal)[];
+    shareDOM?: any;
+    id?: string;
 };
 
-const Toolbar: React.FC<ToolbarProps> = ({ children, components }) => {
-    if (!components?.length && !children) return <></>;
+const Toolbar: React.FC<ToolbarProps> = ({ children, components, shareDOM, id }) => {
+    const toolbarRef = createRef<any>();
+
+    /**
+     * If shareDOM is set, the DOM reference is shared to the outside of the dataTable
+     */
+    // eslint-disable-next-line react/no-find-dom-node
+    useEffect(() => {
+        if (shareDOM) shareDOM(toolbarRef.current);
+    });
 
     return (
-        <Wrapper>
-            <Left>
+        <Wrapper ref={toolbarRef}>
+            <Left id={`${id}-left`} className="top-left">
                 {components
                     ?.filter((x: any) => x.props.placement.endsWith('left') || !x.props.placement)
                     .map((component: any, index: number) => {
@@ -45,7 +56,7 @@ const Toolbar: React.FC<ToolbarProps> = ({ children, components }) => {
                         return <React.Fragment key={key}>{component.props.children}</React.Fragment>;
                     })}
             </Left>
-            <Right>
+            <Right id={`${id}-right`} className="top-right">
                 {children}
 
                 {components
