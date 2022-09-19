@@ -1,3 +1,10 @@
+## [2.28.13](https://github.com/equinor/sdscoredev-components/compare/2.28.12...2.28.13) (2022-09-19)
+
+
+### Bug Fixes
+
+* calculate width on first render ([b3648a7](https://github.com/equinor/sdscoredev-components/commit/b3648a7a284eea9e0319113a7c940bdc56a487f3))
+
 ## [2.28.12](https://github.com/equinor/sdscoredev-components/compare/2.28.11...2.28.12) (2022-09-16)
 
 
