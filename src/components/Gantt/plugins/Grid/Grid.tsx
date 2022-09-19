@@ -52,6 +52,8 @@ export const Grid = forwardRef<GridRef, InternalGridProps>((props: InternalGridP
         handleResize: () => renderGrid(),
     }));
 
+    // TODO: Increase performance by combining the ticks and lines into one polyline
+
     const drawTicks = (ctx: CanvasRenderingContext2D, w: number, h: number, tickWidth: number): void => {
         let x = 0;
         for (let i = 0; i < state.ganttReducer.dates.length; i++) {

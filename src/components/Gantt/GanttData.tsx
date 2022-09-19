@@ -119,6 +119,23 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
 
     const [ignoreScrollEvent, setIgnoreScrollEvent] = useState(false);
 
+    const updateGanttWidth = () => {
+        const tickWidth = state.gridReducer && state.gridReducer.tickWidth ? state.gridReducer.tickWidth : 0;
+
+        if (init.current < 5 && state.ganttReducer.dates && verticalGanttContainerRef.current) {
+            for (let i = 0; i < state.ganttReducer.dates.length; i++) {
+                if (isToday(state.ganttReducer.dates[i])) {
+                    init.current++;
+                    dispatch({
+                        type: 'SET_SCROLL_X',
+                        payload: (i - 1) * tickWidth,
+                    });
+                    verticalGanttContainerRef.current.scrollTo((i - 1) * tickWidth, 0);
+                }
+            }
+        }
+    };
+
     /**
      * Removes hidden tasks and maps some props
      *
@@ -210,7 +227,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
      * Generate bars and dates and update state
      */
     useEffect(() => {
-        if (props.tasks && props.tasks.length) {
+        if (props.tasks && props.tasks.length && verticalGanttContainerRef.current) {
             const filteredTasks = filterTasks(props.tasks);
 
             /** Main functions to draw grid and calendar */
@@ -234,7 +251,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
             setBars(bars);
             setNuggets(nuggets);
         }
-    }, [props.tasks, focus, viewMode, onExpanderClick]);
+    }, [verticalGanttContainerRef.current, props.tasks, focus, viewMode, onExpanderClick]);
 
     /**
      * Will scroll to the date set in the viewDate
@@ -365,20 +382,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
      * Set SVG width when dates or tickWidth updates
      */
     useEffect(() => {
-        const tickWidth = state.gridReducer && state.gridReducer.tickWidth ? state.gridReducer.tickWidth : 0;
-
-        if (init.current < 5 && state.ganttReducer.dates && verticalGanttContainerRef.current) {
-            for (let i = 0; i < state.ganttReducer.dates.length; i++) {
-                if (isToday(state.ganttReducer.dates[i])) {
-                    init.current++;
-                    dispatch({
-                        type: 'SET_SCROLL_X',
-                        payload: (i - 1) * tickWidth,
-                    });
-                    verticalGanttContainerRef.current.scrollTo((i - 1) * tickWidth, 0);
-                }
-            }
-        }
+        updateGanttWidth();
     }, [state.ganttReducer.dates, state.gridReducer, viewMode]);
 
     // const handleScrollY = (event: SyntheticEvent<HTMLDivElement>) => {
@@ -515,8 +519,6 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         onExpanderClick: handleExpanderClick,
     };
 
-    if (!bars.length || !state.ganttReducer.dates.length || !state.gridReducer?.tickWidth) return <></>;
-
     return (
         <>
             {plugins.toolbar && <Toolbar {...plugins.toolbar.props}>{plugins.toolbar.props.children}</Toolbar>}
@@ -536,24 +538,26 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
                 <Right id="gantt-vertical-container" ref={verticalGanttContainerRef}>
                     <Calendar {...calendarProps} viewMode={viewMode} />
 
-                    <HorizontalContainer
-                        id="gantt-horizontal-container"
-                        ref={horizontalContainerRef}
-                        height={ganttHeight}
-                        width={state.ganttReducer.dates.length * state.gridReducer.tickWidth}
-                    >
-                        {plugins.grid && (
-                            <Grid
-                                barCount={bars.length}
-                                rowHeight={rowHeight}
-                                viewMode={viewMode}
-                                {...plugins.grid.props}
-                                ref={plugins.grid.ref}
-                            />
-                        )}
+                    {bars.length && state.ganttReducer.dates.length && (
+                        <HorizontalContainer
+                            id="gantt-horizontal-container"
+                            ref={horizontalContainerRef}
+                            height={ganttHeight}
+                            width={state.ganttReducer.dates.length * state.gridReducer.tickWidth}
+                        >
+                            {plugins.grid && (
+                                <Grid
+                                    barCount={bars.length}
+                                    rowHeight={rowHeight}
+                                    viewMode={viewMode}
+                                    {...plugins.grid.props}
+                                    ref={plugins.grid.ref}
+                                />
+                            )}
 
-                        <TaskGanttContent {...barProps} />
-                    </HorizontalContainer>
+                            <TaskGanttContent {...barProps} />
+                        </HorizontalContainer>
+                    )}
                 </Right>
 
                 {plugins.tooltip && ganttEvent.action === 'mouseenter' && (
