@@ -1,3 +1,11 @@
+## [2.28.12](https://github.com/equinor/sdscoredev-components/compare/2.28.11...2.28.12) (2022-09-16)
+
+
+### Bug Fixes
+
+* Add joint toolbar ([2e57c7e](https://github.com/equinor/sdscoredev-components/commit/2e57c7e25e0341908d7d3ed079a5f8dfe582cdf4))
+* add Toolbar plugin ([78e5346](https://github.com/equinor/sdscoredev-components/commit/78e534679b7a5f244e87a0b033e12d6d8be829b6))
+
 ## [2.28.11](https://github.com/equinor/sdscoredev-components/compare/2.28.10...2.28.11) (2022-09-14)
 
 
