@@ -77,7 +77,10 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
 
     useEffect(() => {
         if (!hasError.current) {
-            if (formData) {
+            if (formData && props.onRender) {
+                const manipulatedValues = props.onRender(formData);
+                setForm(manipulatedValues);
+            } else if (formData && !props.onRender) {
                 setForm(formData);
             } else {
                 setForm({});
