@@ -1,3 +1,10 @@
+## [2.28.14](https://github.com/equinor/sdscoredev-components/compare/2.28.13...2.28.14) (2022-09-20)
+
+
+### Bug Fixes
+
+* form not updating ([93e1b78](https://github.com/equinor/sdscoredev-components/commit/93e1b786a119360616938e9146e4dbc7cea728ac))
+
 ## [2.28.13](https://github.com/equinor/sdscoredev-components/compare/2.28.12...2.28.13) (2022-09-19)
 
 
