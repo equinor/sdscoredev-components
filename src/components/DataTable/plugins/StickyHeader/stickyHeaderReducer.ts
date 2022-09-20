@@ -23,7 +23,7 @@ const reducer = (state = initialState, action: any): DataTableState => {
         const payload = {};
         Array.from(headerElement.children).forEach((child: any) => {
             if (visibleColumns && visibleColumns.includes(child.id)) {
-                payload[child.id] = child.getBoundingClientRect().width - 32; // TODO: Must not use hard coded value (padding)
+                payload[child.id] = child.getBoundingClientRect().width;
             }
         });
         return payload;
