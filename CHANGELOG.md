@@ -1,3 +1,11 @@
+## [2.28.16](https://github.com/equinor/sdscoredev-components/compare/2.28.15...2.28.16) (2022-09-22)
+
+
+### Bug Fixes
+
+* lock file broken ([9b0d2c2](https://github.com/equinor/sdscoredev-components/commit/9b0d2c20e3013653e616c5bf1d4fafdd8749ccce))
+* performance issues ([01dd1f9](https://github.com/equinor/sdscoredev-components/commit/01dd1f91e479fcc5af22e584244f110ab70898c3))
+
 ## [2.28.15](https://github.com/equinor/sdscoredev-components/compare/2.28.14...2.28.15) (2022-09-20)
 
 
