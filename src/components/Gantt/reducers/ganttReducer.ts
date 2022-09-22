@@ -2,6 +2,7 @@ import { ViewMode } from 'types';
 
 export const SET_DATES = 'SET_DATES';
 export const SET_VIEW_MODE = 'SET_VIEW_MODE';
+export const SET_READONLY = 'SET_READONLY';
 
 interface GanttState {
     dates?: Array<Date>;
@@ -16,13 +17,13 @@ export const initialState: GanttState = {
     viewMode: null,
     viewModeTickWidth: {
         128: 30,
-        64: 40,
-        32: 50,
-        16: 60,
-        8: 80,
-        4: 100,
-        2: 100,
-        1: 100,
+        64: 30,
+        32: 30,
+        16: 30,
+        8: 70,
+        4: 80,
+        2: 80,
+        1: 80,
         0: 100,
     },
 };

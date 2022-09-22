@@ -31,6 +31,7 @@ const Wrapper = styled.div<{ width: number }>`
 
 export const Right = styled.div`
     overflow-x: scroll;
+    grid-template-rows: min-content auto;
     font-size: 0;
     margin: 0;
     padding: 0;
@@ -88,7 +89,6 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
 
     const state: any = useContext(StateContext);
     const dispatch: any = useContext(DispatchContext);
-
     /**
      * Container references
      */

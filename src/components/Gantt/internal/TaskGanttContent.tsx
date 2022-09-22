@@ -62,6 +62,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
     useEffect(() => {
         point = svg?.current?.createSVGPoint();
     }, [svg.current]);
+
     // create xStep
     useEffect(() => {
         const { tickWidth } = state.gridReducer;

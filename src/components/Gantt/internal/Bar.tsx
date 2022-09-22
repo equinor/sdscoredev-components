@@ -26,7 +26,7 @@ export const BarLabelOutside = styled.text`
 `;
 
 export const InternalBar: React.FC<Bar> = (props) => {
-    const { taskBar, arrowIndent, isDelete, taskHeight, isSelected, onEventStart, readonly } = {
+    const { taskBar, arrowIndent, isDelete, isSelected, onEventStart, readonly } = {
         ...props,
     };
 
@@ -36,7 +36,7 @@ export const InternalBar: React.FC<Bar> = (props) => {
 
     useEffect(() => {
         setTaskItem(taskBar.type[0]({ ...props, ...taskBar.type[1] }));
-    }, [taskBar, isSelected]);
+    }, [taskBar, isSelected, readonly]);
 
     useEffect(() => {
         if (textRef.current) {

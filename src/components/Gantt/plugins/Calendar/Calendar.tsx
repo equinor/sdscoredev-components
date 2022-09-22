@@ -1,33 +1,10 @@
 /* eslint-disable no-plusplus */
 import { StateContext } from 'components/Gantt/GanttStore';
-import React, { ReactChild, useContext } from 'react';
-import styled from 'styled-components';
+import React, { useContext, useEffect, useRef } from 'react';
 import { ViewMode } from 'types';
 
-import {
-    getCachedDateTimeFormat,
-    getDaysInMonth,
-    getLocalDayOfWeek,
-    getLocaleMonth,
-    getWeekNumberISO8601,
-} from '../../helpers/date-helper';
+import { getLocaleMonth, getWeekNumberISO8601 } from '../../helpers/date-helper';
 import { LOCALE } from '../../types/public-types';
-import { Section } from './Section';
-
-export const CalendarBottomText = styled.text`
-    text-anchor: middle;
-    fill: #333;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    pointer-events: none;
-`;
-
-export const CalendarHeader = styled.rect`
-    fill: #f7f7f7;
-`;
 
 export type CalendarProps = {
     viewMode: ViewMode;
@@ -37,331 +14,285 @@ export const Calendar: React.FC<CalendarProps> = ({ viewMode }) => {
     const state: any = useContext(StateContext);
     let { headerHeight } = state.ganttReducer;
     const { tickWidth } = state.gridReducer;
+    const canvas = useRef<HTMLCanvasElement>(null);
+
+    const daysInMonth = (month: any, year: any) => {
+        return new Date(year, month, 0).getDate();
+    };
 
     headerHeight -= 2;
+    const width = state.ganttReducer.dates.length * tickWidth;
 
-    const getCalendarValuesForYear = () => {
-        const topValues: ReactChild[] = [];
-        const bottomValues: ReactChild[] = [];
+    const getCalendarValuesForYear = (ctx: any) => {
+        ctx.beginPath();
+        for (let i = 0; i < state.ganttReducer.dates.length; i++) {
+            const p1 = { x: tickWidth * i, y: i % 2 === 0 ? 0 : headerHeight };
+            const p2 = { x: tickWidth * i, y: i % 2 !== 0 ? 0 : headerHeight };
+            ctx.moveTo(p1.x + 0.5, p1.y);
+            ctx.lineTo(p2.x + 0.5, p2.y);
+        }
+        ctx.strokeStyle = 'rgb(220,220,220)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
 
         for (let i = 0; i < state.ganttReducer.dates.length; i++) {
             const date = state.ganttReducer.dates[i];
-            const bottomValue = date.getFullYear();
-
-            const uuid = crypto.randomUUID();
-
-            bottomValues.push(
-                <Section
-                    value={bottomValue}
-                    key={bottomValue + uuid}
-                    x1Line={tickWidth * i}
-                    y1Line={0}
-                    y2Line={headerHeight}
-                    yText={headerHeight * 0.8}
-                    xText={tickWidth * i + tickWidth * 0.5}
-                />,
-            );
+            const value = date.getFullYear();
+            ctx.fillText(value, tickWidth * i + tickWidth * 0.5, headerHeight / 2);
         }
-        return [topValues, bottomValues];
     };
 
-    const getCalendarValuesForPartOfYear = () => {
-        const topValues: ReactChild[] = [];
-        const bottomValues: ReactChild[] = [];
+    const getCalendarValuesForPartOfYear = (ctx: any) => {
         const ticks = viewMode === ViewMode.HalfYear ? 2 : 4;
-        const topDefaultHeight = headerHeight * 0.5;
         const { dates } = state.ganttReducer;
-        for (let i = 0; i < dates.length; i++) {
-            const date = dates[i];
-            const bottomValue = new Date(date).getMonth();
+        const datesCount = dates.length;
 
-            bottomValues.push(
-                <Section
-                    key={date.getTime()}
-                    value={`${bottomValue}`}
-                    x1Line={tickWidth * i}
-                    y1Line={headerHeight / 2}
-                    y2Line={headerHeight}
-                    yText={headerHeight * 0.8}
-                    xText={tickWidth * i + tickWidth * 0.5}
-                />,
-            );
-
-            const uuid = crypto.randomUUID();
-
-            if (i === 0 || date.getFullYear() !== dates[i - 1].getFullYear()) {
-                topValues.push(
-                    <Section
-                        key={date.getFullYear() + uuid}
-                        value={date.getFullYear()}
-                        x1Line={tickWidth * i}
-                        y1Line={0}
-                        y2Line={topDefaultHeight}
-                        xText={tickWidth * i + ticks * tickWidth * 0.5}
-                        yText={topDefaultHeight * 0.9}
-                    />,
-                );
-            }
+        ctx.beginPath();
+        for (let i = 0; i < datesCount; i++) {
+            const p1 = { x: tickWidth * i, y: i % 2 === 0 ? headerHeight * 0.5 : headerHeight };
+            const p2 = { x: tickWidth * i, y: i % 2 !== 0 ? headerHeight * 0.5 : headerHeight };
+            ctx.moveTo(p1.x + 0.5, p1.y);
+            ctx.lineTo(p2.x + 0.5, p2.y);
         }
+        for (let i = 0; i < datesCount / ticks; i++) {
+            const p1 = { x: tickWidth * i * ticks, y: i % 2 === 0 ? 0 : headerHeight * 0.5 };
+            const p2 = { x: tickWidth * i * ticks, y: i % 2 !== 0 ? 0 : headerHeight * 0.5 };
+            ctx.moveTo(p1.x + 0.5, p1.y);
+            ctx.lineTo(p2.x + 0.5, p2.y);
+        }
+        ctx.strokeStyle = 'rgb(220,220,220)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
 
-        return [topValues, bottomValues];
+        for (let i = 0; i < datesCount; i++) {
+            const date = dates[i];
+            const value = new Date(date).getMonth();
+            ctx.fillText(value, tickWidth * i + tickWidth * 0.5, headerHeight * 0.75);
+        }
+        for (let i = 0; i < datesCount / ticks; i++) {
+            const date = dates[i * ticks];
+            const value = new Date(date).getFullYear();
+            ctx.fillText(value, tickWidth * i * ticks + tickWidth * ticks * 0.5, headerHeight * 0.25);
+        }
     };
 
-    const getCalendarValuesForMonth = () => {
-        const topValues: ReactChild[] = [];
-        const bottomValues: ReactChild[] = [];
-        const topDefaultHeight = headerHeight * 0.5;
-        for (let i = 0; i < state.ganttReducer.dates.length; i++) {
-            const date = state.ganttReducer.dates[i];
-            const bottomValue = getLocaleMonth(date);
+    const getCalendarValuesForMonth = (ctx: any) => {
+        const { dates } = state.ganttReducer;
+        const datesCount = dates.length;
 
-            const uuid = crypto.randomUUID();
-
-            bottomValues.push(
-                <Section
-                    value={`${bottomValue}`}
-                    key={bottomValue + date.getFullYear() + uuid}
-                    x1Line={tickWidth * i}
-                    y1Line={headerHeight / 2}
-                    y2Line={headerHeight}
-                    yText={headerHeight * 0.8}
-                    xText={tickWidth * i + tickWidth * 0.5}
-                />,
-            );
-            if (i === 0 || date.getFullYear() !== state.ganttReducer.dates[i - 1].getFullYear()) {
-                const topValue = date.getFullYear().toString();
-
-                const xText: number = (6 + i - date.getMonth()) * tickWidth;
-
-                topValues.push(
-                    <Section
-                        key={topValue}
-                        value={topValue}
-                        x1Line={tickWidth * i}
-                        y1Line={0}
-                        y2Line={topDefaultHeight}
-                        xText={xText}
-                        yText={topDefaultHeight * 0.9}
-                    />,
-                );
-            }
+        ctx.beginPath();
+        for (let i = 0; i < datesCount; i++) {
+            const p1 = { x: tickWidth * i, y: i % 2 === 0 ? headerHeight * 0.5 : headerHeight };
+            const p2 = { x: tickWidth * i, y: i % 2 !== 0 ? headerHeight * 0.5 : headerHeight };
+            ctx.moveTo(p1.x + 0.5, p1.y);
+            ctx.lineTo(p2.x + 0.5, p2.y);
         }
-        return [topValues, bottomValues];
+        for (let i = 0; i < datesCount / 12; i++) {
+            const p1 = { x: tickWidth * i * 12 - tickWidth * 5, y: i % 2 === 0 ? 0 : headerHeight * 0.5 };
+            const p2 = { x: tickWidth * i * 12 - tickWidth * 5, y: i % 2 !== 0 ? 0 : headerHeight * 0.5 };
+            ctx.moveTo(p1.x + 0.5, p1.y);
+            ctx.lineTo(p2.x + 0.5, p2.y);
+        }
+
+        ctx.strokeStyle = 'rgb(220,220,220)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        for (let i = 0; i < datesCount; i++) {
+            const date = dates[i];
+            const value = getLocaleMonth(date);
+            ctx.fillText(value, tickWidth * i + tickWidth * 0.5, headerHeight * 0.75);
+        }
+        for (let i = 0; i < datesCount / 12; i++) {
+            const date = dates[i * 12 + 1];
+            const value = new Date(date).getFullYear();
+            ctx.fillText(value, tickWidth * i * 12 + tickWidth, headerHeight * 0.25);
+        }
     };
 
-    const getCalendarValuesForWeek = () => {
-        const topValues: ReactChild[] = [];
-        const bottomValues: ReactChild[] = [];
-        let weeksCount: number = 1;
-        const topDefaultHeight = headerHeight * 0.5;
+    const getCalendarValuesForWeek = (ctx: any) => {
         const { dates } = state.ganttReducer;
-        for (let i = dates.length - 1; i >= 0; i--) {
+        const datesCount = dates.length;
+
+        ctx.beginPath();
+        for (let i = 0; i < datesCount; i++) {
+            const p1 = { x: tickWidth * i, y: i % 2 === 0 ? headerHeight * 0.5 : headerHeight };
+            const p2 = { x: tickWidth * i, y: i % 2 !== 0 ? headerHeight * 0.5 : headerHeight };
+            ctx.moveTo(p1.x + 0.5, p1.y);
+            ctx.lineTo(p2.x + 0.5, p2.y);
+        }
+
+        ctx.strokeStyle = 'rgb(220,220,220)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        for (let i = 0; i < datesCount; i++) {
             const date = dates[i];
-            let topValue = '';
+            const value = `W${getWeekNumberISO8601(date)}`;
+            ctx.fillText(value, tickWidth * i + tickWidth * 0.5, headerHeight * 0.75);
+        }
+        for (let i = 0; i < datesCount; i++) {
+            const date = dates[i];
             if (i === 0 || date.getMonth() !== dates[i - 1].getMonth()) {
-                // top
-                topValue = `${getLocaleMonth(date)}, ${date.getFullYear()}`;
+                const value = `${getLocaleMonth(date)}, ${date.getFullYear()}`;
+                ctx.fillText(value, tickWidth * i + tickWidth * 0.5, headerHeight * 0.25);
             }
-            // bottom
-            const bottomValue = `W${getWeekNumberISO8601(date)}`;
-
-            bottomValues.push(
-                <Section
-                    value={`${bottomValue}`}
-                    key={date.getTime()}
-                    x1Line={tickWidth * i}
-                    y1Line={headerHeight / 2}
-                    y2Line={headerHeight}
-                    yText={headerHeight * 0.8}
-                    xText={tickWidth * i + tickWidth * 0.5}
-                />,
-            );
-
-            if (topValue) {
-                // if last day is new month
-                if (i !== dates.length - 1) {
-                    topValues.push(
-                        <Section
-                            key={topValue}
-                            value={topValue}
-                            x1Line={tickWidth * i + weeksCount * tickWidth}
-                            y1Line={0}
-                            y2Line={topDefaultHeight}
-                            xText={tickWidth * i + tickWidth * weeksCount * 0.5}
-                            yText={topDefaultHeight * 0.9}
-                        />,
-                    );
-                }
-                weeksCount = 0;
-            }
-            weeksCount++;
         }
-        return [topValues, bottomValues];
     };
 
-    const getCalendarValuesForDay = () => {
-        const topValues: ReactChild[] = [];
-        const bottomValues: ReactChild[] = [];
-        const topDefaultHeight = headerHeight * 0.5;
+    const getCalendarValuesForDay = (ctx: any) => {
         const { dates } = state.ganttReducer;
-        for (let i = 0; i < dates.length; i++) {
-            const date = dates[i];
-            const bottomValue = `${getLocalDayOfWeek(date, 'short')}, ${date.getDate().toString()}`;
+        const datesCount = dates.length;
 
-            bottomValues.push(
-                <Section
-                    value={`${bottomValue}`}
-                    key={date.getTime()}
-                    x1Line={tickWidth * i}
-                    y1Line={headerHeight / 2}
-                    y2Line={headerHeight}
-                    yText={headerHeight * 0.8}
-                    xText={tickWidth * i + tickWidth * 0.5}
-                />,
-            );
+        ctx.beginPath();
+        for (let i = 0; i < datesCount; i++) {
+            const p1 = { x: tickWidth * i, y: i % 2 === 0 ? headerHeight * 0.5 : headerHeight };
+            const p2 = { x: tickWidth * i, y: i % 2 !== 0 ? headerHeight * 0.5 : headerHeight };
+            ctx.moveTo(p1.x + 0.5, p1.y);
+            ctx.lineTo(p2.x + 0.5, p2.y);
+        }
+        for (let i = 0; i < datesCount; i++) {
+            const date = dates[i];
             if (i + 1 !== dates.length && date.getMonth() !== dates[i + 1].getMonth()) {
-                const topValue = getLocaleMonth(date);
-
-                topValues.push(
-                    <Section
-                        key={topValue + date.getFullYear()}
-                        value={topValue}
-                        x1Line={tickWidth * (i + 1)}
-                        y1Line={0}
-                        y2Line={topDefaultHeight}
-                        xText={
-                            tickWidth * (i + 1) - getDaysInMonth(date.getMonth(), date.getFullYear()) * tickWidth * 0.5
-                        }
-                        yText={topDefaultHeight * 0.9}
-                    />,
-                );
+                const p1 = { x: tickWidth * i + tickWidth, y: i % 2 === 0 ? 0 : headerHeight * 0.5 };
+                const p2 = { x: tickWidth * i + tickWidth, y: i % 2 !== 0 ? 0 : headerHeight * 0.5 };
+                ctx.moveTo(p1.x + 0.5, p1.y);
+                ctx.lineTo(p2.x + 0.5, p2.y);
             }
         }
-        return [topValues, bottomValues];
-    };
 
-    const getCalendarValuesForPartOfDay = () => {
-        const topValues: ReactChild[] = [];
-        const bottomValues: ReactChild[] = [];
-        const ticks = state.ganttReducer.viewMode === ViewMode.HalfDay ? 2 : 4;
-        const topDefaultHeight = headerHeight * 0.5;
-        const { dates } = state.ganttReducer;
-        for (let i = 0; i < dates.length; i++) {
+        ctx.strokeStyle = 'rgb(220,220,220)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        for (let i = 0; i < datesCount; i++) {
             const date = dates[i];
-            const bottomValue = getCachedDateTimeFormat(LOCALE, {
-                hour: 'numeric',
-            }).format(date);
-
-            bottomValues.push(
-                <CalendarBottomText key={date.getTime()} y={headerHeight * 0.8} x={tickWidth * i}>
-                    {bottomValue}
-                </CalendarBottomText>,
-            );
-            if (i === 0 || date.getDate() !== dates[i - 1].getDate()) {
-                const topValue = `${getLocalDayOfWeek(date, 'short')}, ${date.getDate()} ${getLocaleMonth(date)}`;
-                topValues.push(
-                    <Section
-                        key={topValue + date.getFullYear()}
-                        value={topValue}
-                        x1Line={tickWidth * i + ticks * tickWidth}
-                        y1Line={0}
-                        y2Line={topDefaultHeight}
-                        xText={tickWidth * i + ticks * tickWidth * 0.5}
-                        yText={topDefaultHeight * 0.9}
-                    />,
-                );
-            }
+            const value = `${date.getDate().toString()}`;
+            ctx.fillText(value, tickWidth * i + tickWidth * 0.5, headerHeight * 0.75);
         }
-
-        return [topValues, bottomValues];
-    };
-
-    const getCalendarValuesForHour = () => {
-        const topValues: ReactChild[] = [];
-        const bottomValues: ReactChild[] = [];
-        const topDefaultHeight = headerHeight * 0.5;
-        const { dates } = state.ganttReducer;
-        for (let i = 0; i < dates.length; i++) {
+        for (let i = 0; i < datesCount; i++) {
             const date = dates[i];
-            const bottomValue = getCachedDateTimeFormat(LOCALE, {
-                hour: 'numeric',
-            }).format(date);
-
-            bottomValues.push(
-                <CalendarBottomText key={date.getTime()} y={headerHeight * 0.8} x={tickWidth * i}>
-                    {bottomValue}
-                </CalendarBottomText>,
-            );
-            if (i !== 0 && date.getDate() !== dates[i - 1].getDate()) {
-                const displayDate = dates[i - 1];
-                const topValue = `${getLocalDayOfWeek(displayDate, 'long')}, ${displayDate.getDate()} ${getLocaleMonth(
-                    displayDate,
-                )}`;
-                const topPosition = (date.getHours() - 24) / 2;
-                topValues.push(
-                    <Section
-                        key={topValue + displayDate.getFullYear()}
-                        value={topValue}
-                        x1Line={tickWidth * i}
-                        y1Line={0}
-                        y2Line={topDefaultHeight}
-                        xText={tickWidth * (i + topPosition)}
-                        yText={topDefaultHeight * 0.9}
-                    />,
-                );
+            if (i + 1 !== dates.length && date.getMonth() !== dates[i + 1].getMonth()) {
+                const days = daysInMonth(date.getMonth(), date.getYear());
+                const value = getLocaleMonth(date);
+                ctx.fillText(value, tickWidth * i + tickWidth * 0.5 - (tickWidth * days) / 2, headerHeight * 0.25);
             }
         }
-
-        return [topValues, bottomValues];
     };
 
-    let topValues: ReactChild[] = [];
-    let bottomValues: ReactChild[] = [];
-    switch (viewMode) {
-        case ViewMode.Year:
-            [topValues, bottomValues] = getCalendarValuesForYear();
-            break;
-        case ViewMode.HalfYear:
-        case ViewMode.QuarterYear:
-            [topValues, bottomValues] = getCalendarValuesForPartOfYear();
-            break;
-        case ViewMode.Month:
-            [topValues, bottomValues] = getCalendarValuesForMonth();
-            break;
-        case ViewMode.Week:
-            [topValues, bottomValues] = getCalendarValuesForWeek();
-            break;
-        case ViewMode.Day:
-            [topValues, bottomValues] = getCalendarValuesForDay();
-            break;
-        case ViewMode.QuarterDay:
-        case ViewMode.HalfDay:
-            [topValues, bottomValues] = getCalendarValuesForPartOfDay();
-            break;
-        case ViewMode.Hour:
-            [topValues, bottomValues] = getCalendarValuesForHour();
-            break;
-        default:
-    }
+    // const getCalendarValuesForPartOfDay = () => {
+    //     const topValues: ReactChild[] = [];
+    //     const bottomValues: ReactChild[] = [];
+    //     const ticks = state.ganttReducer.viewMode === ViewMode.HalfDay ? 2 : 4;
+    //     const topDefaultHeight = headerHeight * 0.5;
+    //     const { dates } = state.ganttReducer;
+    //     for (let i = 0; i < dates.length; i++) {
+    //         const date = dates[i];
+    //         const bottomValue = getCachedDateTimeFormat(LOCALE, {
+    //             hour: 'numeric',
+    //         }).format(date);
+
+    //         bottomValues.push(
+    //             <CalendarBottomText key={date.getTime()} y={headerHeight * 0.8} x={tickWidth * i}>
+    //                 {bottomValue}
+    //             </CalendarBottomText>,
+    //         );
+    //         if (i === 0 || date.getDate() !== dates[i - 1].getDate()) {
+    //             const topValue = `${getLocalDayOfWeek(date, 'short')}, ${date.getDate()} ${getLocaleMonth(date)}`;
+    //             topValues.push(
+    //                 <Section
+    //                     key={topValue + date.getFullYear()}
+    //                     value={topValue}
+    //                     x1Line={tickWidth * i + ticks * tickWidth}
+    //                     y1Line={0}
+    //                     y2Line={topDefaultHeight}
+    //                     xText={tickWidth * i + ticks * tickWidth * 0.5}
+    //                     yText={topDefaultHeight * 0.9}
+    //                 />,
+    //             );
+    //         }
+    //     }
+
+    //     return [topValues, bottomValues];
+    // };
+
+    // const getCalendarValuesForHour = () => {
+    //     const topValues: ReactChild[] = [];
+    //     const bottomValues: ReactChild[] = [];
+    //     const topDefaultHeight = headerHeight * 0.5;
+    //     const { dates } = state.ganttReducer;
+    //     for (let i = 0; i < dates.length; i++) {
+    //         const date = dates[i];
+    //         const bottomValue = getCachedDateTimeFormat(LOCALE, {
+    //             hour: 'numeric',
+    //         }).format(date);
+
+    //         bottomValues.push(
+    //             <CalendarBottomText key={date.getTime()} y={headerHeight * 0.8} x={tickWidth * i}>
+    //                 {bottomValue}
+    //             </CalendarBottomText>,
+    //         );
+    //         if (i !== 0 && date.getDate() !== dates[i - 1].getDate()) {
+    //             const displayDate = dates[i - 1];
+    //             const topValue = `${getLocalDayOfWeek(displayDate, 'long')}, ${displayDate.getDate()} ${getLocaleMonth(
+    //                 displayDate,
+    //             )}`;
+    //             const topPosition = (date.getHours() - 24) / 2;
+    //             topValues.push(
+    //                 <Section
+    //                     key={topValue + displayDate.getFullYear()}
+    //                     value={topValue}
+    //                     x1Line={tickWidth * i}
+    //                     y1Line={0}
+    //                     y2Line={topDefaultHeight}
+    //                     xText={tickWidth * (i + topPosition)}
+    //                     yText={topDefaultHeight * 0.9}
+    //                 />,
+    //             );
+    //         }
+    //     }
+
+    //     return [topValues, bottomValues];
+    // };
+
+    useEffect(() => {
+        if (!canvas.current) return;
+
+        canvas.current.style.background = 'rgb(247,247,247)';
+
+        // console.warn('Canvas width is limited to 65200. Your canvas width is: ' + width);
+        canvas.current.width = width > 65200 ? 65200 : width;
+        const ctx = canvas.current.getContext('2d', { alpha: false });
+
+        if (ctx) {
+            ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
+            ctx.fillStyle = 'rgb(247,247,247)';
+            ctx.fillRect(0, 0, width, headerHeight);
+            ctx.font = '14px Equinor';
+            ctx.fillStyle = 'rgb(61,61,61)';
+            ctx.textBaseline = 'middle';
+            ctx.textAlign = 'center';
+
+            if (viewMode.valueOf() === ViewMode.Year) getCalendarValuesForYear(ctx);
+            if (viewMode.valueOf() === ViewMode.HalfYear || viewMode.valueOf() === ViewMode.QuarterYear)
+                getCalendarValuesForPartOfYear(ctx);
+            if (viewMode.valueOf() === ViewMode.Month) getCalendarValuesForMonth(ctx);
+            if (viewMode.valueOf() === ViewMode.Week) getCalendarValuesForWeek(ctx);
+            if (viewMode.valueOf() === ViewMode.Day) getCalendarValuesForDay(ctx);
+            // if (viewMode.valueOf() === ViewMode.HalfDay || viewMode.valueOf() === ViewMode.QuarterDay)
+            //     getCalendgetCalendarValuesForPartOfDayarValuesForDay(ctx);
+            // if (viewMode.valueOf() === ViewMode.Hour) getCalendarValuesForHour(ctx);
+        }
+    }, [canvas.current, viewMode, tickWidth]);
 
     if (!state.ganttReducer.dates) return <></>;
     return (
-        <svg
-            id="gantt-calendar"
-            xmlns="http://www.w3.org/2000/svg"
-            width={state.ganttReducer.dates.length * state.gridReducer.tickWidth}
+        <canvas
+            className="calendar"
+            ref={canvas}
+            id="calendar-canvas"
             height={state.ganttReducer.headerHeight - 2}
-            style={{
-                fontFamily: 'Equinor',
-                fontSize: '12px',
-                borderBottom: '2px solid #dcdcdc',
-                fontWeight: 500,
-            }}
-        >
-            <g className="calendar">
-                <CalendarHeader x={0} y={0} width={tickWidth * state.ganttReducer.dates.length} height={headerHeight} />
-                {bottomValues} {topValues}
-            </g>
-        </svg>
+            style={{ borderBottom: '2px solid rgb(220,220,220)' }}
+        />
     );
 };

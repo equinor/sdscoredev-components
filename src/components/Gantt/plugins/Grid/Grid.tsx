@@ -1,9 +1,8 @@
-import { TaskBar } from 'components/Gantt/bars/types';
-import React, { forwardRef, useContext, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import React, { forwardRef, useContext, useEffect, useImperativeHandle, useRef } from 'react';
 import styled from 'styled-components';
 import { ViewMode } from 'types';
 import { GridProps, GridRef } from '.';
-import { DispatchContext, StateContext } from '../../GanttStore';
+import { StateContext } from '../../GanttStore';
 
 export const GridRowLine = styled.line`
     stroke: #ebeff2;
@@ -40,7 +39,6 @@ export const Grid = forwardRef<GridRef, InternalGridProps>((props: InternalGridP
 
     const state: any = useContext(StateContext);
     const canvas = useRef<HTMLCanvasElement>(null);
-    const dispatch: any = useContext(DispatchContext);
 
     const { tickWidth } = state.gridReducer;
 
@@ -56,28 +54,29 @@ export const Grid = forwardRef<GridRef, InternalGridProps>((props: InternalGridP
 
     const drawTicks = (ctx: CanvasRenderingContext2D, w: number, h: number, tickWidth: number): void => {
         let x = 0;
+        ctx.beginPath();
         for (let i = 0; i < state.ganttReducer.dates.length; i++) {
-            ctx.beginPath();
             ctx.moveTo(x + 0.5, 0);
             ctx.lineTo(x + 0.5, h);
-            ctx.strokeStyle = 'rgb(220,220,220)';
-            ctx.lineWidth = 1;
-            ctx.stroke();
             x += tickWidth;
         }
+        ctx.strokeStyle = 'rgb(220,220,220)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
     };
 
     const drawRowLines = (ctx: CanvasRenderingContext2D, w: number, h: number): void => {
         let y = 0;
+        ctx.beginPath();
         for (let i = 0; i < barCount; i++) {
-            ctx.beginPath();
             ctx.moveTo(0, y - 0.5);
             ctx.lineTo(w, y - 0.5);
-            ctx.strokeStyle = 'rgb(220,220,220)';
-            ctx.lineWidth = 1;
-            ctx.stroke();
+
             y += rowHeight;
         }
+        ctx.strokeStyle = 'rgb(220,220,220)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
     };
 
     // useEffect(() => {
