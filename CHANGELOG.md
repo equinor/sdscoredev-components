@@ -1,3 +1,11 @@
+## [2.28.15](https://github.com/equinor/sdscoredev-components/compare/2.28.14...2.28.15) (2022-09-20)
+
+
+### Bug Fixes
+
+* sticky header wrong ([2f67e8b](https://github.com/equinor/sdscoredev-components/commit/2f67e8bcc9d533f5456d47aa90b2f3d9bbd77aa1))
+* wrong entry ([c797cbe](https://github.com/equinor/sdscoredev-components/commit/c797cbef9c1f2acf1c71af9de3f62b115b2e1fd6))
+
 ## [2.28.14](https://github.com/equinor/sdscoredev-components/compare/2.28.13...2.28.14) (2022-09-20)
 
 
