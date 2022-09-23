@@ -93,7 +93,7 @@
     "peerDependencies": {
         "react": ">=16",
         "react-dom": ">=16",
-        "react-router-dom": ">=5",
+        "react-router-dom": "6.3.0",
         "styled-components": ">=5"
     },
     "dependencies": {
