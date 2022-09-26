@@ -52,18 +52,21 @@ export const Pagination: React.FC<InternalPaginationProps> = ({
      * Resets the pagination when search filter updates
      */
     useEffect(() => {
+        // state in the URL
         const params = new URLSearchParams(location.search);
         const pagination = params.get('pagination');
 
         params.delete('pagination');
         params.delete('sort');
 
-        const current = new URLSearchParams(state.filterReducer?.searchString);
-        if (current) {
-            current.delete('pagination');
-            current.delete('sort');
+        // searchString currently available in the filterReducer
+        const { searchString } = state.filterReducer || {};
 
-            if (params.toString() !== current.toString()) {
+        if (searchString) {
+            const currentURLSearchParams = new URLSearchParams(state.filterReducer?.searchString);
+
+            // reset pageIndex if pageIndex in params !== currentURLSearchParams
+            if (params.toString() !== currentURLSearchParams.toString()) {
                 dispatch({ type: 'SET_PAGE_INDEX', payload: 1 });
             }
         }
@@ -71,6 +74,7 @@ export const Pagination: React.FC<InternalPaginationProps> = ({
         if (pagination) {
             const parts = pagination.split(',');
 
+            // reset pageIndex if pageIndex in state is !== parts[0]
             if (parts[0] !== state.paginationReducer.pageIndex) {
                 dispatch({ type: 'SET_PAGE_INDEX', payload: parts[0] });
             }
@@ -102,7 +106,7 @@ export const Pagination: React.FC<InternalPaginationProps> = ({
         <Wrapper>
             <NativeSelect
                 id=""
-                key={`pageSize-${+pageSize}`} // Must jave key so that it rerender on context update
+                key={`pageSize-${+pageSize}`} // Must have key so that it rerender on context update
                 label=""
                 value={+pageSize}
                 onChange={handleChangePageSize}
@@ -114,7 +118,7 @@ export const Pagination: React.FC<InternalPaginationProps> = ({
                 ))}
             </NativeSelect>
             <EDSPagination
-                key={`pageIndex-${+pageIndex}`} // Must jave key so that it rerender on context update
+                key={`pageIndex-${+pageIndex}`} // Must have key so that it rerender on context update
                 totalItems={count || 0}
                 itemsPerPage={+pageSize}
                 defaultPage={+pageIndex}

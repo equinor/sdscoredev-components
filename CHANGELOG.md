@@ -1,3 +1,17 @@
+## [2.28.18](https://github.com/equinor/sdscoredev-components/compare/2.28.17...2.28.18) (2022-09-23)
+
+
+### Bug Fixes
+
+* bug caused by URLSearchParams ([#33](https://github.com/equinor/sdscoredev-components/issues/33)) ([a5036f9](https://github.com/equinor/sdscoredev-components/commit/a5036f9772a6b1de0bba10ed3435a5e525aef7f2))
+
+## [2.28.17](https://github.com/equinor/sdscoredev-components/compare/2.28.16...2.28.17) (2022-09-23)
+
+
+### Bug Fixes
+
+* react-router-dom had wrong version ([940edd2](https://github.com/equinor/sdscoredev-components/commit/940edd2bfc35d96c29c4f1054a2737651e13de29))
+
 ## [2.28.16](https://github.com/equinor/sdscoredev-components/compare/2.28.15...2.28.16) (2022-09-22)
 
 
