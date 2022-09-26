@@ -1,3 +1,10 @@
+## [2.28.19](https://github.com/equinor/sdscoredev-components/compare/2.28.18...2.28.19) (2022-09-26)
+
+
+### Bug Fixes
+
+* sections not set date ([6f8a19d](https://github.com/equinor/sdscoredev-components/commit/6f8a19d00d6a9291c2ddb6bb28e7965ee56ea041))
+
 ## [2.28.18](https://github.com/equinor/sdscoredev-components/compare/2.28.17...2.28.18) (2022-09-23)
 
 
