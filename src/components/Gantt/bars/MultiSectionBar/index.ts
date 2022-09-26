@@ -72,6 +72,7 @@ const handleMouseEvents = (
 
                 for (let i = 0; i < changedTask.type[1].sections.length; i++) {
                     changedTask.type[1].dates[i] = getNewSectionDate(i);
+                    changedTask.type[1].sections[i] = getNewSectionDate(i);
                 }
             }
             break;
@@ -86,6 +87,7 @@ const handleMouseEvents = (
 
                 for (let i = 0; i < changedTask.type[1].sections.length; i++) {
                     changedTask.type[1].dates[i] = getNewSectionDate(i);
+                    changedTask.type[1].sections[i] = getNewSectionDate(i);
                 }
             }
             break;
@@ -101,6 +103,7 @@ const handleMouseEvents = (
 
                 for (let i = 0; i < changedTask.type[1].sections.length; i++) {
                     changedTask.type[1].dates[i] = getNewSectionDate(i);
+                    changedTask.type[1].sections[i] = getNewSectionDate(i);
                 }
             }
             break;
