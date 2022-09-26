@@ -54,32 +54,25 @@ export const Pagination: React.FC<InternalPaginationProps> = ({
     useEffect(() => {
         // state in the URL
         const params = new URLSearchParams(location.search);
-        const pagination = params.get('pagination');
+        const current = new URLSearchParams(state.filterReducer?.searchString);
 
         params.delete('pagination');
         params.delete('sort');
+        params.delete('pageSize');
+        params.delete('pageIndex');
+        params.delete('orderBy');
+        params.delete('desc');
+        current.delete('pagination');
+        current.delete('sort');
+        current.delete('pageSize');
+        current.delete('pageIndex');
+        current.delete('orderBy');
+        current.delete('desc');
 
-        // searchString currently available in the filterReducer
-        const { searchString } = state.filterReducer || {};
-
-        if (searchString) {
-            const currentURLSearchParams = new URLSearchParams(state.filterReducer?.searchString);
-
-            // reset pageIndex if pageIndex in params !== currentURLSearchParams
-            if (params.toString() !== currentURLSearchParams.toString()) {
-                dispatch({ type: 'SET_PAGE_INDEX', payload: 1 });
-            }
+        if (params.toString() !== current.toString()) {
+            dispatch({ type: 'SET_PAGE_INDEX', payload: 1 });
         }
-
-        if (pagination) {
-            const parts = pagination.split(',');
-
-            // reset pageIndex if pageIndex in state is !== parts[0]
-            if (parts[0] !== state.paginationReducer.pageIndex) {
-                dispatch({ type: 'SET_PAGE_INDEX', payload: parts[0] });
-            }
-        }
-    }, [location]);
+    }, [location.search]);
 
     /**
      * Handler for updating page index
