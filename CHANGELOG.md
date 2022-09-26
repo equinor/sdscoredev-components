@@ -1,3 +1,10 @@
+## [2.28.20](https://github.com/equinor/sdscoredev-components/compare/2.28.19...2.28.20) (2022-09-26)
+
+
+### Bug Fixes
+
+* pagination errors ([9f4c366](https://github.com/equinor/sdscoredev-components/commit/9f4c366b195f87c790f1ffd4cf806da1aa5ebfae))
+
 ## [2.28.19](https://github.com/equinor/sdscoredev-components/compare/2.28.18...2.28.19) (2022-09-26)
 
 
