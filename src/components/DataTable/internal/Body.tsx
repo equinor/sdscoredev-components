@@ -7,8 +7,11 @@ import { DispatchContext, StateContext } from '../DataTableStore';
 import { Subrow } from '../plugins/Subrow/Subrow';
 import Row from './Row';
 
-const PaddedText = styled.div`
-    padding: 16px;
+const PaddedText = styled.tr`
+    td {
+        padding: 16px;
+        white-space: nowrap;
+    }
 `;
 
 type TableBodyProps = {
@@ -91,11 +94,19 @@ const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBo
         }
 
         if (!items || items.length === 0) {
-            return <PaddedText>No data was found</PaddedText>;
+            return (
+                <PaddedText>
+                    <td> No data was found</td>
+                </PaddedText>
+            );
         }
 
         if (state.columnSelectorReducer && !state.columnSelectorReducer.visibleColumns.length) {
-            return <PaddedText>No column selected</PaddedText>;
+            return (
+                <PaddedText>
+                    <td>No column selected</td>
+                </PaddedText>
+            );
         }
 
         return items.map((item: any, index: number) => {
