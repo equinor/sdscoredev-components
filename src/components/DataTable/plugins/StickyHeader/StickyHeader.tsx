@@ -66,7 +66,6 @@ export const StickyHeader = forwardRef<StickyHeaderRef, InternalStickyHeaderProp
 
         /**
          * Sets the table header sticky if table top offset has reached threshold
-         *
          * @returns void
          */
         const determineStickyState = (): void => {
