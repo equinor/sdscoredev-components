@@ -1,3 +1,10 @@
+## [2.28.21](https://github.com/equinor/sdscoredev-components/compare/2.28.20...2.28.21) (2022-09-27)
+
+
+### Bug Fixes
+
+* resolve <div> cannot appear as a child of <tbody> error ([#34](https://github.com/equinor/sdscoredev-components/issues/34)) ([311184d](https://github.com/equinor/sdscoredev-components/commit/311184d32b571bdadde3b2408bb735e991496a82))
+
 ## [2.28.20](https://github.com/equinor/sdscoredev-components/compare/2.28.19...2.28.20) (2022-09-26)
 
 
