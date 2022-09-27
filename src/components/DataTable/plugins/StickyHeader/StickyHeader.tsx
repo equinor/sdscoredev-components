@@ -1,4 +1,3 @@
-import { ColumnProps } from 'components/DataTable/Column';
 import React, { forwardRef, useCallback, useContext, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import styled from 'styled-components';
 
@@ -100,7 +99,7 @@ export const StickyHeader = forwardRef<StickyHeaderRef, InternalStickyHeaderProp
                 <Head id={`dataTable.stickyHeaderRow.${id}`}>
                     <Table.Row>
                         {/* ---- Checkbox plugin implementation start TODO: Do the same as with Subrow --------------------- */}
-                        {state.checkboxReducer && <CheckboxHeaderCell key="checkbox-header" />}
+                        {state.checkboxReducer?.visible && <CheckboxHeaderCell key="checkbox-header" />}
                         {/* ---- Checkbox plugin implementation end ----------------------- */}
 
                         {state.dataTableReducer.columns
