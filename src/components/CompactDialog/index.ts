@@ -1,4 +1,4 @@
-import { CompactDialog as BaseCompactDialog, CompactDialogProps, CompactDialogRef } from './CompactDialog';
+import { CompactDialog as BaseCompactDialog, CompactDialogRef } from './CompactDialog';
 import { CompactDialogAction } from './CompactDialogAction';
 
 type CompactDialogCompound = typeof BaseCompactDialog & {
@@ -14,4 +14,4 @@ CompactDialog.Actions.displayName = 'CompactDialog.Actions';
 export { CompactDialog };
 
 // export Props and Types
-export { CompactDialogProps, CompactDialogRef };
+export { CompactDialogRef };

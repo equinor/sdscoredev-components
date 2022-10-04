@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo, forwardRef, useContext, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useMemo, forwardRef, useContext } from 'react';
 import styled from 'styled-components';
 import { ViewMode } from 'types';
 import { DataTable } from 'components/DataTable';
@@ -16,7 +16,6 @@ import { Calendar, CalendarProps } from './plugins/Calendar/Calendar';
 import { GanttProps } from './Gantt';
 import { Tooltip } from './plugins/Tooltip/Tooltip';
 import { getTickIndex, monthDiff, roundUp } from './internal/functions';
-import { Toolbar } from './plugins/Toolbar/Toolbar';
 
 const Wrapper = styled.div<{ width: number }>`
     overflow: visible;
@@ -29,13 +28,15 @@ const Wrapper = styled.div<{ width: number }>`
     position: relative;
 `;
 
-export const Right = styled.div`
+// 2257 2317
+export const Right = styled.div<{ height: number }>`
     overflow-x: scroll;
     grid-template-rows: min-content auto;
     font-size: 0;
     margin: 0;
     padding: 0;
     display: grid;
+    height: ${(props) => (props.height ? `${props.height}px ` : '0px')};
 `;
 
 const Left = styled.div``;
@@ -520,70 +521,56 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
     };
 
     return (
-        <>
-            {plugins.toolbar && <Toolbar {...plugins.toolbar.props}>{plugins.toolbar.props.children}</Toolbar>}
+        <Wrapper
+            id="gantt-wrapper"
+            onKeyDown={handleKeyDown}
+            tabIndex={0}
+            ref={wrapperRef}
+            width={plugins.taskList?.props?.width}
+        >
+            <Left ref={taskListRef}>
+                {plugins.taskList && listCellWidth && <TaskList {...tableProps} {...plugins.taskList.props} />}
+                {plugins.dataTable && listCellWidth && <DataTable {...plugins.dataTable.props} />}
+            </Left>
 
-            <Wrapper
-                id="gantt-wrapper"
-                onKeyDown={handleKeyDown}
-                tabIndex={0}
-                ref={wrapperRef}
-                width={plugins.taskList?.props?.width}
+            <Right
+                id="gantt-vertical-container"
+                ref={verticalGanttContainerRef}
+                height={rowHeight * bars.length + state.ganttReducer.headerHeight + 11}
             >
-                <Left ref={taskListRef}>
-                    {plugins.taskList && listCellWidth && <TaskList {...tableProps} {...plugins.taskList.props} />}
-                    {plugins.dataTable && listCellWidth && <DataTable {...plugins.dataTable.props} />}
-                </Left>
+                <Calendar {...calendarProps} viewMode={viewMode} />
 
-                <Right id="gantt-vertical-container" ref={verticalGanttContainerRef}>
-                    <Calendar {...calendarProps} viewMode={viewMode} />
+                {bars.length && state.ganttReducer.dates.length && (
+                    <HorizontalContainer
+                        id="gantt-horizontal-container"
+                        ref={horizontalContainerRef}
+                        height={ganttHeight}
+                        width={state.ganttReducer.dates.length * state.gridReducer.tickWidth}
+                    >
+                        {plugins.grid && (
+                            <Grid
+                                barCount={bars.length}
+                                rowHeight={rowHeight}
+                                viewMode={viewMode}
+                                {...plugins.grid.props}
+                                ref={plugins.grid.ref}
+                            />
+                        )}
 
-                    {bars.length && state.ganttReducer.dates.length && (
-                        <HorizontalContainer
-                            id="gantt-horizontal-container"
-                            ref={horizontalContainerRef}
-                            height={ganttHeight}
-                            width={state.ganttReducer.dates.length * state.gridReducer.tickWidth}
-                        >
-                            {plugins.grid && (
-                                <Grid
-                                    barCount={bars.length}
-                                    rowHeight={rowHeight}
-                                    viewMode={viewMode}
-                                    {...plugins.grid.props}
-                                    ref={plugins.grid.ref}
-                                />
-                            )}
-
-                            <TaskGanttContent {...barProps} />
-                        </HorizontalContainer>
-                    )}
-                </Right>
-
-                {plugins.tooltip && ganttEvent.action === 'mouseenter' && (
-                    <Tooltip
-                        task={ganttEvent.changedTask}
-                        anchorRef={verticalGanttContainerRef}
-                        containerRef={verticalGanttContainerRef}
-                        taskListRef={taskListRef}
-                        {...plugins.tooltip.props}
-                    />
+                        <TaskGanttContent {...barProps} />
+                    </HorizontalContainer>
                 )}
+            </Right>
 
-                {/* <VerticalScroll
-                        ganttFullHeight={ganttFullHeight}
-                        ganttHeight={ganttHeight}
-                        headerHeight={headerHeight}
-                        scroll={scrollY}
-                        onScroll={handleScrollY}
-                    /> */}
-            </Wrapper>
-            {/* <HorizontalScroll
-                    svgWidth={svgWidth}
-                    taskListWidth={taskListWidth}
-                    scroll={scrollX}
-                    onScroll={handleScrollX}
-                /> */}
-        </>
+            {plugins.tooltip && ganttEvent.action === 'mouseenter' && (
+                <Tooltip
+                    task={ganttEvent.changedTask}
+                    anchorRef={verticalGanttContainerRef}
+                    containerRef={verticalGanttContainerRef}
+                    taskListRef={taskListRef}
+                    {...plugins.tooltip.props}
+                />
+            )}
+        </Wrapper>
     );
 });

@@ -1,0 +1,68 @@
+@import url(https://eds-static.equinor.com/font/equinor-font.css);
+@import url(https://eds-static.equinor.com/font/equinor-mono.css);
+:root {
+    font-family: 'Equinor';
+    --mdc-typography-font-family: 'Equinor';
+}
+
+.story .sbdocs-content {
+    max-width: 100% !important;
+}
+
+.story .sbdocs-wrapper {
+    padding: 4rem !important;
+}
+
+.story .sbdocs-preview {
+    box-shadow: none;
+    box-shadow: initial;
+    border: 0;
+}
+
+.story .sbdocs-preview .docs-story > div:first-child {
+    padding: 0;
+}
+
+.story .sbdocs-preview .docs-story > div:last-child {
+    position: relative;
+    margin-top: 20px;
+}
+
+.story .sbdocs-preview .docs-story > div:last-child > button {
+    text-decoration: none;
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    background: rgba(0,112,121,1);
+    height: 36px;
+    padding-left: 16px;
+    padding-top: 0;
+    padding-right: 16px;
+    padding-bottom: 0;
+    border: 1px solid rgba(0,112,121,1);
+    border-radius: 4px;
+    margin: 0px;
+    color: rgba(255,255,255,1);
+    font-family: Equinor;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.143em;
+    text-align: center;
+}
+
+.story .sbdocs-preview .docs-story > div:last-child > button:hover {
+    background: rgba(0,79,85,1);
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.story .sbdocs-preview .docs-story > div:last-child > button:focus {
+    box-shadow: none;
+    box-shadow: initial;
+}
+
+.story .sbdocs-preview .docs-story + div {
+    margin-top: 20px;
+}
+
+/*# sourceMappingURL=main.544bd099.css.map*/

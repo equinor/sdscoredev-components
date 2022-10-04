@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, { useContext, useEffect } from 'react';
+import React, { createRef, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
 import { NativeSelect, Pagination as EDSPagination } from '@equinor/eds-core-react';
@@ -25,11 +25,14 @@ const Wrapper = styled.div`
 
 export type InternalPaginationProps = {
     count?: number;
+    shareDOM?: any;
 } & PaginationProps;
 
 export const Pagination: React.FC<InternalPaginationProps> = ({
     count,
     defaultPageSize,
+    shareDOM,
+    onChange,
     pageSizeOptions = [5, 10, 20, 50],
 }) => {
     const state: any = useContext(StateContext);
@@ -37,6 +40,8 @@ export const Pagination: React.FC<InternalPaginationProps> = ({
     const location = useLocation();
 
     const { pageIndex, pageSize } = state.paginationReducer;
+
+    const paginationRef = createRef<any>();
 
     if (defaultPageSize && pageSizeOptions && pageSizeOptions.findIndex((x) => x === defaultPageSize) < 0) {
         throw Error(
@@ -47,6 +52,14 @@ export const Pagination: React.FC<InternalPaginationProps> = ({
     useEffect(() => {
         if (!pageSize && defaultPageSize) dispatch({ type: 'SET_PAGE_SIZE', payload: defaultPageSize });
     }, []);
+
+    /**
+     * If shareDOM is set, the DOM reference is shared to the outside of the dataTable
+     */
+    // eslint-disable-next-line react/no-find-dom-node
+    useEffect(() => {
+        if (shareDOM && paginationRef.current) shareDOM(paginationRef.current);
+    });
 
     /**
      * Resets the pagination when search filter updates
@@ -82,6 +95,7 @@ export const Pagination: React.FC<InternalPaginationProps> = ({
      */
     const handleChangePage = (_e: any, payload: number) => {
         dispatch({ type: 'SET_PAGE_INDEX', payload });
+        if (onChange) onChange(payload, pageSize);
     };
 
     /**
@@ -91,12 +105,13 @@ export const Pagination: React.FC<InternalPaginationProps> = ({
      */
     const handleChangePageSize = (e: any) => {
         dispatch({ type: 'SET_PAGE_SIZE', payload: e.target.value });
+        if (onChange) onChange(pageIndex, e.target.value);
     };
 
     if (!pageSize) return <></>;
 
     return (
-        <Wrapper>
+        <Wrapper ref={paginationRef}>
             <NativeSelect
                 id=""
                 key={`pageSize-${+pageSize}`} // Must have key so that it rerender on context update

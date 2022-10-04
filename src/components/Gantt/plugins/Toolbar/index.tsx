@@ -5,7 +5,7 @@ export type ToolbarRef = {
 } | null;
 
 export type ToolbarProps = {
-    placement?: 'right' | 'left' | 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
+    placement?: 'top' | 'bottom';
     children?: any;
     id?: string;
     /**
@@ -21,5 +21,5 @@ export type ToolbarProps = {
  * @returns `JSX.Element`
  */
 export const Toolbar: React.FC<ToolbarProps> = (props) => {
-    return <React.Fragment {...props}>Toolbar</React.Fragment>;
+    return <>Toolbar</>;
 };

@@ -3,20 +3,18 @@ const path = require('path');
 module.exports = {
     stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
     addons: [
-        '@storybook/addon-essentials',
-        '@storybook/addon-interactions',
-        '@storybook/addon-links',
-        '@storybook/preset-create-react-app',
         '@storybook/addon-storysource',
         {
             name: '@storybook/addon-docs',
             options: {
                 configureJSX: true,
-                babelOptions: {},
-                sourceLoaderOptions: null,
                 transcludeMarkdown: true,
             },
         },
+        '@storybook/addon-essentials',
+        '@storybook/addon-interactions',
+        '@storybook/addon-links',
+        '@storybook/preset-create-react-app',
     ],
     framework: '@storybook/react',
     core: {

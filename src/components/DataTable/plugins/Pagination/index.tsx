@@ -6,6 +6,7 @@ export type PaginationProps = {
     getCount?: Function;
     defaultPageSize?: number;
     pageSizeOptions?: Array<number>;
+    onChange?: (pageIndex: number, pageSize: number) => void;
 };
 
 /**

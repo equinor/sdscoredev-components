@@ -84,7 +84,7 @@ export type DataTableProps = {
      */
     children?: any;
     /**
-     * Provides a callback with the toolbar DOM, so that you can place it elsewhere
+     * Exposes the toolbar DOM, so that you can place it elsewhere
      *
      * example:
      * ```
@@ -92,6 +92,15 @@ export type DataTableProps = {
      * ```
      */
     toolbarDOM?: (toolbar: any) => void;
+    /**
+     * Exposes the pagination DOM, so that you can place it elsewhere
+     *
+     * example:
+     * ```
+     * paginationDOM={(dom: any) => document.getElementById('gantt-toolbar')?.append(dom)}
+     * ```
+     */
+    paginationDOM?: (pagination: any) => void;
 };
 
 const id = makeId();
@@ -107,6 +116,7 @@ export const DataTable = React.memo((props: DataTableProps) => {
         compact = false,
         width,
         toolbarDOM,
+        paginationDOM,
     } = props;
     const components = Children.toArray(children);
     const wrapperRef = useRef<any>(null);
@@ -194,7 +204,18 @@ export const DataTable = React.memo((props: DataTableProps) => {
                     </EdsProvider>
                 </TableWrapper>
 
-                {pagination && <Pagination count={pagination.props.getCount(data || 0)} {...pagination.props} />}
+                {/**
+                 * Pagination plugin.
+                 * Shares its DOM as a callback. When DataTAble is used as a plugin in Gantt,
+                 * the pagination can be moved to Gantt bottom toolbar, or elsewhere.
+                 */}
+                {pagination && (
+                    <Pagination
+                        count={pagination.props.getCount(data || 0)}
+                        {...pagination.props}
+                        shareDOM={paginationDOM}
+                    />
+                )}
 
                 {/**
                  * Bottom toolbar will list all toolbars with placement beginning with string `bottom`

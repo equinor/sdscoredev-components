@@ -5,6 +5,7 @@ import { GanttStore } from './GanttStore';
 import { ganttReducer } from './reducers/ganttReducer';
 import { GanttData } from './GanttData';
 import { Task } from './bars/types';
+import { Toolbar } from './plugins/Toolbar/Toolbar';
 
 export type GanttProps = {
     tasks: Task[];
@@ -44,17 +45,30 @@ export const Gantt: React.FC<GanttProps & RefAttributes<HTMLDivElement>> = forwa
     const tooltip: any = components.find((x: JSX.Element) => x.type.displayName === 'Gantt.Tooltip');
     const taskList: any = components.find((x: JSX.Element) => x.type.displayName === 'Gantt.TaskList');
     const dataTable: any = components.find((x: JSX.Element) => x.type.displayName === 'Gantt.DataTable');
-    const toolbar: any = components.find((x: JSX.Element) => x.type.displayName === 'Gantt.Toolbar');
+    const toolbar: any = components.filter((x: JSX.Element) => x.type.displayName === 'Gantt.Toolbar');
+
+    const bottomToolbar = toolbar.find((x: any) => x.props.placement === 'bottom');
+    const topToolbar = toolbar.find((x: any) => x.props.placement === 'top');
 
     return (
         <GanttStore components={components} reducers={{ ganttReducer, ...reducers }}>
             <div ref={ref}>
+                {topToolbar && (
+                    <Toolbar {...topToolbar.props} id="gantt-toolbar-top" components={topToolbar.props.components} />
+                )}
                 <GanttData
                     {...props}
                     tasks={props.tasks}
                     onSetTasks={setTasks}
                     plugins={{ grid, taskList, tooltip, dataTable, toolbar }}
                 />
+                {bottomToolbar && (
+                    <Toolbar
+                        {...bottomToolbar.props}
+                        id="gantt-toolbar-bottom"
+                        components={bottomToolbar.props.components}
+                    />
+                )}
             </div>
         </GanttStore>
     );
