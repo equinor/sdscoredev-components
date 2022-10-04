@@ -1,3 +1,24 @@
+## [2.28.22](https://github.com/equinor/sdscoredev-components/compare/2.28.21...2.28.22) (2022-09-27)
+
+
+### Bug Fixes
+
+* trigger release ([#35](https://github.com/equinor/sdscoredev-components/issues/35)) ([70739d9](https://github.com/equinor/sdscoredev-components/commit/70739d9daff0e8fac6039b4066f63f46945f8d2b))
+
+## [2.28.21](https://github.com/equinor/sdscoredev-components/compare/2.28.20...2.28.21) (2022-09-27)
+
+
+### Bug Fixes
+
+* resolve <div> cannot appear as a child of <tbody> error ([#34](https://github.com/equinor/sdscoredev-components/issues/34)) ([311184d](https://github.com/equinor/sdscoredev-components/commit/311184d32b571bdadde3b2408bb735e991496a82))
+
+## [2.28.20](https://github.com/equinor/sdscoredev-components/compare/2.28.19...2.28.20) (2022-09-26)
+
+
+### Bug Fixes
+
+* pagination errors ([9f4c366](https://github.com/equinor/sdscoredev-components/commit/9f4c366b195f87c790f1ffd4cf806da1aa5ebfae))
+
 ## [2.28.19](https://github.com/equinor/sdscoredev-components/compare/2.28.18...2.28.19) (2022-09-26)
 
 
