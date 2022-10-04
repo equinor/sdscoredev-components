@@ -1,3 +1,10 @@
+## [2.28.25](https://github.com/equinor/sdscoredev-components/compare/2.28.24...2.28.25) (2022-10-04)
+
+
+### Bug Fixes
+
+* setForm check on cancel ([#36](https://github.com/equinor/sdscoredev-components/issues/36)) ([4b7cdbe](https://github.com/equinor/sdscoredev-components/commit/4b7cdbe45e96d6ae2ca2afd81c1cc426a74c58f1))
+
 ## [2.28.24](https://github.com/equinor/sdscoredev-components/compare/2.28.23...2.28.24) (2022-10-04)
 
 
