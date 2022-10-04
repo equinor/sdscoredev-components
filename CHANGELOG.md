@@ -1,3 +1,10 @@
+## [2.28.23](https://github.com/equinor/sdscoredev-components/compare/2.28.22...2.28.23) (2022-10-04)
+
+
+### Bug Fixes
+
+* add pagination for gantt ([b702e18](https://github.com/equinor/sdscoredev-components/commit/b702e1873c841cf8a51fe817bbd6a15324ffd6b3))
+
 ## [2.28.22](https://github.com/equinor/sdscoredev-components/compare/2.28.21...2.28.22) (2022-09-27)
 
 
