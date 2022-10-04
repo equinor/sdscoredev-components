@@ -54,7 +54,6 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
     const [initEventX1Delta, setInitEventX1Delta] = useState(0);
     const [isMoving, setIsMoving] = useState(false);
     const state: any = useContext(StateContext);
-    const dispatch: any = useContext(DispatchContext);
     const ganttSVGRef = useRef<SVGSVGElement>(null);
     const svg: React.RefObject<SVGSVGElement> = ganttSVGRef;
     let point = svg?.current?.createSVGPoint();
@@ -266,6 +265,19 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
         }
     };
 
+    const merged = [...bars, ...nuggets].sort((a: any, b: any) => {
+        const first = a.nugget ? a.nugget[1].pri : a.type[1].pri;
+        const second = b.nugget ? b.nugget[1].pri : b.type[1].pri;
+
+        if (first > second) {
+            return -1;
+        }
+        if (first < second) {
+            return 1;
+        }
+        return 0;
+    });
+
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -299,25 +311,33 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
                     ))}
                 </g>
                 <g className="nuggets">
-                    {nuggets.map((task: any) => (
-                        <Nugget key={task.nugget[1].id} taskBar={task} nugget={task.nugget} taskHeight={taskHeight} />
-                    ))}
-                </g>
-                <g className="bar">
-                    {bars.map((task: TaskBar) => (
-                        <InternalBar
-                            taskBar={task}
-                            arrowIndent={arrowIndent}
-                            taskHeight={taskHeight}
-                            isProgressChangeable={!!onProgressChange && !task.isDisabled}
-                            isDateChangeable={!task.isDisabled}
-                            isDelete={!task.isDisabled}
-                            onEventStart={handleBarEventStart}
-                            key={task.id}
-                            isSelected={!!selectedTask && task.id === selectedTask.id}
-                            readonly={readonly}
-                        />
-                    ))}
+                    {merged.map((item: any) => {
+                        if (item.nugget)
+                            return (
+                                <Nugget
+                                    key={item.nugget[1].id}
+                                    taskBar={item}
+                                    nugget={item.nugget}
+                                    taskHeight={taskHeight}
+                                />
+                            );
+                        if (!item.nugget && item.type)
+                            return (
+                                <InternalBar
+                                    taskBar={item}
+                                    arrowIndent={arrowIndent}
+                                    taskHeight={taskHeight}
+                                    isProgressChangeable={!!onProgressChange && !item.isDisabled}
+                                    isDateChangeable={!item.isDisabled}
+                                    isDelete={!item.isDisabled}
+                                    onEventStart={handleBarEventStart}
+                                    key={item.id}
+                                    isSelected={!!selectedTask && item.id === selectedTask.id}
+                                    readonly={readonly}
+                                />
+                            );
+                        return <></>;
+                    })}
                 </g>
             </g>
         </svg>

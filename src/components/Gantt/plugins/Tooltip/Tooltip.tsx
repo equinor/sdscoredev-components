@@ -35,7 +35,7 @@ export const Tooltip: React.FC<InternalTooltipProps> = (props) => {
 
         /** Calculate y position and also add listener for mouse move event */
         if (tooltipRef.current && containerRef?.current && taskListRef?.current && task) {
-            y = -(containerRef.current.offsetHeight - calendarHeight - task.y) - 10;
+            y = -(containerRef.current.offsetHeight - calendarHeight - task.y) - 10 - 11;
 
             /** Set new tooltip position based on mouse and bar position */
             tooltipRef.current.style.transform = `translate(${x}px, ${y}px)`;
