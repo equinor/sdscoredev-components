@@ -1,3 +1,10 @@
+## [2.28.24](https://github.com/equinor/sdscoredev-components/compare/2.28.23...2.28.24) (2022-10-04)
+
+
+### Bug Fixes
+
+* add drawing priority for nuggets and bars ([816a4ff](https://github.com/equinor/sdscoredev-components/commit/816a4ffef720ab099e3c722bff37caec2f65f2b7))
+
 ## [2.28.23](https://github.com/equinor/sdscoredev-components/compare/2.28.22...2.28.23) (2022-10-04)
 
 
