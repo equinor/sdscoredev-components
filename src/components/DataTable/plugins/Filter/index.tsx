@@ -20,6 +20,10 @@ export type FilterProps = {
      * Storage, either `window.localStorage` or `window.sessionStorage`, default is `window.sessionStorage`
      */
     storage?: Storage;
+    /**
+     * If set to true, do not render filter button
+     */
+    hideButton?: boolean;
 };
 
 const Filter: React.FC<FilterProps> & ReducerProp = (props) => {
