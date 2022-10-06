@@ -1,3 +1,10 @@
+## [2.28.26](https://github.com/equinor/sdscoredev-components/compare/2.28.25...2.28.26) (2022-10-06)
+
+
+### Bug Fixes
+
+* add hide filter button functionality ([#37](https://github.com/equinor/sdscoredev-components/issues/37)) ([2e99823](https://github.com/equinor/sdscoredev-components/commit/2e99823db0f41457e22166066812c62bfda1291e))
+
 ## [2.28.25](https://github.com/equinor/sdscoredev-components/compare/2.28.24...2.28.25) (2022-10-04)
 
 
