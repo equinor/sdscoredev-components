@@ -85,7 +85,7 @@ export const Pagination: React.FC<InternalPaginationProps> = ({
         if (params.toString() !== current.toString()) {
             dispatch({ type: 'SET_PAGE_INDEX', payload: 1 });
         }
-    }, [location.search]);
+    }, [location.search, state.filterReducer?.searchString]);
 
     /**
      * Handler for updating page index
