@@ -35,8 +35,8 @@ const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBo
     const currentTableData = useMemo(() => {
         const firstPageIndex = (+state.paginationReducer?.pageIndex - 1) * +state.paginationReducer?.pageSize;
         const lastPageIndex = firstPageIndex + +state.paginationReducer?.pageSize;
-        return data?.slice(firstPageIndex, lastPageIndex);
-    }, [state.paginationReducer, data]);
+        return state.dataTableReducer.data?.slice(firstPageIndex, lastPageIndex);
+    }, [state.paginationReducer, state.dataTableReducer.data]);
 
     const usePagination = () => {
         if (state.paginationReducer) {
@@ -139,7 +139,7 @@ const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>((props: TableBo
 
     return (
         <Table.Body ref={ref} id={`dataTable.body.${id}`}>
-            {generateRows(usePagination() && onFetch ? currentTableData : state.dataTableReducer.data)}
+            {generateRows(usePagination() ? currentTableData : state.dataTableReducer.data)}
         </Table.Body>
     );
 });
