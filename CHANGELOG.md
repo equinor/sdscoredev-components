@@ -1,3 +1,10 @@
+## [2.28.27](https://github.com/equinor/sdscoredev-components/compare/2.28.26...2.28.27) (2022-10-07)
+
+
+### Bug Fixes
+
+* use the right data state and remove onFetch constriction ([#38](https://github.com/equinor/sdscoredev-components/issues/38)) ([3dc637d](https://github.com/equinor/sdscoredev-components/commit/3dc637dcc566310eb50e6963562fb453d05dd69b))
+
 ## [2.28.26](https://github.com/equinor/sdscoredev-components/compare/2.28.25...2.28.26) (2022-10-06)
 
 
