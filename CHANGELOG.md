@@ -1,3 +1,10 @@
+## [2.28.29](https://github.com/equinor/sdscoredev-components/compare/2.28.28...2.28.29) (2022-10-11)
+
+
+### Bug Fixes
+
+* change to empty string ([e573727](https://github.com/equinor/sdscoredev-components/commit/e573727d0da0ee50a7004aec34e2c4a97377b659))
+
 ## [2.28.28](https://github.com/equinor/sdscoredev-components/compare/2.28.27...2.28.28) (2022-10-11)
 
 
