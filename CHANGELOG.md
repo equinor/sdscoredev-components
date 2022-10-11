@@ -1,3 +1,10 @@
+## [2.28.30](https://github.com/equinor/sdscoredev-components/compare/2.28.29...2.28.30) (2022-10-11)
+
+
+### Bug Fixes
+
+* remove defaultValue prop on textfield ([e076d55](https://github.com/equinor/sdscoredev-components/commit/e076d553542cc80ae5fcacd54686d6f07fa8135f))
+
 ## [2.28.29](https://github.com/equinor/sdscoredev-components/compare/2.28.28...2.28.29) (2022-10-11)
 
 
