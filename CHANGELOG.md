@@ -1,3 +1,10 @@
+## [2.28.28](https://github.com/equinor/sdscoredev-components/compare/2.28.27...2.28.28) (2022-10-11)
+
+
+### Bug Fixes
+
+* value in textfield ([#39](https://github.com/equinor/sdscoredev-components/issues/39)) ([c9b88b9](https://github.com/equinor/sdscoredev-components/commit/c9b88b9e7bbbbf94455ee89bfdd73f7f46186e7b))
+
 ## [2.28.27](https://github.com/equinor/sdscoredev-components/compare/2.28.26...2.28.27) (2022-10-07)
 
 
