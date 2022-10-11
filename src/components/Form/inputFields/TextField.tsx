@@ -20,7 +20,7 @@ export const TextField: React.FC<InputProps & PartialPick<TextFieldProps, 'unit'
             inputRef={inputRef}
             unit={unit}
             onChange={onChange}
-            value={value || undefined}
+            value={value || null}
             defaultValue={defaultValue || ''}
             variant={error ? 'error' : 'default'}
             helperText={error}
