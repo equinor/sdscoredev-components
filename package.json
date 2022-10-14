@@ -51,7 +51,7 @@
     },
     "scripts": {
         "start": "vite",
-        "build": "tsc -w && vite build",
+        "watch": "tsc -w && vite build",
         "preview": "vite preview",
         "storybook": "start-storybook -p 6006",
         "storybook:build": "build-storybook -o docs",
