@@ -4,11 +4,18 @@
     "description": "Composite react components based on equinor design system (EDS)",
     "author": "John Wennstrøm <john.wennstrom@protonmail.com>",
     "license": "ISC",
-    "main": "dist/index.js",
-    "module": "dist/index.es.js",
+    "main": "./dist/index.umd.js",
+    "module": "./dist/index.es.js",
     "files": [
         "dist"
     ],
+    "exports": {
+        ".": {
+            "import": "./dist/index.es.js",
+            "require": "./dist/index.umd.js"
+        }
+    },
+    "types": "./dist/index.d.ts",
     "homepage": "https://github.com/equinor/sdscoredev-components#readme",
     "repository": {
         "type": "git",
@@ -50,9 +57,8 @@
         ]
     },
     "scripts": {
-        "start": "vite",
-        "watch": "tsc -w && vite build",
-        "build": "tsc && vite build",
+        "start": "tsc -w && vite build",
+        "build": "vite build",
         "preview": "vite preview",
         "storybook": "start-storybook -p 6006",
         "storybook:build": "build-storybook -o docs",
@@ -63,6 +69,8 @@
         "@babel/core": "^7.19.1",
         "@rollup/plugin-commonjs": "^22.0.2",
         "@rollup/plugin-node-resolve": "^13.3.0",
+        "@rollup/plugin-typescript": "^9.0.1",
+        "@semantic-release/git": "^10.0.1",
         "@storybook/addon-docs": "^6.5.12",
         "@storybook/addon-essentials": "^6.5.12",
         "@storybook/addon-interactions": "^6.5.12",
@@ -73,7 +81,9 @@
         "@storybook/node-logger": "^6.5.12",
         "@storybook/preset-create-react-app": "^4.1.2",
         "@storybook/react": "^6.5.12",
+        "@types/estree": "^1.0.0",
         "@types/styled-components": "^5.1.26",
+        "@vitejs/plugin-react": "^2.1.0",
         "babel-loader": "^8.2.5",
         "eslint-config-airbnb": "^19.0.4",
         "eslint-config-prettier": "^8.5.0",
@@ -100,10 +110,7 @@
         "@equinor/eds-core-react": "0.20.4",
         "@equinor/eds-icons": "^0.12.0",
         "@equinor/eds-tokens": "^0.7.1",
-        "@semantic-release/git": "^10.0.1",
-        "@types/estree": "^1.0.0",
         "@types/react": "17.0.49",
-        "@vitejs/plugin-react": "^2.1.0",
         "casual-browserify": "^1.5.19-2",
         "fast-sort": "^3.2.0",
         "object-merge-advanced": "^13.1.3",
@@ -113,6 +120,8 @@
         "styled-components": ">=5",
         "tsconfig-paths-webpack-plugin": "^3.5.2",
         "typescript": "^4.8.3",
-        "vite": "^3.1.8"
+        "vite": "^3.1.8",
+        "vite-plugin-commonjs": "^0.5.2",
+        "vite-plugin-dts": "^1.6.6"
     }
 }

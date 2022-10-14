@@ -1,4 +1,5 @@
-import { CompactDialog as BaseCompactDialog, CompactDialogRef } from './CompactDialog';
+import { CompactDialog as BaseCompactDialog } from './CompactDialog';
+import type { CompactDialogRef } from './CompactDialog';
 import { CompactDialogAction } from './CompactDialogAction';
 
 type CompactDialogCompound = typeof BaseCompactDialog & {

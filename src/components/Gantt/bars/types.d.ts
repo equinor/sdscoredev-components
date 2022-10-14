@@ -20,7 +20,7 @@ export type Task<T = {}> = {
     /**
      * An extra bar item to be displayed in the row. Can be more or less anything
      */
-    nuggets: any[];
+    nuggets?: any[];
     /**
      * Name for the action, will be displayed inside the bar. Temporarily not in use
      */
@@ -53,7 +53,7 @@ export type Task<T = {}> = {
     /**
      * Order of task display.
      */
-    displayOrder?: number;
+    displayOrder?: any;
 };
 
 /**

@@ -8,9 +8,9 @@ import { Validation } from './Validation';
 import { ValidationProvider } from './Validation/ValidationProvider';
 import { useValidation } from './Validation/useValidation';
 import { validationReducer } from './Validation/validationReducer';
-
 import { useForm } from './useForm';
-import { withInput, InputProps } from './inputFields/withInput';
+import { withInput } from './inputFields/withInput';
+import type { InputProps } from './inputFields/withInput';
 
 type FormCompound = typeof BaseForm & {
     Row: typeof Row;

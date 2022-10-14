@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import packageJson from './package.json';
+import dts from 'vite-plugin-dts';
+import commonjs from 'vite-plugin-commonjs';
+import typescript from '@rollup/plugin-typescript';
 
 const path = require('path');
 
@@ -12,33 +14,58 @@ export default defineConfig({
         host: 'localhost',
         port: 3005,
     },
-    plugins: [react()],
+    plugins: [
+        // {
+        //     ...typescript({ tsconfig: './tsconfig.json' }),
+        //     apply: 'build',
+        // },
+        react(),
+        dts(),
+    ],
     build: {
-        sourcemap: true,
-        cssCodeSplit: false,
+        target: 'esnext',
+        sourcemap: false,
         watch: watcherOptions,
         lib: {
             entry: path.resolve(__dirname, 'src/index.ts'),
-            name: 'MyLib',
-            formats: ['es', 'umd'],
-            fileName: (format) => `my-lib.${format}.js`,
+            name: 'index',
+            fileName: (format) => `index.${format}.js`,
         },
         rollupOptions: {
             external: ['react', 'react-dom', 'styled-components', 'react-router-dom'],
-            output: [
-                {
-                    format: 'cjs',
-                    file: packageJson.main,
-                    exports: 'named',
-                    sourcemap: false,
+            output: {
+                sourcemap: false,
+                globals: {
+                    react: 'react',
+                    'react-dom': 'reactDom',
+                    'styled-components': 'styled',
+                    'react-router-dom': 'reactRouterDom',
                 },
-                {
-                    format: 'es',
-                    file: packageJson.module,
-                    exports: 'named',
-                    sourcemap: false,
-                },
-            ],
+            },
+            // output: {
+            //     // Provide global variables to use in the UMD build
+            //     // for externalized deps
+            //     globals: {
+            //         react: 'react',
+            //         reactDom: 'react-dom',
+            //         styled: 'styled-components',
+            //         reactRouterDom: 'react-router-dom',
+            //     },
+            // },
+            // output: [
+            //     {s
+            //         format: 'cjs',
+            //         file: packageJson.main,
+            //         exports: 'named',
+            //         sourcemap: false,
+            //     },
+            //     {
+            //         format: 'es',
+            //         file: packageJson.module,
+            //         exports: 'named',
+            //         sourcemap: false,
+            //     },
+            // ],
         },
     },
     resolve: {

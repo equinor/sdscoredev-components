@@ -1,8 +1,9 @@
 import React from 'react';
 import { Icon, TextField as EdsTextField, TextFieldProps } from '@equinor/eds-core-react';
 import styled from 'styled-components';
-import { InputProps, withInput } from './withInput';
+import { withInput } from './withInput';
 import { PartialPick } from '../types';
+import type { InputProps } from './withInput';
 
 const StyledTextField = styled(EdsTextField)`
     input {
