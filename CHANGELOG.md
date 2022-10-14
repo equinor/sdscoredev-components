@@ -1,3 +1,52 @@
+## [2.28.30](https://github.com/equinor/sdscoredev-components/compare/2.28.29...2.28.30) (2022-10-11)
+
+
+### Bug Fixes
+
+* remove defaultValue prop on textfield ([e076d55](https://github.com/equinor/sdscoredev-components/commit/e076d553542cc80ae5fcacd54686d6f07fa8135f))
+
+## [2.28.29](https://github.com/equinor/sdscoredev-components/compare/2.28.28...2.28.29) (2022-10-11)
+
+
+### Bug Fixes
+
+* change to empty string ([e573727](https://github.com/equinor/sdscoredev-components/commit/e573727d0da0ee50a7004aec34e2c4a97377b659))
+
+## [2.28.28](https://github.com/equinor/sdscoredev-components/compare/2.28.27...2.28.28) (2022-10-11)
+
+
+### Bug Fixes
+
+* value in textfield ([#39](https://github.com/equinor/sdscoredev-components/issues/39)) ([c9b88b9](https://github.com/equinor/sdscoredev-components/commit/c9b88b9e7bbbbf94455ee89bfdd73f7f46186e7b))
+
+## [2.28.27](https://github.com/equinor/sdscoredev-components/compare/2.28.26...2.28.27) (2022-10-07)
+
+
+### Bug Fixes
+
+* use the right data state and remove onFetch constriction ([#38](https://github.com/equinor/sdscoredev-components/issues/38)) ([3dc637d](https://github.com/equinor/sdscoredev-components/commit/3dc637dcc566310eb50e6963562fb453d05dd69b))
+
+## [2.28.26](https://github.com/equinor/sdscoredev-components/compare/2.28.25...2.28.26) (2022-10-06)
+
+
+### Bug Fixes
+
+* add hide filter button functionality ([#37](https://github.com/equinor/sdscoredev-components/issues/37)) ([2e99823](https://github.com/equinor/sdscoredev-components/commit/2e99823db0f41457e22166066812c62bfda1291e))
+
+## [2.28.25](https://github.com/equinor/sdscoredev-components/compare/2.28.24...2.28.25) (2022-10-04)
+
+
+### Bug Fixes
+
+* setForm check on cancel ([#36](https://github.com/equinor/sdscoredev-components/issues/36)) ([4b7cdbe](https://github.com/equinor/sdscoredev-components/commit/4b7cdbe45e96d6ae2ca2afd81c1cc426a74c58f1))
+
+## [2.28.24](https://github.com/equinor/sdscoredev-components/compare/2.28.23...2.28.24) (2022-10-04)
+
+
+### Bug Fixes
+
+* add drawing priority for nuggets and bars ([816a4ff](https://github.com/equinor/sdscoredev-components/commit/816a4ffef720ab099e3c722bff37caec2f65f2b7))
+
 ## [2.28.23](https://github.com/equinor/sdscoredev-components/compare/2.28.22...2.28.23) (2022-10-04)
 
 
