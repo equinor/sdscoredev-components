@@ -1,6 +1,6 @@
-import { Task, TaskBar } from 'components/Gantt/bars/types';
 import React from 'react';
 import { ReducerProp } from 'types';
+import { TaskBar } from '../../bars/types';
 // import { tooltipReducer } from './tooltipReducer';
 
 export type TooltipProps = {

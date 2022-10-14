@@ -1,8 +1,5 @@
 import React, { Ref } from 'react';
-
-import { Density } from '@equinor/eds-core-react';
-
-import { ReducerProp } from '../../types';
+import { ReducerProp } from 'types';
 import { columnSelectorReducer } from './columnSelectorReducer';
 
 export type ColumnSelectorRef = {
@@ -24,7 +21,7 @@ interface DialogStyle {
     /**
      * Whether the columns checkbox-options are in compact or comfortable mode; defaults to "comfortable"
      */
-    density?: Density;
+    density?: any;
     /**
      * The number of columns used to divide the columns options; default is `2`
      */

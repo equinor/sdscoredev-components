@@ -1,9 +1,8 @@
 import React, { createContext, ReactElement, useReducer } from 'react';
-import { GeneralStoreProps } from 'types';
+import { GeneralStoreProps, ReducerProp } from 'types';
 
 import createPersistedReducer from '../createPersistedReducer';
 import { useCombinedReducers } from '../utils';
-import { DataTableStoreProps, ReducerProp } from './types';
 
 export const StateContext = createContext({});
 export const DispatchContext = createContext({});

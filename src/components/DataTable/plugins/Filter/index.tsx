@@ -1,6 +1,6 @@
 import React, { MouseEventHandler } from 'react';
+import { ReducerProp } from 'types';
 
-import { ReducerProp } from '../../types';
 import { filterReducer } from './filterReducer';
 
 export type FilterProps = {

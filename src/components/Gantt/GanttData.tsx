@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useMemo, forwardRef, useContext } from 'react';
 import styled from 'styled-components';
-import { ViewMode } from 'types';
-import { DataTable } from 'components/DataTable';
+import { ViewMode } from '../../types';
+import { DataTable } from '../DataTable';
 import { EventOption, StylingOption } from './types/public-types';
 import { removeHiddenTasks, sortTasks } from './helpers/other-helper';
 import { ganttDateRange, isToday, seedDates } from './helpers/date-helper';

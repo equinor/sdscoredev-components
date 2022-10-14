@@ -1,5 +1,5 @@
-import { TaskBar } from 'components/Gantt/bars/types';
 import React from 'react';
+import { TaskBar } from '../bars/types';
 
 type ArrowProps = {
     taskFrom: TaskBar;

@@ -2,7 +2,7 @@ import React from 'react';
 import { Label as EdsLabel } from '@equinor/eds-core-react';
 import styled from 'styled-components';
 import { ReadOnlyValue } from './ReadOnlyValue';
-import { Tooltip } from 'components/Tooltip';
+import { Tooltip } from '../../Tooltip';
 
 export interface ReadOnlyFieldProps {
     /**
@@ -14,7 +14,7 @@ export interface ReadOnlyFieldProps {
      */
     value?: any;
     /**
-     * Text to be shown in a tooltip. 
+     * Text to be shown in a tooltip.
      * Adds a question mark icon to the right of the label
      */
     tooltip?: string;
@@ -33,8 +33,8 @@ export interface ReadOnlyFieldProps {
 }
 
 const InputWrapper = styled.div<{ width?: number }>`
-    min-width: ${(props) => props.width ? `${props.width}px` : '350px'};
-`
+    min-width: ${(props) => (props.width ? `${props.width}px` : '350px')};
+`;
 
 const Header = styled.div`
     display: grid;
@@ -42,7 +42,7 @@ const Header = styled.div`
     padding-bottom: 2px;
     width: 100%;
     white-space: nowrap;
-`
+`;
 
 const Label = styled(EdsLabel)`
     height: 16px;
@@ -50,10 +50,10 @@ const Label = styled(EdsLabel)`
     & span {
         display: inline-flex;
         align-items: center;
-        line-height: 0.750rem;
+        line-height: 0.75rem;
         color: #6f6f6f;
     }
-`
+`;
 
 export const ReadOnlyField: React.FC<ReadOnlyFieldProps> = (props: any) => {
     const { label, tooltip, width } = props;
@@ -65,7 +65,7 @@ export const ReadOnlyField: React.FC<ReadOnlyFieldProps> = (props: any) => {
                 {tooltip && <Tooltip title={tooltip} placement="top" />}
             </Header>
 
-            <ReadOnlyValue {...props} />    
+            <ReadOnlyValue {...props} />
         </InputWrapper>
     );
 };

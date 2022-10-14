@@ -1,3 +1,4 @@
+import { ColumnProps } from 'components/DataTable/Column';
 import React from 'react';
 
 export type GeneralStoreProps = {
@@ -34,3 +35,16 @@ export enum ViewMode {
     HalfYear = 1,
     Year = 0,
 }
+
+export type DataTableStoreProps = {
+    reducers: any;
+    components: (React.ReactChild | React.ReactFragment | React.ReactPortal)[];
+};
+
+export type CustomRenderProps = {
+    column?: ColumnProps;
+    item?: { [key: string]: any };
+    content: any;
+    renderProps?: { [key: string]: any };
+    depth?: number;
+};

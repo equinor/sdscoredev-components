@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { FC } from '../../types';
+import { FC } from 'types';
 
 export type DefaultQueryProps = {
     state: any;

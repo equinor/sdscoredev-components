@@ -28,7 +28,7 @@ Gantt.DataTable.displayName = 'Gantt.DataTable';
 Gantt.Toolbar.displayName = 'Gantt.Toolbar';
 
 export { Gantt };
-export { ViewMode } from 'types';
+export { ViewMode } from '../../types';
 export * from './bars/index';
 export * from './nuggets/index';
 export type { StylingOption, EventOption } from './types/public-types';

@@ -1,6 +1,5 @@
 import React, { Ref, FC } from 'react';
-
-import { ReducerProp } from '../../types';
+import { ReducerProp } from 'types';
 import { stickyHeaderReducer } from './stickyHeaderReducer';
 
 export type StickyHeaderRef = {

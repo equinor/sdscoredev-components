@@ -1,7 +1,7 @@
-import { StateContext } from 'components/Gantt/GanttStore';
-import { Task } from 'components/Gantt/bars/types';
 import React, { useContext, useMemo } from 'react';
 import styled from 'styled-components';
+import { StateContext } from '../../GanttStore';
+import { Task } from '../../bars/types';
 import { LOCALE } from '../../types/public-types';
 
 export const TaskListWrapper = styled.div`

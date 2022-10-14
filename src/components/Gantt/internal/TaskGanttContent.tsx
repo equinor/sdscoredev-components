@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { DispatchContext, StateContext } from 'components/Gantt/GanttStore';
 import { ViewMode } from 'types';
+import { StateContext } from '../GanttStore';
 import { Arrow } from './Arrow';
 import { handleTaskBySVGMouseEvent } from '../helpers/bar-helper';
 import { isKeyboardEvent } from '../helpers/other-helper';

@@ -1,6 +1,6 @@
-import { StateContext } from 'components/Gantt/GanttStore';
 import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { StateContext } from '../../GanttStore';
 
 export const GanttTable = styled.div`
     display: table;

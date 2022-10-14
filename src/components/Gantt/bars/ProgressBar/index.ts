@@ -7,8 +7,8 @@ import {
     startByX,
     taskXCoordinate,
     taskYCoordinate,
-} from 'components/Gantt/helpers/bar-helper';
-import { BarMoveAction } from 'components/Gantt/types/gantt-task-actions';
+} from '../../helpers/bar-helper';
+import { BarMoveAction } from '../../types/gantt-task-actions';
 import { ProgressBar, ProgressBarProps } from './ProgressBar';
 import { Task, TaskBar, TaskBarMouseEvent, TaskConvertOptions } from '../types';
 

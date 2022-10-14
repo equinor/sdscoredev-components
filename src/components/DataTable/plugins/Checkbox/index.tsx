@@ -1,6 +1,5 @@
 import React, { Ref } from 'react';
-
-import { ReducerProp } from '../../types';
+import { ReducerProp } from 'types';
 import { checkboxReducer } from './checkboxReducer';
 
 export type CheckboxRef = {

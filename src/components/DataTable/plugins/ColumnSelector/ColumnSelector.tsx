@@ -1,9 +1,7 @@
-import { CompactDialog, CompactDialogRef } from 'components/CompactDialog';
-import { Dialog, DialogRef } from 'components/Dialog';
 import React, { forwardRef, useContext, useImperativeHandle, useRef } from 'react';
-
 import { Button, Tooltip } from '@equinor/eds-core-react';
-
+import { CompactDialog, CompactDialogRef } from '../../../CompactDialog';
+import { Dialog, DialogRef } from '../../../Dialog';
 import { DispatchContext, StateContext } from '../../DataTableStore';
 import ColumnSelectorDialog from './ColumnSelectorDialog';
 import { ColumnSelectorProps, ColumnSelectorRef } from './index';

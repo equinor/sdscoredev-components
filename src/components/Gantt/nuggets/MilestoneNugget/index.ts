@@ -1,4 +1,4 @@
-import { taskXCoordinate, taskYCoordinate } from 'components/Gantt/helpers/bar-helper';
+import { taskXCoordinate, taskYCoordinate } from '../../helpers/bar-helper';
 import { MilestoneNugget, MilestoneNuggetProps } from './MilestoneNugget';
 import { Task, TaskBar, TaskConvertOptions } from '../../bars/types';
 

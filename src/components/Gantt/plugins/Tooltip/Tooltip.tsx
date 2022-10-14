@@ -1,6 +1,6 @@
 import { Popover, Typography } from '@equinor/eds-core-react';
-import { TaskBar } from 'components/Gantt/bars/types';
 import React, { useRef, useEffect } from 'react';
+import { TaskBar } from '../../bars/types';
 import { TooltipProps } from '.';
 
 export type InternalTooltipProps = {

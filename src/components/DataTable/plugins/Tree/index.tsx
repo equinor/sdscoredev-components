@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { ReducerProp } from '../../types';
+import { ReducerProp } from 'types';
 import { treeReducer } from './treeReducer';
 
 export type TreeProps = {

@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
-
-import { ReducerProp } from '../../types';
+import { ReducerProp } from 'types';
 import { sortReducer } from './sortReducer';
 
 export type SortProps = {

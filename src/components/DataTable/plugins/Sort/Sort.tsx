@@ -1,7 +1,6 @@
-import { getByPath } from 'components/helpers';
 import { sort } from 'fast-sort';
 import React, { useContext, useEffect } from 'react';
-
+import { getByPath } from '../../../helpers';
 import { DispatchContext, StateContext } from '../../DataTableStore';
 import { SortProps } from './index';
 

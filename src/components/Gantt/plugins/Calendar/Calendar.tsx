@@ -1,10 +1,8 @@
 /* eslint-disable no-plusplus */
-import { StateContext } from 'components/Gantt/GanttStore';
 import React, { useContext, useEffect, useRef } from 'react';
-import { ViewMode } from 'types';
-
+import { ViewMode } from '../../../../types';
+import { StateContext } from '../../GanttStore';
 import { getLocaleMonth, getWeekNumberISO8601 } from '../../helpers/date-helper';
-import { LOCALE } from '../../types/public-types';
 
 export type CalendarProps = {
     viewMode: ViewMode;

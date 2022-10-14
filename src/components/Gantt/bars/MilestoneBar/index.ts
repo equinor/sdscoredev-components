@@ -1,5 +1,5 @@
-import { dateByX, moveByX, taskXCoordinate, taskYCoordinate } from 'components/Gantt/helpers/bar-helper';
-import { BarMoveAction } from 'components/Gantt/types/gantt-task-actions';
+import { dateByX, moveByX, taskXCoordinate, taskYCoordinate } from '../../helpers/bar-helper';
+import { BarMoveAction } from '../../types/gantt-task-actions';
 import { MilestoneBar, MilestoneBarProps } from './MilestoneBar';
 import { Task, TaskBar, TaskConvertOptions } from '../types';
 

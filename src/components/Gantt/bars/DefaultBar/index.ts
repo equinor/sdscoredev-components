@@ -1,12 +1,5 @@
-import {
-    dateByX,
-    endByX,
-    moveByX,
-    startByX,
-    taskXCoordinate,
-    taskYCoordinate,
-} from 'components/Gantt/helpers/bar-helper';
-import { BarMoveAction } from 'components/Gantt/types/gantt-task-actions';
+import { dateByX, endByX, moveByX, startByX, taskXCoordinate, taskYCoordinate } from '../../helpers/bar-helper';
+import { BarMoveAction } from '../../types/gantt-task-actions';
 import { DefaultBar, DefaultBarProps } from './DefaultBar';
 import { Task, TaskBar, TaskConvertOptions } from '../types';
 

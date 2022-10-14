@@ -1,5 +1,5 @@
-import { Task, TaskBar } from 'components/Gantt/bars/types';
 import React, { useEffect, useRef } from 'react';
+import { Task, TaskBar } from '../../bars/types';
 import { TaskListHeader } from './TaskListHeader';
 import { TaskListTable } from './TaskListTable';
 

@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
-import usePersistedReducer from 'hooks/usePersistedReducer';
 import { useReducer } from 'react';
-
+import usePersistedReducer from '../hooks/usePersistedReducer';
 import createStorage from './createStorage';
 
 const createPersistedReducer = (key: string, provider = globalThis.localStorage) => {

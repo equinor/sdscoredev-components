@@ -1,8 +1,8 @@
+import { CustomRenderProps } from 'types';
 import { DataTable as BaseDataTable, DataTableProps } from './DataTable';
 import { Checkbox, CheckboxRef } from './plugins/Checkbox';
 import { Column } from './Column';
 import { ColumnSelector } from './plugins/ColumnSelector';
-import { CustomRenderProps } from './types';
 import { DefaultQuery } from './plugins/DefaultQuery';
 import { Export } from './plugins/Export';
 import { Filter } from './plugins/Filter';
@@ -13,7 +13,6 @@ import { StickyHeader } from './plugins/StickyHeader';
 import { Subrow } from './plugins/Subrow';
 import { Toolbar } from './Toolbar';
 import { Tree } from './plugins/Tree';
-
 import { checkboxReducer } from './plugins/Checkbox/checkboxReducer';
 import { columnSelectorReducer } from './plugins/ColumnSelector/columnSelectorReducer';
 import { defaultQueryReducer } from './plugins/DefaultQuery/defaultQueryReducer';
