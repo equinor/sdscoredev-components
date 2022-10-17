@@ -99,7 +99,10 @@ export const ColumnSelector = forwardRef<ColumnSelectorRef, InternalColumnSelect
         const handleResetColumns = (): void => {
             dispatch({
                 type: 'RESET_VISIBLE_COLUMNS',
-                payload: state.dataTableReducer.columns,
+                payload: {
+                    allColumns: state.dataTableReducer.columns,
+                    visibleColumns: state.columnSelectorReducer?.visibleColumns,
+                },
             });
         };
 
