@@ -1,3 +1,21 @@
+# [2.29.0](https://github.com/equinor/sdscoredev-components/compare/2.28.30...2.29.0) (2022-10-17)
+
+
+### Bug Fixes
+
+* add build command ([17f1303](https://github.com/equinor/sdscoredev-components/commit/17f1303d4480ee7a5607d18b737cfd0698451a14))
+* add timouet??? ([9b68e58](https://github.com/equinor/sdscoredev-components/commit/9b68e58a81d0fb997f89c34f715e055753727e48))
+* change command ([906a4c5](https://github.com/equinor/sdscoredev-components/commit/906a4c535c293e84d766b8dedc7382d76b2e472a))
+* did not compile properly ([88057c9](https://github.com/equinor/sdscoredev-components/commit/88057c94b9dfdbd887d221439e78d649867bbd6d))
+* exit 0 ([d311545](https://github.com/equinor/sdscoredev-components/commit/d3115451dcdff64b96a2564a389b10c33eae55b8))
+* hmm ([6d361ad](https://github.com/equinor/sdscoredev-components/commit/6d361ad69b4202aeda343dee5b96a8380c9bfa72))
+* wrong placement of dependencies ([248c894](https://github.com/equinor/sdscoredev-components/commit/248c894b88bee11dcbf95ebd002ba61442e423d2))
+
+
+### Features
+
+* DX, replace rollup with vite ([e5e2ff3](https://github.com/equinor/sdscoredev-components/commit/e5e2ff37afd01bc5b81db28228718a07f68d43f3))
+
 ## [2.28.30](https://github.com/equinor/sdscoredev-components/compare/2.28.29...2.28.30) (2022-10-11)
 
 
