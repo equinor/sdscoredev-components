@@ -58,7 +58,7 @@
     },
     "scripts": {
         "start": "tsc -w && vite build",
-        "build": "timeout 30s vite build || ( [[ $? -eq 124 ]] && \\",
+        "build": "timeout 30s vite build; exit 0",
         "preview": "vite preview",
         "storybook": "start-storybook -p 6006",
         "storybook:build": "build-storybook -o docs",
