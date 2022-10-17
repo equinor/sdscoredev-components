@@ -8,10 +8,11 @@ const watcherOptions = {};
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [react(), dts()],
+    plugins: [dts(), react()],
     build: {
         target: 'esnext',
-        sourcemap: false,
+        sourcemap: true,
+        emptyOutDir: false,
         watch: watcherOptions,
         lib: {
             entry: path.resolve(__dirname, 'src/index.ts'),
@@ -21,7 +22,7 @@ export default defineConfig({
         rollupOptions: {
             external: ['react', 'react-dom', 'styled-components', 'react-router-dom'],
             output: {
-                sourcemap: false,
+                sourcemap: true,
                 globals: {
                     react: 'react',
                     'react-dom': 'reactDom',

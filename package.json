@@ -57,7 +57,7 @@
         ]
     },
     "scripts": {
-        "start": "tsc -w && vite build",
+        "start": "vite build --watch",
         "build": "timeout 30s vite build; exit 0",
         "preview": "vite preview",
         "storybook": "start-storybook -p 6006",
