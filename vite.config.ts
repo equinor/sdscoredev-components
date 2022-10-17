@@ -8,18 +8,7 @@ const watcherOptions = {};
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    server: {
-        host: 'localhost',
-        port: 3005,
-    },
-    plugins: [
-        // {
-        //     ...typescript({ tsconfig: './tsconfig.json' }),
-        //     apply: 'build',
-        // },
-        react(),
-        dts(),
-    ],
+    plugins: [react(), dts()],
     build: {
         target: 'esnext',
         sourcemap: false,
@@ -40,30 +29,6 @@ export default defineConfig({
                     'react-router-dom': 'reactRouterDom',
                 },
             },
-            // output: {
-            //     // Provide global variables to use in the UMD build
-            //     // for externalized deps
-            //     globals: {
-            //         react: 'react',
-            //         reactDom: 'react-dom',
-            //         styled: 'styled-components',
-            //         reactRouterDom: 'react-router-dom',
-            //     },
-            // },
-            // output: [
-            //     {s
-            //         format: 'cjs',
-            //         file: packageJson.main,
-            //         exports: 'named',
-            //         sourcemap: false,
-            //     },
-            //     {
-            //         format: 'es',
-            //         file: packageJson.module,
-            //         exports: 'named',
-            //         sourcemap: false,
-            //     },
-            // ],
         },
     },
     resolve: {
