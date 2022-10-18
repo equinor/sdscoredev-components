@@ -25,6 +25,27 @@ const reducer = (state = initialState, action: any): ColumnSelectorState => {
         return visibleColumns;
     };
 
+    const getDefaultVisibleColumnsReset = (columns: {
+        allColumns: Array<ReactNode>;
+        visibleColumns?: Array<string>;
+    }) => {
+        const { allColumns, visibleColumns } = columns;
+        const newVisibleColumns: Array<string> = [];
+
+        allColumns.forEach((column: any) => {
+            if (typeof column.props.optional === 'undefined') {
+                if (column.props.id) newVisibleColumns.push(column.props.id);
+            } // column that start with "__" will be included if visible
+            else if (column.props?.id.startsWith('__')) {
+                if (visibleColumns?.includes(column.props.id)) {
+                    newVisibleColumns.push(column.props.id);
+                }
+            }
+        });
+
+        return newVisibleColumns;
+    };
+
     switch (action.type) {
         case SET_COLUMNS:
             // If state is set by cache return state
@@ -44,7 +65,7 @@ const reducer = (state = initialState, action: any): ColumnSelectorState => {
             if (action.payload) {
                 return {
                     ...state,
-                    visibleColumns: getDefaultVisibleColumns(action.payload),
+                    visibleColumns: getDefaultVisibleColumnsReset(action.payload),
                 };
             }
             return state;

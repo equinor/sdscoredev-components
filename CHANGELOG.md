@@ -1,3 +1,17 @@
+## [2.29.3](https://github.com/equinor/sdscoredev-components/compare/2.29.2...2.29.3) (2022-10-17)
+
+
+### Bug Fixes
+
+* don't reset visible columns that start with "__" ([#40](https://github.com/equinor/sdscoredev-components/issues/40)) ([6ea01f2](https://github.com/equinor/sdscoredev-components/commit/6ea01f291a662497c59944d080bf2e38fa680f01))
+
+## [2.29.2](https://github.com/equinor/sdscoredev-components/compare/2.29.1...2.29.2) (2022-10-17)
+
+
+### Bug Fixes
+
+* make hot reload work ([f329e0e](https://github.com/equinor/sdscoredev-components/commit/f329e0e5b92be1dc485519e11b21438129112dfa))
+
 ## [2.29.1](https://github.com/equinor/sdscoredev-components/compare/2.29.0...2.29.1) (2022-10-17)
 
 
