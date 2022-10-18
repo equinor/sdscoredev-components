@@ -1,3 +1,10 @@
+## [2.29.5](https://github.com/equinor/sdscoredev-components/compare/2.29.4...2.29.5) (2022-10-18)
+
+
+### Bug Fixes
+
+* add theme prop ([41bc559](https://github.com/equinor/sdscoredev-components/commit/41bc559b665fff6361271d3a2564b16136a2d910))
+
 ## [2.29.4](https://github.com/equinor/sdscoredev-components/compare/2.29.3...2.29.4) (2022-10-18)
 
 
