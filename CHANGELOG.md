@@ -1,3 +1,10 @@
+## [2.29.4](https://github.com/equinor/sdscoredev-components/compare/2.29.3...2.29.4) (2022-10-18)
+
+
+### Bug Fixes
+
+* change how fill works ([f7e7483](https://github.com/equinor/sdscoredev-components/commit/f7e748335c470709620fd2af8b7c27f5fbea46d4))
+
 ## [2.29.3](https://github.com/equinor/sdscoredev-components/compare/2.29.2...2.29.3) (2022-10-17)
 
 
