@@ -9,10 +9,11 @@ export const MilestoneWrapper = styled.g`
 
 export type MilestoneNuggetProps = {
     onDoubleClick?: (item: TaskBar<MilestoneNuggetProps>) => void;
+    theme?: any;
 };
 
 export const MilestoneNugget: React.FC<Bar<MilestoneNuggetProps>> = (props) => {
-    const { taskBar, onDoubleClick } = props;
+    const { taskBar, onDoubleClick, theme } = props;
 
     const transform = `rotate(45 ${taskBar.x1 + taskBar.height * 0.356} 
     ${taskBar.y + taskBar.height * 0.85})`;
@@ -24,7 +25,7 @@ export const MilestoneNugget: React.FC<Bar<MilestoneNuggetProps>> = (props) => {
     return (
         <MilestoneWrapper tabIndex={0}>
             <rect
-                fill="#9d9d9d"
+                fill={theme?.fill}
                 x={taskBar.x1}
                 width={taskBar.height}
                 y={taskBar.y}
@@ -32,7 +33,7 @@ export const MilestoneNugget: React.FC<Bar<MilestoneNuggetProps>> = (props) => {
                 rx={2}
                 ry={2}
                 transform={transform}
-                style={{ userSelect: 'none', strokeWidth: 1, stroke: '#3e3e3e' }}
+                style={{ userSelect: 'none', strokeWidth: 1, stroke: '#333' }}
                 onDoubleClick={handleDoubleClick}
             />
         </MilestoneWrapper>
