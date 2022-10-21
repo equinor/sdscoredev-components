@@ -1,3 +1,10 @@
+## [2.29.6](https://github.com/equinor/sdscoredev-components/compare/2.29.5...2.29.6) (2022-10-21)
+
+
+### Bug Fixes
+
+* ReadOnlyField ([aaaac00](https://github.com/equinor/sdscoredev-components/commit/aaaac00a3eb72471e02390a2f744e400d9903355))
+
 ## [2.29.5](https://github.com/equinor/sdscoredev-components/compare/2.29.4...2.29.5) (2022-10-18)
 
 
