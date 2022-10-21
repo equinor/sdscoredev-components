@@ -30,6 +30,7 @@ export interface ReadOnlyFieldProps {
      * Type of data to be shown
      */
     variant?: 'html' | 'text';
+    'data-cy'?: string;
 }
 
 const InputWrapper = styled.div<{ width?: number }>`
@@ -55,6 +56,11 @@ const Label = styled(EdsLabel)`
     }
 `;
 
+const Empty = styled.div`
+    margin-top: 4px;
+    height: 32px;
+`;
+
 export const ReadOnlyField: React.FC<ReadOnlyFieldProps> = (props: any) => {
     const { label, tooltip, width } = props;
 
@@ -66,6 +72,7 @@ export const ReadOnlyField: React.FC<ReadOnlyFieldProps> = (props: any) => {
             </Header>
 
             <ReadOnlyValue {...props} />
+            <Empty />
         </InputWrapper>
     );
 };
