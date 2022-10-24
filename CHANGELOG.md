@@ -1,3 +1,10 @@
+## [2.29.7](https://github.com/equinor/sdscoredev-components/compare/2.29.6...2.29.7) (2022-10-24)
+
+
+### Bug Fixes
+
+* set row-cursor to default if onClick is falsy ([#41](https://github.com/equinor/sdscoredev-components/issues/41)) ([4b2b080](https://github.com/equinor/sdscoredev-components/commit/4b2b080fe36dcc054c8ece3b5b5ae82cb548ea89))
+
 ## [2.29.6](https://github.com/equinor/sdscoredev-components/compare/2.29.5...2.29.6) (2022-10-21)
 
 
