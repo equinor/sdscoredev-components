@@ -1,13 +1,15 @@
-import { Table } from '@equinor/eds-core-react';
 import React, { forwardRef, RefAttributes, useContext } from 'react';
 import styled from 'styled-components';
+
+import { Table } from '@equinor/eds-core-react';
+
 import { StateContext } from '../DataTableStore';
 import CheckboxCell from '../plugins/Checkbox/CheckboxCell';
 import SubrowCell from '../plugins/Subrow/SubrowCell';
 import { RowProps } from '../Row';
 import Cell from './Cell';
 
-const DefaultRow = styled(Table.Row)`
+const DefaultRow = styled(Table.Row)<{ hasOnClick?: boolean }>`
     display: table-row;
     vertical-align: middle;
     text-decoration: none;
@@ -18,7 +20,7 @@ const DefaultRow = styled(Table.Row)`
     background-size: 1px 8px;
 
     &:hover {
-        cursor: pointer;
+        cursor: ${({ hasOnClick }) => (hasOnClick ? 'pointer' : 'default')};
         background: rgba(247, 247, 247, 1);
     }
     & > td {
@@ -63,7 +65,7 @@ const Row: React.FC<TableRowProps & RowProps & RefAttributes<HTMLTableRowElement
     if (!data || !state.dataTableReducer.columns) return <></>;
 
     return (
-        <DefaultRow role="row" ref={ref} style={getStyle && getStyle(data)}>
+        <DefaultRow role="row" ref={ref} style={getStyle && getStyle(data)} hasOnClick={!!onClick}>
             {/* ---- Checkbox plugin implementation start --------------------------------------- */}
             {state.checkboxReducer?.visible && (
                 <CheckboxCell key={`checkbox-header-${data.id}`} item={data} getKey={plugins.checkbox.props.getKey} />
