@@ -20,7 +20,7 @@ const DefaultRow = styled(Table.Row)<{ hasOnClick?: boolean }>`
     background-size: 1px 8px;
 
     &:hover {
-        cursor: ${({ hasOnClick }) => (hasOnClick ? 'cursor' : 'default')};
+        cursor: ${({ hasOnClick }) => (hasOnClick ? 'pointer' : 'default')};
         background: rgba(247, 247, 247, 1);
     }
     & > td {
