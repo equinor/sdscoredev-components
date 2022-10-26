@@ -1,3 +1,10 @@
+## [2.29.8](https://github.com/equinor/sdscoredev-components/compare/2.29.7...2.29.8) (2022-10-26)
+
+
+### Bug Fixes
+
+* hide "Optional columns" if no optional column is found ([#42](https://github.com/equinor/sdscoredev-components/issues/42)) ([d1d5f58](https://github.com/equinor/sdscoredev-components/commit/d1d5f5883fe982fb639283bf193638988d566999))
+
 ## [2.29.7](https://github.com/equinor/sdscoredev-components/compare/2.29.6...2.29.7) (2022-10-24)
 
 
