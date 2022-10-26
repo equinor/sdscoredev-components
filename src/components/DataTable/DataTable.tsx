@@ -76,6 +76,10 @@ export type DataTableProps = {
      */
     compact?: boolean;
     /**
+     * Use native Eds-sticky header
+     */
+    nativeSticky?: boolean;
+    /**
      * Sets the maximum width of table
      */
     width?: number;
@@ -114,6 +118,7 @@ export const DataTable = React.memo((props: DataTableProps) => {
         onFetch,
         onScroll,
         compact = false,
+        nativeSticky,
         width,
         toolbarDOM,
         paginationDOM,
@@ -185,7 +190,7 @@ export const DataTable = React.memo((props: DataTableProps) => {
                              * Header can be provided with plugins.
                              * Children must contain only the column definitions.
                              */}
-                            <Header id={id} plugins={{ subrow, checkbox, sort }}>
+                            <Header id={id} plugins={{ subrow, checkbox, sort }} nativeSticky={nativeSticky}>
                                 {components.filter((x: any) => x.type.displayName === 'DataTable.Column')}
                             </Header>
 

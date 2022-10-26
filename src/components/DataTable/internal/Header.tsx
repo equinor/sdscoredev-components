@@ -16,9 +16,10 @@ const Head = styled(Table.Head)`
 type HeaderProps = {
     id: string;
     plugins?: any;
+    nativeSticky?: boolean;
 };
 
-const Header: React.FC<HeaderProps> = ({ children, id, plugins }) => {
+const Header: React.FC<HeaderProps> = ({ children, id, plugins, nativeSticky }) => {
     const state: any = useContext(StateContext);
     const dispatch: any = useContext(DispatchContext);
 
@@ -44,7 +45,7 @@ const Header: React.FC<HeaderProps> = ({ children, id, plugins }) => {
     if (!state.dataTableReducer.columns) return <></>;
 
     return (
-        <Head>
+        <Head sticky={nativeSticky}>
             <Table.Row id={`dataTable.headerRow.${id}`}>
                 {/* ---- Checkbox plugin implementation start --------------------- */}
                 {state.checkboxReducer?.visible && <CheckboxHeaderCell key="checkbox-header" />}
