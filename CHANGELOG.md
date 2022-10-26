@@ -1,3 +1,10 @@
+# [2.30.0](https://github.com/equinor/sdscoredev-components/compare/2.29.8...2.30.0) (2022-10-26)
+
+
+### Features
+
+* add nativeSticky prop (trigger release) ([#44](https://github.com/equinor/sdscoredev-components/issues/44)) ([9942d7f](https://github.com/equinor/sdscoredev-components/commit/9942d7ff84bc20888499a333ae52e738dce53922))
+
 ## [2.29.8](https://github.com/equinor/sdscoredev-components/compare/2.29.7...2.29.8) (2022-10-26)
 
 
