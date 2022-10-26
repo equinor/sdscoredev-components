@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import styled from 'styled-components';
 
 import { Checkbox, Density, EdsProvider, Typography } from '@equinor/eds-core-react';
@@ -72,6 +72,13 @@ const ColumnSelectorDialog: FC<Props> = ({
     visibleColumns,
     onCheck,
 }) => {
+    const hasOptionalColumns = useMemo(() => {
+        if (columns && Array.isArray(columns)) {
+            return columns.some((x: any) => x.props.optional && !x.props.id.startsWith('__'));
+        }
+        return false;
+    }, [columns]);
+
     return (
         <>
             <GroupsWrapper maxHight={maxHight} maxWidth={maxWidth} overflowX={overflowX} overflowY={overflowY}>
@@ -92,22 +99,24 @@ const ColumnSelectorDialog: FC<Props> = ({
                                 ))}
                         </OptionsGroupWrapper>
                     </span>
-                    <span>
-                        <Typography variant="h6">Optional columns</Typography>
-                        <OptionsGroupWrapper columnsNumber={columnsNumber} rowsNumber={rowsNumber}>
-                            {columns
-                                .filter((x: any) => x.props.optional && !x.props.id.startsWith('__'))
-                                .map((column: any) => (
-                                    <CheckBoxWrapper key={column.props.id}>
-                                        <Checkbox
-                                            checked={visibleColumns?.includes(column.props.id)}
-                                            onChange={() => onCheck(column)}
-                                        />
-                                        <CheckBoxLabel>{column.props.children}</CheckBoxLabel>
-                                    </CheckBoxWrapper>
-                                ))}
-                        </OptionsGroupWrapper>
-                    </span>
+                    {hasOptionalColumns && (
+                        <span>
+                            <Typography variant="h6">Optional columns</Typography>
+                            <OptionsGroupWrapper columnsNumber={columnsNumber} rowsNumber={rowsNumber}>
+                                {columns
+                                    .filter((x: any) => x.props.optional && !x.props.id.startsWith('__'))
+                                    .map((column: any) => (
+                                        <CheckBoxWrapper key={column.props.id}>
+                                            <Checkbox
+                                                checked={visibleColumns?.includes(column.props.id)}
+                                                onChange={() => onCheck(column)}
+                                            />
+                                            <CheckBoxLabel>{column.props.children}</CheckBoxLabel>
+                                        </CheckBoxWrapper>
+                                    ))}
+                            </OptionsGroupWrapper>
+                        </span>
+                    )}
                 </EdsProvider>
             </GroupsWrapper>
         </>
