@@ -19,7 +19,6 @@ import { Tree } from './plugins/Tree/Tree';
 import { dataTableReducer } from './reducers/dataTableReducer';
 
 const Wrapper = styled.div<{ width?: number }>`
-    /* overflow-x: auto; */
     max-width: ${(props) => (props.width ? `${props.width}px` : '100%')};
     width: ${(props) => (!props.width ? '100%' : 'unset')};
     white-space: nowrap;
