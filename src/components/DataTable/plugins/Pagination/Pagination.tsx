@@ -111,9 +111,9 @@ export const Pagination: React.FC<InternalPaginationProps> = ({
     if (!pageSize) return <></>;
 
     return (
-        <Wrapper id="paginationWrapper" ref={paginationRef}>
+        <Wrapper id="sds_paginationWrapper" ref={paginationRef}>
             <NativeSelect
-                id="pageSelector"
+                id="sds_pageSelector"
                 key={`pageSize-${+pageSize}`} // Must have key so that it rerender on context update
                 label=""
                 value={+pageSize}
