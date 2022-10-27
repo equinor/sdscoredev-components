@@ -158,7 +158,7 @@ export const DataTable = React.memo((props: DataTableProps) => {
 
     return (
         <DataTableStore components={components} reducers={{ dataTableReducer, ...reducers }}>
-            <Wrapper width={width}>
+            <Wrapper id="sds_tableWrapper" width={width}>
                 {/**
                  * Top toolbar will list all toolbars with placement beginning with string `top` | `right` | `left`
                  * or plugins `export` | `columnSelector` | `filter`
@@ -184,7 +184,7 @@ export const DataTable = React.memo((props: DataTableProps) => {
                     )}
 
                     <EdsProvider density={compact ? 'compact' : 'comfortable'}>
-                        <Table style={{ width: '100%' }} {...getDataProps(props)}>
+                        <Table id="sds_table" style={{ width: '100%' }} {...getDataProps(props)}>
                             {/**
                              * Header can be provided with plugins.
                              * Children must contain only the column definitions.
