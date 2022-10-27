@@ -1,3 +1,10 @@
+## [2.30.1](https://github.com/equinor/sdscoredev-components/compare/2.30.0...2.30.1) (2022-10-27)
+
+
+### Bug Fixes
+
+* add IDs to wrappers ([#45](https://github.com/equinor/sdscoredev-components/issues/45)) ([cc4d4dc](https://github.com/equinor/sdscoredev-components/commit/cc4d4dc9d80bdec4548bea9fb9157d97ab1466fb))
+
 # [2.30.0](https://github.com/equinor/sdscoredev-components/compare/2.29.8...2.30.0) (2022-10-26)
 
 
