@@ -1,3 +1,10 @@
+## [2.30.3](https://github.com/equinor/sdscoredev-components/compare/2.30.2...2.30.3) (2022-11-01)
+
+
+### Bug Fixes
+
+* add clear callback to ref ([33b5d8a](https://github.com/equinor/sdscoredev-components/commit/33b5d8a56d00edde6c1c6324e0c6ed04b992df29))
+
 ## [2.30.2](https://github.com/equinor/sdscoredev-components/compare/2.30.1...2.30.2) (2022-11-01)
 
 
