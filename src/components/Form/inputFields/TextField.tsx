@@ -12,12 +12,13 @@ const StyledTextField = styled(EdsTextField)`
     }
 `;
 export const TextField: React.FC<InputProps & PartialPick<TextFieldProps, 'unit' | 'inputRef'>> = (props: any) => {
-    const { id, value, error, onChange, unit, inputRef } = props;
+    const { id, value, error, onChange, unit, inputRef, disabled } = props;
 
     return (
         <StyledTextField
             id={id}
             label=""
+            disabled={disabled}
             inputRef={inputRef}
             unit={unit}
             onChange={onChange}

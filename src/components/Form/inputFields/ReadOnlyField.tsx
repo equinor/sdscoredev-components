@@ -26,6 +26,7 @@ export interface ReadOnlyFieldProps {
      * If set, it overrides the min-width value
      */
     width?: number;
+    meta?: string;
     /**
      * Type of data to be shown
      */
@@ -34,15 +35,20 @@ export interface ReadOnlyFieldProps {
 }
 
 const InputWrapper = styled.div<{ width?: number }>`
-    min-width: ${(props) => (props.width ? `${props.width}px` : '350px')};
+    min-width: ${(props) => (props.width ? `${props.width}px` : 'unset')};
+    flex: ${(props) => (props.width ? 'unset' : '1')};
 `;
 
 const Header = styled.div`
-    display: grid;
-    grid-template-columns: min-content auto auto;
+    display: flex;
+
     padding-bottom: 2px;
     width: 100%;
     white-space: nowrap;
+    justify-content: space-between;
+    &:last-child {
+        float: right;
+    }
 `;
 
 const Label = styled(EdsLabel)`
@@ -62,13 +68,16 @@ const Empty = styled.div`
 `;
 
 export const ReadOnlyField: React.FC<ReadOnlyFieldProps> = (props: any) => {
-    const { label, tooltip, width } = props;
+    const { label, tooltip, width, meta } = props;
 
     return (
         <InputWrapper width={width}>
             <Header>
-                {label && <Label label={label} />}
-                {tooltip && <Tooltip title={tooltip} placement="top" />}
+                <div>
+                    {label && <Label label={label} />}
+                    {tooltip && <Tooltip title={tooltip} placement="top" />}
+                </div>
+                {meta && <Label label={meta} />}
             </Header>
 
             <ReadOnlyValue {...props} />
