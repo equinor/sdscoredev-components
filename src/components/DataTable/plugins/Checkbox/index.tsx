@@ -9,6 +9,7 @@ export type CheckboxRef = {
      */
     check: (item: any) => void;
     uncheck: (item: any) => void;
+    clear: () => void;
 } | null;
 
 export type CheckboxProps = {

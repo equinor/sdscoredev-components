@@ -54,7 +54,15 @@ export const Checkbox = forwardRef<CheckboxRef, CheckboxProps>((props: CheckboxP
         dispatch({ type: 'SET_SELECTED', payload: result });
     };
 
-    useImperativeHandle(ref, () => ({ check, uncheck }), [state.checkboxReducer.selected]);
+    /**
+     * Exposes a way to clear all checked
+     *
+     */
+    const clear = () => {
+        dispatch({ type: 'SET_SELECTED', payload: [] });
+    };
+
+    useImperativeHandle(ref, () => ({ check, uncheck, clear }), [state.checkboxReducer.selected]);
 
     return <></>;
 });
