@@ -45,7 +45,7 @@ npm link ..\thelma-web\node_modules\styled-components
 4. In your local project run
 
 ```
-npm install ../sdscoredev-components
+npm link ../sdscoredev-components
 ```
 
 5. Run
