@@ -1,3 +1,10 @@
+## [2.30.4](https://github.com/equinor/sdscoredev-components/compare/2.30.3...2.30.4) (2022-11-16)
+
+
+### Bug Fixes
+
+* remove styled-components ([046d78d](https://github.com/equinor/sdscoredev-components/commit/046d78dee58b69638f5a7108b7d440b857c38830))
+
 ## [2.30.3](https://github.com/equinor/sdscoredev-components/compare/2.30.2...2.30.3) (2022-11-01)
 
 
