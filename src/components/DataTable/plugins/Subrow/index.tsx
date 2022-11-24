@@ -3,9 +3,10 @@ import { ReducerProp } from 'types';
 import { subrowReducer } from './subrowReducer';
 
 export type SubrowProps = {
-    render: Function;
     columnHeader: string | Element;
     columnRender: Function | Element;
+    render?: JSX.Element | Function | [Function, { [key: string]: any }];
+
 };
 
 const Subrow: FC<SubrowProps> & ReducerProp = (props) => {

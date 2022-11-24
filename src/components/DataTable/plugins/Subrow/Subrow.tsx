@@ -42,10 +42,25 @@ export const Subrow: React.FC<InternalSubrowProps & SubrowProps> = (props) => {
         const elements = document.getElementsByClassName('dataTableTh');
         return elements.length;
     };
+    const RenderRow = () => {
+        /* If render prop is an element */
+        if (render && typeof render === 'function') {
+            return render({ data });
+        }
+
+        /* If render prop is an array */
+        if (render && Array.isArray(render)) {
+            return render[0]({
+                data,
+                renderProps: render[1],
+            });
+        }
+        return null;
+     }
 
     return (
         <DefaultRow role="row">
-            <StyledCell colSpan={getCellCount()}>{render({ data })}</StyledCell>
+            <StyledCell colSpan={getCellCount()}>{RenderRow()}</StyledCell>
         </DefaultRow>
     );
 };
