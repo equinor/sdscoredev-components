@@ -1,3 +1,10 @@
+## [2.30.5](https://github.com/equinor/sdscoredev-components/compare/2.30.4...2.30.5) (2022-11-24)
+
+
+### Bug Fixes
+
+* add renderprops to subrow ([23ab6f6](https://github.com/equinor/sdscoredev-components/commit/23ab6f62fcde67c77a4e133e1bc4c9a9fbbd413f))
+
 ## [2.30.4](https://github.com/equinor/sdscoredev-components/compare/2.30.3...2.30.4) (2022-11-16)
 
 
