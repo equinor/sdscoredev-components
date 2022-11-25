@@ -1,3 +1,10 @@
+## [2.30.6](https://github.com/equinor/sdscoredev-components/compare/2.30.5...2.30.6) (2022-11-25)
+
+
+### Bug Fixes
+
+* add id for Gantt ([d78588f](https://github.com/equinor/sdscoredev-components/commit/d78588f9fab798446f1c62d97550104a93869f48))
+
 ## [2.30.5](https://github.com/equinor/sdscoredev-components/compare/2.30.4...2.30.5) (2022-11-24)
 
 
