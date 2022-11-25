@@ -8,6 +8,7 @@ import { Task } from './bars/types';
 import { Toolbar } from './plugins/Toolbar/Toolbar';
 
 export type GanttProps = {
+    id: string;
     tasks: Task[];
     children?: any;
     focus?: any[];
@@ -37,7 +38,7 @@ export type GanttProps = {
     StylingOption;
 
 export const Gantt: React.FC<GanttProps & RefAttributes<HTMLDivElement>> = forwardRef((props, ref) => {
-    const { children, reducers = [] } = props;
+    const { children, reducers = [], id } = props;
     const [tasks, setTasks] = useState<Task[]>(props.tasks);
 
     const components = Children.toArray(children);
@@ -54,7 +55,11 @@ export const Gantt: React.FC<GanttProps & RefAttributes<HTMLDivElement>> = forwa
         <GanttStore components={components} reducers={{ ganttReducer, ...reducers }}>
             <div ref={ref}>
                 {topToolbar && (
-                    <Toolbar {...topToolbar.props} id="gantt-toolbar-top" components={topToolbar.props.components} />
+                    <Toolbar
+                        {...topToolbar.props}
+                        id={`Gantt-${id}-ToolbarTop`}
+                        components={topToolbar.props.components}
+                    />
                 )}
                 <GanttData
                     {...props}
@@ -65,7 +70,7 @@ export const Gantt: React.FC<GanttProps & RefAttributes<HTMLDivElement>> = forwa
                 {bottomToolbar && (
                     <Toolbar
                         {...bottomToolbar.props}
-                        id="gantt-toolbar-bottom"
+                        id={`Gantt-${id}-ToolbarBottom`}
                         components={bottomToolbar.props.components}
                     />
                 )}

@@ -22,6 +22,7 @@ a datatable generate over time is avoided by abstractions and combined reducers.
 ## Development
 
 1. Clone the repo from [https://github.com/equinor/sdscoredev-components](https://github.com/equinor/sdscoredev-components) as a sibling to your local project.
+
 2. Run
 
 ```
@@ -32,20 +33,14 @@ cd sdscoredev-components && npm install
 
 ```
 npm link ..\thelma-web\node_modules\react
-```
-
-```
 npm link ..\thelma-web\node_modules\react-dom
-```
-
-```
 npm link ..\thelma-web\node_modules\styled-components
 ```
 
-4. In your local project run
+4. In your main project you need to delete `/node_modules/equinor-sdscoredev-components`, and then make a link by running:
 
 ```
-npm link ../sdscoredev-components
+Start-Process -FilePath "$env:comspec" -ArgumentList "/k", "mklink", "/j", "`"/node_modules/equinor-sdscoredev-components`"","`"../sdscoredev-components`""
 ```
 
 5. Run
