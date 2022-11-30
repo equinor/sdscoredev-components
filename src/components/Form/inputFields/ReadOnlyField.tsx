@@ -17,7 +17,7 @@ export interface ReadOnlyFieldProps {
      * Text to be shown in a tooltip.
      * Adds a question mark icon to the right of the label
      */
-    tooltip?: string;
+    tooltip?: string | null;
     /**
      * Displays `* Requeried*  to the top right of the input field.
      */

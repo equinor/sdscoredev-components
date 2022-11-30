@@ -189,7 +189,7 @@ export type MenuItemProps = {
     /**
      * Custom tooltip, if set to false, disable tooltip for this item
      */
-    tooltip?: boolean | string;
+    tooltip?: boolean | string | null;
 };
 
 export const MenuItem: React.FC<MenuItemProps & LayoutProps> = (props) => {
