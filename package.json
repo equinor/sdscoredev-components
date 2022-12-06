@@ -106,9 +106,9 @@
         "styled-components": ">=5"
     },
     "dependencies": {
-        "@equinor/eds-core-react": "0.20.4",
-        "@equinor/eds-icons": "^0.12.0",
-        "@equinor/eds-tokens": "^0.7.1",
+        "@equinor/eds-core-react": "0.27.0",
+        "@equinor/eds-icons": "^0.17.0",
+        "@equinor/eds-tokens": "^0.9.0",
         "@types/react": "17.0.49",
         "@vitejs/plugin-react": "^2.1.0",
         "casual-browserify": "^1.5.19-2",

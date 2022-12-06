@@ -29,15 +29,19 @@ export const Tooltip: React.FC<InternalTooltipProps> = (props) => {
                 x = taskListWidth + evt.clientX - rect.left - tooltipRef.current.offsetWidth / 2;
 
                 /** Set new tooltip position based on mouse and bar position */
+                tooltipRef.current.style.top = 'unset';
+                tooltipRef.current.style.left = 'unset';
                 tooltipRef.current.style.transform = `translate(${x}px, ${y}px)`;
             }
         };
 
         /** Calculate y position and also add listener for mouse move event */
         if (tooltipRef.current && containerRef?.current && taskListRef?.current && task) {
-            y = -(containerRef.current.offsetHeight - calendarHeight - task.y) - 10 - 11;
+            y = -(calendarHeight - task.y) + 28;
 
             /** Set new tooltip position based on mouse and bar position */
+            tooltipRef.current.style.top = 'unset';
+            tooltipRef.current.style.left = 'unset';
             tooltipRef.current.style.transform = `translate(${x}px, ${y}px)`;
 
             containerRef.current.addEventListener('mousemove', handleMouseMove);

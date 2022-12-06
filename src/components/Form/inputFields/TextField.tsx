@@ -8,7 +8,7 @@ import type { InputProps } from './withInput';
 const StyledTextField = styled(EdsTextField)`
     input {
         padding-top: 7px;
-        height: 37px;
+        /* height: 37px; */
     }
 `;
 export const TextField: React.FC<InputProps & PartialPick<TextFieldProps, 'unit' | 'inputRef'>> = (props: any) => {
@@ -23,7 +23,7 @@ export const TextField: React.FC<InputProps & PartialPick<TextFieldProps, 'unit'
             unit={unit}
             onChange={onChange}
             value={value || ''}
-            variant={error ? 'error' : 'default'}
+            variant={error ? 'error' : undefined}
             helperText={error}
             helperIcon={error && <Icon name="error_filled" title="Error" />}
         />
