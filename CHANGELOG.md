@@ -1,3 +1,10 @@
+## [2.30.8](https://github.com/equinor/sdscoredev-components/compare/2.30.7...2.30.8) (2022-12-06)
+
+
+### Bug Fixes
+
+* missmatch versions ([0b3b7e8](https://github.com/equinor/sdscoredev-components/commit/0b3b7e864b2cb25f8674854a372482e9a913494a))
+
 ## [2.30.7](https://github.com/equinor/sdscoredev-components/compare/2.30.6...2.30.7) (2022-11-30)
 
 
