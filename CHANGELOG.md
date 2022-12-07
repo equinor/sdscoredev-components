@@ -1,3 +1,10 @@
+## [2.30.9](https://github.com/equinor/sdscoredev-components/compare/2.30.8...2.30.9) (2022-12-07)
+
+
+### Bug Fixes
+
+* clear gantt if no data ([aabb3ad](https://github.com/equinor/sdscoredev-components/commit/aabb3ada374fc9f375d194e7e61ddf2fb1335004))
+
 ## [2.30.8](https://github.com/equinor/sdscoredev-components/compare/2.30.7...2.30.8) (2022-12-06)
 
 
