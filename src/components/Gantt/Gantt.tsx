@@ -39,7 +39,6 @@ export type GanttProps = {
 
 export const Gantt: React.FC<GanttProps & RefAttributes<HTMLDivElement>> = forwardRef((props, ref) => {
     const { children, reducers = [], id } = props;
-    const [tasks, setTasks] = useState<Task[]>(props.tasks);
 
     const components = Children.toArray(children);
     const grid: any = components.find((x: JSX.Element) => x.type.displayName === 'Gantt.Grid');
@@ -61,12 +60,7 @@ export const Gantt: React.FC<GanttProps & RefAttributes<HTMLDivElement>> = forwa
                         components={topToolbar.props.components}
                     />
                 )}
-                <GanttData
-                    {...props}
-                    tasks={props.tasks}
-                    onSetTasks={setTasks}
-                    plugins={{ grid, taskList, tooltip, dataTable, toolbar }}
-                />
+                <GanttData {...props} tasks={props.tasks} plugins={{ grid, taskList, tooltip, dataTable, toolbar }} />
                 {bottomToolbar && (
                     <Toolbar
                         {...bottomToolbar.props}

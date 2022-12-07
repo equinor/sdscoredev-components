@@ -40,12 +40,13 @@ npm link ..\thelma-web\node_modules\styled-components
 4. In your main project you need to delete `/node_modules/equinor-sdscoredev-components`, and then make a link by running:
 
 ```
-Start-Process -FilePath "$env:comspec" -ArgumentList "/k", "mklink", "/j", "`"/node_modules/equinor-sdscoredev-components`"","`"../sdscoredev-components`""
+Start-Process -FilePath "$env:comspec" -ArgumentList "/k", "mklink", "/j", "`"node_modules/equinor-sdscoredev-components`"","`"../sdscoredev-components`""
 ```
 
 5. Run
 
 ```
+npm dedupe
 npm start
 ```
 

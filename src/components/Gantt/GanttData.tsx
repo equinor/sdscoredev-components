@@ -83,7 +83,6 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         onClick,
         onDelete,
         onSelect,
-        onSetTasks,
         onExpanderClick,
         readonly,
     } = props;
@@ -251,6 +250,9 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
             dispatch({ type: 'SET_TICK_WIDTH', payload: tickWidth });
             setBars(bars);
             setNuggets(nuggets);
+        } else {
+            setBars([]);
+            setNuggets([]);
         }
     }, [verticalGanttContainerRef.current, props.tasks, focus, viewMode, onExpanderClick]);
 
@@ -471,12 +473,6 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         if (newSelectedTask) setSelectedTask(newSelectedTask);
     };
 
-    const handleTasks = (tasks: TaskBar[]) => {
-        if (onSetTasks) {
-            onSetTasks(tasks);
-        }
-    };
-
     const handleExpanderClick = (task: Task) => {
         if (onExpanderClick && task.hideChildren !== undefined) {
             onExpanderClick({ ...task, hideChildren: !task.hideChildren });
@@ -499,7 +495,7 @@ export const GanttData = forwardRef<any, GanttDataProps>((props: GanttDataProps,
         arrowIndent,
         setGanttEvent,
         setFailedTask,
-        setBars: handleTasks,
+        setBars: () => {},
         setSelectedTask: handleSelectedTask,
         onDateChange,
         onProgressChange,
