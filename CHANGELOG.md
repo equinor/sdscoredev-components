@@ -1,3 +1,10 @@
+## [2.30.10](https://github.com/equinor/sdscoredev-components/compare/2.30.9...2.30.10) (2022-12-09)
+
+
+### Bug Fixes
+
+* update resolver for column content ([33aa917](https://github.com/equinor/sdscoredev-components/commit/33aa9172059cbab881c143ff33db8bf068a1cbb1))
+
 ## [2.30.9](https://github.com/equinor/sdscoredev-components/compare/2.30.8...2.30.9) (2022-12-07)
 
 
