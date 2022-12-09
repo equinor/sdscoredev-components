@@ -31,8 +31,13 @@ export const onNextFrame = (callback: FrameRequestCallback) => {
     });
 };
 
-export const resolve = (object: any, path: string | undefined, defaultValue: any = {}) =>
-    path?.split('.').reduce((o: { [x: string]: any }, p: string | number) => (o ? o[p] : defaultValue), object);
+export const resolve = (object: any, path: string | undefined, defaultValue: any = {}) => {
+    if (path && path.startsWith('__')) {
+        // eslint-disable-next-line no-param-reassign
+        path = path.slice(2);
+    }
+    return path?.split('.').reduce((o: { [x: string]: any }, p: string | number) => (o ? o[p] : defaultValue), object);
+};
 
 export const makeId = () => {
     let id = '';
