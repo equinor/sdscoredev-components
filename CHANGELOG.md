@@ -1,3 +1,10 @@
+## [2.30.11](https://github.com/equinor/sdscoredev-components/compare/2.30.10...2.30.11) (2022-12-12)
+
+
+### Bug Fixes
+
+* update parser to handle or in any ([8703cc8](https://github.com/equinor/sdscoredev-components/commit/8703cc82ab395bd6dd839472a64a6acef9c00ad1))
+
 ## [2.30.10](https://github.com/equinor/sdscoredev-components/compare/2.30.9...2.30.10) (2022-12-09)
 
 
