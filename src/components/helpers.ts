@@ -1,6 +1,16 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-plusplus */
+
+/**
+ * combineReducers is a function that takes an arbitrary number of reducers as parameters and returns a single reducer.
+ *
+ * @param reducers: any - An arbitrary number of reducers
+ * @returns (state: any, action: any) - A single reducer
+ *
+ * The function iterates over the reducers passed in as parameters and applies each one to the state and action provided.
+ *
+ */
 export const combineReducers = (...reducers: any) => {
     return (state: any, action: any) => {
         // eslint-disable-next-line no-restricted-syntax

@@ -1,4 +1,14 @@
 /* eslint-disable no-plusplus */
+
+/**
+ * combineReducers is a function that takes an arbitrary number of reducers as parameters and returns a single reducer.
+ *
+ * @param reducers: any - An arbitrary number of reducers
+ * @returns (state: any, action: any) - A single reducer
+ *
+ * The function iterates over the reducers passed in as parameters and applies each one to the state and action provided.
+ *
+ */
 export const combineReducers = (...reducers: any) => {
     // eslint-disable-next-line consistent-return
     return (state: any, action: any) => {
@@ -10,6 +20,19 @@ export const combineReducers = (...reducers: any) => {
     };
 };
 
+/**
+ * useCombinedReducers
+ *
+ * This function provides a hook to manage multiple reducers in one object.
+ *
+ * @param {any} combinedReducers - An object containing all the individual reducers
+ *
+ * @returns {any[]} - An array containing the state and dispatch objects
+ *
+ * The state object will contain the state of each individual reducer, stored in a key-value pair.
+ *
+ * The dispatch object will call the action function for each individual reducer.
+ */
 export const useCombinedReducers = (combinedReducers: any) => {
     const state = Object.keys(combinedReducers).reduce(
         (acc: any, key: any) => ({ ...acc, [key]: combinedReducers[key][0] }),
@@ -31,6 +54,20 @@ export const onNextFrame = (callback: FrameRequestCallback) => {
     });
 };
 
+/**
+ * resolve() is a function that takes in 3 parameters:
+ *
+ * @param {any} object
+ *  The object that contains the value to be accessed.
+ *
+ * @param {string|undefined} path
+ *  The path to the desired value. If starting with '__', it will be removed from the path.
+ *
+ * @param {any} defaultValue
+ *  The default value if the desired value is not found.
+ *
+ * The function will return the value at the specified path in the object, or the default value if the path does not exist.
+ */
 export const resolve = (object: any, path: string | undefined, defaultValue: any = {}) => {
     if (path && path.startsWith('__')) {
         // eslint-disable-next-line no-param-reassign
@@ -39,7 +76,14 @@ export const resolve = (object: any, path: string | undefined, defaultValue: any
     return path?.split('.').reduce((o: { [x: string]: any }, p: string | number) => (o ? o[p] : defaultValue), object);
 };
 
-export const makeId = () => {
+/**
+ * makeId
+ *
+ * This function is used to generate a random alphanumeric ID of length 6.
+ *
+ * @returns {string} - A random alphanumeric ID of length 6.
+ */
+export const makeId = (): string => {
     let id = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     for (let i = 0; i < 6; i++) {
@@ -49,16 +93,15 @@ export const makeId = () => {
 };
 
 /**
- * Set the value for the given object for the given path
- * where the path can be a nested key represented with dot notation
+ * set() is a function that sets a value of a property in a given object, or creates the property if it does not exist.
  *
- * @param {object} obj   The object on which to set the given value
- * @param {string} path  The dot notation path to the nested property where the value should be set
- * @param {mixed}  value The value that should be set
- * @return {mixed}
+ * @param {Record<string, string | number | object>} obj - The object to be used
+ * @param {string} path - The path of the property to be set. Strings separated by a period (.) can be used to access nested properties.
+ * @param {*} value - The value to be set
  *
+ * @returns {void}
  */
-export const set = (obj: Record<string, string | number | object>, path: string, value: any) => {
+export const set = (obj: Record<string, string | number | object>, path: string, value: any): void => {
     const usableObj = typeof obj === 'object' ? obj : {};
     const keys = Array.isArray(path) ? path : path.split('.');
     let curStep: any = usableObj;
@@ -78,7 +121,14 @@ export const set = (obj: Record<string, string | number | object>, path: string,
     curStep[finalStep] = value;
 };
 
-export const getDataProps = (props: any) => {
+/**
+ * getDataProps() function takes in an object of props (props: any) and returns an object containing all props that start with 'data-'.
+ *
+ * @param {any} props - An object containing props
+ *
+ * @returns {object} - An object containing props that start with 'data-'
+ */
+export const getDataProps = (props: any): object => {
     const result = {};
     Object.keys(props).forEach((key: any, index: number) => {
         if (key.startsWith('data-')) result[key] = props[key];
@@ -87,6 +137,14 @@ export const getDataProps = (props: any) => {
     return result;
 };
 
+/**
+ * camelize()
+ *
+ * Function to convert a string to camelCase.
+ *
+ * @param {string} str - The string to be converted to camelCase.
+ * @returns {string} - The string in camelCase format.
+ */
 export const camelize = (str: string) => {
     return str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase());
 };

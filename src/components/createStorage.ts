@@ -1,3 +1,11 @@
+/**
+ * createStorage()
+ *
+ * Creates a storage object which can be used to store and retrieve data.
+ *
+ * @param {any} provider - The object used to store and retrieve data.
+ * @returns {Object} An object with two methods, get() and set(), which can be used to store and retrieve data from the provider.
+ */
 const createStorage = (provider: any) => ({
     get(key: string, initialState: any) {
         const json = provider.getItem(key);

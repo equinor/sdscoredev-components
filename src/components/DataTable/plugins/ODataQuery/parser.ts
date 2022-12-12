@@ -8,6 +8,7 @@
 import { mergeAdvanced } from 'object-merge-advanced';
 /* eslint-disable no-restricted-globals */
 import buildQuery, { ITEM_ROOT } from 'odata-query';
+import f from 'odata-filter-builder';
 
 interface Filter {
     [index: string]: any;
@@ -40,7 +41,7 @@ class FilterParser {
         this.sort = '';
         this.pagination = this.getPagination(config.defaultPagination) || {};
         this.any = false;
-        this.or = false;
+        this.or = true;
 
         this.init();
     }
@@ -67,26 +68,46 @@ class FilterParser {
         return this;
     }
 
-    composeQuery = (obj: any) => {
-        const run = (obj: any) => {
-            for (const k in obj) {
-                if (typeof obj[k] === 'object') {
-                    // Only wrap with `and` if child object contains multiple objects and the current parse is not `or`
-                    // TODO: try refactor this.or
-                    if (Object.keys(obj[k]).length > 1 && typeof Object.values(obj[k])[0] === 'object' && !this.or) {
-                        run(obj[k]);
-                    }
-                }
-            }
-        };
+    /**
+     * Iterate over an object, transforming it in-place.
+     *
+     * This function will iterate over the keys of the given object, and perform
+     * the following actions:
+     *
+     * - If a key is "any" and the corresponding value is an object with more than
+     *   one property, the value will be replaced with a new object containing an
+     *   "or" property, whose value is an array of objects containing each of the
+     *   original properties of the value object.
+     * - If a key has a value that is an object, this function will be called
+     *   recursively on the value object.
+     *
+     * @param obj - The object to iterate over.
+     *
+     * @returns The transformed object.
+     */
+    iterate = (obj: any) => {
+        Object.keys(obj).forEach((key) => {
+            if (key === 'any' && Object.keys(obj[key]).length > 1) {
+                const arr: Array<any> = [];
 
-        run(obj);
+                Object.keys(obj[key]).forEach((nestedKey: any) => {
+                    arr.push({ [nestedKey]: obj[key][nestedKey] });
+                });
+
+                obj[key] = {
+                    or: arr,
+                };
+            } else if (typeof obj[key] === 'object' && obj[key] !== null) {
+                this.iterate(obj[key]);
+            }
+        });
+
         return obj;
     };
 
     parse = () => {
         if (this.filter) {
-            this.filter = this.composeQuery(this.filter);
+            this.filter = this.iterate(this.filter);
         }
 
         let query = buildQuery({ filter: this.filter, orderBy: this.sort, ...this.pagination });
@@ -99,6 +120,12 @@ class FilterParser {
         return query;
     };
 
+    /**
+     * Strip single quotes from date/time values in a query string.
+     *
+     * @param {string} query The query string to process.
+     * @returns {string} The processed query string with single quotes removed from date/time values.
+     */
     private stripSingleQuoteFromDateTime = (query: string) => {
         const regex = / ge [\w\d\S]*| le [\w\d\S]*/gi;
         return query.replace(regex, (match: any) => match.replaceAll("'", ''));
