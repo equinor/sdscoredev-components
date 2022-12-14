@@ -17,7 +17,7 @@ export const Checkbox = forwardRef<CheckboxRef, CheckboxProps>((props: CheckboxP
     }, [state.checkboxReducer.selected]);
 
     /**
-     * Optional prop 'visible' to show or hide the checkbox column
+     * Optional prop 'visible' to show or hide the checkbox column.
      */
     useEffect(() => {
         if (typeof visible !== 'undefined') {
