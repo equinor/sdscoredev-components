@@ -1,3 +1,10 @@
+# [2.31.0](https://github.com/equinor/sdscoredev-components/compare/2.30.11...2.31.0) (2022-12-14)
+
+
+### Features
+
+* checkbox checked based on item value ([#46](https://github.com/equinor/sdscoredev-components/issues/46)) ([2404044](https://github.com/equinor/sdscoredev-components/commit/2404044647860a07b39f75c59fd0d63228d5298c))
+
 ## [2.30.11](https://github.com/equinor/sdscoredev-components/compare/2.30.10...2.30.11) (2022-12-12)
 
 
