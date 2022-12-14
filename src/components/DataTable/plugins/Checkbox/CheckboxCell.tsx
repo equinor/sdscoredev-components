@@ -54,7 +54,7 @@ const CheckboxCell: React.FC<CheckboxCellProps> = ({ item, getKey }) => {
                         checked={
                             state.checkboxReducer.selected.findIndex(
                                 (x: any) => x[getKey || 'id'] === item[getKey || 'id'],
-                            ) >= 0 || item?.isChecked
+                            ) >= 0
                         }
                         readOnly
                     />
