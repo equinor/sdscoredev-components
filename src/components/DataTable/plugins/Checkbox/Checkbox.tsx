@@ -33,7 +33,7 @@ export const Checkbox = forwardRef<CheckboxRef, CheckboxProps>((props: CheckboxP
     }, []);
 
     /**
-     * Exposes a way to check a checkbox by reference
+     * Exposes a way to check a checkbox by reference.
      *
      * @param item any
      */
