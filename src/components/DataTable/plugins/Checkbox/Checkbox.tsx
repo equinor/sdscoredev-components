@@ -4,7 +4,7 @@ import { DispatchContext, StateContext } from '../../DataTableStore';
 import { CheckboxProps, CheckboxRef } from './index';
 
 export const Checkbox = forwardRef<CheckboxRef, CheckboxProps>((props: CheckboxProps, ref) => {
-    const { onChange, getKey, visible } = props;
+    const { onChange, getKey, visible, preCheckedItems } = props;
     const state: any = useContext(StateContext);
     // const init = useRef(0);
     const dispatch: any = useContext(DispatchContext);
@@ -24,6 +24,13 @@ export const Checkbox = forwardRef<CheckboxRef, CheckboxProps>((props: CheckboxP
             dispatch({ type: 'SET_VISIBLE', payload: visible });
         }
     }, [visible]);
+
+    useEffect(() => {
+        if (preCheckedItems && preCheckedItems.length) {
+            const result = [...new Set(...state.checkboxReducer.selected, preCheckedItems)];
+            dispatch({ type: 'SET_SELECTED', payload: result });
+        }
+    }, []);
 
     /**
      * Exposes a way to check a checkbox by reference
