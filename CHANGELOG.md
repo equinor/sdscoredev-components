@@ -1,3 +1,10 @@
+## [2.31.3](https://github.com/equinor/sdscoredev-components/compare/2.31.2...2.31.3) (2022-12-15)
+
+
+### Bug Fixes
+
+* dialog centering ([#52](https://github.com/equinor/sdscoredev-components/issues/52)) ([630dec2](https://github.com/equinor/sdscoredev-components/commit/630dec2d5ec13d18febf263b40fefbb88939eb01))
+
 ## [2.31.2](https://github.com/equinor/sdscoredev-components/compare/2.31.1...2.31.2) (2022-12-14)
 
 
