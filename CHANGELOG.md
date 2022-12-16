@@ -1,3 +1,31 @@
+## [2.31.3](https://github.com/equinor/sdscoredev-components/compare/2.31.2...2.31.3) (2022-12-15)
+
+
+### Bug Fixes
+
+* dialog centering ([#52](https://github.com/equinor/sdscoredev-components/issues/52)) ([630dec2](https://github.com/equinor/sdscoredev-components/commit/630dec2d5ec13d18febf263b40fefbb88939eb01))
+
+## [2.31.2](https://github.com/equinor/sdscoredev-components/compare/2.31.1...2.31.2) (2022-12-14)
+
+
+### Bug Fixes
+
+* trigger release ([#51](https://github.com/equinor/sdscoredev-components/issues/51)) ([3e5e6bb](https://github.com/equinor/sdscoredev-components/commit/3e5e6bbb8bbbd86f9921d7e2a005395b5cc4068f))
+
+## [2.31.1](https://github.com/equinor/sdscoredev-components/compare/2.31.0...2.31.1) (2022-12-14)
+
+
+### Bug Fixes
+
+* trigger release ([#48](https://github.com/equinor/sdscoredev-components/issues/48)) ([cd7832b](https://github.com/equinor/sdscoredev-components/commit/cd7832b64a8a02be1d87f0d9b871c1a366c5158d))
+
+# [2.31.0](https://github.com/equinor/sdscoredev-components/compare/2.30.11...2.31.0) (2022-12-14)
+
+
+### Features
+
+* checkbox checked based on item value ([#46](https://github.com/equinor/sdscoredev-components/issues/46)) ([2404044](https://github.com/equinor/sdscoredev-components/commit/2404044647860a07b39f75c59fd0d63228d5298c))
+
 ## [2.30.11](https://github.com/equinor/sdscoredev-components/compare/2.30.10...2.30.11) (2022-12-12)
 
 

@@ -31,6 +31,11 @@ export type CheckboxProps = {
      * Optional prop to show or hide the checkbox column
      */
     visible?: boolean;
+    /**
+     * Optional prop to show items as checked
+     */
+    preCheckedItems?: Array<any>;
+
 };
 
 const Checkbox: React.FC<CheckboxProps> & ReducerProp = (props) => {
