@@ -38,6 +38,14 @@ export const Checkbox = forwardRef<CheckboxRef, CheckboxProps>((props: CheckboxP
         dispatch({ type: 'SET_SELECTED', payload: result });
     };
 
+    const checkMany = (item: Array<any>) => {
+        let result = [];
+
+        result = [...new Set([...state.checkboxReducer.selected, ...item])];
+
+        dispatch({ type: 'SET_SELECTED', payload: result });
+    };
+
     /**
      * Exposes a way to uncheck a checkbox by reference
      *
@@ -62,7 +70,7 @@ export const Checkbox = forwardRef<CheckboxRef, CheckboxProps>((props: CheckboxP
         dispatch({ type: 'SET_SELECTED', payload: [] });
     };
 
-    useImperativeHandle(ref, () => ({ check, uncheck, clear }), [state.checkboxReducer.selected]);
+    useImperativeHandle(ref, () => ({ check, uncheck, clear, checkMany }), [state.checkboxReducer.selected]);
 
     return <></>;
 });

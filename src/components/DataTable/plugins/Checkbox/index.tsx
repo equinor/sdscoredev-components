@@ -8,6 +8,8 @@ export type CheckboxRef = {
      * @param item any
      */
     check: (item: any) => void;
+    checkMany: (item: Array<any>) => void;
+
     uncheck: (item: any) => void;
     clear: () => void;
 } | null;
