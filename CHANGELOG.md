@@ -1,3 +1,10 @@
+# [2.32.0](https://github.com/equinor/sdscoredev-components/compare/2.31.3...2.32.0) (2022-12-16)
+
+
+### Features
+
+* add check many to checkbox ([54301c7](https://github.com/equinor/sdscoredev-components/commit/54301c79b55d000f544ff018d3fb12c24afc05ca))
+
 ## [2.31.3](https://github.com/equinor/sdscoredev-components/compare/2.31.2...2.31.3) (2022-12-15)
 
 
