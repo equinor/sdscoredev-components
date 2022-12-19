@@ -77,22 +77,21 @@ class FilterParser {
 
         let query = buildQuery({ filter: payload, orderBy: this.sort, ...this.pagination });
 
-        // TODO: Implement this rewrite later
-        // const i = query.indexOf('any(technicalobjects');
+        const i = query.indexOf('any(technicalobjects');
 
-        // if (i !== -1) {
-        //     const re = /(\(technicalobjects)/g;
-        //     query = query.replace(re, '(i');
-        // }
+        if (i !== -1) {
+            const re = /(\(technicalobjects)/g;
+            query = query.replace(re, '(i');
+        }
 
-        // const j = query.indexOf('any(technicalobject/childtechnicalobjects');
+        const j = query.indexOf('any(technicalobject/childtechnicalobjects');
 
-        // if (j !== -1) {
-        //     const re = /(\(technicalobject\/childtechnicalobjects)/g;
-        //     query = query.replace(re, '(p');
-        //     const te = /(:technicalobject\/childtechnicalobjects)/g;
-        //     query = query.replace(te, ':p');
-        // }
+        if (j !== -1) {
+            const re = /(\(technicalobject\/childtechnicalobjects)/g;
+            query = query.replace(re, '(p');
+            const te = /(:technicalobject\/childtechnicalobjects)/g;
+            query = query.replace(te, ':p');
+        }
 
         query = this.stripSingleQuoteFromDateTime(query);
 
