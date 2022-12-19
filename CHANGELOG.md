@@ -1,3 +1,10 @@
+## [2.32.2](https://github.com/equinor/sdscoredev-components/compare/2.32.1...2.32.2) (2022-12-19)
+
+
+### Bug Fixes
+
+* cannot handle slash in child fitler parsing ([d76834c](https://github.com/equinor/sdscoredev-components/commit/d76834c3162a1a2b967612291376eb5a10a1f358))
+
 ## [2.32.1](https://github.com/equinor/sdscoredev-components/compare/2.32.0...2.32.1) (2022-12-19)
 
 
