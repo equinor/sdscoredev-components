@@ -1,14 +1,4 @@
-/* eslint-disable no-cond-assign */
-/* eslint-disable no-const-assign */
-/* eslint-disable guard-for-in */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable no-prototype-builtins */
-/* eslint-disable no-plusplus */
-/* eslint-disable no-param-reassign */
-import { mergeAdvanced } from 'object-merge-advanced';
-/* eslint-disable no-restricted-globals */
 import buildQuery, { ITEM_ROOT } from 'odata-query';
-import f from 'odata-filter-builder';
 
 interface Filter {
     [index: string]: any;
@@ -30,20 +20,32 @@ class FilterParser {
 
     logging: boolean;
 
-    any: boolean;
-
-    or: boolean;
-
     constructor(params: URLSearchParams, config: FilterParserConfiguration) {
         this.filter = {};
         this.params = params;
         this.logging = config.logging || false;
         this.sort = '';
         this.pagination = this.getPagination(config.defaultPagination) || {};
-        this.any = false;
-        this.or = true;
-
         this.init();
+    }
+
+    getParsedUrlFilter() {
+        try {
+            // eslint-disable-next-line no-restricted-globals
+            const params = new URLSearchParams(location.search);
+            const value = params.get('filter');
+
+            if (value) {
+                const str = value.toString();
+                const decoded = decodeURIComponent(str);
+                const parsed = JSON.parse(decoded);
+                if (parsed) return parsed;
+            }
+        } catch (err) {
+            console.log(err);
+        }
+
+        return null;
     }
 
     init() {
@@ -61,61 +63,37 @@ class FilterParser {
             } else if (key === 'pagination') {
                 this.pagination = this.getPagination(value);
             } else {
-                this.filter = mergeAdvanced(this.filter, this.getFilter(value, key), {});
+                this.filter = this.getParsedUrlFilter();
             }
         });
 
         return this;
     }
 
-    /**
-     * Iterate over an object, transforming it in-place.
-     *
-     * This function will iterate over the keys of the given object, and perform
-     * the following actions:
-     *
-     * - If a key is "any" and the corresponding value is an object with more than
-     *   one property, the value will be replaced with a new object containing an
-     *   "or" property, whose value is an array of objects containing each of the
-     *   original properties of the value object.
-     * - If a key has a value that is an object, this function will be called
-     *   recursively on the value object.
-     *
-     * @param obj - The object to iterate over.
-     *
-     * @returns The transformed object.
-     */
-    iterate = (obj: any) => {
-        Object.keys(obj).forEach((key) => {
-            if (key === 'any' && Object.keys(obj[key]).length > 1) {
-                const arr: Array<any> = [];
-
-                Object.keys(obj[key]).forEach((nestedKey: any) => {
-                    arr.push({ [nestedKey]: obj[key][nestedKey] });
-                });
-
-                obj[key] = {
-                    or: arr,
-                };
-            } else if (typeof obj[key] === 'object' && obj[key] !== null) {
-                this.iterate(obj[key]);
-            }
+    parse = () => {
+        const payload = Object.keys(this.filter).map((x: any) => {
+            return this.filter[x];
         });
 
-        return obj;
-    };
+        let query = buildQuery({ filter: payload, orderBy: this.sort, ...this.pagination });
 
-    parse = () => {
-        if (this.filter) {
-            this.filter = this.iterate(this.filter);
-        }
+        // const i = query.indexOf('any(technicalobjects');
 
-        let query = buildQuery({ filter: this.filter, orderBy: this.sort, ...this.pagination });
+        // if (i !== -1) {
+        //     const re = /(\(technicalobjects)/g;
+        //     query = query.replace(re, '(i');
+        // }
+
+        // const j = query.indexOf('any(technicalobject/childtechnicalobjects');
+
+        // if (j !== -1) {
+        //     const re = /(\(technicalobject\/childtechnicalobjects)/g;
+        //     query = query.replace(re, '(p');
+        //     const te = /(:technicalobject\/childtechnicalobjects)/g;
+        //     query = query.replace(te, ':p');
+        // }
+
         query = this.stripSingleQuoteFromDateTime(query);
-
-        if (this.logging) {
-            console.log('  \u25C9 OUTPUT: ', query);
-        }
 
         return query;
     };
@@ -126,202 +104,10 @@ class FilterParser {
      * @param {string} query The query string to process.
      * @returns {string} The processed query string with single quotes removed from date/time values.
      */
-    private stripSingleQuoteFromDateTime = (query: string) => {
+    private stripSingleQuoteFromDateTime = (query: string): string => {
         const regex = / ge [\w\d\S]*| le [\w\d\S]*/gi;
         return query.replace(regex, (match: any) => match.replaceAll("'", ''));
     };
-
-    /**
-     * Check if url query value contains a comma character, then it will
-     * be treated as an array.
-     * @param value url query param value
-     * @returns FilterParser
-     */
-    isCommaSeparatedString = (value: string) => value.includes(',');
-
-    stdTimezoneOffset = () => {
-        const jan = new Date(0, 1);
-        const jul = new Date(6, 1);
-        return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
-    };
-
-    isDstObserved = (today: Date) => today.getTimezoneOffset() < this.stdTimezoneOffset();
-
-    isDateString = (str: any): boolean => {
-        if (typeof str !== 'string') return false;
-        // TODO: Some values must fit with maximum months and days of month.
-        const regex = /^(19|20)[0-9][0-9]-[0-1][0-9]-[0-3][0-9]$/g;
-        const found = str.match(regex);
-        if (found) return true;
-
-        return false;
-    };
-
-    private getFilter(value: any, key: string) {
-        if (key.startsWith('*')) {
-            key = key.slice(1);
-            this.any = true;
-        } else if (key.includes('|')) {
-            this.or = true;
-        } else {
-            this.any = false;
-        }
-
-        if (key.endsWith('>')) {
-            return this.getGreaterThanFilter(value, key);
-        }
-
-        if (key.endsWith('<')) {
-            return this.getLesserThanFilter(value, key);
-        }
-
-        if (key.endsWith('[]')) {
-            return this.getArrayFilter(value, key);
-        }
-
-        if (key.endsWith('[str]')) {
-            return this.getStringArrayFilter(value, key);
-        }
-
-        if (value.includes('|')) {
-            return this.getOrArrayFilter(value, key);
-        }
-
-        if (value.endsWith('*') && value.startsWith('*')) {
-            return this.getContainsFilter(value, key);
-        }
-
-        return this.getDefaultFilter(value, key);
-    }
-
-    /**
-     * Handler for url query param that has a key that contain a `>` character at the end.
-     * Will be treated as a `greater than` value in odata
-     * @param value url query param value. Accepts `number` or `yyyy-MM-dd`
-     * @param key url query param key
-     * @returns FilterParser
-     */
-    private getGreaterThanFilter(value: any, key: string) {
-        // Removes the '>' at the end
-        key = key.slice(0, -1);
-
-        if (this.isDateString(value)) {
-            value = new Date(value);
-            const dts = this.isDstObserved(value) ? 0 : 60;
-            value = new Date(value.valueOf() + (value.getTimezoneOffset() - dts) * 60 * 1000).toISOString();
-        } else {
-            value = parseFloat(value);
-        }
-
-        const result: Filter = { ge: value };
-        return this.appendKeys(key, result);
-    }
-
-    /**
-     * Handler for url query param that has a key that contain a `<` character at the end.
-     * Will be treated as a `lesser than` value in odata
-     * @param value url query param value. Accepts `number` or `yyyy-MM-dd`
-     * @param key url query param key
-     * @returns FilterParser
-     */
-    private getLesserThanFilter(value: any, key: string) {
-        // Removes the '<' at the end
-        key = key.slice(0, -1);
-
-        if (this.isDateString(value)) {
-            value = new Date(value);
-            const dts = this.isDstObserved(value) ? 0 : 60;
-            value = new Date(value.valueOf() - (value.getTimezoneOffset() - dts) * 60 * 1000).toISOString();
-        } else {
-            value = parseFloat(value);
-        }
-
-        const result: Filter = { le: value };
-        return this.appendKeys(key, result);
-    }
-
-    /**
-     * Handler for url query param that has no special characters.
-     * Will be treated as an `equal` value in odata
-     * @param value url query param value.
-     * @param key url query param key
-     * @returns FilterParser
-     */
-    private getDefaultFilter(value: any, key: string) {
-        // eslint-disable-next-line no-nested-ternary
-        value = value === 'true' ? true : value === 'false' ? false : value;
-        return this.appendKeys(key, value);
-    }
-
-    /**
-     * Handler for url query param that has a key that contain `[]` character at the end.
-     * Will be treated as an `and array` value in odata
-     * @param value url query param value
-     * @param key url query param key
-     * @returns FilterParser
-     */
-    private getArrayFilter(value: any, key: string) {
-        // Removes '[]' at the end
-        key = key.slice(0, -2);
-        const result: Filter = { in: this.parseArray(value) };
-
-        return this.appendKeys(key, result);
-    }
-
-    /**
-     * Handler for url query param that has a key that contain `[str]` character at the end.
-     * Will be treated as an `and array` value with strings in odata
-     * @param value url query param value
-     * @param key url query param key
-     * @returns FilterParser
-     */
-    private getStringArrayFilter(value: any, key: string) {
-        // Removes '[str]' at the end
-        key = key.slice(0, -5);
-        const result: Filter = { in: this.parseStringArray(value) };
-
-        return this.appendKeys(key, result);
-    }
-
-    /**
-     * Handler for url query param that has a value that contain `|` character.
-     * Will be treated as an `or array` value in odata
-     * @param value url query param value. An array with objects
-     * @param key url query param key
-     * @returns FilterParser
-     */
-    private getOrArrayFilter(value: any, key: string) {
-        this.or = true;
-        const values = value.split('|').map((x: string) => {
-            const parsed = JSON.parse(x);
-            return this.getFilter(parsed[Object.keys(parsed)[0]], Object.keys(parsed)[0]);
-        });
-        const result: Filter = { or: values };
-        return this.appendKeys(key, result);
-    }
-
-    /**
-     * Handler for url query param that has a value that beginns and ends with `*` character.
-     * Will be treated as a `contains` value in odata
-     * @param value url query param value.
-     * @param key url query param key
-     * @returns FilterParser
-     */
-    private getContainsFilter(value: any, key: string) {
-        value = value.substring(1, value.length - 1);
-        const result: Filter = [
-            ...new Set(key.split('|').map((x: any) => ({ [`tolower(${x})`]: { contains: value.toLowerCase() } }))),
-        ];
-        return this.appendKeys(ITEM_ROOT, { or: result });
-
-        // const g = f('or')
-
-        // key.split('|').forEach(x => {
-        //     g.contains(y => y.toLower(x), value.toLowerCase());
-        // })
-
-        // return g.toString()
-    }
 
     /**
      * Handler for url query param that has key `sort`.
@@ -356,64 +142,6 @@ class FilterParser {
 
         return { skip, top };
     };
-
-    /**
-     * Converts the url query param key to an array. If the key is `trigger.id`,
-     * this function will return an array `["trigger", "id"]`.
-     * @param value url query param key
-     * @returns Array<string>
-     */
-    private parseKeys = (value: string): Array<string> => {
-        const items = value.split('.');
-        return items.length > 0 ? items : [value];
-    };
-
-    private parseArray = (value: any): Array<string> => {
-        const items = value.split(',');
-
-        if (items.length > 0) {
-            const parsed = items.map((x: any) => (!isNaN(x) ? parseFloat(x) : x));
-            return parsed;
-        }
-
-        return !isNaN(value) ? parseFloat(value) : value;
-    };
-
-    private parseStringArray = (value: any): Array<string> => {
-        const items = value.split(',');
-
-        if (items.length > 0) {
-            return items;
-        }
-
-        return value;
-    };
-
-    /**
-     * Appends `key=>value` pairs to the result. In the loop it will check if
-     * we will wrap the key with `any`, that is if the key in the url query begins with char `*`
-     * @param key string, example: `labels.id`
-     * @param result Filter
-     * @returns
-     */
-    private appendKeys(key: string, result: Filter) {
-        const keys = this.parseKeys(key);
-        const n = keys.length;
-
-        for (let i = n - 1; i >= 0; i--) {
-            if (i === 0 && this.any) {
-                result = { [keys[i]]: { any: result } };
-            } else {
-                result = { [keys[i]]: result };
-            }
-        }
-
-        if (this.logging) {
-            console.log('  \u25CB PARSED: ', result);
-        }
-
-        return result;
-    }
 }
 
 export default FilterParser;
