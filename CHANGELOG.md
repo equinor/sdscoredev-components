@@ -1,3 +1,10 @@
+## [2.32.1](https://github.com/equinor/sdscoredev-components/compare/2.32.0...2.32.1) (2022-12-19)
+
+
+### Bug Fixes
+
+* trigger release ([7d29423](https://github.com/equinor/sdscoredev-components/commit/7d29423596e080925ec87fc3aad28e55bbcc4f10))
+
 # [2.32.0](https://github.com/equinor/sdscoredev-components/compare/2.31.3...2.32.0) (2022-12-16)
 
 
