@@ -77,6 +77,7 @@ class FilterParser {
 
         let query = buildQuery({ filter: payload, orderBy: this.sort, ...this.pagination });
 
+        // TODO: Implement this rewrite later
         // const i = query.indexOf('any(technicalobjects');
 
         // if (i !== -1) {
