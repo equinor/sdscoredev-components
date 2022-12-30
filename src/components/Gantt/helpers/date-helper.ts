@@ -110,7 +110,6 @@ export const ganttDateRange = (tasks: Task[], viewMode: ViewMode) => {
         if (task.end > end) {
             end = task.end;
         }
-        console.log(new Date(start));
         /**
          * Check to see if nugget is present and recalculate the dates
          */
