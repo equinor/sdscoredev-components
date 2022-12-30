@@ -36,14 +36,18 @@ export const getCachedDateTimeFormat = (
  * @returns
  */
 export const addToDate = (date: Date, quantity: number, scale: DateHelperScales) => {
+    let existingDate = date;
+    if (typeof existingDate === 'string') {
+        existingDate = new Date(date);
+    }
     const newDate = new Date(
-        date.getFullYear() + (scale === 'year' ? quantity : 0),
-        date.getMonth() + (scale === 'month' ? quantity : 0),
-        date.getDate() + (scale === 'day' ? quantity : 0),
-        date.getHours() + (scale === 'hour' ? quantity : 0),
-        date.getMinutes() + (scale === 'minute' ? quantity : 0),
-        date.getSeconds() + (scale === 'second' ? quantity : 0),
-        date.getMilliseconds() + (scale === 'millisecond' ? quantity : 0),
+        existingDate.getFullYear() + (scale === 'year' ? quantity : 0),
+        existingDate.getMonth() + (scale === 'month' ? quantity : 0),
+        existingDate.getDate() + (scale === 'day' ? quantity : 0),
+        existingDate.getHours() + (scale === 'hour' ? quantity : 0),
+        existingDate.getMinutes() + (scale === 'minute' ? quantity : 0),
+        existingDate.getSeconds() + (scale === 'second' ? quantity : 0),
+        existingDate.getMilliseconds() + (scale === 'millisecond' ? quantity : 0),
     );
     return newDate;
 };
@@ -70,8 +74,12 @@ export const startOfDate = (date: Date, scale: DateHelperScales) => {
         const maxScore = scores.indexOf(scale);
         return scores.indexOf(_scale) <= maxScore;
     };
+    let existingDate = date;
+    if (typeof existingDate === 'string') {
+        existingDate = new Date(date);
+    }
     const newDate = new Date(
-        date.getFullYear(),
+        existingDate.getFullYear(),
         shouldReset('year') ? 0 : date.getMonth(),
         shouldReset('month') ? 1 : date.getDate(),
         shouldReset('day') ? 0 : date.getHours(),
@@ -102,7 +110,7 @@ export const ganttDateRange = (tasks: Task[], viewMode: ViewMode) => {
         if (task.end > end) {
             end = task.end;
         }
-
+        console.log(new Date(start));
         /**
          * Check to see if nugget is present and recalculate the dates
          */

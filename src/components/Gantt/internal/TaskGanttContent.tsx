@@ -66,10 +66,10 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
     useEffect(() => {
         const { tickWidth } = state.gridReducer;
         const dateDelta =
-            state.ganttReducer.dates[1].getTime() -
-            state.ganttReducer.dates[0].getTime() -
-            state.ganttReducer.dates[1].getTimezoneOffset() * 60 * 1000 +
-            state.ganttReducer.dates[0].getTimezoneOffset() * 60 * 1000;
+            state.ganttReducer?.dates[1]?.getTime() -
+            state.ganttReducer?.dates[0]?.getTime() -
+            state.ganttReducer?.dates[1]?.getTimezoneOffset() * 60 * 1000 +
+            state.ganttReducer?.dates[0]?.getTimezoneOffset() * 60 * 1000;
         const newXStep = (timeStep * tickWidth) / dateDelta;
         setXStep(newXStep);
     }, [viewMode, state.ganttReducer?.dates, timeStep]);
