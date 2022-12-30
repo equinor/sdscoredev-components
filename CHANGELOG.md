@@ -1,3 +1,10 @@
+# [2.33.0](https://github.com/equinor/sdscoredev-components/compare/2.32.2...2.33.0) (2022-12-30)
+
+
+### Features
+
+* add empty bar to gantt ([b481329](https://github.com/equinor/sdscoredev-components/commit/b481329569423299a7940d48b4a78318b126b9df))
+
 ## [2.32.2](https://github.com/equinor/sdscoredev-components/compare/2.32.1...2.32.2) (2022-12-19)
 
 
