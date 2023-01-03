@@ -1,3 +1,10 @@
+## [2.33.3](https://github.com/equinor/sdscoredev-components/compare/2.33.2...2.33.3) (2023-01-03)
+
+
+### Bug Fixes
+
+* Odata query filter parser crash ([b025f3a](https://github.com/equinor/sdscoredev-components/commit/b025f3a3d7feb4594ebe45220eb5e8d2f4c69f05))
+
 ## [2.33.2](https://github.com/equinor/sdscoredev-components/compare/2.33.1...2.33.2) (2023-01-03)
 
 
