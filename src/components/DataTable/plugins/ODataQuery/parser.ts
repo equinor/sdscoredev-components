@@ -71,16 +71,17 @@ class FilterParser {
     }
 
     parse = () => {
-        const payload = Object.keys(this.filter).map((x: any) => {
-            return this.filter[x];
-        });
-
-        let query = buildQuery({ filter: payload, orderBy: this.sort, ...this.pagination });
-
-        const i = query.indexOf('any(technicalobjects');
-
-        if (i !== -1) {
-            const re = /(\(technicalobjects)/g;
+        if (this.filter) {
+            const payload = Object.keys(this.filter)?.map((x: any) => {
+                return this.filter[x];
+            });
+            
+            let query = buildQuery({ filter: payload, orderBy: this.sort, ...this.pagination });
+            
+            const i = query.indexOf('any(technicalobjects');
+            
+            if (i !== -1) {
+                const re = /(\(technicalobjects)/g;
             query = query.replace(re, '(i');
         }
 
@@ -94,8 +95,10 @@ class FilterParser {
         }
 
         query = this.stripSingleQuoteFromDateTime(query);
-
+        
         return query;
+    }
+    return null; 
     };
 
     /**
