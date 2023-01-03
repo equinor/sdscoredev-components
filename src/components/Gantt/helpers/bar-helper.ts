@@ -59,11 +59,13 @@ export const dateToProgress = (xDate: Date, dates: Date[]) => {
 
 export const taskXCoordinate = (xDate: Date, dates: Date[], tickWidth: number) => {
     const index = dates.findIndex((d) => d.getTime() >= xDate.getTime()) - 1;
-
-    const remainderMillis = xDate.getTime() - dates[index].getTime();
-    const percentOfInterval = remainderMillis / (dates[index + 1].getTime() - dates[index].getTime());
-    const x = index * tickWidth + percentOfInterval * tickWidth;
-    return x;
+    if (index && index > -1) {
+        const remainderMillis = xDate.getTime() - dates[index]?.getTime();
+        const percentOfInterval = remainderMillis / (dates[index + 1].getTime() - dates[index].getTime());
+        const x = index * tickWidth + percentOfInterval * tickWidth;
+        return x;
+    }
+    return 0;
 };
 
 export const taskYCoordinate = (index: number, rowHeight: number, taskHeight: number) => {
