@@ -1,3 +1,10 @@
+## [2.33.2](https://github.com/equinor/sdscoredev-components/compare/2.33.1...2.33.2) (2023-01-03)
+
+
+### Bug Fixes
+
+* bar-helper crash ([c0043eb](https://github.com/equinor/sdscoredev-components/commit/c0043eb635754cad8ed6d2bfbb2b77206a3157ba))
+
 ## [2.33.1](https://github.com/equinor/sdscoredev-components/compare/2.33.0...2.33.1) (2022-12-30)
 
 
