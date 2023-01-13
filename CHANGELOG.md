@@ -1,3 +1,10 @@
+## [2.33.4](https://github.com/equinor/sdscoredev-components/compare/2.33.3...2.33.4) (2023-01-13)
+
+
+### Bug Fixes
+
+* prevent wrapper from crashing if key is provided instead of id ([#53](https://github.com/equinor/sdscoredev-components/issues/53)) ([1c560cd](https://github.com/equinor/sdscoredev-components/commit/1c560cdd4b7981a454655e1f256501be7c4d015c))
+
 ## [2.33.3](https://github.com/equinor/sdscoredev-components/compare/2.33.2...2.33.3) (2023-01-03)
 
 
