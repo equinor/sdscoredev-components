@@ -1,3 +1,10 @@
+## [2.33.5](https://github.com/equinor/sdscoredev-components/compare/2.33.4...2.33.5) (2023-01-13)
+
+
+### Bug Fixes
+
+* add key for withInput props ([#54](https://github.com/equinor/sdscoredev-components/issues/54)) ([735c843](https://github.com/equinor/sdscoredev-components/commit/735c843749bc5444ba00cbe2fb667e40ce22d5d3))
+
 ## [2.33.4](https://github.com/equinor/sdscoredev-components/compare/2.33.3...2.33.4) (2023-01-13)
 
 
