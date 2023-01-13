@@ -156,7 +156,7 @@ export const withInput =
     ) => {
         type ResultProps = TOriginalProps & InputProps;
         const Input = (props: ResultProps) => {
-            const { id, value, label, tooltip, isRequired, disabled, edit, flexGrow, width, noValidation } = props;
+            const { id, value, label, tooltip, isRequired, disabled, edit, flexGrow, width, noValidation, key } = props;
             const [validationErrors, setValidationErrors] = useState<Array<string> | undefined>(undefined);
 
             const state: any = useContext(ValidationStateContext);
