@@ -202,7 +202,7 @@ export const withInput =
             };
 
             return (
-                <InputWrapper flexGrow={flexGrow} edit={edit} width={width} data-cy={`Input-${id.replace('.', '_')}`}>
+                <InputWrapper flexGrow={flexGrow} edit={edit} width={width} data-cy={`Input-${id ? id.replace('.', '_') : key.replace('.', '_')}`}>
                     {!noLabel && (
                         <Header data-cy={`Input-Header-${id}`}>
                             {label && (
