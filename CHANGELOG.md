@@ -1,3 +1,10 @@
+## [2.33.6](https://github.com/equinor/sdscoredev-components/compare/2.33.5...2.33.6) (2023-01-13)
+
+
+### Bug Fixes
+
+* add key to destruction of props ([#55](https://github.com/equinor/sdscoredev-components/issues/55)) ([200e701](https://github.com/equinor/sdscoredev-components/commit/200e7015173c4809ef6349370dc2b549d3ecc1b3))
+
 ## [2.33.5](https://github.com/equinor/sdscoredev-components/compare/2.33.4...2.33.5) (2023-01-13)
 
 
