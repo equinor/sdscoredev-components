@@ -1,3 +1,10 @@
+## [2.33.7](https://github.com/equinor/sdscoredev-components/compare/2.33.6...2.33.7) (2023-01-13)
+
+
+### Bug Fixes
+
+* change data-cy name to use cyName if provided ([#56](https://github.com/equinor/sdscoredev-components/issues/56)) ([a27eb67](https://github.com/equinor/sdscoredev-components/commit/a27eb676cffdfa7085c997ea6e1ffcaa135b84f7))
+
 ## [2.33.6](https://github.com/equinor/sdscoredev-components/compare/2.33.5...2.33.6) (2023-01-13)
 
 
