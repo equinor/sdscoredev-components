@@ -70,10 +70,6 @@ export type InputProps = {
      * Placeholder text to display in an empty textField
      */
     placeholder?: string | Array<string>;
-    /**
-     * Defining cypress name in case of Material ui key
-     */
-    cyName?: string;
 };
 
 export type Error = {
@@ -156,7 +152,7 @@ export const withInput =
     ) => {
         type ResultProps = TOriginalProps & InputProps;
         const Input = (props: ResultProps) => {
-            const { id, value, label, tooltip, isRequired, disabled, edit, flexGrow, width, noValidation, cyName } = props;
+            const { id, value, label, tooltip, isRequired, disabled, edit, flexGrow, width, noValidation } = props;
             const [validationErrors, setValidationErrors] = useState<Array<string> | undefined>(undefined);
 
             const state: any = useContext(ValidationStateContext);
@@ -206,7 +202,7 @@ export const withInput =
             };
 
             return (
-                <InputWrapper flexGrow={flexGrow} edit={edit} width={width} data-cy={`Input-${cyName ? cyName : id.replace('.', '_')}`}>
+                <InputWrapper flexGrow={flexGrow} edit={edit} width={width} data-cy={`Input-${id?.replace('.', '_')}`}>
                     {!noLabel && (
                         <Header data-cy={`Input-Header-${id}`}>
                             {label && (
