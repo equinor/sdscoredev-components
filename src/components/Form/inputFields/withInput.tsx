@@ -70,6 +70,10 @@ export type InputProps = {
      * Placeholder text to display in an empty textField
      */
     placeholder?: string | Array<string>;
+    /**
+     * Key for use with Material ui
+     */
+    key?: string;
 };
 
 export type Error = {
