@@ -1,3 +1,38 @@
+## [2.33.8](https://github.com/equinor/sdscoredev-components/compare/2.33.7...2.33.8) (2023-01-13)
+
+
+### Bug Fixes
+
+* rework data-cy naming ([#57](https://github.com/equinor/sdscoredev-components/issues/57)) ([67cc325](https://github.com/equinor/sdscoredev-components/commit/67cc325862639a22e07ef6626f207b4ce013da1a))
+
+## [2.33.7](https://github.com/equinor/sdscoredev-components/compare/2.33.6...2.33.7) (2023-01-13)
+
+
+### Bug Fixes
+
+* change data-cy name to use cyName if provided ([#56](https://github.com/equinor/sdscoredev-components/issues/56)) ([a27eb67](https://github.com/equinor/sdscoredev-components/commit/a27eb676cffdfa7085c997ea6e1ffcaa135b84f7))
+
+## [2.33.6](https://github.com/equinor/sdscoredev-components/compare/2.33.5...2.33.6) (2023-01-13)
+
+
+### Bug Fixes
+
+* add key to destruction of props ([#55](https://github.com/equinor/sdscoredev-components/issues/55)) ([200e701](https://github.com/equinor/sdscoredev-components/commit/200e7015173c4809ef6349370dc2b549d3ecc1b3))
+
+## [2.33.5](https://github.com/equinor/sdscoredev-components/compare/2.33.4...2.33.5) (2023-01-13)
+
+
+### Bug Fixes
+
+* add key for withInput props ([#54](https://github.com/equinor/sdscoredev-components/issues/54)) ([735c843](https://github.com/equinor/sdscoredev-components/commit/735c843749bc5444ba00cbe2fb667e40ce22d5d3))
+
+## [2.33.4](https://github.com/equinor/sdscoredev-components/compare/2.33.3...2.33.4) (2023-01-13)
+
+
+### Bug Fixes
+
+* prevent wrapper from crashing if key is provided instead of id ([#53](https://github.com/equinor/sdscoredev-components/issues/53)) ([1c560cd](https://github.com/equinor/sdscoredev-components/commit/1c560cdd4b7981a454655e1f256501be7c4d015c))
+
 ## [2.33.3](https://github.com/equinor/sdscoredev-components/compare/2.33.2...2.33.3) (2023-01-03)
 
 
