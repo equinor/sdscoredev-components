@@ -3,9 +3,11 @@ import React, { useContext } from 'react';
 
 import { Button, Icon, Tooltip } from '@equinor/eds-core-react';
 
+import { useLocation } from 'react-router-dom';
 import { FilterProps } from './index';
 
 export const Filter: React.FC<FilterProps> = ({ title, onClick, hideButton }) => {
+    const location = useLocation();
     return (
         <>
             {!hideButton && (
@@ -13,6 +15,11 @@ export const Filter: React.FC<FilterProps> = ({ title, onClick, hideButton }) =>
                     <Button variant="ghost" onClick={onClick} data-cy="sdscc-DataTable-Button-filter">
                         {title}
                         <Icon name="filter_list" title="Show filter" size={24} />
+                        {new URLSearchParams(location.search) &&
+                            new URLSearchParams(location.search)?.get('filter') &&
+                            new URLSearchParams(location.search)?.get('filter') !== '' && (
+                                <Icon name="star_filled" size={16} color="#e4502b" />
+                            )}
                     </Button>
                 </Tooltip>
             )}
