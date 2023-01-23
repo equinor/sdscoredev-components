@@ -1,3 +1,10 @@
+# [2.34.0](https://github.com/equinor/sdscoredev-components/compare/2.33.8...2.34.0) (2023-01-19)
+
+
+### Features
+
+* show filter indicate if filters are active ([6fd52dc](https://github.com/equinor/sdscoredev-components/commit/6fd52dc5e8d7379c302354e6e0e6e57cd54eabc3))
+
 ## [2.33.8](https://github.com/equinor/sdscoredev-components/compare/2.33.7...2.33.8) (2023-01-13)
 
 
