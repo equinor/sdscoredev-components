@@ -1,3 +1,10 @@
+## [2.34.2](https://github.com/equinor/sdscoredev-components/compare/2.34.1...2.34.2) (2023-01-23)
+
+
+### Bug Fixes
+
+* add star filled to icon imports ([458e490](https://github.com/equinor/sdscoredev-components/commit/458e4903899598b69ef6c37332b405fb8ff9a200))
+
 ## [2.34.1](https://github.com/equinor/sdscoredev-components/compare/2.34.0...2.34.1) (2023-01-23)
 
 
