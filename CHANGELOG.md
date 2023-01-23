@@ -1,3 +1,10 @@
+## [2.34.1](https://github.com/equinor/sdscoredev-components/compare/2.34.0...2.34.1) (2023-01-23)
+
+
+### Bug Fixes
+
+* filter indicator size undefined ([40cb264](https://github.com/equinor/sdscoredev-components/commit/40cb264b08010a1be79f616a03da341165e9cc21))
+
 # [2.34.0](https://github.com/equinor/sdscoredev-components/compare/2.33.8...2.34.0) (2023-01-19)
 
 
