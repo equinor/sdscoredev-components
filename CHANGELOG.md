@@ -1,3 +1,10 @@
+## [2.34.3](https://github.com/equinor/sdscoredev-components/compare/2.34.2...2.34.3) (2023-02-03)
+
+
+### Bug Fixes
+
+* useForm reset data on error ([c55cb15](https://github.com/equinor/sdscoredev-components/commit/c55cb158b7e461297edc2bbca29eade96bfea039))
+
 ## [2.34.2](https://github.com/equinor/sdscoredev-components/compare/2.34.1...2.34.2) (2023-01-23)
 
 
