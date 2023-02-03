@@ -31,7 +31,6 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
     const promiseSubmit = async () => {
         if (typeof props.onSubmit === 'function') {
             const { data, error, status } = await props.onSubmit(form);
-
             if (status >= 200 && status < 300 && !error) {
                 hasError.current = false;
                 dispatch({ type: 'SET_ERRORS', payload: undefined });
@@ -43,7 +42,10 @@ export const useForm = (formData: any, props: UseFormHookProps): UseFormHook | R
                 hasError.current = true;
                 dispatch({ type: 'SET_ERRORS', payload: error.response.data });
 
-                if (typeof props.onError === 'function') props.onError(error.response.data);
+                if (typeof props.onError === 'function') {
+                    props.onError(error.response.data);
+                    setForm(form);
+                }
             }
         }
     };
